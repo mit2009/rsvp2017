@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="js/scripts.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+  <div class="background-1"></div>
+  <div class="background-2"></div>
+  <div class="center-container">
+    <h2>
+      <div class="h2-inline-container">2.009 Product Launch</div>
+    </h2>
+    <div class="super-logo">
+      <div class="super-wallace-i-mean-product-man"></div>
+      <div class="product-man-background"></div>
+    </div>
+    <div class="color-bars">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <a href="/" id="rsvp-btn" class="rsvp-btn">PRESS TO RSVP</a>
+  <script type="text/javascript">
+    function parseQueryString(url) {
+      var urlParams = {};
+      url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+        function ($0, $1, $2, $3) {
+          urlParams[$1] = $3;
+        });
+      return urlParams;
+    }
+    function setRSVPUrl() {
+      var urlParams = parseQueryString(location.search);
+      console.log(urlParams);
+      if (urlParams['invite'] != undefined) {
+        document.getElementById("rsvp-btn").href = 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite'];
+      }
+
+      // Clears the url to a blank state incase they want to share the URL
+      // window.history.replaceState({}, document.title, "/");
+    }
+    $(function () {
+      console.log('hey')
+      setRSVPUrl();
+    });
+  </script>
+</body>
+
+<!-- example http://2009.mit.edu/rsvp/?invite=vhung@mit.edu/518B8-Y0CRU-MO0QV -->
+
+</html>
