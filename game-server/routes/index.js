@@ -27,7 +27,7 @@ router.post("/end", function(req, res, next) {
   var score = req.body.score;
   var name = req.body.name;
   var color = req.body.color;
-  if (sessionKey == null || score == null || name == null) {
+  if (sessionKey == null || score == null) {
     res.send({ error: "Incomplete data" });
   } else {
     var sessionRef = firebase.database().ref(`games/${sessionKey}`);
@@ -47,7 +47,7 @@ router.post("/end", function(req, res, next) {
             return {
               startTime: currentValue.startTime,
               endTime: moment(now).toISOString(),
-              name: name.toUpperCase(),
+              name: name != null ? name.toUpperCase() : undefined,
               color: color != null ? color.toUpperCase() : "WHITE",
               score,
             };
@@ -71,6 +71,20 @@ router.post("/end", function(req, res, next) {
   }
 });
 
+router.post("/updateName", function(req, res) {
+  var name = req.body.name;
+  var sessionId = req.body.sessionId;
+  if (name != null && sessionId != null) {
+    firebase.database().ref(`games/${sessionId}`).update({ name: name.toUpperCase() }).then(function() {
+      res.send({ success: true });
+    }, function(error) {
+      res.send({ error });
+    })
+  } else {
+    res.send({ error: "Name is required." });
+  }
+})
+
 router.get("/scores/:numScores?", function(req, res) {
   firebase.database().ref("games").once("value", function(snapshot) {
     // scores indexed by name, only recording the max for the name. case insensitive
@@ -78,6 +92,8 @@ router.get("/scores/:numScores?", function(req, res) {
     snapshot.forEach(function(childSnapshot) {
       var gameData = childSnapshot.val();
       if (gameData.score !== undefined &&
+        gameData.name !== undefined &&
+        gameData.name.length > 0 &&
         gameData.endTime !== undefined &&
         gameData.startTime !== undefined &&
         moment(gameData.endTime).isAfter(gameData.startTime)) {

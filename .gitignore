@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .sass-cache/
+.DS_Store
 
 # Runtime data
 pids

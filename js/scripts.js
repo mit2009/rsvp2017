@@ -3,6 +3,7 @@ var gameState = 'WAITING_TO_START';
 var mouseX = -1;
 var pmanY, pmanWidth, pmanHeight;
 var debrisCollection;
+var sessionId;
 
 $(document).mousemove(function (event) {
     mouseX = event.pageX;
@@ -37,8 +38,28 @@ function loop(tick) {
         debrisCollection.tick(tick);
         $('.score-num').text(tick);
     } else if (gameState == 'GAME_STOPPED') {
+        var ticks = timer.getNumTicks();
         console.log('GAME OVER, SCORE:', timer.getNumTicks());
         timer.stop();
+        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks, name: name }, function(response) {
+            if (response.success) {
+                $("#score-form").fadeIn();
+                $("#score-form-submit-button").click(function() {
+                    var name = $("#score-name").val();
+                    if (name.length > 0) {
+                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, score: ticks, name: name }, function(response) {
+                            if (response.success) {
+                                console.log("saved");
+                            } else {
+                                console.log(response);
+                            }
+                        })
+                    }
+                });
+            } else {
+                console.log(error, response);
+            }
+        })
     }
 };
 
@@ -47,10 +68,15 @@ function startGame() {
     gameState = 'GAME_STARTED';
     debrisCollection = new DebrisCollection();
     $('.instructions').fadeOut();
-    // 24 frames per second- lets see what happens. 
-    // Im sorry, slow computers :|
-    timer = new Timer(42, loop);
-    timer.run();
+    $.post(SERVER_URL + "/start", function(response) {
+        if (response.error === undefined) {
+            sessionId = response.sessionId;
+        }
+        // 24 frames per second- lets see what happens. 
+        // Im sorry, slow computers :|
+        timer = new Timer(42, loop);
+        timer.run();
+    });
 }
 
 function init() {

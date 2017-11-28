@@ -311,6 +311,20 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
         }
     }
 }
+.score-form {
+    display: none;
+    width: 300px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    line-height: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 14px;
+}
 .product-man {
     display: none;
     position: absolute;
