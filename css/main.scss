@@ -109,7 +109,7 @@ h2 {
 .product-man-background {
     background-color: #232323;
     top: 150px;
-    z-index: 2016;
+    z-index: 2;
     height: 30000px;
 }
 
@@ -151,11 +151,16 @@ h2 {
         opacity: 0;
     }
 
+    60% {
+        opacity: 1;
+    }
+
     80% {
         background-color: #000;
     }
 
     90% {
+        opacity: 1;
         background-color: #999;
     }
 
@@ -172,63 +177,115 @@ h2 {
 .background-1 {
     z-index: -1;
     background-image: url("../assets/background1.png");
-    background-size: 400px;
-    height: calc(100% + 100px);
+    background-size: #{(961px / 2)} #{(1125px / 2)};
+    height: 1125px * 2;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    opacity: 0;
-    transform: translate(0px, 100px);
-    animation: riseDownBackground ease-out 1;
+    opacity: 0.4;
+    transform: translate(0%, -50%);
+    animation: riseDownBackground linear infinite;
     animation-fill-mode: forwards;
-    animation-duration: 2.5s;
+    animation-duration: 15s;
 }
 
 .background-2 {
     z-index: -2;
     background-image: url("../assets/background2.png");
-    background-size: 500px;
-    height: calc(100% + 100px);
+    background-size: #{(961px / 2)} #{(1125px / 2)};
+    height: 1125px * 2;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
-    opacity: 0;
-    transform: translate(0px, 100px);
-    animation: riseDownBackgroundFar ease-out 1;
+    opacity: 0.2;
+    transform: translate(0%, -50%);
+    animation: riseDownBackgroundFar linear infinite;
     animation-fill-mode: forwards;
-    animation-duration: 2.5s;
+    animation-duration: 30s;
+}
+
+.cloud-left {
+    z-index: -3;
+    background-image: url("../assets/left-clouds.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: bottom right;
+    position: fixed;
+    bottom: -20px;
+    left: -5px;
+    width: 35%;
+    height: 100%;
+    opacity: 0;
+
+    transform: translate(-100%, 0);
+    animation: comeInLeft cubic-bezier(0.06, 0.36, 0.16, 0.99) 1;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    animation-duration: 1s;
+}
+
+.cloud-right {
+    z-index: -3;
+    background-image: url("../assets/right-clouds.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: bottom right;
+    position: fixed;
+    bottom: -20px;
+    right: -5px;
+    width: 35%;
+    height: 100%;
+    opacity: 0;
+
+    transform: translate(100%, 0);
+    animation: comeInRight cubic-bezier(0.06, 0.36, 0.16, 0.99) 1;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    animation-duration: 1s;
 }
 
 @keyframes riseDownBackground {
     0% {
-        transform: translate(0px, -80px);
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 0.5;
+        transform: translate(0%, -50%);
     }
 
     100% {
-        transform: translate(0px, 0px);
-        opacity: 0.5;
+        transform: translate(0%, 0%);
     }
 }
 
 @keyframes riseDownBackgroundFar {
     0% {
-        transform: translate(0px, -10px);
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 0.4;
+        transform: translate(0%, -50%);
     }
 
     100% {
-        transform: translate(0px, 0px);
+        transform: translate(0%, 0%);
+    }
+}
+
+@keyframes comeInLeft {
+    0% {
+        transform: translate(-100%, 0%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(0%, 0%);
+        opacity: 0.5;
+    }
+}
+
+@keyframes comeInRight {
+    0% {
+        transform: translate(100%, 0%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(0%, 0%);
         opacity: 0.4;
     }
 }
@@ -288,7 +345,6 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
     }
 }
 
-
 .instructions {
     display: none;
     width: 300px;
@@ -311,6 +367,7 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
         }
     }
 }
+
 .score-form,
 .score-table {
     display: none;
@@ -326,9 +383,11 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
     text-align: center;
     font-size: 14px;
 }
+
 .score-form-error {
     display: none;
 }
+
 .product-man {
     display: none;
     position: absolute;
@@ -356,6 +415,7 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
 }
 
 .score {
+    display: none;
     position: absolute;
     top: 20px;
     left: 20px;
@@ -374,9 +434,6 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
         color: #eee;
         vertical-align: bottom;
     }
-    
-    
-
 }
 
 @media only screen and (max-width: 650px) {

@@ -4,13 +4,13 @@ var Debris = function (leftBound, rightBound, screenHeight, debrisObject, velX, 
     this.height = debrisObject.height/3;
     this.x = Math.random() * (rightBound - this.width - leftBound);
     this.y = -this.height;
-    this.velY = velY;
+    this.velY = velY * debrisObject.speed;
     this.velX = velX;
     this.$html = $('<div class="debris"></div>');
     this.$html.css({
         height: this.height,
         width: this.width,
-        backgroundImage: "url('../assets/debris/" + debrisObject.img + "')",
+        backgroundImage: "url('assets/debris/" + debrisObject.img + "')",
         left: this.x,
         top: this.y
     })
@@ -46,7 +46,7 @@ Debris.prototype = {
 var DebrisCollection = function () {
     this.debrisList = [];
     this.lastDebrisTick = 0;
-    this.minTicksPassedBeforeNewDebris = 50;
+    this.minTicksPassedBeforeNewDebris = 30;
     this.debrisSelection = 2;
     this.difficulty = 0.5;
     this.difficultyVel = 1;
@@ -56,26 +56,31 @@ var DebrisCollection = function () {
             img: 'spinner.png',
             width: 302,
             height: 302,
+            speed: 1,
         },
         1: {
             img: 'shakeweight.png',
             width: 382,
             height: 278,
+            speed: 1,
         },
         2: {
             img: 'juicero.png',
             width: 302 * 1.5,
             height: 302 * 1.5,
+            speed: 1,
         },
         3: {
             img: 'car.png',
-            width: 587,
-            height: 235,
+            width: 587 * 1.5,
+            height: 235 * 1.5,
+            speed: 0.8,
         },
         4: {
             img: 'zune.png',
             width: 302,
             height: 302,
+            speed: 3,
         }
     }
 };
@@ -95,15 +100,15 @@ DebrisCollection.prototype = {
                 debrisObject = this.availableDebris[k];
                 velX = Math.min(this.difficulty, 10);
                 velX = Math.random() < 0.5 ? -velX : velX;
-                velY = Math.min(this.difficulty * 3 + Math.random() * 8 * this.difficulty, 100);
+                velY = Math.min(this.difficulty * 5 + Math.random() * 8 * this.difficulty, 100);
                 debris = new Debris(0, $(window).width(), $(window).height(), debrisObject, velX, velY);
                 this.debrisList.push(debris);
             }
         }
-        if (tickNumber % 100 == 0) {
+        if (tickNumber % 80 == 0) {
             this.maybeAdjustDifficulty();
         }
-        if (tickNumber % 300 == 0) {
+        if (tickNumber % 50 == 0) { // default 300
             this.debrisSelection = Math.min(this.debrisSelection+1, Object.keys(this.availableDebris).length)
         }
     },

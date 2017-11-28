@@ -15,6 +15,7 @@ function clearStageForGame() {
     }, 100, function () { // SUPERSPEED
         $('.instructions').fadeIn(100);
         $('.product-man').fadeIn(100);
+        $('.score').fadeIn(100);
     })
 };
 
@@ -84,6 +85,7 @@ function startGame() {
         if (response.error === undefined) {
             sessionId = response.sessionId;
         }
+    }).always(function() {
         // 24 frames per second- lets see what happens. 
         // Im sorry, slow computers :|
         timer = new Timer(42, loop);
@@ -98,6 +100,6 @@ function init() {
         }
     })
 
-    setTimeout(clearStageForGame, 100); //SUPERSPEED
+    // setTimeout(clearStageForGame, 100); //SUPERSPEED
     // clearStageForGame();
 }
