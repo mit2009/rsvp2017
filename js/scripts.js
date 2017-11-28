@@ -1,7 +1,7 @@
 var timer;
 var gameState = 'WAITING_TO_START';
 var mouseX = -1;
-var pmanY, pmanWidth, pmanHeight;
+var pmanY, pmanWidth, pmanHeight, pmanMarginOffset;
 var debrisCollection;
 var sessionId;
 
@@ -10,6 +10,9 @@ $(document).mousemove(function (event) {
 });
 
 function clearStageForGame() {
+    $('.photo-background').fadeOut(100);
+    $('.cloud-left').fadeOut(100);
+    $('.cloud-right').fadeOut(100);
     $('.mobile-overflow-container').animate({
         top: '100%'
     }, 100, function () { // SUPERSPEED
@@ -26,6 +29,7 @@ function updatePmanPosition() {
             left: productManPosX - (productManPosX - mouseX) / 3
         })
     }
+    pmanMarginOffset = 20;
     pmanX = parseInt($('.product-man').css('left'));
     pmanY = parseInt($('.product-man').css('top'));
     pmanWidth = parseInt($('.product-man').css('width'));
@@ -34,6 +38,9 @@ function updatePmanPosition() {
 
 
 function loop(tick) {
+    // gameState = 'GAME_STOPPED';
+    // debugging
+
     if (gameState == 'GAME_STARTED') {
         updatePmanPosition();
         debrisCollection.tick(tick);
@@ -100,6 +107,6 @@ function init() {
         }
     })
 
-    // setTimeout(clearStageForGame, 100); //SUPERSPEED
+    setTimeout(clearStageForGame, 100); //SUPERSPEED
     // clearStageForGame();
 }

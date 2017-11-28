@@ -506,6 +506,47 @@ h2 {
 .score-form-error {
   display: none; }
 
+.game-over-caption {
+  margin-bottom: 10px;
+  font-size: 16px; }
+
+.game-over-caption-instruction {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 15px; }
+
+input {
+  border: none;
+  outline: none;
+  padding: 3px 5px;
+  font-size: 18px;
+  font-family: sabo, sans-serif; }
+
+input[type='submit'] {
+  background-color: #aaa; }
+  input[type='submit']:hover {
+    background-color: #fff;
+    cursor: pointer; }
+
+input[type='text'] {
+  background-color: #333;
+  color: #fff; }
+
+.highscore-table {
+  text-align: left;
+  font-family: Montserrat, sans-serif;
+  margin: 0 auto; }
+  .highscore-table th {
+    font-size: 14px;
+    color: #777;
+    padding: 3px; }
+  .highscore-table tr {
+    font-size: 16px;
+    color: #eee; }
+  .highscore-table td {
+    padding: 3px;
+    padding-right: 14px; }
+
 .product-man {
   display: none;
   position: absolute;
@@ -534,14 +575,14 @@ h2 {
   top: 20px;
   left: 20px;
   font-family: sabo, sans-serif;
-  font-size: 20px;
+  font-size: 30px;
   z-index: 1900;
   vertical-align: bottom; }
   .score .caption {
     color: #aaa;
     vertical-align: bottom; }
   .score .score-num {
-    font-size: 26px;
+    font-size: 36px;
     color: #eee;
     vertical-align: bottom; }
 

@@ -25,7 +25,7 @@ Debris.prototype = {
         // iunno how wide is product man
         // this wide
         console.log(pmanWidth);
-        if (this.x + this.width > pmanX && this.x < pmanX + pmanWidth && this.y + this.height > pmanY && this.y < pmanY + 40) { // last digit should be pmanheight fix because his legs are long idk
+        if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY && this.y < pmanY + 40) { // last digit should be pmanheight fix because his legs are long idk
             gameState = 'GAME_STOPPED'
         }
         if (this.y > this.screenHeight) {
