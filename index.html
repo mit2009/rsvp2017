@@ -26,10 +26,12 @@
         <p>Navigate product man through the sea of bad products, and make sure product man doesn't get hit by any of the defective products!</p>
         <p>Click Product Man to Start!</p>
       </div>
-      <div class="score-form" id="score-form">
-        <input type="text" id="score-name" />
-        <button id="score-form-submit-button">submit</button>
-      </div>
+      <form class="score-form" id="score-form">
+        <input type="text" id="score-name" autofocus="true" />
+        <input type="submit" id="score-form-submit-button" value="submit" />
+        <div id="score-form-error" class="score-form-error">Oops! We were unable to save your score. Really want your score up there? Take a screenshot and email <a href="mailto:vhung@mit.edu">Victor</a>.</div>
+      </form>
+      <div id="score-table"></div>
       <div class="product-man">
       </div>
     </div>

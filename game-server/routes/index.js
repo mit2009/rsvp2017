@@ -40,17 +40,20 @@ router.post("/end", function(req, res, next) {
         && currentValue.startTime != null
         && score !== undefined
         && !isNaN(score)
-        && isValidScore(snapshot.val().startTime, now, score)) {
+        && isValidScore(currentValue.startTime, now, score)) {
         // yay we're valid, make a transaction to update the score
+        const scoreData = {
+          startTime: currentValue.startTime,
+          endTime: moment(now).toISOString(),
+          color: color != null ? color.toUpperCase() : "WHITE",
+          score,
+        };
+        if (name !== undefined) {
+          scoreData.name = name.toUpperCase();
+        }
         sessionRef.transaction(function(currentSession) {
           if (currentSession == null || currentSession.score == null) {
-            return {
-              startTime: currentValue.startTime,
-              endTime: moment(now).toISOString(),
-              name: name != null ? name.toUpperCase() : undefined,
-              color: color != null ? color.toUpperCase() : "WHITE",
-              score,
-            };
+            return scoreData;
           } else {
             // someone else has snuck in a score, abort transaction
             return;
@@ -97,10 +100,9 @@ router.get("/scores/:numScores?", function(req, res) {
         gameData.endTime !== undefined &&
         gameData.startTime !== undefined &&
         moment(gameData.endTime).isAfter(gameData.startTime)) {
-        if (maxGameScores[gameData.name] === undefined) {
-          maxGameScores[gameData.name] = gameData;
-        } else if (maxGameScores[gameData.name].score < gameData.score) {
-          maxGameScores[gameData.name] = gameData;
+        if (maxGameScores[gameData.name] === undefined ||
+          maxGameScores[gameData.name].score < parseInt(gameData.score, 10)) {
+          maxGameScores[gameData.name] = { ...gameData, score: parseInt(gameData.score, 10) };;
         }
       }
     });

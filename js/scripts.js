@@ -41,17 +41,23 @@ function loop(tick) {
         var ticks = timer.getNumTicks();
         console.log('GAME OVER, SCORE:', timer.getNumTicks());
         timer.stop();
-        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks, name: name }, function(response) {
+        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks }, function(response) {
             if (response.success) {
                 $("#score-form").fadeIn();
-                $("#score-form-submit-button").click(function() {
+                $("#score-form").submit(function(event) {
+                    event.preventDefault();
                     var name = $("#score-name").val();
                     if (name.length > 0) {
-                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, score: ticks, name: name }, function(response) {
+                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, name: name }, function(response) {
                             if (response.success) {
-                                console.log("saved");
+                                $("#score-form-error").fadeOut();
+                                $("#score-form").fadeOut();
+                                $.get(SERVER_URL + "/scores/10", function(response) {
+                                    // add to table
+                                    console.log(response.scores);
+                                });
                             } else {
-                                console.log(response);
+                                $("#score-form-error").fadeIn();
                             }
                         })
                     }
