@@ -12,10 +12,12 @@ edit main.scss instead
     src: url(Sabo-Filled.otf);
 }
 
-html, body {
+html, body, .mobile-overflow-container {
     width: 100%;
-    height: 100;
+    height: 100%;
+    position: fixed;
     background-color: #000;
+    overflow: hidden;
 }
 
 body {
@@ -136,8 +138,8 @@ h2 {
     opacity: 0;
     animation: rsvpBtnFadeIn ease-out 1;
     animation-fill-mode: forwards;
-    animation-duration: 2.0s;
-    animation-delay: 1.5s;
+    animation-duration: 1.0s;
+    animation-delay: 2.0s;
 
     &:hover {
         background-color: #666;
