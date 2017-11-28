@@ -409,6 +409,22 @@ h2 {
   position: absolute;
   background-color: #333; }
 
+.score {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family: sabo, sans-serif;
+  font-size: 20px;
+  z-index: 1900;
+  vertical-align: bottom; }
+  .score .caption {
+    color: #aaa;
+    vertical-align: bottom; }
+  .score .score-num {
+    font-size: 26px;
+    color: #eee;
+    vertical-align: bottom; }
+
 @media only screen and (max-width: 650px) {
   .super-logo {
     width: 80%;

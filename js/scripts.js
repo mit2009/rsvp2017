@@ -11,9 +11,9 @@ $(document).mousemove(function (event) {
 function clearStageForGame() {
     $('.mobile-overflow-container').animate({
         top: '100%'
-    }, 1200, function () {
-        $('.instructions').fadeIn();
-        $('.product-man').fadeIn();
+    }, 100, function () { // SUPERSPEED
+        $('.instructions').fadeIn(100);
+        $('.product-man').fadeIn(100);
     })
 };
 
@@ -24,6 +24,7 @@ function updatePmanPosition() {
             left: productManPosX - (productManPosX - mouseX) / 3
         })
     }
+    pmanX = parseInt($('.product-man').css('left'));
     pmanY = parseInt($('.product-man').css('top'));
     pmanWidth = parseInt($('.product-man').css('width'));
     pmanHeight = parseInt($('.product-man').css('height'));
@@ -34,6 +35,7 @@ function loop(tick) {
     if (gameState == 'GAME_STARTED') {
         updatePmanPosition();
         debrisCollection.tick(tick);
+        $('.score-num').text(tick);
     } else if (gameState == 'GAME_STOPPED') {
         console.log('GAME OVER, SCORE:', timer.getNumTicks());
         timer.stop();
@@ -52,11 +54,10 @@ function startGame() {
 }
 
 function init() {
-
     $('.product-man').click(function () {
         startGame();
     })
 
-    setTimeout(clearStageForGame, 1000);
+    setTimeout(clearStageForGame, 100); //SUPERSPEED
     // clearStageForGame();
 }

@@ -1,6 +1,5 @@
-var Debris = function (leftBound, rightBound) {
-    console.log(leftBound, rightBound)
-    this.screenHeight = 800;
+var Debris = function (leftBound, rightBound, screenHeight) {
+    this.screenHeight = screenHeight;
     this.width = 80;
     this.height = 80;
     this.x = Math.random()*(rightBound-this.width-leftBound);
@@ -19,8 +18,7 @@ Debris.prototype = {
         // iunno how wide is product man
         // this wide
         console.log(pmanWidth);
-        console.log(this.x + this.width > mouseX - pmanWidth/2 && this.x < mouseX)
-        if (this.x + this.width > mouseX - pmanWidth/2 && this.x < mouseX + pmanWidth/2 && this.y + this.height > pmanY && this.y < pmanY + pmanHeight) {
+        if (this.x + this.width > pmanX && this.x < pmanX + pmanWidth && this.y + this.height > pmanY && this.y < pmanY + 40) { // last digit should be pmanheight fix because his legs are long idk
             gameState = 'GAME_STOPPED'
         }
         if (this.y > this.screenHeight) {
@@ -43,17 +41,24 @@ var DebrisCollection = function () {
     this.lastDebrisTick = 0;
     this.minTicksPassedBeforeNewDebris = 20;
     this.difficulty = 0.5;
+    this.difficultyVel = 1;
 };
 
 DebrisCollection.prototype = {
+    maybeAdjustDifficulty: function() {
+        this.difficulty = Math.min(this.difficulty + this.difficultyVel, 1);
+        this.minTicksPassedBeforeNewDebris = Math.max(this.minTicksPassedBeforeNewDebris - this.difficultyVel, 0)
+    },
     mightAddNewDebris: function (tickNumber) {   
-
         if (tickNumber - this.lastDebrisTick > this.minTicksPassedBeforeNewDebris) {
             if (Math.random() < this.difficulty) {
                 this.lastDebrisTick = tickNumber;
-                debris = new Debris(0, $(window).width());
+                debris = new Debris(0, $(window).width(), $(window).height());
                 this.debrisList.push(debris);
             }
+        }
+        if (tickNumber % 100 == 0) {
+            this.maybeAdjustDifficulty();
         }
     },
     progressDebris: function() {
