@@ -93,7 +93,9 @@ function startGame() {
 
 function init() {
     $('.product-man').click(function () {
-        startGame();
+        if (gameState == 'WAITING_TO_START') {
+            startGame();
+        }
     })
 
     setTimeout(clearStageForGame, 100); //SUPERSPEED

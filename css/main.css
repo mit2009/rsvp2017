@@ -425,7 +425,7 @@ h2 {
   height: 70px;
   display: inline-block;
   position: absolute;
-  background-color: #333; }
+  background-size: 100%; }
 
 .score {
   position: absolute;
