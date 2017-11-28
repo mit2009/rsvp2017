@@ -15,6 +15,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="js/lib/config.js"></script>
   <script src="js/lib/Timer.js"></script>
+  <script src="js/lib/Items.js"></script>
   <script src="js/lib/DebrisCollection.js"></script>
   <script src="js/scripts.js"></script>
 
@@ -27,6 +28,10 @@
     <div class="game-elements">
       <div class="score">
         <span class="caption">score:</span> <span class="score-num">0</span>
+        <span class="bonus-score">+5000</span>
+      </div>
+      <div class="underscore">
+
       </div>
       <div class="instructions">
         <p>Oh no! Defective Products!</p>
@@ -34,7 +39,7 @@
         <p>Click Product Man to Start!</p>
       </div>
       <form class="score-form" id="score-form">
-        <div class="game-over-caption">Oh no! [product]! My one weakness!</div>
+        <div class="game-over-caption game-over-specific-caption">Oh no! My one weakness!</div>
         <div class="game-over-caption game-over-caption-instruction">Enter your superhero name below</div>
         <input type="text" maxlength="30" id="score-name" autofocus="true" />
         <input type="submit" id="score-form-submit-button" value="submit" />
@@ -50,6 +55,8 @@
           </thead>
           <tbody id="score-table-body"></tbody>
         </table>
+        <button class="end-replay">replay</button>
+        <button class="end-back">back to rsvp</button>
       </div>
       <div class="product-man">
       </div>

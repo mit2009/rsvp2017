@@ -4,6 +4,8 @@ var mouseX = -1;
 var pmanY, pmanWidth, pmanHeight, pmanMarginOffset;
 var debrisCollection;
 var sessionId;
+var collectedGems = [];
+var bonusPoints = 0;
 
 $(document).mousemove(function (event) {
     mouseX = event.pageX;
@@ -26,7 +28,8 @@ function updatePmanPosition() {
     if (gameState == 'GAME_STARTED') {
         productManPosX = parseFloat($('.product-man').css('left'));
         $('.product-man').css({
-            left: productManPosX - (productManPosX - mouseX) / 3
+            left: productManPosX - (productManPosX - mouseX) / 3,
+            transform: 'rotate(' + (-(productManPosX - mouseX) / 10) + 'deg)'
         })
     }
     pmanMarginOffset = 20;
@@ -44,23 +47,23 @@ function loop(tick) {
     if (gameState == 'GAME_STARTED') {
         updatePmanPosition();
         debrisCollection.tick(tick);
-        $('.score-num').text(tick);
+        $('.score-num').text(tick + bonusPoints);
     } else if (gameState == 'GAME_STOPPED') {
         var ticks = timer.getNumTicks();
         console.log('GAME OVER, SCORE:', timer.getNumTicks());
         timer.stop();
-        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks }, function(response) {
+        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks }, function (response) {
             if (response.success) {
                 $("#score-form").fadeIn();
-                $("#score-form").submit(function(event) {
+                $("#score-form").submit(function (event) {
                     event.preventDefault();
                     var name = $("#score-name").val();
                     if (name.length > 0) {
-                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, name: name }, function(response) {
+                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, name: name }, function (response) {
                             if (response.success) {
                                 $("#score-form-error").fadeOut();
                                 $("#score-form").fadeOut();
-                                $.get(SERVER_URL + "/scores/10", function(response) {
+                                $.get(SERVER_URL + "/scores/10", function (response) {
                                     // add to table
                                     if (response !== undefined && response.scores !== undefined) {
                                         $("#score-table-body").empty();
@@ -88,11 +91,11 @@ function startGame() {
     gameState = 'GAME_STARTED';
     debrisCollection = new DebrisCollection();
     $('.instructions').fadeOut();
-    $.post(SERVER_URL + "/start", function(response) {
+    $.post(SERVER_URL + "/start", function (response) {
         if (response.error === undefined) {
             sessionId = response.sessionId;
         }
-    }).always(function() {
+    }).always(function () {
         // 24 frames per second- lets see what happens. 
         // Im sorry, slow computers :|
         timer = new Timer(42, loop);
@@ -106,6 +109,19 @@ function init() {
             startGame();
         }
     })
+
+    $('.end-replay').click(function () {
+        console.log(gameState);
+        if (gameState == 'GAME_STOPPED') {
+            startGame();
+            bonusPoints = 0;
+            collectedGems = 0;
+        }
+    });
+
+    $('.end-back').click(function () {
+        location.reload();
+    });
 
     setTimeout(clearStageForGame, 100); //SUPERSPEED
     // clearStageForGame();

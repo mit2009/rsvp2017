@@ -515,6 +515,10 @@ h2 {
   color: #aaa;
   margin-bottom: 15px; }
 
+form {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5); }
+
 input {
   border: none;
   outline: none;
@@ -533,6 +537,8 @@ input[type='text'] {
   color: #fff; }
 
 .highscore-table {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 30px;
   text-align: left;
   font-family: Montserrat, sans-serif;
   margin: 0 auto; }
@@ -552,11 +558,11 @@ input[type='text'] {
   position: absolute;
   width: 40px;
   z-index: 1001;
-  bottom: 20px;
+  bottom: 40px;
   left: 50%;
   margin: -20px;
-  height: 100px;
-  background-image: url("../assets/product-man.png");
+  height: 160px;
+  background-image: url("../assets/pman.png");
   background-size: 100%;
   background-repeat: no-repeat; }
   .product-man:hover {
@@ -585,6 +591,19 @@ input[type='text'] {
     font-size: 36px;
     color: #eee;
     vertical-align: bottom; }
+  .score .bonus-score {
+    display: none; }
+
+.underscore {
+  position: fixed;
+  top: 70px;
+  left: 20px; }
+
+.gem-status {
+  display: inline-block; }
+  .gem-status img {
+    margin-right: 8px;
+    height: 25px; }
 
 @media only screen and (max-width: 650px) {
   .super-logo {
