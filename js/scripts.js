@@ -54,7 +54,13 @@ function loop(tick) {
                                 $("#score-form").fadeOut();
                                 $.get(SERVER_URL + "/scores/10", function(response) {
                                     // add to table
-                                    console.log(response.scores);
+                                    if (response !== undefined && response.scores !== undefined) {
+                                        $("#score-table-body").empty();
+                                        for (var score of response.scores) {
+                                            $("#score-table-body").append(`<tr><td>${score.name}</td><td>${score.score}</td></tr>`);
+                                        }
+                                        $("#score-table").fadeIn();
+                                    }
                                 });
                             } else {
                                 $("#score-form-error").fadeIn();

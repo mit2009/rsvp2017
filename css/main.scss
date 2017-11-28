@@ -311,9 +311,10 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
         }
     }
 }
-.score-form {
+.score-form,
+.score-table {
     display: none;
-    width: 300px;
+    width: 500px;
     left: 50%;
     top: 50%;
     position: absolute;

@@ -387,9 +387,10 @@ h2 {
     .instructions p:nth-child(2) {
       opacity: 0.7; }
 
-.score-form {
+.score-form,
+.score-table {
   display: none;
-  width: 300px;
+  width: 500px;
   left: 50%;
   top: 50%;
   position: absolute;
