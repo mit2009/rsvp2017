@@ -1,9 +1,8 @@
 var timer;
 var gameState = 'WAITING_TO_START';
 var mouseX = -1;
+var pmanY, pmanWidth, pmanHeight;
 var debrisCollection;
-
-var currentMousePos = { x: -1, y: -1 };
 
 $(document).mousemove(function (event) {
     mouseX = event.pageX;
@@ -25,12 +24,20 @@ function updatePmanPosition() {
             left: productManPosX - (productManPosX - mouseX) / 3
         })
     }
+    pmanY = parseInt($('.product-man').css('top'));
+    pmanWidth = parseInt($('.product-man').css('width'));
+    pmanHeight = parseInt($('.product-man').css('height'));
 };
 
 
 function loop(tick) {
-    updatePmanPosition();
-    debrisCollection.tick(tick);
+    if (gameState == 'GAME_STARTED') {
+        updatePmanPosition();
+        debrisCollection.tick(tick);
+    } else if (gameState == 'GAME_STOPPED') {
+        console.log('GAME OVER, SCORE:', timer.getNumTicks());
+        timer.stop();
+    }
 };
 
 function startGame() {

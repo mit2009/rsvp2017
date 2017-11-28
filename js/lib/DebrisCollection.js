@@ -2,6 +2,7 @@ var Debris = function (leftBound, rightBound) {
     console.log(leftBound, rightBound)
     this.screenHeight = 800;
     this.width = 80;
+    this.height = 80;
     this.x = Math.random()*(rightBound-this.width-leftBound);
     this.y = -60;
     this.velY = 10 + Math.random()*20;
@@ -14,6 +15,14 @@ Debris.prototype = {
     move: function() {
         this.y += this.velY;
         this.x += this.velX;
+        // check for collision here i guess?
+        // iunno how wide is product man
+        // this wide
+        console.log(pmanWidth);
+        console.log(this.x + this.width > mouseX - pmanWidth/2 && this.x < mouseX)
+        if (this.x + this.width > mouseX - pmanWidth/2 && this.x < mouseX + pmanWidth/2 && this.y + this.height > pmanY && this.y < pmanY + pmanHeight) {
+            gameState = 'GAME_STOPPED'
+        }
         if (this.y > this.screenHeight) {
             this.$html.remove();
             return false;
