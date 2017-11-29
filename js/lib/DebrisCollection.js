@@ -26,7 +26,7 @@ Debris.prototype = {
         this.y += this.velY;
         this.x += this.velX;
         if (this.debrisObject.rotationSpeed) {
-            this.rotation += this.debrisObject.rotationSpeed * 20
+            this.rotation += this.debrisObject.rotationSpeed * 20;
         }
         // check for collision here i guess?
         // iunno how wide is product man
@@ -34,9 +34,7 @@ Debris.prototype = {
         if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY && this.y < pmanY + 40 && !this.collided) { // last digit should be pmanheight fix because his legs are long idk
             this.collided = true;
             if (this.debrisType == 'GEM') {
-                console.log('collision is true!', this.debrisObject.color)
                 this.$html.remove();
-                console.log('removing')
                 gemCollection.gemFound(this.debrisObject.color)
                 return false;
             } else {
@@ -149,7 +147,7 @@ GemCollection.prototype = {
 var DebrisCollection = function () {
     this.debrisList = [];
     this.lastDebrisTick = 0;
-    this.minTicksPassedBeforeNewDebris = 40 - ($(window).width() / 375) * 5; // to give smaller screens a bit of an advantage
+    this.minTicksPassedBeforeNewDebris = Math.max(0, 40 - ($(window).width() / 375) * 5); // to give smaller screens a bit of an advantage
     this.debrisSelection = 2;
     this.difficulty = 0.5;
     this.difficultyVel = 1;

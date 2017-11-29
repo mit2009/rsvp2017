@@ -96,7 +96,7 @@ function loop(tick) {
                     }
                 });
             } else {
-                console.log(error, response);
+                console.log(response);
             }
         })
     }
@@ -104,6 +104,7 @@ function loop(tick) {
 
 function startGame() {
     console.log('starting game');
+    $('body').addClass('no-select')
     gameState = 'GAME_STARTED';
     debrisCollection = new DebrisCollection();
     $('.instructions').fadeOut();
