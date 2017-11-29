@@ -60,7 +60,7 @@ router.post("/end", function(req, res, next) {
           scoreData.name = name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15);
         }
         if (urlParams !== undefined) {
-          scoreData.urlParams = urlParams.replace(/[^0-9A-Z]/g, "")
+          scoreData.urlParams = urlParams.replace(/[^0-9a-zA-Z]/g, "")
         } else {
           scoreData.urlParams = 'none';
         }

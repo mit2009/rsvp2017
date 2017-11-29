@@ -69,14 +69,14 @@ function loop(tick) {
                 clearInterval(clearId);
             }
         }, 85)
-        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks + bonusPoints }, function (response) {
+        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks + bonusPoints, urlParams: urlP.replace(/[^0-9a-zA-Z]/g, "") }, function (response) {
             if (response.success) {
                 $("#score-form").fadeIn();
                 $("#score-form").submit(function (event) {
                     event.preventDefault();
                     var name = $("#score-name").val();
                     if (name.length > 0) {
-                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, name: name, urlParams: urlP }, function (response) {
+                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, name: name, urlParams: urlP.replace(/[^0-9a-zA-Z]/g, "") }, function (response) {
                             if (response.success) {
                                 $("#score-form-error").fadeOut();
                                 $("#score-form").fadeOut();
