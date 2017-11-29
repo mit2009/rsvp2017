@@ -140,8 +140,16 @@ router.get("/scores/:numScores?", function(req, res) {
 function isValidScore(startTime, endTime, proposedScore) {
   var millisecondsPassed = moment(endTime).diff(moment(startTime), "milliseconds");
   var baseScore = Math.floor(millisecondsPassed / 42);
+  var tickToDebris = 30;
+  var gemScore = baseScore;
+  var numGems = 0;
+  while (gemScore > 0) {
+    gemScore -= tickToDebris;
+    numGems += 1;
+    tickToDebris = Math.max(1, tickToDebris - 1);
+  }
   var parsedProposedScore = parseInt(proposedScore, 10);
-  return baseScore > 30 ? baseScore + 5000 >= parsedProposedScore : baseScore >= parsedProposedScore;
+  return baseScore > 30 ? baseScore + Math.floor(numGems / 8) * 1000 + numGems + 20 >= parsedProposedScore : baseScore >= parsedProposedScore;
 }
 
 module.exports = router;
