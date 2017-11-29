@@ -11,6 +11,9 @@ var firebase = admin.initializeApp({
 });
 
 router.post('/start', function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   var initialData = {
     startTime: new Date(),
   };
@@ -23,6 +26,9 @@ router.post('/start', function(req, res, next) {
 });
 
 router.post("/end", function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   var sessionKey = req.body.sessionId;
   var score = req.body.score;
   var name = req.body.name;
@@ -76,6 +82,9 @@ router.post("/end", function(req, res, next) {
 });
 
 router.post("/updateName", function(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   var name = req.body.name;
   var sessionId = req.body.sessionId;
   if (name != null && sessionId != null) {
@@ -90,6 +99,9 @@ router.post("/updateName", function(req, res) {
 })
 
 router.get("/scores/:numScores?", function(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   firebase.database().ref("games").once("value", function(snapshot) {
     // scores indexed by name, only recording the max for the name. case insensitive
     var maxGameScores = {};
