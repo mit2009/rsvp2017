@@ -12,16 +12,16 @@ $(document).mousemove(function (event) {
 });
 
 function clearStageForGame() {
-    $('.photo-background').fadeOut(300);
-    $('.cloud-left').fadeOut(300);
-    $('.cloud-right').fadeOut(300);
+    $('.photo-background').fadeOut(500);
+    $('.cloud-left').fadeOut(500);
+    $('.cloud-right').fadeOut(500);
     $('.mobile-overflow-container').animate({
         top: '100%'
     }, 500, function () { // SUPERSPEED
-        $('.instructions').fadeIn(300);
-        $('.dragbar').fadeIn(300);
-        $('.product-man').fadeIn(300);
-        $('.score').fadeIn(300);
+        $('.instructions').fadeIn(500);
+        $('.dragbar').fadeIn(500);
+        $('.product-man').fadeIn(500);
+        $('.score').fadeIn(500);
     })
 };
 
