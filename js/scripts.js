@@ -52,9 +52,10 @@ function loop(tick) {
         var ticks = timer.getNumTicks();
         timer.stop();
         productManPosX = parseFloat($('.product-man').css('left'));
+        var explosionWidth = parseInt($("#explosion").css("width"));
         $('.product-man').fadeOut(100);
         $("#explosion").css({
-            left: productManPosX - (productManPosX - mouseX) / 3,
+            left: productManPosX - (explosionWidth / 2 - pmanWidth / 2),
             "background-image": 'url("../assets/debris/explosion1.png")',
         }).fadeIn(100);
         var explosionGraphic = 2;
