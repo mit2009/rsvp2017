@@ -12,7 +12,7 @@ var availableDebris = {
         message: "Oh no. You've been Shaken up by a Shakeweight!",
         img: 'shakeweight.png',
         width: 306,
-        height: 223,
+        height: 149,
         speed: 1,
         debrisType: 'BAD'
     },
@@ -27,8 +27,8 @@ var availableDebris = {
     3: {
         message: 'Oh no! A Ford Edsel',
         img: 'car.png',
-        width: 587 * 1.5,
-        height: 235 * 1.5,
+        width: 609 * 1.5,
+        height: 325 * 1.5,
         speed: 0.8,
         debrisType: 'BAD'
     },
@@ -49,7 +49,7 @@ var availableDebris = {
         debrisType: 'BAD'
     },
     6: {
-        message: 'Oh no! E.T. [puts his finger to his glowing heart] Ouch.',
+        message: 'Oh no! E.T. [puts finger to glowing heart] Ouch.',
         img: 'atari.png',
         width: 334 * 1,
         height: 365 * 1,
@@ -76,8 +76,8 @@ var availableDebris = {
     9: {
         message: 'Oh no! A FURBY?!',
         img: 'furby.png',
-        width: 352 * 3,
-        height: 342 * 3,
+        width: 352 * 2,
+        height: 342 * 2,
         speed: 3,
         debrisType: 'BAD'
     }

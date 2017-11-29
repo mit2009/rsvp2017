@@ -496,7 +496,7 @@ h2 {
   top: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 9999;
   line-height: normal;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -539,9 +539,12 @@ input[type='text'] {
 button {
   border: none;
   color: #000;
+  text-transform: uppercase;
   background-color: #eee;
   font-family: Montserrat, sans-serif;
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
   padding: 8px 16px;
   margin-top: 15px;
   margin-right: 10px;
@@ -587,7 +590,8 @@ button {
   height: 70px;
   display: inline-block;
   position: absolute;
-  background-size: 100%; }
+  background-size: 100%;
+  background-repeat: no-repeat; }
 
 .score {
   display: none;
@@ -644,8 +648,13 @@ button {
     bottom: 0;
     height: 60px;
     width: 100%;
-    background-color: #aaa;
-    z-index: 324356; }
+    opacity: 0.7;
+    background-color: #333;
+    z-index: 324356;
+    background-image: url("../assets/debris/drag.png");
+    background-position: center center;
+    background-size: 60%;
+    background-repeat: no-repeat; }
 
   .product-man {
     bottom: 60px; } }
