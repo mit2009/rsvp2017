@@ -113,6 +113,8 @@ function init() {
     $('.end-replay').click(function () {
         console.log(gameState);
         if (gameState == 'GAME_STOPPED') {
+            $("#score-table").fadeOut();
+            debrisCollection.removeAll();
             startGame();
             bonusPoints = 0;
             collectedGems = 0;

@@ -492,6 +492,22 @@ input[type='text'] {
     color: #fff;
 }
 
+button {
+    border: none;
+    color: #000;
+    background-color: #eee;
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+    padding: 8px 16px;
+    margin-top: 15px;
+    margin-right: 10px;
+    outline: none;
+    
+    &:hover {
+        opacity: 0.7;
+        cursor: pointer;
+    }
+}
 .highscore-table {
     background-color: rgba(0,0,0,0.8);
     padding: 30px;

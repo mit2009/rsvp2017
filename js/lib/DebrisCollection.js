@@ -143,6 +143,13 @@ DebrisCollection.prototype = {
         this.minTicksPassedBeforeNewDebris = Math.max(this.minTicksPassedBeforeNewDebris - this.difficultyVel, 0)
 
     },
+    removeAll: function() {
+        for (i in this.debrisList) {
+            this.debrisList[i].$html.fadeOut(300, function() {
+                $(this).remove();
+            })
+        }
+    },
     mightAddNewDebris: function (tickNumber) {
         if (tickNumber - this.lastDebrisTick > this.minTicksPassedBeforeNewDebris) {
             if (Math.random() < this.difficulty) {
@@ -150,7 +157,7 @@ DebrisCollection.prototype = {
 
                 var debrisObject;
 
-                if (Math.random() < 0.9) {
+                if (Math.random() < 0.1) {
                     // probability of spouting a gem
                     console.log('But wait a GEM!')
                     k = Math.floor(Math.random() * Object.keys(availableGems).length);

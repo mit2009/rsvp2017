@@ -9,7 +9,7 @@ var availableDebris = {
         debrisType: 'BAD'
     },
     1: {
-        message: 'Oh no. A Shakeweight!',
+        message: "Oh no. You've been Shaken up by a Shakeweight!",
         img: 'shakeweight.png',
         width: 306,
         height: 223,
@@ -17,7 +17,7 @@ var availableDebris = {
         debrisType: 'BAD'
     },
     2: {
-        message: 'Oh no. You got JUICED!',
+        message: 'Oh no. You got JUICED by juicero!',
         img: 'juicero.png',
         width: 178 * 1.5,
         height: 227 * 1.5,
@@ -47,9 +47,39 @@ var availableDebris = {
         height: 273 * 1.5,
         speed: 1,
         debrisType: 'BAD'
+    },
+    6: {
+        message: 'Oh no! E.T. [puts his finger to his glowing heart] Ouch.',
+        img: 'atari.png',
+        width: 334 * 1,
+        height: 365 * 1,
+        speed: 1,
+        debrisType: 'BAD'
+    },
+    7: {
+        message: 'Oh no! Newer is not always better!',
+        img: 'coke.png',
+        width: 355 * 1,
+        height: 216 * 1,
+        speed: 1,
+        debrisType: 'BAD'
+    },
+    8: {
+        message: "Oh no! You've been strucked with a chia pet!",
+        img: 'chia.png',
+        width: 343,
+        height: 343,
+        speed: 2,
+        debrisType: 'BAD'
+    },
+    9: {
+        message: 'Oh no! A FURBY?!',
+        img: 'furby.png',
+        width: 352 * 3,
+        height: 342 * 3,
+        speed: 3,
+        debrisType: 'BAD'
     }
-
-
 }
 
 var availableGems = {
