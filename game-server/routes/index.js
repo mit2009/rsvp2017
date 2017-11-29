@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var admin = require("firebase-admin");
 var moment = require("moment");
+var request = require("request");
 
 var serviceAccount = require("../config/productmangame-firebase-adminsdk.json");
 
@@ -10,7 +11,7 @@ var firebase = admin.initializeApp({
   databaseURL: "https://productmangame.firebaseio.com"
 });
 
-router.post('/start', function(req, res, next) {
+router.post('/start', function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -18,14 +19,60 @@ router.post('/start', function(req, res, next) {
     startTime: new Date(),
   };
   var newSession = firebase.database().ref().child("games").push().key;
-  firebase.database().ref(`games/${newSession}`).update(initialData).then(function() {
+  firebase.database().ref(`games/${newSession}`).update(initialData).then(function () {
     res.send({ sessionId: newSession });
-  }, function(error) {
+  }, function (error) {
     res.send({ error });
   });
 });
 
-router.post("/end", function(req, res, next) {
+router.get('/highscores', function (req, res, next) {
+  res.json({ 'hi': 'hello' })
+});
+
+// this one's for slack
+router.get('/gethighscores', function (req, res, next) {
+  /*
+  ignore this
+  
+  console.log('attempting to post score to slack')
+  var url = "https://hooks.slack.com/services/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";
+  var data = { "text": "New score! " + score }
+
+  var options = {
+    method: 'post',
+    body: data,
+    json: true,
+    url: url
+  }
+  request(options, function (err, res, body) {
+    if (err) {
+      console.error('error posting json: ', err)
+      throw err
+    }
+    var headers = res.headers
+    var statusCode = res.statusCode
+    console.log('headers: ', headers)
+    console.log('statusCode: ', statusCode)
+    console.log('body: ', body)
+  })
+*/
+
+
+  // return highscores here
+  res.json({
+    "response_type": "in_channel",
+    "text": "It's 80 degrees right now.",
+    "attachments": [
+      {
+        "text": "Partly cloudy today and tomorrow"
+      }
+    ]
+  })
+
+})
+
+router.post("/end", function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -39,7 +86,7 @@ router.post("/end", function(req, res, next) {
   } else {
     var sessionRef = firebase.database().ref(`games/${sessionKey}`);
     var now = new Date();
-    sessionRef.once("value").then(function(snapshot) {
+    sessionRef.once("value").then(function (snapshot) {
       // exists and was not ended before
       var currentValue = snapshot.val();
       if (currentValue != null
@@ -64,14 +111,15 @@ router.post("/end", function(req, res, next) {
         } else {
           scoreData.urlParams = 'none';
         }
-        sessionRef.transaction(function(currentSession) {
+
+        sessionRef.transaction(function (currentSession) {
           if (currentSession == null || currentSession.score == null) {
             return scoreData;
           } else {
             // someone else has snuck in a score, abort transaction
             return;
           }
-        }, function(error, committed, snapshot) {
+        }, function (error, committed, snapshot) {
           if (error) {
             res.send({ error });
           } else if (!committed) {
@@ -87,7 +135,7 @@ router.post("/end", function(req, res, next) {
   }
 });
 
-router.post("/updateName", function(req, res) {
+router.post("/updateName", function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -95,11 +143,11 @@ router.post("/updateName", function(req, res) {
   var urlParams = req.body.urlParams;
   var sessionId = req.body.sessionId;
   if (name != null && sessionId != null) {
-    firebase.database().ref(`games/${sessionId}`).update({ 
-        name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15)
-      }).then(function() {
+    firebase.database().ref(`games/${sessionId}`).update({
+      name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15)
+    }).then(function () {
       res.send({ success: true });
-    }, function(error) {
+    }, function (error) {
       res.send({ error });
     })
   } else {
@@ -107,14 +155,14 @@ router.post("/updateName", function(req, res) {
   }
 })
 
-router.get("/scores/:numScores?", function(req, res) {
+router.get("/scores/:numScores?", function (req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  firebase.database().ref("games").once("value", function(snapshot) {
+  firebase.database().ref("games").once("value", function (snapshot) {
     // scores indexed by name, only recording the max for the name. case insensitive
     var maxGameScores = {};
-    snapshot.forEach(function(childSnapshot) {
+    snapshot.forEach(function (childSnapshot) {
       var gameData = childSnapshot.val();
       if (gameData.score !== undefined &&
         gameData.name !== undefined &&
@@ -129,10 +177,10 @@ router.get("/scores/:numScores?", function(req, res) {
       }
     });
     var scores = Object.keys(maxGameScores)
-      .map(function(key) {
+      .map(function (key) {
         return maxGameScores[key];
       })
-      .sort(function(gameA, gameB) {
+      .sort(function (gameA, gameB) {
         if (gameA.score > gameB.score) {
           return -1;
         } else if (gameA.score < gameB.score) {
