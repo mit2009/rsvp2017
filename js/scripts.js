@@ -57,12 +57,12 @@ function loop(tick) {
         $('.product-man').fadeOut(100);
         $("#explosion").css({
             left: productManPosX - (explosionWidth / 2 - pmanWidth / 2),
-            "background-image": 'url("../assets/debris/explosion1.png")',
+            "background-image": 'url("assets/debris/explosion1.png")',
         }).fadeIn(100);
         var explosionGraphic = 2;
         var clearId = setInterval(function () {
             $("#explosion").css({
-                "background-image": 'url("../assets/debris/explosion' + explosionGraphic + '.png")',
+                "background-image": 'url("assets/debris/explosion' + explosionGraphic + '.png")',
             });
             explosionGraphic += 1;
             if (explosionGraphic > 6) {
