@@ -12,15 +12,16 @@ $(document).mousemove(function (event) {
 });
 
 function clearStageForGame() {
-    $('.photo-background').fadeOut(100);
-    $('.cloud-left').fadeOut(100);
-    $('.cloud-right').fadeOut(100);
+    $('.photo-background').fadeOut(300);
+    $('.cloud-left').fadeOut(300);
+    $('.cloud-right').fadeOut(300);
     $('.mobile-overflow-container').animate({
         top: '100%'
-    }, 100, function () { // SUPERSPEED
-        $('.instructions').fadeIn(100);
-        $('.product-man').fadeIn(100);
-        $('.score').fadeIn(100);
+    }, 500, function () { // SUPERSPEED
+        $('.instructions').fadeIn(300);
+        $('.dragbar').fadeIn(300);
+        $('.product-man').fadeIn(300);
+        $('.score').fadeIn(300);
     })
 };
 
@@ -59,7 +60,7 @@ function loop(tick) {
             "background-image": 'url("../assets/debris/explosion1.png")',
         }).fadeIn(100);
         var explosionGraphic = 2;
-        var clearId = setInterval(function() {
+        var clearId = setInterval(function () {
             $("#explosion").css({
                 "background-image": 'url("../assets/debris/explosion' + explosionGraphic + '.png")',
             });
@@ -68,7 +69,7 @@ function loop(tick) {
                 clearInterval(clearId);
             }
         }, 85)
-        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks+bonusPoints }, function (response) {
+        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks + bonusPoints }, function (response) {
             if (response.success) {
                 $("#score-form").fadeIn();
                 $("#score-form").submit(function (event) {
@@ -144,10 +145,12 @@ function init() {
     });
 
     $('body').on('touchmove', '.dragbar', function (e) {
-        console.log(e);
         mouseX = e.originalEvent.touches[0].pageX;
     })
 
-    setTimeout(clearStageForGame, 100); //SUPERSPEED
-    // clearStageForGame();
+    $('.play-btn').on('click', function () {
+        clearStageForGame();
+    });
+
+    //setTimeout(clearStageForGame, 2000); //SUPERSPEED
 }
