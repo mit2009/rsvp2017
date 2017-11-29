@@ -40,6 +40,7 @@ router.post("/end", function(req, res, next) {
         && currentValue.startTime != null
         && score !== undefined
         && !isNaN(score)
+        && moment(now).isAfter(moment(currentValue.startTime))
         && isValidScore(currentValue.startTime, now, score)) {
         // yay we're valid, make a transaction to update the score
         const scoreData = {
@@ -68,7 +69,7 @@ router.post("/end", function(req, res, next) {
           }
         });
       } else {
-        res.send({ error: "Invalid session key" });
+        res.send({ error: "Invalid session key or score" });
       }
     });
   }
@@ -130,9 +131,17 @@ router.get("/scores/:numScores?", function(req, res) {
   });
 });
 
+router.get("/delete/:sessionId", function(req, res) {
+  firebase.database().ref("games/" + req.params.sessionId).remove().then(function() {
+    res.send({ success: true });
+  });
+})
+
 function isValidScore(startTime, endTime, proposedScore) {
-  // todo
-  return true;
+  var millisecondsPassed = moment(endTime).diff(moment(startTime), "milliseconds");
+  var baseScore = Math.floor(millisecondsPassed / 42);
+  var parsedProposedScore = parseInt(proposedScore, 10);
+  return baseScore > 30 ? baseScore + 5000 >= parsedProposedScore : baseScore >= parsedProposedScore;
 }
 
 module.exports = router;
