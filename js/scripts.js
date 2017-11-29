@@ -68,7 +68,7 @@ function loop(tick) {
                 clearInterval(clearId);
             }
         }, 85)
-        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks }, function (response) {
+        $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks+bonusPoints }, function (response) {
             if (response.success) {
                 $("#score-form").fadeIn();
                 $("#score-form").submit(function (event) {

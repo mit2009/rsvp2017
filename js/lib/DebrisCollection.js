@@ -68,7 +68,7 @@ GemCollection.prototype = {
             gem = availableGems[i];
             color = gem.color;
             this.collectedGems[color] = {};
-            this.collectedGems[color].$html = $('<div class="gem-status"><img src="assets/debris/' + color + '_empty.png"></div>');
+            this.collectedGems[color].$html = $('<div class="gem-status"><img class="empty-gem" src="assets/debris/' + color + '_empty.png"></div>');
             this.collectedGems[color].found = false;
             this.$html.append(this.collectedGems[color].$html)
         }
@@ -78,7 +78,7 @@ GemCollection.prototype = {
     },
     allGemsCollected: function () {
         var _this = this;
-        $('.bonus-score').fadeIn(500, function() {
+        $('.bonus-score').fadeIn(500, function () {
             bonusPoints += 5000;
             $('.bonus-score').fadeOut();
         })
@@ -92,6 +92,15 @@ GemCollection.prototype = {
             })
         });
 
+    },
+    getUnacquiredGem: function() {
+        for (i in availableGems) {
+            color = availableGems[i].color
+            if (!this.collectedGems[color].found) {
+                return availableGems[i];
+            }
+        }
+        return availableGems[0];
     },
     gemFound: function (color) {
         this.collectedGems[color].$html = $('<div class="gem-status"><img src="assets/debris/' + color + '.png"></div>');
@@ -125,7 +134,7 @@ GemCollection.prototype = {
 var DebrisCollection = function () {
     this.debrisList = [];
     this.lastDebrisTick = 0;
-    this.minTicksPassedBeforeNewDebris = 30;
+    this.minTicksPassedBeforeNewDebris = 40 - ($(window).width() / 375) * 5; // to give smaller screens a bit of an advantage
     this.debrisSelection = 2;
     this.difficulty = 0.5;
     this.difficultyVel = 1;
@@ -138,9 +147,9 @@ DebrisCollection.prototype = {
         this.minTicksPassedBeforeNewDebris = Math.max(this.minTicksPassedBeforeNewDebris - this.difficultyVel, 0)
 
     },
-    removeAll: function() {
+    removeAll: function () {
         for (i in this.debrisList) {
-            this.debrisList[i].$html.fadeOut(300, function() {
+            this.debrisList[i].$html.fadeOut(300, function () {
                 $(this).remove();
             })
         }
@@ -152,10 +161,15 @@ DebrisCollection.prototype = {
 
                 var debrisObject;
 
-                if (Math.random() < 0.2) {
-                    // probability of spouting a gem
-                    k = Math.floor(Math.random() * Object.keys(availableGems).length);
-                    debrisObject = availableGems[k];
+                if (Math.random() < 0.3) {
+                    // probability of spouting a missing gem
+                    if (Math.random() < 0.9) {
+                        // majority of the time it'll give you a gem you don't have
+                        debrisObject = this.gemCollection.getUnacquiredGem();
+                    } else {
+                        k = Math.floor(Math.random() * Object.keys(availableGems).length);
+                        debrisObject = availableGems[k];
+                    }
 
                 } else {
                     k = Math.floor(Math.random() * this.debrisSelection);
@@ -172,10 +186,10 @@ DebrisCollection.prototype = {
                 this.lastDebrisTick = tickNumber;
             }
         }
-        if (tickNumber % 80 == 0) {
+        if (tickNumber % 400 == 0) {
             this.maybeAdjustDifficulty();
         }
-        if (tickNumber % 50 == 0) { // default 300
+        if (tickNumber % 350 == 0) { // default 300
             this.debrisSelection = Math.min(this.debrisSelection + 1, Object.keys(availableDebris).length)
         }
     },

@@ -503,7 +503,8 @@ h2 {
 .score-form,
 .score-table {
   display: none;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   left: 50%;
   top: 50%;
   position: absolute;
@@ -514,6 +515,9 @@ h2 {
   text-transform: uppercase;
   text-align: center;
   font-size: 14px; }
+
+#score-name {
+  margin-bottom: 10px; }
 
 .score-form-error {
   display: none; }
@@ -632,6 +636,8 @@ button {
 
 .gem-status {
   display: inline-block; }
+  .gem-status .empty-gem {
+    opacity: 0.3; }
   .gem-status img {
     margin-right: 8px;
     height: 25px; }

@@ -450,7 +450,8 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
 .score-form,
 .score-table {
     display: none;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     left: 50%;
     top: 50%;
     position: absolute;
@@ -461,6 +462,10 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
     text-transform: uppercase;
     text-align: center;
     font-size: 14px;
+}
+
+#score-name {
+    margin-bottom: 10px;
 }
 
 .score-form-error {
@@ -612,6 +617,10 @@ button {
 .gem-status {
     display: inline-block;
 
+    .empty-gem {
+        opacity: 0.3;
+    }
+
     img {
         margin-right: 8px;
         height: 25px;
@@ -649,13 +658,13 @@ button {
         opacity: 0.7;
         background-color: #333;
         z-index: 324356;
-        background-image: url('../assets/debris/drag.png');
+        background-image: url("../assets/debris/drag.png");
         background-position: center center;
         background-size: 60%;
         background-repeat: no-repeat;
     }
 
-    .product-man { 
+    .product-man {
         bottom: 60px;
     }
 }
