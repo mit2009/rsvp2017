@@ -7,6 +7,7 @@ var Debris = function (leftBound, rightBound, screenHeight, debrisObject, velX, 
     this.velY = velY * debrisObject.speed;
     this.velX = velX;
     this.rotation = 0;
+    this.collided = false;
     this.$html = $('<div class="debris"></div>');
     this.$html.css({
         height: this.height,
@@ -30,9 +31,12 @@ Debris.prototype = {
         // check for collision here i guess?
         // iunno how wide is product man
         // this wide
-        if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY && this.y < pmanY + 40) { // last digit should be pmanheight fix because his legs are long idk
+        if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY && this.y < pmanY + 40 && !this.collided) { // last digit should be pmanheight fix because his legs are long idk
+            this.collided = true;
             if (this.debrisType == 'GEM') {
+                console.log('collision is true!', this.debrisObject.color)
                 this.$html.remove();
+                console.log('removing')
                 gemCollection.gemFound(this.debrisObject.color)
                 return false;
             } else {
@@ -76,12 +80,17 @@ GemCollection.prototype = {
             callback();
         }
     },
-    allGemsCollected: function () {
-        var _this = this;
+    addBonusScore: function (v) {
+        var _value = v;
+        $('.bonus-score').text('+' + v);
         $('.bonus-score').fadeIn(500, function () {
-            bonusPoints += 5000;
+            bonusPoints += _value;
             $('.bonus-score').fadeOut();
         })
+    },
+    allGemsCollected: function () {
+        var _this = this;
+        this.addBonusScore(1000);
         $('.underscore').animate({
             left: '-400px'
         }, 600, function () {
@@ -93,8 +102,12 @@ GemCollection.prototype = {
         });
 
     },
-    getUnacquiredGem: function() {
-        for (i in availableGems) {
+    getUnacquiredGem: function () {
+        gemIds = Object.keys(availableGems).sort(function () {
+            return .5 - Math.random();
+        });
+        for (k in gemIds) {
+            i = gemIds[k]
             color = availableGems[i].color
             if (!this.collectedGems[color].found) {
                 return availableGems[i];
@@ -117,6 +130,8 @@ GemCollection.prototype = {
                 totalGems++;
             }
         }
+        this.addBonusScore(100);
+
         if (totalGems == 8) {
             setTimeout(function (_this) {
                 _this.allGemsCollected();
@@ -163,7 +178,7 @@ DebrisCollection.prototype = {
 
                 if (Math.random() < 0.3) {
                     // probability of spouting a missing gem
-                    if (Math.random() < 0.9) {
+                    if (Math.random() < 0.8) {
                         // majority of the time it'll give you a gem you don't have
                         debrisObject = this.gemCollection.getUnacquiredGem();
                     } else {
@@ -189,7 +204,7 @@ DebrisCollection.prototype = {
         if (tickNumber % 400 == 0) {
             this.maybeAdjustDifficulty();
         }
-        if (tickNumber % 350 == 0) { // default 300
+        if (tickNumber % 300 == 0) { // default 300
             this.debrisSelection = Math.min(this.debrisSelection + 1, Object.keys(availableDebris).length)
         }
     },
