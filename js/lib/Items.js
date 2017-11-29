@@ -62,6 +62,7 @@ var availableDebris = {
         width: 355 * 1,
         height: 216 * 1,
         speed: 1,
+        rotationSpeed: 0.2,
         debrisType: 'BAD'
     },
     8: {

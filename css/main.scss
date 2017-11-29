@@ -467,7 +467,7 @@ $colors: #EE4780 #F07423 #FBD800 #B1B4B5 #3775BA #EA2127 #4FB548 #894D9D;
 
 form {
     padding: 20px;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 input {
@@ -502,14 +502,15 @@ button {
     margin-top: 15px;
     margin-right: 10px;
     outline: none;
-    
+
     &:hover {
         opacity: 0.7;
         cursor: pointer;
     }
 }
+
 .highscore-table {
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     padding: 30px;
     text-align: left;
     font-family: Montserrat, sans-serif;
@@ -582,16 +583,18 @@ button {
     .bonus-score {
         display: none;
     }
-    
 }
 
 .underscore {
     position: fixed;
     top: 70px;
     left: 20px;
+    z-index: 4;
 }
+
 .gem-status {
     display: inline-block;
+
     img {
         margin-right: 8px;
         height: 25px;
@@ -619,5 +622,18 @@ button {
         height: 100%;
         width: 100%;
         background-size: 300px;
+    }
+
+    .dragbar {
+        position: fixed;
+        bottom: 0;
+        height: 60px;
+        width: 100%;
+        background-color: #aaa;
+        z-index: 324356;
+    }
+
+    .product-man { 
+        bottom: 60px;
     }
 }

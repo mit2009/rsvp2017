@@ -611,7 +611,8 @@ button {
 .underscore {
   position: fixed;
   top: 70px;
-  left: 20px; }
+  left: 20px;
+  z-index: 4; }
 
 .gem-status {
   display: inline-block; }
@@ -636,6 +637,17 @@ button {
   .cloud-left, .cloud-right {
     height: 100%;
     width: 100%;
-    background-size: 300px; } }
+    background-size: 300px; }
+
+  .dragbar {
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    background-color: #aaa;
+    z-index: 324356; }
+
+  .product-man {
+    bottom: 60px; } }
 
 /*# sourceMappingURL=main.css.map */

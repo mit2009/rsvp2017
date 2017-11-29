@@ -50,7 +50,6 @@ function loop(tick) {
         $('.score-num').text(tick + bonusPoints);
     } else if (gameState == 'GAME_STOPPED') {
         var ticks = timer.getNumTicks();
-        console.log('GAME OVER, SCORE:', timer.getNumTicks());
         timer.stop();
         $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks }, function (response) {
             if (response.success) {
@@ -111,7 +110,6 @@ function init() {
     })
 
     $('.end-replay').click(function () {
-        console.log(gameState);
         if (gameState == 'GAME_STOPPED') {
             $("#score-table").fadeOut();
             debrisCollection.removeAll();
@@ -124,6 +122,11 @@ function init() {
     $('.end-back').click(function () {
         location.reload();
     });
+
+    $('body').on('touchmove', '.dragbar', function (e) {
+        console.log(e);
+        mouseX = e.originalEvent.touches[0].pageX;
+    })
 
     setTimeout(clearStageForGame, 100); //SUPERSPEED
     // clearStageForGame();

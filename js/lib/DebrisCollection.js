@@ -33,10 +33,7 @@ Debris.prototype = {
         if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY && this.y < pmanY + 40) { // last digit should be pmanheight fix because his legs are long idk
             if (this.debrisType == 'GEM') {
                 this.$html.remove();
-                console.log(this.debrisObject.color)
-                console.log(gemCollection);
                 gemCollection.gemFound(this.debrisObject.color)
-                console.log('gem collected!');
                 return false;
             } else {
                 $('.game-over-specific-caption').text(this.debrisObject.message);
@@ -80,7 +77,6 @@ GemCollection.prototype = {
         }
     },
     allGemsCollected: function () {
-        console.log('all gems collected!');
         var _this = this;
         $('.bonus-score').fadeIn(500, function() {
             bonusPoints += 5000;
@@ -120,7 +116,6 @@ GemCollection.prototype = {
                 this.collectedGems[i].found = false;
             }
         }
-        console.log(totalGems);
     },
     render: function () {
         $('.underscore').html(this.$html);
@@ -157,9 +152,8 @@ DebrisCollection.prototype = {
 
                 var debrisObject;
 
-                if (Math.random() < 0.1) {
+                if (Math.random() < 0.2) {
                     // probability of spouting a gem
-                    console.log('But wait a GEM!')
                     k = Math.floor(Math.random() * Object.keys(availableGems).length);
                     debrisObject = availableGems[k];
 
