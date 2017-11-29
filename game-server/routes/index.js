@@ -149,7 +149,7 @@ function isValidScore(startTime, endTime, proposedScore) {
     tickToDebris = Math.max(1, tickToDebris - 1);
   }
   var parsedProposedScore = parseInt(proposedScore, 10);
-  return baseScore > 30 ? baseScore + Math.floor(numGems / 8) * 1000 + numGems + 20 >= parsedProposedScore : baseScore >= parsedProposedScore;
+  return baseScore > 30 ? baseScore + Math.floor(numGems / 8) * 1000 + numGems + 100 >= parsedProposedScore : baseScore >= parsedProposedScore;
 }
 
 module.exports = router;
