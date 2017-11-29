@@ -31,32 +31,33 @@ router.get('/highscores', function (req, res, next) {
 });
 
 // this one's for slack
-router.get('/gethighscores', function (req, res, next) {
-  /*
-  ignore this
+router.post('/gethighscores', function (req, res, next) {
   
-  console.log('attempting to post score to slack')
-  var url = "https://hooks.slack.com/services/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";
-  var data = { "text": "New score! " + score }
+  /*
+    ignore this
 
-  var options = {
-    method: 'post',
-    body: data,
-    json: true,
-    url: url
-  }
-  request(options, function (err, res, body) {
-    if (err) {
-      console.error('error posting json: ', err)
-      throw err
+    console.log('attempting to post score to slack')
+    var url = "https://hooks.slack.com/services/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";
+    var data = { "text": "New score! " + score }
+
+    var options = {
+      method: 'post',
+      body: data,
+      json: true,
+      url: url
     }
-    var headers = res.headers
-    var statusCode = res.statusCode
-    console.log('headers: ', headers)
-    console.log('statusCode: ', statusCode)
-    console.log('body: ', body)
-  })
-*/
+    request(options, function (err, res, body) {
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
+      }
+      var headers = res.headers
+      var statusCode = res.statusCode
+      console.log('headers: ', headers)
+      console.log('statusCode: ', statusCode)
+      console.log('body: ', body)
+    })
+  */
 
 
   // return highscores here

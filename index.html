@@ -102,8 +102,7 @@
         </div>
       </div>
       <div class="button-container">
-        <a href="https://2009.mit.edu/apps/rsvp/new_guest/" id="rsvp-btn" class="rsvp-btn">PRESS TO
-          <em>RSVP</em>
+        <a href="https://2009.mit.edu/apps/rsvp/new_guest/" id="rsvp-btn" class="rsvp-btn">TICKET SYSTEM
         </a>
         <a class="play-btn">PLAY THE GAME</a>
       </div>
@@ -124,6 +123,8 @@
       if (urlParams['invite'] != undefined) {
         urlP = urlParams['invite'];
         document.getElementById("rsvp-btn").href = 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite'];
+      } else {
+        // $('.rsvp-btn').text('ticket system')
       }
 
       // Clears the url to a blank state incase they want to share the URL
