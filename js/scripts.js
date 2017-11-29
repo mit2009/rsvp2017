@@ -51,6 +51,21 @@ function loop(tick) {
     } else if (gameState == 'GAME_STOPPED') {
         var ticks = timer.getNumTicks();
         timer.stop();
+        productManPosX = parseFloat($('.product-man').css('left'));
+        $('.product-man').fadeOut(100);
+        $("#explosion").css({
+            left: productManPosX - (productManPosX - mouseX) / 3,
+        }).fadeIn(100);
+        var explosionGraphic = 2;
+        var clearId = setInterval(function() {
+            $("#explosion").css({
+                "background-image": 'url("../assets/debris/explosion' + explosionGraphic + '.png")',
+            });
+            explosionGraphic += 1;
+            if (explosionGraphic > 6) {
+                clearInterval(clearId);
+            }
+        }, 85)
         $.post(SERVER_URL + "/end", { sessionId: sessionId, score: ticks }, function (response) {
             if (response.success) {
                 $("#score-form").fadeIn();
@@ -113,6 +128,8 @@ function init() {
         if (gameState == 'GAME_STOPPED') {
             $("#score-table").fadeOut();
             debrisCollection.removeAll();
+            $("#explosion").fadeOut(0);
+            $(".product-man").fadeIn(100);
             startGame();
             bonusPoints = 0;
             collectedGems = 0;
