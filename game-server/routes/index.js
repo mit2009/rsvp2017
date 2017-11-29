@@ -56,7 +56,7 @@ router.post("/end", function(req, res, next) {
           score,
         };
         if (name !== undefined) {
-          scoreData.name = name.toUpperCase().slice(0, 15);
+          scoreData.name = name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15);
         }
         sessionRef.transaction(function(currentSession) {
           if (currentSession == null || currentSession.score == null) {
@@ -88,7 +88,7 @@ router.post("/updateName", function(req, res) {
   var name = req.body.name;
   var sessionId = req.body.sessionId;
   if (name != null && sessionId != null) {
-    firebase.database().ref(`games/${sessionId}`).update({ name: name.toUpperCase().slice(0, 15) }).then(function() {
+    firebase.database().ref(`games/${sessionId}`).update({ name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15) }).then(function() {
       res.send({ success: true });
     }, function(error) {
       res.send({ error });
