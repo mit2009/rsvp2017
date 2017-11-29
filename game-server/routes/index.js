@@ -32,6 +32,7 @@ router.post("/end", function(req, res, next) {
   var sessionKey = req.body.sessionId;
   var score = req.body.score;
   var name = req.body.name;
+  var urlParams = req.body.urlParams;
   var color = req.body.color;
   if (sessionKey == null || score == null) {
     res.send({ error: "Incomplete data" });
@@ -57,6 +58,11 @@ router.post("/end", function(req, res, next) {
         };
         if (name !== undefined) {
           scoreData.name = name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15);
+        }
+        if (urlParams !== undefined) {
+          scoreData.urlParams = urlParams.replace(/[^0-9A-Z]/g, "")
+        } else {
+          scoreData.urlParams = 'none';
         }
         sessionRef.transaction(function(currentSession) {
           if (currentSession == null || currentSession.score == null) {
@@ -90,8 +96,7 @@ router.post("/updateName", function(req, res) {
   var sessionId = req.body.sessionId;
   if (name != null && sessionId != null) {
     firebase.database().ref(`games/${sessionId}`).update({ 
-        name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15),
-        urlParams: urlParams.replace(/[^0-9A-Z]/g, "")
+        name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15)
       }).then(function() {
       res.send({ success: true });
     }, function(error) {
