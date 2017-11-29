@@ -1,7 +1,7 @@
 var timer;
 var gameState = 'WAITING_TO_START';
 var mouseX = -1;
-var pmanY, pmanWidth, pmanHeight, pmanMarginOffset;
+var pmanX, pmanY, pmanWidth, pmanHeight, pmanMarginOffset;
 var debrisCollection;
 var sessionId;
 var collectedGems = [];
@@ -38,6 +38,9 @@ function updatePmanPosition() {
     pmanY = parseInt($('.product-man').css('top'));
     pmanWidth = parseInt($('.product-man').css('width'));
     pmanHeight = parseInt($('.product-man').css('height'));
+    if (!pmanY) {
+        pmanY = $(window).height() - parseInt($('.product-man').css('bottom')) - pmanHeight + 50;
+    }
 };
 
 

@@ -35,6 +35,7 @@ Debris.prototype = {
         // check for collision here i guess?
         // iunno how wide is product man
         // this wide
+        
         if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY && this.y < pmanY + 40 && !this.collided) { // last digit should be pmanheight fix because his legs are long idk
             this.collided = true;
             if (this.debrisType == 'GEM') {
@@ -154,7 +155,7 @@ var DebrisCollection = function () {
     this.minTicksPassedBeforeNewDebris = Math.max(0, 40 - ($(window).width() / 375) * 8); // to give smaller screens a bit of an advantage
     this.debrisSelection = 2;
     this.difficulty = 0.5;
-    this.difficultyVel = 1;
+    this.difficultyVel = 0.3;
     this.gemCollection = new GemCollection();
 }
 
@@ -203,7 +204,7 @@ DebrisCollection.prototype = {
                 this.lastDebrisTick = tickNumber;
             }
         }
-        if (tickNumber % 400 == 0) {
+        if (tickNumber % 380 == 0) {
             this.maybeAdjustDifficulty();
         }
         if (tickNumber % 300 == 0) { // default 300
