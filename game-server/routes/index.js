@@ -131,11 +131,11 @@ router.get("/scores/:numScores?", function(req, res) {
   });
 });
 
-router.get("/delete/:sessionId", function(req, res) {
-  firebase.database().ref("games/" + req.params.sessionId).remove().then(function() {
-    res.send({ success: true });
-  });
-})
+// router.get("/delete/:sessionId", function(req, res) {
+//   firebase.database().ref("games/" + req.params.sessionId).remove().then(function() {
+//     res.send({ success: true });
+//   });
+// })
 
 function isValidScore(startTime, endTime, proposedScore) {
   var millisecondsPassed = moment(endTime).diff(moment(startTime), "milliseconds");
