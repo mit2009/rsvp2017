@@ -86,9 +86,13 @@ router.post("/updateName", function(req, res) {
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   var name = req.body.name;
+  var urlParams = req.body.urlParams;
   var sessionId = req.body.sessionId;
   if (name != null && sessionId != null) {
-    firebase.database().ref(`games/${sessionId}`).update({ name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15) }).then(function() {
+    firebase.database().ref(`games/${sessionId}`).update({ 
+        name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15),
+        urlParams: urlParams.replace(/[^0-9A-Z]/g, ""),
+      }).then(function() {
       res.send({ success: true });
     }, function(error) {
       res.send({ error });

@@ -1,9 +1,13 @@
 var Debris = function (leftBound, rightBound, screenHeight, debrisObject, velX, velY) {
     this.screenHeight = screenHeight;
-    this.width = debrisObject.width / 3;
-    this.height = debrisObject.height / 3;
+    var sizeScale = 2.7;
+    if ($(window).width() < 400) {
+        sizeScale = 3.7;
+    }
+    this.width = debrisObject.width / sizeScale;
+    this.height = debrisObject.height / sizeScale;
     this.x = Math.random() * (rightBound - this.width - leftBound);
-    this.y = -this.height;
+    this.y = - this.height - 10;
     this.velY = velY * debrisObject.speed;
     this.velX = velX;
     this.rotation = 0;
@@ -193,7 +197,7 @@ DebrisCollection.prototype = {
                 velX = Math.min(this.difficulty, 10);
                 velX = Math.random() < 0.5 ? -velX : velX;
                 velY = Math.min(this.difficulty * 5 + Math.random() * 8 * this.difficulty, 100);
-                debris = new Debris(0, $(window).width(), $(window).height(), debrisObject, velX, velY);
+                debris = new Debris(- 20, $(window).width() + 20, $(window).height(), debrisObject, velX, velY);
 
                 this.debrisList.push(debris);
                 this.lastDebrisTick = tickNumber;

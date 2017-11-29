@@ -7,12 +7,6 @@ var sessionId;
 var collectedGems = [];
 var bonusPoints = 0;
 
-console.log("Please, please don't hack me");
-console.log("I just wanted a quick game");
-console.log("This is a Haiku");
-console.log("\n");
-console.log("Love,");
-console.log("Victor");
 $(document).mousemove(function (event) {
     mouseX = event.pageX;
 });
@@ -82,7 +76,7 @@ function loop(tick) {
                     event.preventDefault();
                     var name = $("#score-name").val();
                     if (name.length > 0) {
-                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, name: name }, function (response) {
+                        $.post(SERVER_URL + "/updateName", { sessionId: sessionId, name: name, urlParams: urlP }, function (response) {
                             if (response.success) {
                                 $("#score-form-error").fadeOut();
                                 $("#score-form").fadeOut();
@@ -110,6 +104,13 @@ function loop(tick) {
 };
 
 function startGame() {
+    console.log("Please, please don't hack me");
+    console.log("I just wanted a quick game");
+    console.log("This is a Haiku");
+    console.log("\n");
+    console.log("Love,");
+    console.log("Victor");
+
     $('body').addClass('no-select')
     gameState = 'GAME_STARTED';
     debrisCollection = new DebrisCollection();
