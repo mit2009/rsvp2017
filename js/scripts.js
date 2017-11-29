@@ -55,6 +55,7 @@ function loop(tick) {
         $('.product-man').fadeOut(100);
         $("#explosion").css({
             left: productManPosX - (productManPosX - mouseX) / 3,
+            "background-image": 'url("../assets/debris/explosion1.png")',
         }).fadeIn(100);
         var explosionGraphic = 2;
         var clearId = setInterval(function() {
