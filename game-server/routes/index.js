@@ -91,7 +91,7 @@ router.post("/updateName", function(req, res) {
   if (name != null && sessionId != null) {
     firebase.database().ref(`games/${sessionId}`).update({ 
         name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15),
-        urlParams: urlParams.replace(/[^0-9A-Z]/g, ""),
+        urlParams: urlParams.replace(/[^0-9A-Z]/g, "")
       }).then(function() {
       res.send({ success: true });
     }, function(error) {
