@@ -66,7 +66,7 @@ var availableDebris = {
         debrisType: 'BAD'
     },
     8: {
-        message: "Oh no! You've been strucked with a chia pet!",
+        message: "Oh no! You've been struck with a chia pet!",
         img: 'chia.png',
         width: 343,
         height: 343,

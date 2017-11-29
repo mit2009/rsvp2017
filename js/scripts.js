@@ -7,6 +7,12 @@ var sessionId;
 var collectedGems = [];
 var bonusPoints = 0;
 
+console.log("Please, please don't hack me");
+console.log("I just wanted a quick game");
+console.log("This is a Haiku");
+console.log("\n");
+console.log("Love,");
+console.log("Victor");
 $(document).mousemove(function (event) {
     mouseX = event.pageX;
 });
@@ -104,7 +110,6 @@ function loop(tick) {
 };
 
 function startGame() {
-    console.log('starting game');
     $('body').addClass('no-select')
     gameState = 'GAME_STARTED';
     debrisCollection = new DebrisCollection();

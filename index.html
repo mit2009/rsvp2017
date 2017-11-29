@@ -108,7 +108,6 @@
     }
     function setRSVPUrl() {
       var urlParams = parseQueryString(location.search);
-      console.log(urlParams);
       if (urlParams['invite'] != undefined) {
         document.getElementById("rsvp-btn").href = 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite'];
       }
