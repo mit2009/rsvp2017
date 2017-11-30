@@ -15,9 +15,17 @@ router.post('/start', function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  var ip = req.headers['x-forwarded-for'] || 
+  req.connection.remoteAddress || 
+  req.socket.remoteAddress ||
+  (req.connection.socket ? req.connection.socket.remoteAddress : null);
+
   var initialData = {
     startTime: new Date(),
+    ip: ip
   };
+
   var newSession = firebase.database().ref().child("games").push().key;
   firebase.database().ref(`games/${newSession}`).update(initialData).then(function () {
     res.send({ sessionId: newSession });
@@ -61,15 +69,59 @@ router.post('/gethighscores', function (req, res, next) {
 
 
   // return highscores here
-  res.json({
-    "response_type": "in_channel",
-    "text": "It's 80 degrees right now.",
-    "attachments": [
-      {
-        "text": "Partly cloudy today and tomorrow"
+
+
+  firebase.database().ref("games").once("value", function (snapshot) {
+    // scores indexed by name, only recording the max for the name. case insensitive
+    var maxGameScores = {};
+    snapshot.forEach(function (childSnapshot) {
+      var gameData = childSnapshot.val();
+      if (gameData.score !== undefined &&
+        gameData.name !== undefined &&
+        gameData.name.length > 0 &&
+        gameData.endTime !== undefined &&
+        gameData.startTime !== undefined &&
+        moment(gameData.endTime).isAfter(gameData.startTime)) {
+        if (maxGameScores[gameData.name] === undefined ||
+          maxGameScores[gameData.name].score < parseInt(gameData.score, 10)) {
+          maxGameScores[gameData.name] = { ...gameData, score: parseInt(gameData.score, 10) };;
+        }
       }
-    ]
-  })
+    });
+    var scores = Object.keys(maxGameScores)
+      .map(function (key) {
+        return maxGameScores[key];
+      })
+      .sort(function (gameA, gameB) {
+        if (gameA.score > gameB.score) {
+          return -1;
+        } else if (gameA.score < gameB.score) {
+          return 1;
+        } else {
+          return moment(gameA.startTime).isBefore(gameB.startTime) ? -1 : 1;
+        }
+      });
+    
+    var numScores = req.params.text;
+    if (numScores !== undefined) {
+      numScores = parseInt(numScores, 10);
+      if (!isNaN(numScores)) {
+        scores = scores.slice(0, numScores);
+      }
+    }
+    var output = '';
+    for (i in scores) {
+      score = scores[i];
+      output += i + ". " + score.score + ". " + score.name + ". " + score.urlParams + "\n";
+    }
+    res.json({
+      "response_type": "in_channel",
+      "text": output
+    })
+
+  });
+
+  
 
 })
 
@@ -111,6 +163,31 @@ router.post("/end", function (req, res, next) {
           scoreData.urlParams = urlParams.replace(/[^0-9a-zA-Z]/g, "")
         } else {
           scoreData.urlParams = 'none';
+        }
+
+        // message slack yo
+        if (scoreData.score > 100) {
+          // this is an important score! message slack about it!
+          var url = "https://hooks.slack.com/services/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";
+          var data = { "text": "New score! " + scoreData.score + ". Name: " + scoreData.name + ". URLParams: " + scoreData.urlParams }
+      
+          var options = {
+            method: 'post',
+            body: data,
+            json: true,
+            url: url
+          }
+          request(options, function (err, res, body) {
+            if (err) {
+              console.error('error posting json: ', err)
+              throw err
+            }
+            var headers = res.headers
+            var statusCode = res.statusCode
+            console.log('headers: ', headers)
+            console.log('statusCode: ', statusCode)
+            console.log('body: ', body)
+          })
         }
 
         sessionRef.transaction(function (currentSession) {
