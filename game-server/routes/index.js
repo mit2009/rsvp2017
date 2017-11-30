@@ -102,18 +102,21 @@ router.post('/gethighscores', function (req, res, next) {
         }
       });
     
-    var numScores = req.params.text;
+    var numScores = req.body.text;
     if (numScores !== undefined) {
       numScores = parseInt(numScores, 10);
       if (!isNaN(numScores)) {
         scores = scores.slice(0, numScores);
       }
+    } else {
+      numScores = 10;
     }
     var output = '';
     for (i in scores) {
       score = scores[i];
-      output += i + ". " + score.score + ". " + score.name + ". " + score.urlParams + "\n";
+      output += (i+1) + ". " + score.score + ". " + score.name + ". " + score.urlParams + "\n";
     }
+
     res.json({
       "response_type": "in_channel",
       "text": output
@@ -166,10 +169,10 @@ router.post("/end", function (req, res, next) {
         }
 
         // message slack yo
-        if (scoreData.score > 100) {
+        if (scoreData.score > 8000) {
           // this is an important score! message slack about it!
           var url = "https://hooks.slack.com/services/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";
-          var data = { "text": "New score! " + scoreData.score + ". Name: " + scoreData.name + ". URLParams: " + scoreData.urlParams }
+          var data = { "text": "New Big Score! " + scoreData.score + ". Name: " + scoreData.name + ". URLParams: " + scoreData.urlParams }
       
           var options = {
             method: 'post',
