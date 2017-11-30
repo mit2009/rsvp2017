@@ -103,7 +103,7 @@ router.post('/gethighscores', function (req, res, next) {
       });
     
     var numScores = req.body.text;
-    if (numScores !== undefined) {
+    if (numScores !== 'undefined' && numScores !== '') {
       numScores = parseInt(numScores, 10);
       if (!isNaN(numScores)) {
         scores = scores.slice(0, numScores);
@@ -114,7 +114,7 @@ router.post('/gethighscores', function (req, res, next) {
     var output = '';
     for (i in scores) {
       score = scores[i];
-      output += (i+1) + ". " + score.score + ". " + score.name + ". " + score.urlParams + "\n";
+      output += (parseInt(i)+1) + ". " + score.score + ". " + score.name + ". " + score.urlParams + "\n";
     }
 
     res.json({
