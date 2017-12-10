@@ -1,14 +1,18 @@
-var socket = io.connect('http://victorhung.com:8092');
+var socket = io.connect('http://localhost:8092');
 var $html = $('<div></div>')
 socket.on('tweet', function (data) {
   var images = '';
   var text = "";
   var index = 0;
-  while (index < data.text.length) {
+  console.log(data);
+  var tweetText = data.tweet.retweeted ? data.tweet.retweeted_status.text : data.text;
+  var entities = data.tweet.retweeted ? data.tweet.retweeted_status.entities : data.entities;
+  var extended_entities = data.tweet.retweeted ? data.tweet.retweeted_status.extended_entities : data.tweet.extended_entities;
+  while (index < tweetText.length) {
     entityChecker: {
-        for (var entityType in data.entities) {
-            var entities = data.entities[entityType];
-            for (var entity of entities) {
+        for (var entityType in entities) {
+            var entitiesList = entities[entityType];
+            for (var entity of entitiesList) {
                 if (entity.indices[0] === index) {
                     // move index to after the entity
                     switch (entityType) {
@@ -26,20 +30,29 @@ socket.on('tweet', function (data) {
                             break entityChecker;
                         case "media":
                             index = entity.indices[1];
-                            images += `<a href="${entity.url}" target="_blank" class="tweet-image"><img src="${entity.media_url}" /></a>`;
+                            for (var media of extended_entities.media) {
+                                if (media.indices[0] === entity.indices[0] && media.indices[1] === entity.indices[1]) {
+                                    images += `<a href="${media.url}" target="_blank" class="tweet-image"><img src="${media.media_url}" /></a>`;
+                                }
+                            }
                             break entityChecker;
                     }
                 }
             }
         }
         // if we're here, then we didn't match anything, so add the current character and move on
-        text += data.text.charAt(index);
+        text += tweetText.charAt(index);
         index += 1;
     }
+  }
+  var maybeRetweeter = "";
+  if (data.tweet.retweeted) {
+      maybeRetweeter = `<div class="retweeted">Retweeted from <a href="https://twitter.co/${data.tweet.retweeted_status.user.screen_name}">@${data.tweet.retweeted_status.user.screen_name}</a>`;
   }
   var parsedText = text.replace(/\n/g, "<br />");
   $('.content').append($(`<div class="tweet">
     <a class="timestamp" href="https://twitter.com/009minions/status/${data.id}">${moment(data.timestamp).format("MMM DD, hh:mm A")}</a>
+    ${maybeRetweeter}
     <div class="tweet-text">${parsedText}</div>
     ${images}
   </div>`));

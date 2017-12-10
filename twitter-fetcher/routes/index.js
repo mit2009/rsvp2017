@@ -8,7 +8,7 @@ tweets = {};
 
 module.exports = function(io) {
   var client = new Twitter(config);
-  
+
   io.on("connection", function(socket) {
     processTweets = function (tweets) {
       for (i in tweets) {
@@ -16,14 +16,15 @@ module.exports = function(io) {
         processTweet(tweets[i]);
       }
     }
-    
+
     processTweet = function (tweet) {
       id = tweet.id;
       tweets[id] = {
         id: tweet.id_str,
         timestamp: tweet.created_at,
         entities: tweet.entities,
-        text: tweet.text
+        text: tweet.text,
+        tweet: tweet,
       }
       media = tweet.entities.media;
       if (media) {
@@ -32,24 +33,24 @@ module.exports = function(io) {
       socket.emit("tweet", tweets[id]);
       // console.log(tweets[id]);
     }
-    
+
     client.get('statuses/user_timeline', { screen_name: "009minions" }, function (error, tweets, response) {
       // console.log(tweets);
       processTweets(tweets)
     });
-    
+
     client.stream('statuses/filter', { follow: "3659410877" }, function (stream) {
       stream.on('data', function (event) {
         processTweet(event);
       });
-    
+
       stream.on('error', function (error) {
         console.log(error);
       });
     });
   })
-  
-  
+
+
   /* GET home page. */
   router.get('/', function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -57,7 +58,7 @@ module.exports = function(io) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.render('index', { title: 'Express' });
   });
-  
+
   router.get('/tweets', function(req, res, next) {
     res.json(tweets);
   });
