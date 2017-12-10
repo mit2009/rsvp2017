@@ -36,8 +36,9 @@ socket.on('tweet', function (data) {
         index += 1;
     }
   }
+  var parsedText = text.replace(/\n/g, "<br />");
   $('.content').append($(`<div class="tweet">
-    ${text}
-    ${image}
+    <div class="tweet-text">${parsedText}</div>
+    <div class="tweet-image">${image}</div>
   </div>`));
 });

@@ -7,7 +7,15 @@
   <link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
+  <script src="js/iframeResizer.min.js"></script>
   <script src="js/scripts.js"></script>
+  <style>
+    iframe {
+      width: 1px;
+      min-width: 100%;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -21,8 +29,10 @@
         <a class="instagram-icon icon" href="https://instagram.com/009mit/"></a>
         <a class="twitter-icon icon" href="https://twitter.com/009minions/"></a>
       </div>
-      <iframe id="ls_embed_1512411378" src="https://livestream.com/accounts/2261474/events/7959446/player?width=640&height=360&enableInfoAndActivity=true&defaultDrawer=&autoPlay=true&mute=false"
-        width="100%" height="100%" frameborder="0" scrolling="no" allowfullscreen> </iframe>
+      <div class="webcast-frame">
+        <iframe id="ls_embed_1512411378" src="https://livestream.com/accounts/2261474/events/7959446/player?width=640&height=360&enableInfoAndActivity=true&defaultDrawer=&autoPlay=true&mute=false"
+          width="100%" height="100%" frameborder="0" scrolling="no" allowfullscreen> </iframe>
+      </div>
       <script type="text/javascript" data-embed_id="ls_embed_1512411378" src="https://livestream.com/assets/plugins/referrer_tracking.js"></script>
     </div>
 
@@ -34,21 +44,36 @@
     <a href="http://twitter.com/009minions">Twitter</a> &
     <a href="http://instagram.com/009mit">Instagram</a>!
   </div>
-
+<!--
   <div class="downloadables">
     <a href="http://mit.edu/2.009">2.009 Home</a>
     <a href="http://mit.edu/2.009/2016">Product Brochures</a>
     <a href="http://mit.edu/2.009/2016/program.pdf">Download the Program</a>
   </div>
 
+-->
 
+  <div class="twitter-frame">
+    <iframe src="http://localhost:3000" id="twitter-iframe" scrolling="no" frameborder="0">
+  </div>
+
+  </iframe>
+  <script>iFrameResize({
+      checkOrigin: false,
+      heightCalculationMethod: "grow",
+      minSize: 100,
+      scrolling: false,
+      scrollCallback: function () {
+        return false;
+      }
+    }, '#twitter-iframe')</script>
   <script>
-    (function (i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-71118626-1', 'auto');
     ga('send', 'pageview');
