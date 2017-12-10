@@ -9,7 +9,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(3001);
+server.listen(8092);
 
 var index = require('./routes/index')(io);
 

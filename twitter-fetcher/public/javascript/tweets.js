@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3001');
+var socket = io.connect('http://victorhung.com:8092');
 var $html = $('<div></div>')
 socket.on('tweet', function (data) {
   var image = '';
