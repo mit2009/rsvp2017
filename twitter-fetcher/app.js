@@ -4,60 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var Twitter = require('twitter');
-
-var config = require('./config');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-
-var client = new Twitter(config);
-
 /*
-
-client.get('search/tweets', {q: '%40009minions'}, function(error, tweets, response) {
-  for (i in tweets.statuses) {
-    console.log(tweets.statuses[i].text)
-  }
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.on('connection', function(){ 
+  console.log('hEY')
 });
+server.listen(3001);
 */
 
-tweets = {};
-
-processTweets = function (tweets) {
-  for (i in tweets) {
-    processTweet(tweets[i]);
-  }
-}
-
-processTweet = function (tweet) {
-  id = tweet.id;
-  tweets[id] = {
-    text: tweet.text
-  }
-  media = tweet.entities.media;
-  if (media) {
-    tweets[id].media = media[0].media_url
-  }
-  console.log(tweets[id]);
-}
-
-client.get('statuses/user_timeline', { screen_name: "009minions" }, function (error, tweets, response) {
-  // console.log(tweets);
-  processTweets(tweets)
-});
-
-client.stream('statuses/filter', { follow: "3659410877" }, function (stream) {
-  stream.on('data', function (event) {
-    processTweet(event);
-  });
-
-  stream.on('error', function (error) {
-    throw error;
-  });
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
