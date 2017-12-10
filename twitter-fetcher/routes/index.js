@@ -34,7 +34,7 @@ module.exports = function(io) {
       // console.log(tweets[id]);
     }
 
-    client.get('statuses/user_timeline', { screen_name: "009minions" }, function (error, tweets, response) {
+    client.get('statuses/user_timeline', { count: 10, screen_name: "009minions" }, function (error, tweets, response) {
       // console.log(tweets);
       processTweets(tweets)
     });
