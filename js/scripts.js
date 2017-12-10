@@ -1,3 +1,28 @@
+/*
+
+So the story went something like this
+
+** some discussion about getting the RSVP page up and running **
+
+[pause]
+
+Charlene: Reasonably, is it possible to still make a game before Tomorrow morning?
+Victor: haha
+hahaha
+Charlene: lol. nvm.
+
+[5 hours & some discussions later]
+
+Charlene: For the high score, is it a good idea to have people put "name" on the high score board
+
+----
+This game was lovingly made and programmed in under 10 hours
+Thank to everyone involved
+Sorry, Steph
+---
+
+*/
+
 var timer;
 var gameState = 'WAITING_TO_START';
 var mouseX = -1;

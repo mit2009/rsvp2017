@@ -35,8 +35,8 @@ Debris.prototype = {
         // check for collision here i guess?
         // iunno how wide is product man
         // this wide
-        
-        if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY && this.y < pmanY + 40 && !this.collided) { // last digit should be pmanheight fix because his legs are long idk
+
+        if (pmanX + pmanWidth - pmanMarginOffset > this.x && pmanX - pmanMarginOffset < this.x + this.width && this.y + this.height > pmanY + 20 && this.y < pmanY + pmanHeight - 100 && !this.collided) { // last digit should be pmanheight fix because his legs are long idk
             this.collided = true;
             if (this.debrisType == 'GEM') {
                 this.$html.remove();
@@ -152,18 +152,17 @@ GemCollection.prototype = {
 var DebrisCollection = function () {
     this.debrisList = [];
     this.lastDebrisTick = 0;
-    this.minTicksPassedBeforeNewDebris = Math.max(0, 40 - ($(window).width() / 375) * 8); // to give smaller screens a bit of an advantage
+    this.minTicksPassedBeforeNewDebris = Math.max(0, 40 - ($(window).width() / 375) * 7.5); // to give smaller screens a bit of an advantage
     this.debrisSelection = 2;
-    this.difficulty = 0.5;
-    this.difficultyVel = 0.3;
+    this.difficulty = 0.25;
+    this.difficultyVel = 0.2;
     this.gemCollection = new GemCollection();
 }
 
 DebrisCollection.prototype = {
     maybeAdjustDifficulty: function () {
-        this.difficulty = Math.min(this.difficulty + this.difficultyVel, 1);
+        this.difficulty = Math.min(this.difficulty + this.difficultyVel, 3);
         this.minTicksPassedBeforeNewDebris = Math.max(this.minTicksPassedBeforeNewDebris - this.difficultyVel, 0)
-
     },
     removeAll: function () {
         for (i in this.debrisList) {
@@ -197,7 +196,7 @@ DebrisCollection.prototype = {
 
                 velX = Math.min(this.difficulty, 10);
                 velX = Math.random() < 0.5 ? -velX : velX;
-                velY = Math.min(this.difficulty * 5 + Math.random() * 8 * this.difficulty, 100);
+                velY = Math.min(this.difficulty * 5 + Math.random() * 7 * this.difficulty, 150);
                 debris = new Debris(- 20, $(window).width() + 20, $(window).height(), debrisObject, velX, velY);
 
                 this.debrisList.push(debris);

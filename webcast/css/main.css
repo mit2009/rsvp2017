@@ -1,0 +1,135 @@
+body {
+  background-color: #000;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+iframe {
+  margin-bottom: 20px;
+  display: inline-block;
+  vertical-align: top;
+  transition: all 0.3s;
+}
+
+.media-box {
+  display: inline-block;
+  width: 960px;
+  height: 540px;
+}
+
+.is-sticky {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  height: 180px;
+  transition: all 0.3s;
+}
+
+#twitter-widget-0 {
+  height: 400px !important;
+  width: 90% !important;
+  margin-left: 10px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+#twitter-widget-0:hover {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.social {
+  color: #fff;
+  padding-bottom: 15px;
+  font-family: Montserrat, sans-serif;
+  text-transform: uppercase;
+  color: #aaa;
+  letter-spacing: 2px;
+}
+
+.social em {
+  color: #ddd;
+}
+
+a {
+  color: #ddd;
+  transition: all 0.2s;
+}
+
+a:hover {
+  transition: all 0.2s;
+  color: #fff;
+}
+
+em {
+  font-weight: 900;
+}
+
+.timeline-widget {
+  border-radius: 0 !important;
+}
+
+.content {
+  margin: 160px auto 30px;
+  background-color: rgba(0,0,0,0.8);
+}
+
+.downloadables {
+  margin-bottom: 40px;
+}
+
+.logo {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  background-image: url('../2017-logo-01.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  z-index: -10;
+  left: 50%;
+  opacity: 0.3;
+  margin-left: -130px;
+  top: -10px;
+  transition: opacity 0.2s;
+}
+
+.logo:hover {
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.downloadables a, .content a {
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 8px 30px;
+  margin: 0 5px;
+  opacity: 0.3;
+  transition: opacity 0.2s;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+a:hover {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+@media (max-width: 1024px){ 
+  #twitter-widget-0 {
+    height: 500px !important;
+    width: 540px !important;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+}
+
+@media (min-width: 1300px){ 
+  .content {
+    margin: 160px auto 80px;
+    transform: scale(1.2);
+  }
+}

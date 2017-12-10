@@ -40,37 +40,6 @@ router.get('/highscores', function (req, res, next) {
 
 // this one's for slack
 router.post('/gethighscores', function (req, res, next) {
-  
-  /*
-    ignore this
-
-    console.log('attempting to post score to slack')
-    var url = "https://hooks.slack.com/services/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";
-    var data = { "text": "New score! " + score }
-
-    var options = {
-      method: 'post',
-      body: data,
-      json: true,
-      url: url
-    }
-    request(options, function (err, res, body) {
-      if (err) {
-        console.error('error posting json: ', err)
-        throw err
-      }
-      var headers = res.headers
-      var statusCode = res.statusCode
-      console.log('headers: ', headers)
-      console.log('statusCode: ', statusCode)
-      console.log('body: ', body)
-    })
-  */
-
-
-  // return highscores here
-
-
   firebase.database().ref("games").once("value", function (snapshot) {
     // scores indexed by name, only recording the max for the name. case insensitive
     var maxGameScores = {};
@@ -173,7 +142,7 @@ router.post("/end", function (req, res, next) {
           // this is an important score! message slack about it!
           var url = "https://hooks.slack.com/services/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";
           var data = { "text": "New Big Score! " + scoreData.score + ". Name: " + scoreData.name + ". URLParams: " + scoreData.urlParams }
-      
+
           var options = {
             method: 'post',
             body: data,
@@ -227,6 +196,8 @@ router.post("/updateName", function (req, res) {
     firebase.database().ref(`games/${sessionId}`).update({
       name: name.toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 15)
     }).then(function () {
+
+
       res.send({ success: true });
     }, function (error) {
       res.send({ error });
