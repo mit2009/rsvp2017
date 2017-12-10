@@ -20,6 +20,7 @@ module.exports = function(io) {
     processTweet = function (tweet) {
       id = tweet.id;
       tweets[id] = {
+        entities: tweet.entities,
         text: tweet.text
       }
       media = tweet.entities.media;
@@ -49,6 +50,9 @@ module.exports = function(io) {
   
   /* GET home page. */
   router.get('/', function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.render('index', { title: 'Express' });
   });
   
