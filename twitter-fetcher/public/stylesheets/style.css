@@ -17,7 +17,7 @@ a {
     border-bottom: 1px solid #333;
     font-weight: 300;
 
-  /* @keyframes duration | timing-function | delay | 
+  /* @keyframes duration | timing-function | delay |
 iteration-count | direction | fill-mode | play-state | name */
     animation: 0.4s ease-in 1 shimmyin;
 }
@@ -26,7 +26,7 @@ iteration-count | direction | fill-mode | play-state | name */
     margin-top: 9px;
 }
 
-img {
+img.tweet-media {
     margin-top: 25px;
     width: 160px;
 }

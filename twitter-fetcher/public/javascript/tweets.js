@@ -7,6 +7,7 @@ socket.on('tweet', function (data) {
   var tweetText = data.tweet.retweeted ? data.tweet.retweeted_status.text : data.text;
   var entities = data.tweet.retweeted ? data.tweet.retweeted_status.entities : data.entities;
   var extended_entities = data.tweet.retweeted ? data.tweet.retweeted_status.extended_entities : data.tweet.extended_entities;
+//   console.log(data);
   while (index < tweetText.length) {
     entityChecker: {
         for (var entityType in entities) {
@@ -31,7 +32,7 @@ socket.on('tweet', function (data) {
                             index = entity.indices[1];
                             for (var media of extended_entities.media) {
                                 if (media.indices[0] === entity.indices[0] && media.indices[1] === entity.indices[1]) {
-                                    images += `<a href="${media.url}" target="_blank" class="tweet-image"><img src="${media.media_url}" /></a>`;
+                                    images += `<a href="${media.url}" target="_blank" class="tweet-image"><img class="tweet-media" src="${media.media_url}" /></a>`;
                                 }
                             }
                             break entityChecker;
@@ -48,8 +49,10 @@ socket.on('tweet', function (data) {
   if (data.tweet.retweeted) {
       maybeRetweeter = `<div class="retweeted">Retweeted from <a href="https://twitter.co/${data.tweet.retweeted_status.user.screen_name}">@${data.tweet.retweeted_status.user.screen_name}</a>`;
   }
+  var tweeter = data.tweet.retweeted ? data.tweet.retweeted_status.user : data.tweet.user;
   var parsedText = text.replace(/\n/g, "<br />");
   $('.content').append($(`<div class="tweet">
+    <a href="https://twitter.co/${tweeter.screen_name}"><img width="48px" height="auto" src="${tweeter.profile_image_url}" /></a>
     <a class="timestamp" href="https://twitter.com/009minions/status/${data.id}">${moment(data.timestamp).format("MMM DD, hh:mm A")}</a>
     ${maybeRetweeter}
     <div class="tweet-text">${parsedText}</div>
