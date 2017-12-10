@@ -62,3 +62,4 @@ typings/
 
 # secrets
 game-server/config/
+twitter-fetcher/config.js
