@@ -1,10 +1,7 @@
 var socket = io.connect('http://victorhung.com:8092');
 var $html = $('<div></div>')
 socket.on('tweet', function (data) {
-  var image = '';
-  if (data.media) {
-    image = `<img src="${data.media}">`
-  }
+  var images = '';
   var text = "";
   var index = 0;
   while (index < data.text.length) {
@@ -27,6 +24,10 @@ socket.on('tweet', function (data) {
                             index = entity.indices[1];
                             text += `<a href="https://twitter.com/${entity.screen_name}">@${entity.screen_name}</a>`;
                             break entityChecker;
+                        case "media":
+                            index = entity.indices[1];
+                            images += `<a href="${entity.url}" target="_blank" class="tweet-image"><img src="${entity.media_url}" /></a>`;
+                            break entityChecker;
                     }
                 }
             }
@@ -38,7 +39,8 @@ socket.on('tweet', function (data) {
   }
   var parsedText = text.replace(/\n/g, "<br />");
   $('.content').append($(`<div class="tweet">
+    <a class="timestamp" href="https://twitter.com/009minions/status/${data.id}">${moment(data.timestamp).format("MMM DD, hh:mm A")}</a>
     <div class="tweet-text">${parsedText}</div>
-    <div class="tweet-image">${image}</div>
+    ${images}
   </div>`));
 });

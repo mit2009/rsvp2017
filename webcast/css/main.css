@@ -34,6 +34,28 @@ iframe {
 
 .twitter-frame {
   padding: 0 50px;
+  position: relative;
+}
+
+.tweets-from {
+  display: block;
+  text-decoration: none;
+  color: #aaa;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 10px;
+  border-bottom: 1px solid #333;
+  margin-top: 5px;
+  padding: 0 20px;
+  padding-bottom: 10px;
+  transition: all .2s;
+}
+
+.tweets-from:hover {
+  color: #eee;
+  transition: all .2s;
 }
 
 .instagram-icon {
@@ -62,6 +84,7 @@ iframe {
 .is-sticky {
   display: inline-block;
   position: fixed;
+  z-index: 2009;
   top: 20px;
   right: 20px;
   width: 320px;
@@ -113,7 +136,7 @@ em {
 }
 
 .content {
-  margin: 100px auto 30px;
+  margin: 100px auto 15px;
   background-color: rgba(0,0,0,0.8);
 }
 

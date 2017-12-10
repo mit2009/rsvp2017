@@ -20,6 +20,8 @@ module.exports = function(io) {
     processTweet = function (tweet) {
       id = tweet.id;
       tweets[id] = {
+        id: tweet.id_str,
+        timestamp: tweet.created_at,
         entities: tweet.entities,
         text: tweet.text
       }

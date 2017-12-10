@@ -13,11 +13,27 @@ a {
   font-size: 16px;
   line-height: 20px;
   padding: 20px;
-  color: #ccc;
+  color: #ddd;
   border-bottom: 1px solid #333;
+  font-weight: 300;
 }
 
 img {
   margin-top: 25px;
   width: 160px;
+}
+
+.timestamp {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  transition: color 100ms ease-in;
+  font-weight: 500;
+}
+
+.timestamp:hover {
+  color: #888;
 }
