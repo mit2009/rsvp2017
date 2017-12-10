@@ -184,7 +184,7 @@ em {
   cursor: pointer;
 }
 
-@media (max-width: 1024px){ 
+@media (max-width: 1024px){
   #twitter-widget-0 {
     height: 500px !important;
     width: 540px !important;
@@ -192,10 +192,10 @@ em {
     transition: opacity 0.2s;
   }
 }
-
-@media (min-width: 1300px){ 
+/*
+@media (min-width: 1300px){
   .content {
     margin: 160px auto 80px;
     transform: scale(1.2);
   }
-}
+} */
