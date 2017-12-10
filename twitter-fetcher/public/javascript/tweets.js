@@ -18,7 +18,7 @@ socket.on('tweet', function (data) {
                         switch (entityType) {
                             case "hashtags":
                                 index = entity.indices[1];
-                                text += `<a href="https://twitter.com/hashtag/${entity.text}">${entity.text}</a>`;
+                                text += `<a href="https://twitter.com/hashtag/${entity.text}">#${entity.text}</a>`;
                                 break entityChecker;
                             case "urls":
                                 index = entity.indices[1];
