@@ -12,6 +12,7 @@ a {
 .tweet {
     position: relative;
     font-size: 16px;
+    min-height: 70px;
     line-height: 20px;
     padding: 20px;
     color: #ddd;
@@ -34,7 +35,7 @@ iteration-count | direction | fill-mode | play-state | name */
 .left-col img{
   position: absolute;
   left: 7px;
-  top: 40px;
+  top: 30px;
   border-radius: 50%;
   border: 1px solid #eee;
 }
