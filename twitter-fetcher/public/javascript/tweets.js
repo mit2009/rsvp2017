@@ -4,7 +4,6 @@ socket.on('tweet', function (data) {
   var images = '';
   var text = "";
   var index = 0;
-  console.log(data);
   var tweetText = data.tweet.retweeted ? data.tweet.retweeted_status.text : data.text;
   var entities = data.tweet.retweeted ? data.tweet.retweeted_status.entities : data.entities;
   var extended_entities = data.tweet.retweeted ? data.tweet.retweeted_status.extended_entities : data.tweet.extended_entities;
