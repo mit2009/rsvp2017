@@ -12,7 +12,7 @@ module.exports = function(io) {
   io.on("connection", function(socket) {
     processTweets = function (tweets) {
       for (i in tweets) {
-        socket.emit("tweet", i);
+        // socket.emit("tweet", i);
         processTweet(tweets[i]);
       }
     }
@@ -26,8 +26,8 @@ module.exports = function(io) {
       if (media) {
         tweets[id].media = media[0].media_url
       }
-      socket.emit("tweet", tweet);
-      console.log(tweets[id]);
+      socket.emit("tweet", tweets[id]);
+      // console.log(tweets[id]);
     }
     
     client.get('statuses/user_timeline', { screen_name: "009minions" }, function (error, tweets, response) {
@@ -41,7 +41,7 @@ module.exports = function(io) {
       });
     
       stream.on('error', function (error) {
-        throw error;
+        console.log(error);
       });
     });
   })

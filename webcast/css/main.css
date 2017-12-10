@@ -15,6 +15,37 @@ iframe {
   display: inline-block;
   width: 960px;
   height: 540px;
+  position: relative;
+}
+
+.social-media-icons {
+  position: absolute;
+  right: 0px;
+  top: -40px;
+  color: #fff;
+}
+
+.instagram-icon {
+  width: 30px;
+  height: 30px;
+  background-image: url("http://2009.mit.edu/masthead/images/instagram.png");
+  background-size: 30px;
+  display: inline-block;
+  opacity: 0.6;
+}
+
+.icon:hover {
+  opacity: 1
+}
+
+.twitter-icon {
+  margin-left: 6px;
+  width: 30px;
+  height: 30px;
+  background-image: url("http://2009.mit.edu/masthead/images/twitter.png");
+  background-size: 30px;
+  display: inline-block;
+  opacity: 0.8;
 }
 
 .is-sticky {
@@ -100,7 +131,7 @@ em {
   transition: opacity 0.2s;
 }
 
-.downloadables a, .content a {
+.downloadables a {
   background-color: #fff;
   color: #000;
   text-decoration: none;
@@ -113,9 +144,10 @@ em {
   margin-bottom: 10px;
 }
 
-a:hover {
+.downloadables a:hover {
   opacity: 1;
   transition: opacity 0.2s;
+  cursor: pointer;
 }
 
 @media (max-width: 1024px){ 
