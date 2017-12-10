@@ -5,7 +5,7 @@ socket.on('tweet', function (data) {
   if (data.media) {
     image = `<img src="${data.media}">`
   }
-  $('.content').prepend($(`<div class="tweet">
+  $('.content').append($(`<div class="tweet">
     ${data.text}
     ${image}
   </div>`));
