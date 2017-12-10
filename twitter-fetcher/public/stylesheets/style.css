@@ -10,6 +10,7 @@ a {
 }
 
 .tweet {
+    position: relative;
     font-size: 16px;
     line-height: 20px;
     padding: 20px;
@@ -22,26 +23,44 @@ iteration-count | direction | fill-mode | play-state | name */
     animation: 0.4s ease-in 1 shimmyin;
 }
 
+.retweeted {
+  margin-top: 10px;
+}
+
+.right-col {
+  padding-left: 55px;
+}
+
+.left-col img{
+  position: absolute;
+  left: 7px;
+  top: 40px;
+  border-radius: 50%;
+  border: 1px solid #eee;
+}
+
 .tweet-text {
     margin-top: 9px;
 }
 
 img.tweet-media {
     margin-top: 25px;
-    width: 160px;
+    height: 160px;
+    vertical-align: top;
+    margin-right: 10px;
 }
 
 .timestamp {
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #333;
+    color: #aaa;
     font-size: 12px;
     text-decoration: none;
     transition: color 100ms ease-in;
     font-weight: 500;
     padding: 2px 6px;
     border-radius: 1px;
-    background-color: #ddd;
+    background-color: #222;
 }
 
 @keyframes shimmyin {
