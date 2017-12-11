@@ -84,15 +84,13 @@ stream.on('reconnect', function (request, response, connectInterval) {
 });
 
 io.on('connection', function(socket) {
-  // socket.join('tweets');
-  console.log
   var sortedTweets = Object.keys(tweets).map(function(tweetId) {
     return tweets[tweetId];
   }).sort(function(tweetA, tweetB) {
     if (moment(tweetA.timestamp).isAfter(moment(tweetB.timestamp))) {
-      return -1;
-    } else if (moment(tweetA.timestamp).isBefore(moment(tweetB.timestamp))) {
       return 1;
+    } else if (moment(tweetA.timestamp).isBefore(moment(tweetB.timestamp))) {
+      return -1;
     } else {
       return 0;
     }

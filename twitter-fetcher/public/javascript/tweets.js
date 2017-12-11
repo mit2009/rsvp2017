@@ -51,7 +51,7 @@ socket.on('tweet', function (data) {
     }
     var tweeter = data.tweet.retweeted ? data.tweet.retweeted_status.user : data.tweet.user;
     var parsedText = text.replace(/\n/g, "<br />");
-    $('.content').append($(`<div class="tweet">
+    $('.content').prepend($(`<div class="tweet">
     <div class="left-col">
     <a href="https://twitter.co/${tweeter.screen_name}"><img width="48px" height="auto" src="${tweeter.profile_image_url}" /></a>
     </div>
