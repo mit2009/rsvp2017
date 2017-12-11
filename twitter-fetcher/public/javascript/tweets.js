@@ -4,9 +4,10 @@ socket.on('tweet', function (data) {
     var images = '';
     var text = "";
     var index = 0;
-    var tweetText = data.tweet.retweeted ? data.tweet.retweeted_status.text : data.text;
-    var entities = data.tweet.retweeted ? data.tweet.retweeted_status.entities : data.entities;
-    var extended_entities = data.tweet.retweeted ? data.tweet.retweeted_status.extended_entities : data.tweet.extended_entities;
+    var wasRetweeted = data.tweet.retweeted_status != null;
+    var tweetText = wasRetweeted ? data.tweet.retweeted_status.text : data.text;
+    var entities = wasRetweeted ? data.tweet.retweeted_status.entities : data.entities;
+    var extended_entities = wasRetweeted ? data.tweet.retweeted_status.extended_entities : data.tweet.extended_entities;
     //   console.log(data);
     while (index < tweetText.length) {
         entityChecker: {
@@ -46,10 +47,10 @@ socket.on('tweet', function (data) {
         }
     }
     var maybeRetweeter = "";
-    if (data.tweet.retweeted) {
+    if (wasRetweeted) {
         maybeRetweeter = `<div class="retweeted">Retweeted from <a href="https://twitter.co/${data.tweet.retweeted_status.user.screen_name}">@${data.tweet.retweeted_status.user.screen_name}</a>`;
     }
-    var tweeter = data.tweet.retweeted ? data.tweet.retweeted_status.user : data.tweet.user;
+    var tweeter = wasRetweeted ? data.tweet.retweeted_status.user : data.tweet.user;
     var parsedText = text.replace(/\n/g, "<br />");
     $('.content').prepend($(`<div class="tweet">
     <div class="left-col">
