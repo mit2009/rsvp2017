@@ -20,14 +20,14 @@ var client = new Twit(config);
 
 tweets = {};
 
-processTweets = function (tweets) {
+function processTweets(tweets) {
   for (i in tweets) {
     // socket.emit("tweet", i);
     processTweet(tweets[i]);
   }
 }
 
-processTweet = function (tweet) {
+function processTweet(tweet) {
   id = tweet.id;
   tweets[id] = {
     id: tweet.id_str,
@@ -40,7 +40,7 @@ processTweet = function (tweet) {
   if (media) {
     tweets[id].media = media[0].media_url
   }
-  io.to("tweets").emit("tweet", tweets[id]);
+  io.emit("tweet", tweets[id]);
   // console.log(tweets[id]);
 }
 
@@ -51,7 +51,20 @@ client.get('statuses/user_timeline', { screen_name: "009minions" }, function (er
 
 var stream = client.stream("statuses/filter", { follow: "3659410877" });
 stream.on("tweet", function(tweet) {
-  processTweet(tweet);
+  id = tweet.id;
+  tweets[id] = {
+    id: tweet.id_str,
+    timestamp: tweet.created_at,
+    entities: tweet.entities,
+    text: tweet.text,
+    tweet: tweet,
+  }
+  media = tweet.entities.media;
+  if (media) {
+    tweets[id].media = media[0].media_url
+  }
+  console.log("EMITTING TO SOCKETS!", tweet.text);
+  io.emit("tweet", tweets[id]);
 })
 
 stream.on("limit", function(limitMessage) {
@@ -70,8 +83,9 @@ stream.on('reconnect', function (request, response, connectInterval) {
   console.log("Reconnecting in", connectInterval / 1000, "seconds...");
 });
 
-io.on('connection', function(socket){
-  socket.join('tweets');
+io.on('connection', function(socket) {
+  // socket.join('tweets');
+  console.log
   var sortedTweets = Object.keys(tweets).map(function(tweetId) {
     return tweets[tweetId];
   }).sort(function(tweetA, tweetB) {
