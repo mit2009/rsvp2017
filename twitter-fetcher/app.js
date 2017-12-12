@@ -28,19 +28,21 @@ function processTweets(tweets) {
 }
 
 function processTweet(tweet) {
-  id = tweet.id;
-  tweets[id] = {
-    id: tweet.id_str,
-    timestamp: tweet.created_at,
-    entities: tweet.entities,
-    text: tweet.text,
-    tweet: tweet,
+  if (tweet.user.id_str === "3659410877") {
+    id = tweet.id;
+    tweets[id] = {
+      id: tweet.id_str,
+      timestamp: tweet.created_at,
+      entities: tweet.entities,
+      text: tweet.text,
+      tweet: tweet,
+    }
+    media = tweet.entities.media;
+    if (media) {
+      tweets[id].media = media[0].media_url
+    }
+    io.emit("tweet", tweets[id]);
   }
-  media = tweet.entities.media;
-  if (media) {
-    tweets[id].media = media[0].media_url
-  }
-  io.emit("tweet", tweets[id]);
   // console.log(tweets[id]);
 }
 
