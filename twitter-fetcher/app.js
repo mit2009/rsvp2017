@@ -53,20 +53,22 @@ client.get('statuses/user_timeline', { screen_name: "009minions" }, function (er
 
 var stream = client.stream("statuses/filter", { follow: "3659410877" });
 stream.on("tweet", function(tweet) {
-  id = tweet.id;
-  tweets[id] = {
-    id: tweet.id_str,
-    timestamp: tweet.created_at,
-    entities: tweet.entities,
-    text: tweet.text,
-    tweet: tweet,
+  if (tweet.user.id_str === "3659410877") {
+    id = tweet.id;
+    tweets[id] = {
+      id: tweet.id_str,
+      timestamp: tweet.created_at,
+      entities: tweet.entities,
+      text: tweet.text,
+      tweet: tweet,
+    }
+    media = tweet.entities.media;
+    if (media) {
+      tweets[id].media = media[0].media_url
+    }
+    console.log("EMITTING TO SOCKETS!", tweet.text);
+    io.emit("tweet", tweets[id]);
   }
-  media = tweet.entities.media;
-  if (media) {
-    tweets[id].media = media[0].media_url
-  }
-  console.log("EMITTING TO SOCKETS!", tweet.text);
-  io.emit("tweet", tweets[id]);
 })
 
 stream.on("limit", function(limitMessage) {
