@@ -8,32 +8,36 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,500" rel="stylesheet">
   <script src="js/iframeResizer.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="js/scripts.js"></script>
   <style>
-    iframe {
+    iframe#twitter-iframe {
       width: 1px;
       min-width: 100%;
     }
   </style>
-
 </head>
 
 <body>
+  <div class="nav">
+    <a href="http://009super.com">Home</a>
+    <a class="active" href="index.html">Webcast</a>
+    <a href="productbrochures.html">Product Brochures</a>
+    <a href="program.pdf">Program</a>
+  </div>
+  
+  <div class="social-media-icons">
+    <a class="instagram-icon icon" href="https://instagram.com/009mit/"></a>
+    <a class="twitter-icon icon" href="https://twitter.com/009minions/"></a>
+  </div>
+
   <a href="http://mit.edu/2.009">
     <div class="logo"></div>
   </a>
+
   <div class="content">
     <!-- new for 2017 -->
     <div class="media-box">
-      <div class="nav">
-        <a href="http://009super.com">Home</a>
-        <a href="productbrochures.html">Products Brochures</a>
-        <a href="program.pdf">Program</a>
-      </div>
-      <div class="social-media-icons">
-        <a class="instagram-icon icon" href="https://instagram.com/009mit/"></a>
-        <a class="twitter-icon icon" href="https://twitter.com/009minions/"></a>
-      </div>
       <div class="webcast-frame">
         <iframe id="ls_embed_1512411378" src="https://livestream.com/accounts/2261474/events/7959446/player?width=640&height=360&enableInfoAndActivity=true&defaultDrawer=&autoPlay=true&mute=false"
           width="100%" height="100%" frameborder="0" scrolling="no" allowfullscreen> </iframe>
@@ -49,7 +53,7 @@
     <a href="http://twitter.com/009minions">Twitter</a> &
     <a href="http://instagram.com/009mit">Instagram</a>!
   </div>
-<!--
+  <!--
   <div class="downloadables">
     <a href="http://mit.edu/2.009">2.009 Home</a>
     <a href="http://mit.edu/2.009/2016">Product Brochures</a>
@@ -59,8 +63,9 @@
 -->
 
   <div class="twitter-frame">
-    <a class="tweets-from" href="http://twitter.com/009minions"><img width=30 src="twitter-logo.png">&nbsp;&nbsp;Live Tweets from @009minions</a>
-    <iframe src="http://localhost:8091" id="twitter-iframe" scrolling="no" frameborder="0">
+    <a class="tweets-from" href="http://twitter.com/009minions">
+      <img width=30 src="twitter-logo.png">&nbsp;&nbsp;Live Tweets from @009minions</a>
+    <iframe src="http://victorhung.com:8091" id="twitter-iframe" scrolling="no" frameborder="0">
   </div>
 
   </iframe>

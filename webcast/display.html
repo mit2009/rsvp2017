@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="js/scripts.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+  <style>
+    body, html {
+      height: 100%;
+      background-color: black;
+    }
+    .ticket {
+      color: #fff;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 600px;
+      position: relative;
+      transform: translateY(-50%);
+      top: 50%;
+    }
+  </style>
+  <script type="text/javascript">
+    var ref = new Firebase('https://2009counter.firebaseio.com/counter')
+    ref.on('value', function(val) {
+      var data = val.val();
+      $('.ticket').text(data);
+    })
+  </script>
+</head>
+<body>
+  <div class="ticket">
+  </div>
+</body>
+</html>
