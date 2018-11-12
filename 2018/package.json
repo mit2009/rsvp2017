@@ -16,12 +16,14 @@
     "express": "~4.13.1",
     "firebase-admin": "^5.5.1",
     "hbs": "~3.1.0",
+    "jquery": "^3.3.1",
     "moment": "^2.19.2",
     "morgan": "~1.6.1",
     "request": "^2.83.0",
     "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.3.22",
     "css-loader": "^1.0.1",
     "file-loader": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.4",

@@ -29,8 +29,12 @@ if (IS_PRODUCTION) {
 
 module.exports = {
   entry: {
+    "main-2018": [
+      "./app-2018/main-scripts.ts",
+      "./app-2018/main.scss"
+    ],
     "game-2018": [
-      "./app-2018/scripts.ts",
+      "./app-2018/game-scripts.ts",
       "./app-2018/main.scss"
     ]
   },

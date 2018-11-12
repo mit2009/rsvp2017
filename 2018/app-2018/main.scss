@@ -1,4 +1,11 @@
 body {
   padding: 0;
-  color: black;
 }
+
+.game-content {
+  .character-selection {
+    display: none;
+  }
+}
+
+#ctx {}

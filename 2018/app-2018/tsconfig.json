@@ -1,38 +1,35 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "jsx": "react",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "removeComments": false,
-        "sourceMap": true,
-        "stripInternal": true,
-        "target": "es5",
-        "declaration": false,
-        "lib": [
-            "dom",
-            "es2015.core",
-            "es2015.collection",
-            "es2015.generator",
-            "es2015.iterable",
-            "es2015.promise",
-            "es2015.reflect",
-            "es2015.symbol",
-            "es5"
-        ],
-        "outDir": "build"
-    },
-    "exclude": [
-      "node_modules"
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "stripInternal": true,
+    "target": "es5",
+    "declaration": false,
+    "lib": [
+      "dom",
+      "es2015.core",
+      "es2015.collection",
+      "es2015.generator",
+      "es2015.iterable",
+      "es2015.promise",
+      "es2015.reflect",
+      "es2015.symbol",
+      "es5"
     ],
-    "include": [
-        "**/*"
-    ]
+    "outDir": "build"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "**/*"
+  ]
 }
-  
