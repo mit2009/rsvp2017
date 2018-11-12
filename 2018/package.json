@@ -6,7 +6,7 @@
     "dev": "run-p dev:*",
     "dev:server": "nodemon ./game-server-2018/bin/www",
     "dev:app": "webpack --config config/webpack.config.js --watch",
-    "build": "webpack --config config/webpack.config.js",
+    "build": "NODE_ENV=production webpack --config config/webpack.config.js",
     "start": "node ./game-server-2018/bin/www"
   },
   "dependencies": {

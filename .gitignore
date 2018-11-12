@@ -66,3 +66,4 @@ typings/
 game-server/config/
 twitter-fetcher/config.js
 **/public/bundle
+dist

@@ -37,7 +37,7 @@ module.exports = {
 
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "../game-server-2018/public/bundle"),
+    path: path.resolve(__dirname, "../app-2018/dist"),
   },
 
   resolve: {
@@ -54,8 +54,8 @@ module.exports = {
           {
             loader: IS_PRODUCTION ? MiniCssExtractPlugin.loader : "style-loader",
           },
-          "css-loader",
-          "sass-loader"
+          { loader: "css-loader" },
+          { loader: "sass-loader" }
         ]
       },
       {
