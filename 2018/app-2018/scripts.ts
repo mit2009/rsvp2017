@@ -27,7 +27,7 @@ David: Well, we had one last year, so we should probably have a game this year a
 
 */
 
-var gameState = 'MAIN_MENU';
-
+const gameState = 'MAIN_MENU';
+console.log("HELLO I AM STEPHANIE");
 // hi
 
