@@ -52,7 +52,7 @@ let spriteProperties: any = {
       y: 525
     },
     velocity: {
-      x: -15,
+      x: -35,
       y: 0
     },
     width: 1200,
@@ -76,7 +76,7 @@ let spriteProperties: any = {
       y: 225
     },
     velocity: {
-      x: -15,
+      x: -35,
       y: 0
     },
     width: 1200,
@@ -180,11 +180,11 @@ function renderFrame() {
     } else {
       // normal sprite movement and generation
 
-      if (sprite.position.x <= -sprite.width && sprite.looping) {
+      if (sprite.position.x < -sprite.width - sprite.velocity.y && sprite.looping) {
         sprite.position.x = 0
       }
 
-      if (sprite.position.x <= (600 - sprite.width) && sprite.looping) {
+      if (sprite.position.x < (600 - sprite.width) && sprite.looping) {
         ctx.drawImage(spriteImageName, sprite.position.x + sprite.width, sprite.position.y);
       }
 
@@ -206,21 +206,20 @@ $(() => {
   $(document).keydown((e) => {
     if (e.keyCode == 38) {
       if (dangleCharacter.position.y == 385) {
-        dangleCharacter.velocity.y = -60;
+        dangleCharacter.velocity.y = -70;
       }
-      return false;
     }
     if (e.keyCode == 40) {
       dangleCharacter.isBent = true;
-      return false;
     }
+    return false;
   });
 
   $(document).keyup((e) => {
     if (e.keyCode == 40) {
       dangleCharacter.isBent = false;
-      return false;
     }
+    return false;
   });
 
   $(document).on('click', '.dangle', function () {
