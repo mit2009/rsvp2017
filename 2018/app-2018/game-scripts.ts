@@ -40,9 +40,11 @@ let gameState: GameState = GameState.GAME_MENU;
 
 // let selectedDangleColor = 'pink';
 let gameTimer;
+let longholdTimer;
 let ctx: CanvasRenderingContext2D;
 
-const imageUrl = "../images/";
+const imageUrl = "../images/sprites-template_";
+let canvasSize = 600;
 
 let characterSpeed = 0;
 let spriteProperties: any = {
@@ -99,7 +101,94 @@ let spriteProperties: any = {
   }
 }
 
+let dangerArrayProperties = {
+  position: {
+    x: canvasSize * 2,
+    y: 0,
+  },
+  velocity: {
+    x: -30,
+    y: 0
+  },
+  image: new Image(),
+  width: 150,
+  height: 50,
+
+}
+let dangerArray: any = [
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 1, 1, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+]
+
 let dangleCharacter = spriteProperties.dangle_pink;
+
+let keyUpIsDown = 0;
 
 for (const key in spriteProperties) {
   let sprite = spriteProperties[key];
@@ -107,7 +196,7 @@ for (const key in spriteProperties) {
   if (!sprite.totalFrames) {
     // standard image
     sprite['image'] = new Image();
-    sprite.image.src = `${imageUrl}sprites_${key}.png`;
+    sprite.image.src = `${imageUrl}${key}.png`;
     sprite.image.onload = function () {
       console.log(`${key} image loaded`);
     }
@@ -116,15 +205,23 @@ for (const key in spriteProperties) {
     sprite['image'] = {}
     for (let frame = 0; frame < sprite.totalFrames; frame++) {
       sprite['image'][frame] = new Image();
-      sprite.image[frame].src = `${imageUrl}sprites_${key}_${frame}.png`;
+      sprite.image[frame].src = `${imageUrl}${key}_${frame}.png`;
       sprite.image[frame].onload = function () {
         console.log(`${key}, frame ${frame} image loaded`);
       }
     }
     if (sprite.isCharacter) {
       sprite.image['bent'] = new Image();
-      sprite.image.bent.src = `${imageUrl}sprites_${key}_bent_0.png`;
+      sprite.image.bent.src = `${imageUrl}${key}_bent_0.png`;
     }
+  }
+}
+
+// generate knife objects
+for (let i = 1; i < 2; i++) {
+  dangerArrayProperties.image.src = `${imageUrl}knife_${i}.png`;
+  dangerArrayProperties.image.onload = function () {
+    console.log(`${i} image loaded`);
   }
 }
 
@@ -147,7 +244,10 @@ function gameStart() {
 }
 
 function renderFrame() {
-  ctx.clearRect(0, 0, 600, 600);
+  ctx.clearRect(0, 0, canvasSize, canvasSize);
+
+
+  // Render all sprites
   for (const key in spriteProperties) {
     let sprite = spriteProperties[key];
     let spriteImageName;
@@ -191,6 +291,22 @@ function renderFrame() {
       ctx.drawImage(spriteImageName, sprite.position.x, sprite.position.y);
     }
   }
+
+  // Render the danger objects
+  let firstDangerElement = Math.max(0, Math.floor(-dangerArrayProperties.position.x / dangerArrayProperties.width) - 1)
+  let lastDangerElement = firstDangerElement + canvasSize / dangerArrayProperties.width + 2;
+  for (let dangerIndex = firstDangerElement; dangerIndex < lastDangerElement; dangerIndex++) {
+
+    for (let knifeLevel = 0; knifeLevel < 5; knifeLevel++) {
+      if (dangerArray[dangerIndex][knifeLevel] == 1) {
+        ctx.drawImage(dangerArrayProperties.image, dangerArrayProperties.position.x + dangerIndex * dangerArrayProperties.width, spriteProperties.floor.position.y - knifeLevel * (dangerArrayProperties.height + 25) - dangerArrayProperties.height - 20);
+      }
+    }
+  }
+  dangerArrayProperties.position.x += dangerArrayProperties.velocity.x
+
+
+
 }
 
 $(() => {
@@ -205,8 +321,17 @@ $(() => {
 
   $(document).keydown((e) => {
     if (e.keyCode == 38) {
+      keyUpIsDown = 1;
+      // up you go
       if (dangleCharacter.position.y == 385) {
-        dangleCharacter.velocity.y = -70;
+        dangleCharacter.velocity.y = -60;
+        longholdTimer = setTimeout(() => {
+          if (keyUpIsDown > 0) {
+            if (dangleCharacter.velocity.y < 0 && dangleCharacter.position.y < 380 && dangleCharacter.position.y > 200) {
+              dangleCharacter.velocity.y = -60;
+            }
+          }
+        }, 120);
       }
     }
     if (e.keyCode == 40) {
@@ -218,6 +343,10 @@ $(() => {
   $(document).keyup((e) => {
     if (e.keyCode == 40) {
       dangleCharacter.isBent = false;
+    }
+    if (e.keyCode == 38) {
+      keyUpIsDown = 0;
+      clearTimeout(longholdTimer);
     }
     return false;
   });
