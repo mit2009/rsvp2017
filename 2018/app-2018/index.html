@@ -18,6 +18,34 @@
 </head>
 
 <body>
+  <script type="text/javascript">
+    var urlP = 'none';
+    function parseQueryString(url) {
+      var urlParams = {};
+      url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+        function ($0, $1, $2, $3) {
+          urlParams[$1] = $3;
+        });
+      return urlParams;
+    }
+    function setRSVPUrl() {
+      var urlParams = parseQueryString(location.search);
+      if (urlParams['invite'] != undefined) {
+        urlP = urlParams['invite'];
+        document.getElementById("rsvp-btn").href = 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite'];
+      } else {
+        // $('.rsvp-btn').text('ticket system')
+      }
+
+      // Clears the url to a blank state incase they want to share the URL
+      // window.history.replaceState({}, document.title, "/");
+    }
+    $(function () {
+      init();
+    });
+  </script>
+
+
   <div id="main">
     <img class="background_image" src="images/home/kresge_background.jpg">
 
@@ -40,8 +68,15 @@
 
     </div>
     <div class="button-container">
-      <a href="rsvp">RSVP HERE</a>
-      <a href="game">PLAY GAME</a>
+      <a id="rsvp-btn" href="https://2009.mit.edu/apps/rsvp/new_guest/">RSVP
+        HERE</a>
+
+      <script>
+        setRSVPUrl();
+      </script>
+      <!-- 
+<a href="game">PLAY GAME</a>
+      -->
       <!-- <img class="rsvp" id="normal" src="images/home/rsvp.png">
  		<img class="rsvp" id="knife" src="images/home/rsvp_knife.png">
  		<img class="game" id="normal" src="images/home/game.png">
