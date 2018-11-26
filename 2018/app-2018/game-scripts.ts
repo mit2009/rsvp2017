@@ -97,7 +97,9 @@ let spriteProperties: any = {
     frameTransitionSpeed: 0.5,
     currentFrame: 0,
     totalFrames: 3,
-    isBent: false
+    isBent: false,
+    width: 140,
+    height: 140,
   }
 }
 
@@ -107,83 +109,23 @@ let dangerArrayProperties = {
     y: 0,
   },
   velocity: {
-    x: -30,
+    x: -40,
     y: 0
   },
   image: new Image(),
   width: 150,
   height: 50,
-
+  spacesSinceLastKnife: 0,
+  minSpacesBeforeNextKnife: 5
 }
 let dangerArray: any = [
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
   [0, 0, 0, 0, 1],
   [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0],
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
+  [0, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0]
 ]
 
 let dangleCharacter = spriteProperties.dangle_pink;
@@ -240,7 +182,9 @@ function init() {
 function gameStart() {
   console.log('starting game!');
 
+
   gameTimer = setInterval(renderFrame, 42);
+  //ideally use renderFrame();
 }
 
 function renderFrame() {
@@ -265,7 +209,7 @@ function renderFrame() {
 
     // character logic is more complicated, handling it here and assuming no other characters in the future
     if (sprite.isCharacter) {
-      sprite.velocity.y += 9;
+      sprite.velocity.y += 8;
 
       if (sprite.position.y >= 385) {
         sprite.velocity.y = 0;
@@ -296,16 +240,106 @@ function renderFrame() {
   let firstDangerElement = Math.max(0, Math.floor(-dangerArrayProperties.position.x / dangerArrayProperties.width) - 1)
   let lastDangerElement = firstDangerElement + canvasSize / dangerArrayProperties.width + 2;
   for (let dangerIndex = firstDangerElement; dangerIndex < lastDangerElement; dangerIndex++) {
-
+    console.log(dangerIndex);
     for (let knifeLevel = 0; knifeLevel < 5; knifeLevel++) {
+
       if (dangerArray[dangerIndex][knifeLevel] == 1) {
-        ctx.drawImage(dangerArrayProperties.image, dangerArrayProperties.position.x + dangerIndex * dangerArrayProperties.width, spriteProperties.floor.position.y - knifeLevel * (dangerArrayProperties.height + 25) - dangerArrayProperties.height - 20);
+
+        let knifeX = dangerArrayProperties.position.x + dangerIndex * dangerArrayProperties.width
+        let knifeY = spriteProperties.floor.position.y - knifeLevel * (dangerArrayProperties.height + 25) - dangerArrayProperties.height - 20;
+
+        ctx.drawImage(dangerArrayProperties.image, knifeX, knifeY);
+
+        //check collision
+        let knifeW = dangerArrayProperties.width;
+        let knifeH = dangerArrayProperties.height;
+        let dangleX = dangleCharacter.position.x;
+        let dangleY = dangleCharacter.position.y;
+        let dangleW = dangleCharacter.width;
+        let dangleH = dangleCharacter.height - 10;
+        if (dangleCharacter.isBent) {
+          dangleH /= 2;
+          dangleY += dangleH
+        }
+        let dangleTheta = Math.atan(dangleH / (dangleW / 2))
+        // check Y
+
+        /*
+        ctx.beginPath();
+        ctx.moveTo(0, knifeY);
+        ctx.lineTo(300, knifeY);
+        ctx.strokeStyle = "black";
+        ctx.strokeWidth = 2
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, dangleY + dangleH);
+        ctx.lineTo(300, dangleY + dangleH);
+        ctx.strokeStyle = "red";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, knifeY + knifeH);
+        ctx.lineTo(300, knifeY + knifeH);
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, dangleY + Math.tan(dangleTheta) * (knifeX - dangleX - dangleW / 2));
+        ctx.lineTo(300, dangleY + Math.tan(dangleTheta) * (knifeX - dangleX - dangleW / 2));
+        ctx.strokeStyle = "green";
+        ctx.stroke();
+        */
+
+
+        let dangleA = (knifeY + knifeH - dangleY) / Math.tan(dangleTheta);
+        let adjustedH = Math.max(dangleY + Math.tan(dangleTheta) * (knifeX - dangleX - dangleW / 2), dangleY)
+        if (knifeY < dangleY + dangleH &&
+          knifeY + knifeH > adjustedH) {
+
+          console.log('vertical IN PATH!')
+          // check X
+          if (knifeX < dangleA + dangleW / 2 + dangleX && knifeX + knifeW > dangleX + dangleW / 2 - dangleA) {
+            console.log('HITTTTTTTTTT!')
+            window.clearInterval(gameTimer);
+          }
+        }
+        console.log('dangleA is... ', dangleA)
+
+        ctx.beginPath();
+        ctx.moveTo(knifeX, 0);
+        ctx.lineTo(knifeX, 300);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+
+        ctx.beginPath();
+        ctx.moveTo(dangleA + dangleW + dangleX / 2, 0);
+        ctx.lineTo(dangleA + dangleW + dangleX / 2, 300);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+
       }
     }
   }
   dangerArrayProperties.position.x += dangerArrayProperties.velocity.x
 
-
+  // Add danger array items
+  // only add more array elements when running close to the end
+  if (lastDangerElement > dangerArray.length - 1) {
+    if (dangerArrayProperties.spacesSinceLastKnife >= dangerArrayProperties.minSpacesBeforeNextKnife) {
+      let knifeArray = [0, 0, 0, 0, 0]
+      knifeArray[Math.floor(Math.random() * 5)] = 1;
+      dangerArray.push(knifeArray);
+      dangerArrayProperties.spacesSinceLastKnife = 0;
+    } else {
+      dangerArray.push([0, 0, 0, 0, 0]);
+      dangerArrayProperties.spacesSinceLastKnife++;
+    }
+  }
 
 }
 
@@ -324,11 +358,11 @@ $(() => {
       keyUpIsDown = 1;
       // up you go
       if (dangleCharacter.position.y == 385) {
-        dangleCharacter.velocity.y = -60;
+        dangleCharacter.velocity.y = -50;
         longholdTimer = setTimeout(() => {
           if (keyUpIsDown > 0) {
             if (dangleCharacter.velocity.y < 0 && dangleCharacter.position.y < 380 && dangleCharacter.position.y > 200) {
-              dangleCharacter.velocity.y = -60;
+              dangleCharacter.velocity.y = -55;
             }
           }
         }, 120);
