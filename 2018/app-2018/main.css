@@ -114,17 +114,20 @@ html, body {
   padding: 80px;
   bottom: 0; }
   .button-container a {
-    font-size: 36px;
+    position: relative;
+    left: 2.2px;
+    font-size: 22.6px;
     display: inline-block;
     text-decoration: none;
     color: #fff;
     padding: 10px 20px 15px;
     border: 1.5px solid #fff;
-    opacity: 0.8;
+    opacity: 1;
     transition: 0.2s all;
+    border-radius: 2px;
     background-color: rgba(0, 0, 0, 0.4); }
     .button-container a:hover {
-      opacity: 1;
+      opacity: 0.8;
       transition: 0.2s all; }
 
 @keyframes fromAbove {

@@ -1,9 +1,303 @@
-body {
-  padding: 0;
+html, body {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: steelfish_rg;
+  background-color: #000;
 }
 
-.game-content {
-  .character-selection {
-    display: none;
+@font-face {
+  font-family: steelfish_rg;
+  src: url(steelfish_rg.ttf);
+}
+
+.background img {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#photo_background {
+  background-image: url('images/kresge_background.jpg');
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-position: center;
+  z-index: -4;
+  opacity: 0;
+  animation: photoBackground ease-out 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+  animation-duration: 2s;
+}
+
+@keyframes photoBackground {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.7;
+  }
+}
+
+#black_background {
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-position: center;
+  opacity: 0.8;
+  z-index: -3;
+  background: -moz-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%); /* FF3.6-15 */
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=1 );
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centering-container {
+  display: inline-block;
+  width: 80%;
+  min-width: 200px;
+  height: 200px;
+  position: absolute;
+}
+
+.danger-logo, .danger-logo-dust, .danger-logo-dust-2 {
+  background-image: url('images/svg/danger-logo.svg');
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: scale(1.5);
+  animation: fromAbove ease-in 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0.3s;
+  animation-duration: 0.3s;
+  opacity: 0;
+}
+
+.danger-logo-dust {
+  position: absolute;
+  top: 0;
+  animation: toDust ease-out 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+  animation-duration: 0.5s;
+  opacity: 0;
+  z-index: -5;
+}
+
+.rotate-jiggle {
+  transform: rotate(2deg);
+  transition: 0.05s all;
+}
+
+.jiggly-container {
+  height: 100%;
+  width: 100%;
+  transition: 0.05s all;
+}
+
+.button-container {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  padding: 80px;
+  bottom: 0;
+
+  a {
+    position: relative;
+    left: 2.2px;
+    font-size: 22.6px;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px 15px;
+    border: 1.5px solid #fff;
+    opacity: 1;
+    transition: 0.2s all;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    &:hover {
+      opacity: 0.8;
+      transition: 0.2s all;
+    }
+  }
+}
+
+@keyframes fromAbove {
+  0% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes toDust {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+    letter-spacing: normal;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.presentation-info {
+  left: 0;
+  right: 0;
+  position: fixed;
+  top: 0;
+  font-size: 38.5px;
+  text-align: center;
+  padding: 24px;
+  color: #fff;
+  opacity: 0.7;
+  text-shadow: 0 0 4px #000000;
+}
+
+.danger-subtitle {
+  z-index: 2009;
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: -60px;
+  font-size: 67px;
+  width: 100%;
+  text-shadow: 0 0 10px #000000;
+  transition: 0.2s all;
+  animation: settleDownLauren ease-out 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+  animation-duration: 0.5s;
+  opacity: 0;
+}
+
+@keyframes settleDownLauren {
+  0% {
+    transform: translate(0, 20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+$scale: 0.0025;
+$dlwidth: 483 * $scale;
+
+.knife-image {
+  position: fixed;
+  opacity: 0;
+  z-index: 3;
+  transform: translate(0, -100px);
+
+  // mix-blend-mode: screen;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 1));
+
+  &.silver-knife {
+    width: 143px / $dlwidth;
+    top: calc(50% - 47px);
+    left: calc(50% - 30px);
+  }
+
+  &.blue-knife {
+    width: 268px / $dlwidth;
+    top: calc(50% - 60px);
+    left: calc(50% - -50px);
+  }
+
+  &.pink-knife {
+    width: 350px / $dlwidth;
+    top: calc(50% + 93px);
+    left: calc(50% - -60px);
+  }
+
+  &.yellow-knife {
+    width: 350px / $dlwidth;
+    top: calc(50% + 138px);
+    left: calc(50% - -40px);
+  }
+
+  &.purple-knife {
+    width: 316px / $dlwidth;
+    top: calc(50% + 117px);
+    left: calc(50% - 297px);
+  }
+
+  &.orange-knife {
+    width: 357px / $dlwidth;
+    top: calc(50% + 75px);
+    left: calc(50% - 360px);
+  }
+
+  &.green-knife {
+    width: 345px / $dlwidth;
+    top: calc(50% - 7px);
+    left: calc(50% - 370px);
+  }
+
+  &.red-knife {
+    width: 178px / $dlwidth;
+    top: calc(50% - 97px);
+    left: calc(50% - 160px);
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .centering-container {
+    height: 400px;
+  }
+
+  .danger-subtitle {
+    font-size: 40px;
+    top: 54px;
+  }
+
+  .button-container {
+    padding: 28px;
+
+    a {
+      width: calc(100% - 40px);
+    }
   }
 }
