@@ -5,7 +5,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: steelfish_rg;
+  font-family: steelfish_rg, Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -325,4 +325,26 @@ $dlwidth: 483 * $scale;
 
 body.game-page {
   background-color: #eee;
+
+  .center-container {
+    text-align: center;
+    vertical-align: top;
+    font-size: 0;
+  }
+
+  .canvas-container {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .instructions-container {
+    font-family: steelfish_rg, Arial, Helvetica, sans-serif;
+    color: #fff;
+    font-size: 20px;
+    display: inline-block;
+    width: 300px;
+    height: 600px;
+    background-color: #333;
+    vertical-align: top;
+  }
 }
