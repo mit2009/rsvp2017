@@ -6,6 +6,9 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: steelfish_rg;
+}
+
+body {
   background-color: #000;
 }
 
@@ -316,4 +319,10 @@ $dlwidth: 483 * $scale;
       width: calc(100% - 40px);
     }
   }
+}
+
+// Game Specific CSS
+
+body.game-page {
+  background-color: #eee;
 }

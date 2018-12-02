@@ -43,11 +43,23 @@ let gameTimer;
 let longholdTimer;
 let ctx: CanvasRenderingContext2D;
 
-const imageUrl = "../images/sprites-template_";
+const imageUrl = "../images/game/";
 let canvasSize = 600;
 
 let characterSpeed = 0;
 let spriteProperties: any = {
+  background_0: {
+    position: {
+      x: 0,
+      y: 0
+    },
+    velocity: {
+      x: 0,
+      y: 0
+    },
+    width: 600,
+    looping: true
+  },
   floor: {
     position: {
       x: 0,
@@ -96,7 +108,7 @@ let spriteProperties: any = {
     isCharacter: true,
     frameTransitionSpeed: 0.5,
     currentFrame: 0,
-    totalFrames: 3,
+    totalFrames: 5,
     isBent: false,
     width: 140,
     height: 140,
@@ -112,7 +124,7 @@ let dangerArrayProperties = {
     x: -40,
     y: 0
   },
-  image: new Image(),
+  image: {},
   width: 150,
   height: 50,
   spacesSinceLastKnife: 0,
@@ -154,15 +166,16 @@ for (const key in spriteProperties) {
     }
     if (sprite.isCharacter) {
       sprite.image['bent'] = new Image();
-      sprite.image.bent.src = `${imageUrl}${key}_bent_0.png`;
+      sprite.image.bent.src = `${imageUrl}${key}_bent.png`;
     }
   }
 }
 
 // generate knife objects
-for (let i = 1; i < 2; i++) {
-  dangerArrayProperties.image.src = `${imageUrl}knife_${i}.png`;
-  dangerArrayProperties.image.onload = function () {
+for (let i = 0; i < 7; i++) {
+  dangerArrayProperties.image[i] = new Image();
+  dangerArrayProperties.image[i].src = `${imageUrl}knife_${i}.png`;
+  dangerArrayProperties.image[i].onload = function () {
     console.log(`${i} image loaded`);
   }
 }
@@ -183,7 +196,7 @@ function gameStart() {
   console.log('starting game!');
 
 
-  gameTimer = setInterval(renderFrame, 42);
+  gameTimer = setInterval(renderFrame, 60);
   //ideally use renderFrame();
 }
 
@@ -225,7 +238,7 @@ function renderFrame() {
       // normal sprite movement and generation
 
       if (sprite.position.x < -sprite.width - sprite.velocity.y && sprite.looping) {
-        sprite.position.x = 0
+        sprite.position.x = sprite.velocity.x;
       }
 
       if (sprite.position.x < (600 - sprite.width) && sprite.looping) {
@@ -240,15 +253,14 @@ function renderFrame() {
   let firstDangerElement = Math.max(0, Math.floor(-dangerArrayProperties.position.x / dangerArrayProperties.width) - 1)
   let lastDangerElement = firstDangerElement + canvasSize / dangerArrayProperties.width + 2;
   for (let dangerIndex = firstDangerElement; dangerIndex < lastDangerElement; dangerIndex++) {
-    console.log(dangerIndex);
+
     for (let knifeLevel = 0; knifeLevel < 5; knifeLevel++) {
 
-      if (dangerArray[dangerIndex][knifeLevel] == 1) {
-
+      if (dangerArray[dangerIndex][knifeLevel] > 0) {
         let knifeX = dangerArrayProperties.position.x + dangerIndex * dangerArrayProperties.width
         let knifeY = spriteProperties.floor.position.y - knifeLevel * (dangerArrayProperties.height + 25) - dangerArrayProperties.height - 20;
 
-        ctx.drawImage(dangerArrayProperties.image, knifeX, knifeY);
+        ctx.drawImage(dangerArrayProperties.image[dangerArray[dangerIndex][knifeLevel]], knifeX, knifeY);
 
         //check collision
         let knifeW = dangerArrayProperties.width;
@@ -291,21 +303,24 @@ function renderFrame() {
         ctx.stroke();
         */
 
-
+        let legs = 30
         let dangleA = (knifeY + knifeH - dangleY) / Math.tan(dangleTheta);
         let adjustedH = Math.max(dangleY + Math.tan(dangleTheta) * (knifeX - dangleX - dangleW / 2), dangleY)
-        if (knifeY < dangleY + dangleH &&
+        // checks the top and bottom
+        if (knifeY < dangleY + dangleH - legs &&
           knifeY + knifeH > adjustedH) {
 
           console.log('vertical IN PATH!')
-          // check X
+          // checks the left and right side
           if (knifeX < dangleA + dangleW / 2 + dangleX && knifeX + knifeW > dangleX + dangleW / 2 - dangleA) {
-            console.log('HITTTTTTTTTT!')
+
+            // Collided
+            console.log('collided');
             window.clearInterval(gameTimer);
           }
         }
-        console.log('dangleA is... ', dangleA)
 
+        /*
         ctx.beginPath();
         ctx.moveTo(knifeX, 0);
         ctx.lineTo(knifeX, 300);
@@ -320,7 +335,7 @@ function renderFrame() {
         ctx.strokeStyle = "red";
         ctx.lineWidth = 2;
         ctx.stroke();
-
+*/
 
       }
     }
@@ -332,7 +347,7 @@ function renderFrame() {
   if (lastDangerElement > dangerArray.length - 1) {
     if (dangerArrayProperties.spacesSinceLastKnife >= dangerArrayProperties.minSpacesBeforeNextKnife) {
       let knifeArray = [0, 0, 0, 0, 0]
-      knifeArray[Math.floor(Math.random() * 5)] = 1;
+      knifeArray[Math.floor(Math.random() * 5)] = Math.floor(Math.random() * 7);
       dangerArray.push(knifeArray);
       dangerArrayProperties.spacesSinceLastKnife = 0;
     } else {

@@ -241,7 +241,7 @@
       setTimeout(function () {
         $('.jiggly-container').removeClass('rotate-jiggle');
       }, 100);
-    }, 2900);
+    }, 2100);
 
     $('.rsvp-btn').on('mouseover', function () {
       console.log('slow down the retraction. I am now sinister.');
@@ -268,24 +268,30 @@
         // small screens or mobile
         pokeySharpBit = 50;
       } else {
-        pokeySharpBit = 150;
+        pokeySharpBit = 180;
       }
 
       [l1, t1] = getPositionByExtendedOutAmount($this, -70);
       [l2, t2] = getPositionByExtendedOutAmount($this, pokeySharpBit);
+      [l3, t3] = getPositionByExtendedOutAmount($this, pokeySharpBit - 20);
 
       // Animation stack don't look gross
       $(this).animate({
         left: l1,
         top: t1
       }, 100)
-        .delay(1000)
+        .delay(100)
         .animate({
           left: l2,
           top: t2,
           opacity: 0.8,
-        }, 300)
+        }, 300, "easeOutQuad")
         .delay(1000)
+        .animate({
+          left: l3,
+          top: t3,
+          opacity: 0.8,
+        }, 200)
         .animate({
           left: x,
           top: y + verticalOffset
