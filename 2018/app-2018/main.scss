@@ -1,4 +1,4 @@
-html, body {
+body {
   position: fixed;
   left: 0px;
   top: 0px;
@@ -322,9 +322,23 @@ $dlwidth: 483 * $scale;
 }
 
 // Game Specific CSS
+.game-page {
+  html, body {
+    touch-action: manipulation;
+    background-color: #eee;
+    height: initial;
+    position: initial;
+    overflow: initial;
 
-body.game-page {
-  background-color: #eee;
+    // DISABLE ABILITY TO SELECT
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+supported by Chrome and Opera */
+  }
 
   .center-container {
     text-align: center;
@@ -347,6 +361,28 @@ body.game-page {
     padding: 40px;
     background-color: #333;
     vertical-align: top;
+
+    .smoots-run {
+      font-family: Arial;
+      font-size: 30px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
+    .smoots-subtext {
+      font-size: 20px;
+      opacity: 0.6;
+      padding-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .lives-left {
+      font-family: Arial;
+      font-size: 30px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
 
     h3 {
       font-size: 30px;
@@ -393,6 +429,49 @@ body.game-page {
       &:last-child {
         border-bottom: none;
       }
+    }
+
+    .mobile-control-btn {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 1100px) {
+    .canvas-container {
+      margin: 0 auto;
+      display: block;
+      width: 300px;
+      height: 300px;
+      overflow: hidden;
+
+      canvas {
+        position: relative;
+        left: -50%;
+        top: -50%;
+        transform: scale(0.5);
+      }
+    }
+
+    .instructions-container {
+      margin: 0 auto;
+      width: 220px;
+      height: initial;
+      display: block;
+    }
+
+    .big-screen-instrucions {
+      display: none;
+    }
+
+    .mobile-control-btn {
+      display: inline-block !important;
+      width: calc(100% - 40px);
+      padding: 20px;
+      font-size: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      border: 1px solid #eee;
     }
   }
 }

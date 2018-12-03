@@ -29,6 +29,15 @@ David: Well, we had one last year, so we should probably have a game this year a
 
 */
 
+var lastTouchEnd = 0;
+document.addEventListener('touchend', function (event) {
+  var now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
 enum GameState {
   CANVAS_GAME_PLAYING,
   CHARACTER_SELECTION,
@@ -39,9 +48,13 @@ enum GameState {
 let gameState: GameState = GameState.GAME_MENU;
 
 // let selectedDangleColor = 'pink';
+let smootsRun: number = 0;
 let gameTimer;
 let longholdTimer;
 let ctx: CanvasRenderingContext2D;
+
+let startingLivesNumber: number = 3;
+let lives: number = startingLivesNumber;
 
 const imageUrl = "../images/game/";
 let canvasSize = 600;
@@ -112,6 +125,8 @@ let spriteProperties: any = {
     isBent: false,
     width: 140,
     height: 140,
+    isInvincible: false,
+    characterOpacity: 1,
   }
 }
 
@@ -131,17 +146,16 @@ let dangerArrayProperties = {
   minSpacesBeforeNextKnife: 5
 }
 let dangerArray: any = [
-  [0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0],
   [0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0],
-  [0, 1, 0, 0, 0],
-  [0, 0, 0, 0, 0]
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1]
 ]
 
 let dangleCharacter = spriteProperties.dangle_pink;
-
 let keyUpIsDown = 0;
 
 for (const key in spriteProperties) {
@@ -201,6 +215,8 @@ function gameStart() {
 }
 
 function renderFrame() {
+  smootsRun += 0.5;
+  $('.smoots-run').text(Math.floor(smootsRun));
   ctx.clearRect(0, 0, canvasSize, canvasSize);
 
 
@@ -228,12 +244,14 @@ function renderFrame() {
         sprite.velocity.y = 0;
         sprite.position.y = 385
       }
+      ctx.globalAlpha = sprite.characterOpacity;
       if (sprite.isBent) {
         spriteImageName = sprite.image['bent'];
         ctx.drawImage(spriteImageName, sprite.position.x, sprite.position.y + 70);
       } else {
         ctx.drawImage(spriteImageName, sprite.position.x, sprite.position.y);
       }
+      ctx.globalAlpha = 1;
     } else {
       // normal sprite movement and generation
 
@@ -246,6 +264,7 @@ function renderFrame() {
       }
 
       ctx.drawImage(spriteImageName, sprite.position.x, sprite.position.y);
+
     }
   }
 
@@ -314,9 +333,39 @@ function renderFrame() {
           // checks the left and right side
           if (knifeX < dangleA + dangleW / 2 + dangleX && knifeX + knifeW > dangleX + dangleW / 2 - dangleA) {
 
-            // Collided
-            console.log('collided');
-            window.clearInterval(gameTimer);
+            if (!dangleCharacter.isInvincible) {
+              // Collided
+
+              if (lives < 1) {
+                window.clearInterval(gameTimer);
+              } else {
+                lives--;
+                $('.lives-left').text(lives)
+              }
+
+              // LOL IN THE SPIRIT OF GETTING THIS DONE
+              // SORRY, CALLBACK TREE
+              dangleCharacter.isInvincible = true;
+              dangleCharacter.characterOpacity = 0.3;
+              setTimeout(() => {
+                dangleCharacter.characterOpacity = 1;
+                setTimeout(() => {
+                  dangleCharacter.characterOpacity = 0.3;
+                  setTimeout(() => {
+                    dangleCharacter.characterOpacity = 1;
+                    setTimeout(() => {
+                      dangleCharacter.characterOpacity = 0.3;
+                      setTimeout(() => {
+                        dangleCharacter.characterOpacity = 1;
+                        dangleCharacter.isInvincible = false;
+                      }, 500)
+                    }, 300)
+                  }, 300)
+                }, 300)
+              }, 300)
+
+            }
+
           }
         }
 
@@ -368,37 +417,72 @@ $(() => {
     }
   })
 
-  $(document).keydown((e) => {
-    if (e.keyCode == 38) {
-      keyUpIsDown = 1;
-      // up you go
-      if (dangleCharacter.position.y == 385) {
-        dangleCharacter.velocity.y = -50;
-        longholdTimer = setTimeout(() => {
-          if (keyUpIsDown > 0) {
-            if (dangleCharacter.velocity.y < 0 && dangleCharacter.position.y < 380 && dangleCharacter.position.y > 200) {
-              dangleCharacter.velocity.y = -55;
-            }
+  function startJump() {
+
+    keyUpIsDown = 1;
+    // up you go
+    if (dangleCharacter.position.y == 385) {
+      dangleCharacter.velocity.y = -50;
+      longholdTimer = setTimeout(() => {
+        if (keyUpIsDown > 0) {
+          if (dangleCharacter.velocity.y < 0 && dangleCharacter.position.y < 380 && dangleCharacter.position.y > 200) {
+            dangleCharacter.velocity.y = -55;
           }
-        }, 120);
-      }
+        }
+      }, 200);
     }
-    if (e.keyCode == 40) {
-      dangleCharacter.isBent = true;
+  }
+
+  function endJump() {
+    keyUpIsDown = 0;
+    clearTimeout(longholdTimer);
+  }
+
+  function startBent() {
+    dangleCharacter.isBent = true;
+  }
+
+  function endBent() {
+    dangleCharacter.isBent = false;
+  }
+
+  $(document).keydown((e) => {
+    console.log(e.keyCode);
+    if (e.keyCode == 38 || e.keyCode == 32) {
+      startJump();
+    }
+    if (e.keyCode == 40 || e.keyCode == 16) {
+      startBent();
     }
     return false;
   });
 
   $(document).keyup((e) => {
-    if (e.keyCode == 40) {
-      dangleCharacter.isBent = false;
+    if (e.keyCode == 40 || e.keyCode == 16) {
+      endBent();
     }
-    if (e.keyCode == 38) {
-      keyUpIsDown = 0;
-      clearTimeout(longholdTimer);
+    if (e.keyCode == 38 || e.keyCode == 32) {
+      endJump();
     }
     return false;
   });
+
+  $('.jump-btn').on('mousedown touchstart', () => {
+    startJump();
+  });
+
+  $('.jump-btn').on('mouseup touchend', () => {
+    endJump();
+  });
+
+  $('.crouch-btn').on('mousedown touchstart', () => {
+    startBent();
+  });
+
+  $('.crouch-btn').on('mouseup touchend', () => {
+    endBent();
+  });
+
 
   $(document).on('click', '.dangle', function () {
     console.log($(this).data('dangleid'));
