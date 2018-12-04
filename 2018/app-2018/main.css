@@ -1,16 +1,18 @@
-html, body {
+body {
   position: fixed;
   left: 0px;
   top: 0px;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  font-family: steelfish_rg;
+  font-family: steelfish_rg, Arial, Helvetica, sans-serif; }
+
+body {
   background-color: #000; }
 
 @font-face {
   font-family: steelfish_rg;
-  src: url(steelfish_rg.ttf); }
+  src: url("./steelfish_rg.ttf"); }
 .background img {
   position: fixed;
   top: 0px;
@@ -72,6 +74,9 @@ html, body {
   min-width: 200px;
   height: 200px;
   position: absolute; }
+
+.rsvp-btn {
+  margin-right: 10px; }
 
 .danger-logo, .danger-logo-dust, .danger-logo-dust-2 {
   background-image: url("images/svg/danger-logo.svg");
@@ -242,6 +247,240 @@ html, body {
   .button-container {
     padding: 28px; }
     .button-container a {
-      width: calc(100% - 40px); } }
+      width: calc(100% - 40px); }
+
+  .presentation-info p {
+    font-size: 28px; }
+
+  .rsvp-btn {
+    margin-bottom: 15px; }
+
+  .bottom-btn {
+    display: block; } }
+.game-page html, .game-page body {
+  touch-action: manipulation;
+  background-color: #111;
+  position: initial;
+  overflow: initial;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+                       /* Non-prefixed version, currently
+supported by Chrome and Opera */ }
+.game-page .game-content {
+  margin-top: 100px; }
+.game-page .center-container {
+  text-align: center;
+  vertical-align: top;
+  font-size: 0;
+  position: relative; }
+.game-page .canvas-container {
+  display: inline-block;
+  vertical-align: top; }
+.game-page .game-container {
+  display: inline-block;
+  position: relative;
+  box-shadow: 0 0 50px 1px #000; }
+.game-page .overlay {
+  position: absolute;
+  color: #fff;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 2009;
+  justify-content: center;
+  flex-direction: column;
+  display: flex; }
+  .game-page .overlay .retry-btn, .game-page .overlay .start-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    border-radius: 2px;
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    transition: 0.2s all; }
+    .game-page .overlay .retry-btn:hover, .game-page .overlay .start-btn:hover {
+      cursor: pointer;
+      opacity: 1;
+      transition: 0.2s all; }
+  .game-page .overlay h3 {
+    font-size: 60px;
+    text-transform: uppercase;
+    margin-bottom: 20px; }
+  .game-page .overlay h4 {
+    font-size: 24px;
+    line-height: 29px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(255, 255, 255, 0.5);
+    width: 50%;
+    min-width: 300px;
+    margin: 0 auto 20px; }
+    .game-page .overlay h4 em {
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.9); }
+  .game-page .overlay .alternate {
+    margin-top: 20px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: Arial, Helvetica, sans-serif; }
+    .game-page .overlay .alternate .keyboard {
+      font-size: 12px; }
+.game-page .game-start-overlay {
+  background: none;
+  z-index: 2011; }
+.game-page .game-over-overlay {
+  opacity: 0; }
+  .game-page .game-over-overlay.show {
+    opacity: 1;
+    transition: 1s opacity; }
+.game-page .keyboard {
+  border: 2px solid #fff;
+  background-color: #111;
+  padding: 5px 8px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 3px;
+  margin: 0 6px;
+  font-size: 20px;
+  box-shadow: 0 4px 0 2px rgba(255, 255, 255, 0.5); }
+.game-page .instructions-container {
+  font-family: steelfish_rg, Arial, Helvetica, sans-serif;
+  color: #fff;
+  font-size: 16px;
+  display: inline-block;
+  width: 150px;
+  height: 520px;
+  padding: 40px;
+  position: relative;
+  z-index: 4000;
+  background-color: #333;
+  vertical-align: top; }
+  .game-page .instructions-container .smoots-run {
+    font-family: Arial;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px; }
+  .game-page .instructions-container .smoots-subtext {
+    font-size: 20px;
+    opacity: 0.6;
+    padding-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase; }
+  .game-page .instructions-container .lives-left {
+    font-family: Arial;
+    font-size: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px; }
+  .game-page .instructions-container h3 {
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 7px;
+    color: #eee;
+    text-transform: uppercase;
+    letter-spacing: 1.5px; }
+  .game-page .instructions-container .controls {
+    font-family: Arial;
+    margin-top: 0;
+    margin-bottom: 30px;
+    display: block; }
+  .game-page .instructions-container .alternative {
+    margin-top: 15px;
+    font-size: 12px;
+    opacity: 0.4; }
+    .game-page .instructions-container .alternative .keyboard {
+      font-size: 12px; }
+  .game-page .instructions-container .instruction-set {
+    border-bottom: 1px solid #999;
+    margin-bottom: 30px; }
+    .game-page .instructions-container .instruction-set:last-child {
+      border-bottom: none; }
+  .game-page .instructions-container .mobile-control-btn {
+    display: none; }
+@media only screen and (max-width: 1100px) {
+  .game-page .canvas-container {
+    margin: 0 auto;
+    display: block;
+    width: 300px;
+    height: 300px;
+    overflow: hidden; }
+    .game-page .canvas-container canvas {
+      position: relative;
+      left: -50%;
+      top: -50%;
+      transform: scale(0.5); }
+  .game-page .instructions-container {
+    margin: 0 auto;
+    width: 268px;
+    height: initial;
+    display: block;
+    padding: 16px; }
+  .game-page .instructions-container-top {
+    display: flex; }
+    .game-page .instructions-container-top h3 {
+      font-size: 20px;
+      margin-bottom: 4px; }
+    .game-page .instructions-container-top .instruction-set {
+      flex: 50% 1 1;
+      margin-bottom: 0;
+      border-bottom: none; }
+      .game-page .instructions-container-top .instruction-set:first-child {
+        border-right: 1px solid #eee; }
+      .game-page .instructions-container-top .instruction-set .smoots-run {
+        font-size: 24px;
+        margin: 2px;
+        margin-top: 0; }
+      .game-page .instructions-container-top .instruction-set .smoots-subtext {
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif; }
+  .game-page .overlay .game-start-message, .game-page .overlay .game-over-message {
+    position: relative;
+    top: -40px; }
+    .game-page .overlay .game-start-message h3, .game-page .overlay .game-over-message h3 {
+      font-size: 30px; }
+    .game-page .overlay .game-start-message h4, .game-page .overlay .game-over-message h4 {
+      min-width: 240px;
+      font-size: 16px;
+      line-height: 20px; }
+  .game-page .big-screen-instrucions {
+    display: none; }
+  .game-page .small-screen-buttons:last-child .mobile-control-btn {
+    margin-bottom: 0; }
+  .game-page .game-over-overlay .alternate {
+    display: none; }
+  .game-page .instruction-subtext {
+    margin-top: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px; }
+  .game-page .game-content {
+    margin-top: 20px; }
+  .game-page .mobile-control-btn {
+    display: inline-block !important;
+    width: calc(100% - 20px);
+    z-index: 3000;
+    padding: 10px;
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+    .game-page .mobile-control-btn:active {
+      background-color: #000;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); } }
 
 /*# sourceMappingURL=main.css.map */

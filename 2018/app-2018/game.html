@@ -11,6 +11,7 @@
 
 <body>
   <div class="front-page-content game-content">
+    <!--
     <div class="game-menu">
       Game Menu! What would you like to do?
       <div class="options">
@@ -28,54 +29,83 @@
         </ul>
       </div>
     </div>
+    -->
     <div class="center-container">
-      <div class="instructions-container">
-        <div class="instruction-set">
-          <h3>Distance Run</h3>
-          <div class="smoots-run">0</div>
-          <div class="smoots-subtext">smoots</div>
+      <div class="game-container">
+        <div class="game-start-overlay overlay">
+          <div class="game-start-message">
+            <h3>It's up to you!</h3>
+            <h4>The Dangles (Danger Triangles) are stuck in some pretty
+              precarious locations again. See how many
+              smoots you can run for without colliding with a knife!</h4>
+            <div class="start-btn">Begin!</div>
+          </div>
         </div>
-        <div class="instruction-set">
-          <h3>Lives</h3>
-          <div class="lives-left">3</div>
+        <div class="game-over-overlay overlay">
+          <div class="game-over-message">
+            <h3>Game Over!</h3>
+            <h4>You ran for <em><span class="smoots-run">83</span> Smoots</em>,
+              but <span class="death-note">unfortunately encountered a knife</span>.</h4>
+            <div class="retry-btn">Retry?</div>
+            <div class="alternate">or press <span class="keyboard">space</span></div>
+          </div>
         </div>
-      </div>
-      <div class="canvas-container">
-        <canvas id="ctx" width="600" height="600"></canvas>
-      </div>
-      <div class="instructions-container">
-        <div class="small-screen-buttons">
-          <div class="jump-btn mobile-control-btn">Jump!</div>
+        <div class="instructions-container instructions-container-top">
+          <div class="instruction-set">
+            <h3>Distance Run</h3>
+            <div class="smoots-run">0</div>
+            <div class="smoots-subtext">smoots</div>
+          </div>
+          <div class="instruction-set">
+            <h3>Lives Left</h3>
+            <div class="lives-left">2</div>
+          </div>
         </div>
-        <div class="small-screen-buttons">
-          <div class="crouch-btn mobile-control-btn">Crouch!</div>
+        <div class="canvas-container">
+          <canvas id="ctx" width="600" height="600"></canvas>
         </div>
+        <div class="instructions-container">
+          <div>
+            <div class="small-screen-buttons">
+              <div class="jump-btn mobile-control-btn">
+                <div class="instruction-function">Jump!</div>
+                <div class="instruction-subtext">hold to jump higher</div>
+              </div>
+            </div>
+            <div class="small-screen-buttons">
+              <div class="crouch-btn mobile-control-btn">
+                <div class="instruction-function">Crouch!</div>
+                <div class="instruction-subtext">earn less smoots</div>
+              </div>
+            </div>
+          </div>
 
-        <div class="big-screen-instrucions">
-          <div class="instruction-set">
-            <h3>short jump</h3>
-            <div class="controls">
-              <span class="keyboard">SPACE</span>
-              <div class="alternative">
-                or <span class="keyboard">UP</span>
+          <div class="big-screen-instrucions">
+            <div class="instruction-set">
+              <h3>short jump</h3>
+              <div class="controls">
+                <span class="keyboard">SPACE</span>
+                <div class="alternative">
+                  or <span class="keyboard">UP</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="instruction-set">
-            <h3>tall jump</h3>
-            <div class="controls">
-              Hold
-              <span class="keyboard">SPACE</span>
-              <div class="alternative">
-                or hold <span class="keyboard">UP</span>
+            <div class="instruction-set">
+              <h3>tall jump</h3>
+              <div class="controls">
+                Hold
+                <span class="keyboard">SPACE</span>
+                <div class="alternative">
+                  or hold <span class="keyboard">UP</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="instruction-set">
-            <h3>crouch</h3>
-            <div class="controls"><span class="keyboard">SHIFT</span>
-              <div class="alternative">
-                or <span class="keyboard">DOWN</span>
+            <div class="instruction-set">
+              <h3>crouch</h3>
+              <div class="controls"><span class="keyboard">SHIFT</span>
+                <div class="alternative">
+                  or <span class="keyboard">DOWN</span>
+                </div>
               </div>
             </div>
           </div>
