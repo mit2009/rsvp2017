@@ -75,9 +75,6 @@ body {
   height: 200px;
   position: absolute; }
 
-.rsvp-btn {
-  margin-right: 10px; }
-
 .danger-logo, .danger-logo-dust, .danger-logo-dust-2 {
   background-image: url("images/svg/danger-logo.svg");
   height: 100%;
@@ -119,6 +116,7 @@ body {
   padding: 80px;
   bottom: 0; }
   .button-container a {
+    margin-right: 10px;
     position: relative;
     left: 2.2px;
     font-size: 22.6px;
@@ -130,7 +128,12 @@ body {
     opacity: 1;
     transition: 0.2s all;
     border-radius: 2px;
-    background-color: rgba(0, 0, 0, 0.4); }
+    background-color: rgba(0, 0, 0, 0.4);
+    letter-spacing: 0.4px; }
+    .button-container a.webcast-btn {
+      box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.8); }
+    .button-container a:last-child {
+      margin-right: 0; }
     .button-container a:hover {
       opacity: 0.8;
       transition: 0.2s all; }
@@ -252,11 +255,11 @@ body {
   .presentation-info p {
     font-size: 28px; }
 
-  .rsvp-btn {
-    margin-bottom: 15px; }
-
   .bottom-btn {
-    display: block; } }
+    margin-bottom: 15px;
+    display: block; }
+    .bottom-btn:last-child {
+      margin-bottom: 0; } }
 .game-page html, .game-page body {
   touch-action: manipulation;
   background-color: #111;

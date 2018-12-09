@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" media="screen" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,500" rel="stylesheet">
+    <script src="js/iframeResizer.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <script src="js/scripts.js"></script> -->
+    <style>
+        iframe#twitter-iframe {
+            width: 1px;
+            min-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <a href="http://009super.com">Home</a>
+        <a href="index.html">Webcast</a>
+        <a class="active" href="productbrochures.html">Product Brochures</a>
+        <a href="program.pdf">Program</a>
+    </div>
+
+    <div class="social-media-icons">
+        <a class="instagram-icon icon" href="https://instagram.com/009mit/"></a>
+        <a class="twitter-icon icon" href="https://twitter.com/009minions/"></a>
+    </div>
+
+    <a href="http://mit.edu/2.009">
+        <div class="logo"></div>
+    </a>
+    <div class="content">
+    </div>
+    <script> 
+        $(function () {
+            var teams = {
+                blue: {
+                    color: "#3675BB",
+                    link: "blue.pdf",
+                    image: "blue.png"
+                },
+                orange: {
+                    color: "#F27421",
+                    link: "http://web.mit.edu/2.009/2017/Orange_brochure.pdf",
+                    image: "orange.png"
+                },
+                yellow: {
+                    color: "#FDD900",
+                    link: "yellow.pdf",
+                    image: "yellow.png"
+                },
+                green: {
+                    color: "#4FB648",
+                    link: "http://tatchi.cc",
+                    image: "green.png"
+                },
+                purple: {
+                    color: "#8A4C9D",
+                    link: "purple.pdf",
+                    image: "purple.png"
+                },
+                red: {
+                    color: "#EC1C24",
+                    link: "http://web.mit.edu/2.009/2017/Red_brochure.pdf",
+                    image: "red.png"
+                },
+                silver: {
+                    color: "#B2B4B6",
+                    link: "http://web.mit.edu/2.009/2017/Silver_brochure.pdf",
+                    image: "silver.png"
+                },
+                pink: {
+                    color: "#EF4681",
+                    link: "http://web.mit.edu/2.009/2017/Pink_brochure.pdf",
+                    image: "pink.png"
+                }
+            }
+            var $html = $('<div></div>');
+
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+
+                return array;
+            }
+
+            colours = shuffle(Object.keys(teams));
+
+            for (i in colours) {
+                colour = colours[i]
+                team = teams[colour];
+                $html.append(`<div>
+                    <a href="${team.link}" class="team" style="background-color:${team.color}">
+                        <div class="product-img" style="background-image:url(${team.image})">
+                        </div>
+                        ${colour}
+                    </a>
+            </div>`);
+            }
+            $('.content').html($html.html())
+        })
+
+    </script>
+    <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-71118626-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</body>
+
+</html>

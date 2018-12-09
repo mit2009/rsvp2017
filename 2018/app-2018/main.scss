@@ -88,10 +88,6 @@ body {
   position: absolute;
 }
 
-.rsvp-btn {
-  margin-right: 10px;
-}
-
 .danger-logo, .danger-logo-dust, .danger-logo-dust-2 {
   background-image: url('images/svg/danger-logo.svg');
   height: 100%;
@@ -138,6 +134,7 @@ body {
   bottom: 0;
 
   a {
+    margin-right: 10px;
     position: relative;
     left: 2.2px;
     font-size: 22.6px;
@@ -150,6 +147,15 @@ body {
     transition: 0.2s all;
     border-radius: 2px;
     background-color: rgba(0, 0, 0, 0.4);
+    letter-spacing: 0.4px;
+
+    &.webcast-btn {
+      box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
 
     &:hover {
       opacity: 0.8;
@@ -330,12 +336,13 @@ $dlwidth: 483 * $scale;
     }
   }
 
-  .rsvp-btn {
-    margin-bottom: 15px;
-  }
-
   .bottom-btn {
+    margin-bottom: 15px;
     display: block;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
