@@ -1,4 +1,4 @@
-var socket = io.connect('http://victorhung.com:8092');
+var socket = io.connect('http://http://159.65.161.189:8091');
 var $html = $('<div></div>')
 socket.on('tweet', function (data) {
     var images = '';
