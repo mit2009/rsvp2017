@@ -1,0 +1,104 @@
+* {cursor: none;}
+
+@font-face{
+  font-family: Museo_Sans;
+  src: url('../fonts/MuseoSans-500.otf');
+}
+
+body {
+  background-color: #000;
+  font-family: "Lato";
+  color: #FFFFFF;
+}
+
+.video-bounds {
+  width: 1920px;
+  height: 1080px;
+  position: relative;
+  overflow: hidden;
+}
+
+.text-container {
+}
+
+.lyrics-container {
+  font-weight: 300;
+  font-size: 50px;
+  left: 150px;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+.dot {
+  opacity: 0.8;
+  width: 500px;
+  height: 100px;
+  position: absolute;
+  left: -500px;
+  top: 31px;
+
+  /** 2018 EDITS **/
+  /** added padding to fit knife better **/
+  /** also changed backgroung-position to 30% (from 100%) **/
+  padding-top: 45px;
+  padding-left: 25px;
+  
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: right center;
+  z-index: -100;
+}
+
+.pink-knife {
+  background-image: url('../images/pink_knife_02.png');
+}
+
+.red-knife {
+  background-image: url('../images/red_knife_02.png');
+}
+
+.orange-knife {
+  background-image: url('../images/orange_knife_02.png');
+}
+
+.yellow-knife {
+  background-image: url('../images/yellow_knife_02.png');
+}
+
+.green-knife {
+  background-image: url('../images/green_knife_02.png');
+}
+
+.blue-knife {
+  background-image: url('../images/blue_knife_02.png');
+}
+
+.purple-knife {
+  background-image: url('../images/purple_knife_02.png');
+}
+
+.silver-knife {
+  background-image: url('../images/silver_knife_02.png');
+}
+
+.white-knife {
+  background-image: url('../images/white_knife_02.png');
+}
+
+.text-line {
+  opacity: 1;
+  padding: 0 40px 6px;
+  line-height: 80px;
+  border-radius: 5px;
+}
+
+.text-line span {
+  padding: 0 10px 6px;
+  border-radius: 5px;
+}
+
+.highlight {
+  opacity: 1;
+  font-weight: 700;
+}
