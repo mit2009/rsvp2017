@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+      "experimentalDecorators": true,
+      "jsx": "react",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noFallthroughCasesInSwitch": true,
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "noImplicitReturns": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "removeComments": false,
+      "sourceMap": true,
+      "stripInternal": true,
+      "skipLibCheck": true,
+      "target": "es5",
+      "baseUrl": ".",
+      "declaration": false,
+      "lib": [
+        "dom",
+        "es2015.core",
+        "es2015.collection",
+        "es2015.generator",
+        "es2015.iterable",
+        "es2015.promise",
+        "es2015.reflect",
+        "es2015.symbol",
+        "es5"
+      ],
+      "rootDir": ".",
+      "paths": {
+        "*": [
+          "../node_modules/@types/*"
+        ]
+      }
+    },
+    "exclude": [
+      "../node_modules"
+    ]
+  }
