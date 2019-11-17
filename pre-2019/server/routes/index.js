@@ -9,6 +9,11 @@ function getRouter() {
             layout: "layout",
         });
     });
+    router.get("/notify", function (_req, res) {
+        res.render("index", {
+            layout: "layout",
+        });
+    });
     router.get("/webcast", function (_req, res) {
         res.render("webcast", {
             layout: "layout",

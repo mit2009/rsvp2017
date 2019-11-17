@@ -10,6 +10,13 @@ export function getRouter() {
         });
     });
 
+
+    router.get("/notify", (_req: express.Request, res: express.Response) => {
+        res.render("index", {
+            layout: "layout",
+        });
+    });
+
     router.get("/webcast", (_req: express.Request, res: express.Response) => {
         res.render("webcast", {
             layout: "layout",
