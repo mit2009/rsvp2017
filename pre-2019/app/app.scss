@@ -1,5 +1,21 @@
+@import "reset.scss";
+
 html {
   height: 100%;
+}
+
+a {
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 8px 18px;
+  text-decoration: none;
+  color: #999;
+  letter-spacing: 3px;
+  font-size: 18px;
+  display: inline-block;
+  line-height: 24px;
+  box-shadow: 0px 4px 20px #000000;
+  transition: 0.4s all;
 }
 
 body {
