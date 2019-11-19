@@ -1,0 +1,118 @@
+<h2>Stadia Test</h2>
+<div id="content">
+    Name: <input id="name" type="text" /> <button id="start"> Start </button> <button id="stop" onclick="stop"> Stop </button> <br>
+    <canvas id="myCanvas" width="700" height="700" style="border:1px solid #000000;">
+
+    </canvas>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+    const startButton = document.getElementById('start');
+    const stopButton = document.getElementById('stop');
+    const name = document.getElementById('name');
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let intervalId = null;
+    let left = false;
+    let right = false;
+    let forward = false;
+    let fire = false;
+    let user = null;
+
+    const drawItem = function({
+        lastTime,
+        x,
+        y,
+        heading
+    }) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.fillRect(0,0, 700, 700);
+        ctx.save();
+        ctx.fillStyle = 'orange';
+        ctx.font = 'bold 48px serif';
+        ctx.textAlign = "center";
+        ctx.translate(x, y);
+        ctx.rotate(heading);
+        ctx.fillText('A', 0, 0);
+        ctx.restore();
+    }
+
+    const start = function() {
+        console.log("here");
+        user = name.value;
+        axios
+            .post("stadia/new", {
+                user
+            })
+            .then((res) => {
+                drawItem(res.data);
+                intervalId = setInterval(update, 100);
+            })
+            .catch((err) => console.log(err));
+    }
+
+    const update = function() {
+        axios
+            .post("stadia/update", {
+                user,
+                left,
+                right,
+                forward,
+                fire
+            })
+            .then((res) => {
+                drawItem(res.data);
+            })
+            .catch((err) => console.log(err));
+        fire = false;
+    }
+
+    const stop = function() {
+        clearInterval(intervalId);
+    }
+
+    const keyDownHandler = function(e) {
+        const key = e.key;
+        switch (key) {
+            case 'w':
+                forward = true;
+                break;
+            case 'a':
+                left = true;
+                break;
+            case 'd':
+                right = true;
+                break;
+            case ' ':
+                fire = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    const keyUpHandler = function(e) {
+        const key = e.key;
+        switch (key) {
+            case 'w':
+                forward = false;
+                break;
+            case 'a':
+                left = false;
+                break;
+            case 'd':
+                right = false;
+                break;
+            default:
+                break;
+        }
+    }
+
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    startButton.addEventListener("click", start);
+    stopButton.addEventListener("click", stop);
+</script>

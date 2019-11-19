@@ -5,6 +5,7 @@ import * as http from "http";
 import * as path from "path";
 
 import { getRouter } from "./routes/index";
+import { getRouter as getStadiaRouter } from "./routes/stadia";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/stadia", getStadiaRouter());
 app.use("/", getRouter());
 
 
