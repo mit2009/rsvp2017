@@ -16,5 +16,11 @@ export function getRouter() {
         });
     });
 
+    router.get("/game", (_req: express.Request, res: express.Response) => {
+        res.render("game", {
+            layout: "layout",
+        });
+    });
+
     return router;
 }

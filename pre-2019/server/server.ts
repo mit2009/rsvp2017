@@ -19,7 +19,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", getRouter());
 
-
 // catch 404 and forward to error handler
 app.use((req: express.Request, _res: express.Response, next: express.NextFunction) => {
     const err: any = new Error("Not Found: " + req.originalUrl);

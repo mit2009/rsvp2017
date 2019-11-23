@@ -14,6 +14,11 @@ function getRouter() {
             layout: "layout",
         });
     });
+    router.get("/game", function (_req, res) {
+        res.render("game", {
+            layout: "layout",
+        });
+    });
     return router;
 }
 exports.getRouter = getRouter;
