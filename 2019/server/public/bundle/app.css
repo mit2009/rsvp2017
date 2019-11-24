@@ -159,6 +159,14 @@ body {
     display: inline-block;
     width: 700px;
     position: relative; }
+  .home-page .mallow-container {
+    width: 900px;
+    height: 385px;
+    position: absolute;
+    left: -100px;
+    top: -100px;
+    border: 1px solid yellow;
+    z-index: 999; }
   .home-page .ignite-text {
     z-index: -1; }
   .home-page .flame-gif {

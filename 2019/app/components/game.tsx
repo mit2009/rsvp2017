@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { IGameRenderData } from "../../server/api/gameRenderData";
+import { IGameRenderData, ITeamColor } from "../../server/api/gameRenderData";
 import { getLevel } from "../../server/api/levelData";
 
 const BASE_RESOURCE_URL = "images/gameAssets/";
@@ -35,6 +35,8 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     private gameRenderData: IGameRenderData = {
         // SAMPLE DATA FORMAT HERE:
 
+        currentLevel: 1,
+        teamColor: ITeamColor.BLUE,
         imagesToRender: {
             player1: {
                 pos: { x: 60, y: 449, w: 30, h: 30 },

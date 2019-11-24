@@ -1,3 +1,15 @@
+
+export enum ITeamColor {
+    PINK,
+    RED,
+    ORANGE,
+    YELLOW,
+    GREEN,
+    BLUE,
+    PURPLE,
+    SILVER
+}
+
 export interface IShape {
     x: number;
     y: number;
@@ -11,6 +23,8 @@ export interface IRenderableImage {
 }
 
 export interface IGameRenderData {
+    currentLevel: number;
+    teamColor: ITeamColor;
     imagesToRender: {
         [player1: string]: IRenderableImage;
     };
