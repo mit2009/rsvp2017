@@ -27,17 +27,47 @@ body {
   width: 100%;
   height: 100%;
 
-  .flex-container{
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
+  // <div class="mallow mallow-blue in" />
+  // <div class="mallow mallow-pink out" />
+
+  .mallow {
+    // general class for EVERY mallow
+    // position absolute;
+
+    &.mallow-blue {
+      // background image for blue mallow
+
+      &.in {
+        // in position
+      }
+      &.out {
+        // out position
+      }
+    }
+
+    &.mallow-pink {
+      // background image
+
+      &.in {
+        // in position
+      }
+      &.out {
+        // out position
+      }
+    }
   }
 
-  .flex-item{
+  .flex-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .flex-item {
     display: inline-block;
     width: 700px;
     position: relative;
@@ -54,22 +84,21 @@ body {
     left: -245px;
   }
 
-  .info-title{
-    font-family: 'Fjalla One', sans-serif;
+  .info-title {
+    font-family: "Fjalla One", sans-serif;
     font-size: 40px;
     text-align: center;
     color: #ffffff;
     margin: 0px;
   }
 
-  .info-date{
-    font-family: 'Fjalla One', sans-serif;
+  .info-date {
+    font-family: "Fjalla One", sans-serif;
     font-size: 50px;
     text-align: center;
     color: #ffffff;
     margin: 0px;
   }
-
 }
 
 .game-page {

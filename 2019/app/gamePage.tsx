@@ -39,6 +39,17 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                         >
                             Play!
                         </button>
+                        <button
+                            onClick={() => {
+                                console.log("page click!");
+                                this.setState({
+                                    gameState: GameState.INSTRUCTIONS,
+                                });
+                            }}
+                            className="instructions-btn"
+                        >
+                            Instructions!
+                        </button>
                     </div>
                 );
                 break;
@@ -50,7 +61,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                             onClick={() => {
                                 console.log("page click!");
                                 this.setState({
-                                    gameState: GameState.PLAYING,
+                                    gameState: GameState.ATTRACT,
                                 });
                             }}
                             className="play-btn"
