@@ -35,21 +35,33 @@
     let user = null;
 
     const drawItem = function({
-        lastTime,
-        x,
-        y,
-        heading
+        player,
+        bullets
     }) {
+
+        console.log(player);
+        console.log(bullets);
+
         ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
         ctx.fillRect(0,0, 700, 700);
         ctx.save();
         ctx.fillStyle = 'orange';
         ctx.font = 'bold 48px serif';
         ctx.textAlign = "center";
-        ctx.translate(x, y);
-        ctx.rotate(heading);
+        ctx.translate(player.xcor, player.ycor);
+        ctx.rotate(player.heading);
         ctx.fillText('A', 0, 0);
         ctx.restore();
+
+        bullets.forEach(b => {
+            ctx.beginPath();
+            ctx.arc(b.xcor, b.ycor, 5, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'green';
+            ctx.fill();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = '#003300';
+            ctx.stroke();
+        });
     }
 
     const start = function() {
@@ -60,6 +72,7 @@
                 user
             })
             .then((res) => {
+                console.log(res.data);
                 drawItem(res.data);
                 intervalId = setInterval(update, 100);
             })

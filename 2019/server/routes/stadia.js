@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var router = express.Router();
+var game_1 = require("../utils/game");
 function getRouter() {
     var memory = {};
     // routes
@@ -12,34 +13,15 @@ function getRouter() {
     });
     router.post("/new", function (_req, res) {
         var user = _req.body.user;
-        var position = { lastTime: Date.now(), x: 350, y: 350, heading: 0 };
-        memory[user] = position;
-        res.json(position);
+        var game = new game_1.Game();
+        memory[user] = game;
+        res.json(game.getBlob());
     });
     router.post("/update", function (_req, res) {
         var _a = _req.body, user = _a.user, left = _a.left, right = _a.right, forward = _a.forward, fire = _a.fire;
-        var current = memory[user];
-        var currentTime = Date.now();
-        var timeDelta = (currentTime - current.lastTime) / 250;
-        // console.log(currentTime - current.lastTime);
-        if (left) {
-            current.heading -= 1 * timeDelta;
-        }
-        if (right) {
-            current.heading += 1 * timeDelta;
-        }
-        if (forward) {
-            console.log("here");
-            current.x += 60 * Math.sin(current.heading) * timeDelta;
-            current.y -= 60 * Math.cos(current.heading) * timeDelta;
-        }
-        console.log(current.x, current.y);
-        if (fire) {
-        }
-        current.lastTime = currentTime;
-        memory[user] = current;
-        ;
-        res.json(current);
+        var game = memory[user];
+        game.update(left, right, forward, fire);
+        res.json(game.getBlob());
     });
     return router;
 }
