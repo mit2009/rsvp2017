@@ -42,6 +42,24 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     </div>
                 );
                 break;
+            case GameState.INSTRUCTIONS:
+                html = (
+                    <div>
+                        <h1>Instructions!</h1>
+                        <button
+                            onClick={() => {
+                                console.log("page click!");
+                                this.setState({
+                                    gameState: GameState.PLAYING,
+                                });
+                            }}
+                            className="play-btn"
+                        >
+                            Back!
+                        </button>
+                    </div>
+                );
+                break;
             case GameState.PLAYING:
                 html = (
                     <div>
