@@ -18,6 +18,6 @@ export interface IGameRenderData {
     tiles: {
         pos: IShape;
         tileSize: number;
-        tileMap: number[][];
+        level: number;
     };
 };

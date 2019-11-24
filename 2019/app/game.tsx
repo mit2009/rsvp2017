@@ -1,11 +1,12 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { IGameRenderData } from "../server/api/gameRenderData";
+import { levelMap, getLevel } from "../server/api/levelData";
 
 const BASE_RESOURCE_URL = "images/gameAssets/";
 
-// const CANVAS_WIDTH = 700;
-const CANVAS_HEIGHT = 700;
+const CANVAS_WIDTH = 600;
+const CANVAS_HEIGHT = 600;
 
 export interface IImageAsset {
     resourceUrl: string;
@@ -62,25 +63,9 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         ],
 
         tiles: {
-            pos: { x: 60, y: 100 },
+            pos: { x: 60, y: 60 },
             tileSize: 30,
-            tileMap: [
-                [2, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [3, 3, 3, 3, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 1, 1, 1, 0, 1, 1, 3, 3, 2, 2, 2, 1, 1, 0, 1, 1, 1, 1],
-                [2, 0, 1, 1, 1, 3, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 1, 1, 1, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 1, 1, 1, 0, 3, 1, 1, 1, 1, 3, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 0, 1, 1, 0, 3, 1, 2, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 3, 1, 1, 1, 0, 1, 1, 1, 1],
-                [3, 0, 0, 3, 3, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-                [3, 0, 3, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
-            ],
+            level: 1,
         },
     };
 
@@ -90,20 +75,20 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
                 resourceUrl: "roopop.png",
                 loaded: false,
             },
-            tile0: {
+            tile1: {
                 resourceUrl: "tile0.png",
                 loaded: false,
             },
-            tile1: {
+            tile2: {
                 resourceUrl: "tile1.png",
                 loaded: false,
             },
-            tile2: {
+            tile3: {
                 resourceUrl: "tile2.png",
                 loaded: false,
                 heightOffset: -10,
             },
-            tile3: {
+            tile4: {
                 resourceUrl: "tile3.png",
                 loaded: false,
                 heightOffset: -20,
@@ -155,7 +140,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     public render() {
         return (
             <div>
-                <canvas ref={this.canvasRef} width={700} height={700} />
+                <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
             </div>
         );
     }
@@ -186,15 +171,17 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
             // Render the Tiles
 
             let lastY = 0;
-            for (let yIndex = 0; yIndex < data.tiles.tileMap.length; yIndex++) {
-                const row = data.tiles.tileMap[yIndex];
+            const tileMap = getLevel(data.tiles.level);
+
+            for (let yIndex = 0; yIndex < tileMap.length; yIndex++) {
+                const row = tileMap[yIndex];
 
                 for (let xIndex = 0; xIndex < row.length; xIndex++) {
                     const x = data.tiles.pos.x + xIndex * data.tiles.tileSize;
                     const y = data.tiles.pos.y + yIndex * data.tiles.tileSize;
                     lastY = y;
 
-                    const tileId = "tile" + data.tiles.tileMap[yIndex][xIndex];
+                    const tileId = "tile" + tileMap[yIndex][xIndex];
                     const imageData = this.imageStore[tileId];
                     const heightOffset = this.assets.images[tileId].heightOffset
                         ? this.assets.images[tileId].heightOffset
