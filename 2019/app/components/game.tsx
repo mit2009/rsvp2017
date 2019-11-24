@@ -1,8 +1,7 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
-import { IGameRenderData } from "../server/api/gameRenderData";
-import { getLevel } from "../server/api/levelData";
+import { IGameRenderData } from "../../server/api/gameRenderData";
+import { getLevel } from "../../server/api/levelData";
 
 const BASE_RESOURCE_URL = "images/gameAssets/";
 
@@ -288,4 +287,3 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         }
     }
 }
-ReactDOM.render(<GameApp />, document.getElementById("game-content"));

@@ -15,6 +15,7 @@ export interface IGameRenderData {
         [player1: string]: IRenderableImage;
     };
     bullets: IRenderableImage[];
+    monsters: IRenderableImage[];
     tiles: {
         pos: IShape;
         tileSize: number;
