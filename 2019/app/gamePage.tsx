@@ -6,13 +6,18 @@ import { GameApp } from "./components/game";
 enum GameState {
     ATTRACT,
     CHOOSE_CHARACTER,
+    STAGING,
     PLAYING,
     INSTRUCTIONS,
+    NAME_COLLECTION,
+    RECAPITULATE,
     ERROR,
+
 }
 
 export interface IGamePageState {
     gameState: GameState;
+    level: number;
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
@@ -20,6 +25,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         super(props);
         this.state = {
             gameState: GameState.ATTRACT,
+            level: 1,
         };
     }
 
@@ -30,7 +36,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 html = (
                     <div>
                         <h1>Intro Page!</h1>
-                        <button onClick={this.handleStart} className="play-btn">
+                        <button onClick={this.handleEnterGame} className="play-btn">
                             Play!
                         </button>
                         <button
@@ -52,6 +58,32 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     <div>
                         <h1>choose your character</h1>
                         <div onClick={this.handleCharacterSelect(ITeamColor.BLUE)}>blue</div>
+                    </div>
+                );
+                break;
+            case GameState.STAGING:
+                html = (
+                    <div>
+                        <h1>ready for level {this.state.level}</h1>
+                        <button onClick={this.handleStart}>Start Level (or hit enter)</button>
+                    </div>
+                );
+                break;
+            case GameState.NAME_COLLECTION:
+                html = (
+                    <div>
+                        <h1>you died</h1>
+                        <h2>your final score</h2>
+                        <input placeholder="Nickname" type="text" />
+                        <button onClick={this.handleNameSubmission}>Submit</button>
+                    </div>
+                );
+                break;
+            case GameState.RECAPITULATE:
+                html = (
+                    <div>
+                        <h1>you died</h1>
+                        <h2>your final score</h2>
                     </div>
                 );
                 break;
@@ -86,10 +118,24 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         return html;
     }
 
-    private handleStart = () => {
+    private handleEnterGame = () => {
         // post to server, store token in state
         this.setState({
             gameState: GameState.CHOOSE_CHARACTER,
+        });
+    };
+
+    private handleStart = () => {
+        // starts the game
+        this.setState({
+            gameState: GameState.PLAYING,
+        });
+    };
+
+    private handleNameSubmission = () => {
+        // starts the game
+        this.setState({
+            gameState: GameState.RECAPITULATE,
         });
     };
 
@@ -97,10 +143,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         return () => {
             console.log("submitting team color ", color);
             this.setState({
-                gameState: GameState.PLAYING,
+                gameState: GameState.STAGING,
             });
         };
-    }
+    };
 }
 
 ReactDOM.render(<GamePage />, document.getElementById("game-content"));

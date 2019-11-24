@@ -7,7 +7,7 @@ export enum ITeamColor {
     GREEN,
     BLUE,
     PURPLE,
-    SILVER
+    SILVER,
 }
 
 export interface IShape {
@@ -25,6 +25,7 @@ export interface IRenderableImage {
 export interface IGameRenderData {
     currentLevel: number;
     teamColor: ITeamColor;
+    livesLeft: number;
     imagesToRender: {
         [player1: string]: IRenderableImage;
     };
