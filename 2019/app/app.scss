@@ -1,3 +1,51 @@
+@import "reset.scss";
+
+html,
 body {
-  padding: 50px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+$navHeight: 30px;
+
+body {
+  background-color: #333;
+  color: #fff;
+}
+
+.navigation {
+  position: fixed;
+  top: 0;
+  background-color: #000;
+  width: 100%;
+  padding: 20px;
+  z-index: 1;
+}
+
+.game-page {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - #{$navHeight});
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .three-panel {
+    display: flex;
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .sidebar {
+    width: 200px;
+
+    &.sidebar-left {
+      background-color: rgb(89, 89, 119);
+    }
+    &.sidebar-right {
+      background-color: rgb(107, 148, 141);
+    }
+  }
 }

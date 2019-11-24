@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+
 import { IGameRenderData } from "../server/api/gameRenderData";
-import { levelMap, getLevel } from "../server/api/levelData";
+import { getLevel } from "../server/api/levelData";
 
 const BASE_RESOURCE_URL = "images/gameAssets/";
 
@@ -33,7 +34,6 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
 
     private gameRenderData: IGameRenderData = {
-
         // SAMPLE DATA FORMAT HERE:
 
         imagesToRender: {
@@ -159,8 +159,10 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
     public render() {
         return (
-            <div>
+            <div className="three-panel">
+                <div className="sidebar sidebar-left" />
                 <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+                <div className="sidebar sidebar-right" />
             </div>
         );
     }
