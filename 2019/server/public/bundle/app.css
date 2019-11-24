@@ -144,6 +144,41 @@ body {
   padding: 20px;
   z-index: 1; }
 
+.home-page {
+  width: 100%;
+  height: 100%; }
+  .home-page .flex-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%; }
+  .home-page .flex-item {
+    display: inline-block;
+    width: 700px;
+    position: relative; }
+  .home-page .ignite-text {
+    z-index: -1; }
+  .home-page .flame-gif {
+    z-index: 1;
+    position: absolute;
+    top: -368px;
+    left: -245px; }
+  .home-page .info-title {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 40px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0px; }
+  .home-page .info-date {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 50px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0px; }
+
 .game-page {
   text-align: center;
   position: absolute;
