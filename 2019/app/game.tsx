@@ -4,10 +4,14 @@ import { IGameRenderData } from "../server/api/gameRenderData";
 
 const BASE_RESOURCE_URL = "images/gameAssets/";
 
+// const CANVAS_WIDTH = 700;
+const CANVAS_HEIGHT = 700;
+
 export interface IImageAsset {
     resourceUrl: string;
     loaded: boolean;
     heightOffset?: number;
+    zIndex?: number;
 }
 
 export interface IAssets {
@@ -28,14 +32,37 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
 
     private gameRenderData: IGameRenderData = {
+
+        // SAMPLE DATA FORMAT HERE:
+
         imagesToRender: {
             player1: {
-                pos: { x: 60, y: 360, w: 30, h: 30 },
+                pos: { x: 60, y: 450, w: 30, h: 30 },
                 resourceId: "player1",
             },
+            background: {
+                pos: { x: 0, y: 0 },
+                resourceId: "background",
+            },
         },
+
+        bullets: [
+            {
+                pos: { x: 60, y: 60, w: 15, h: 22 },
+                resourceId: "bullet",
+            },
+            {
+                pos: { x: 100, y: 60, w: 15, h: 22 },
+                resourceId: "bullet",
+            },
+            {
+                pos: { x: 260, y: 60, w: 15, h: 22 },
+                resourceId: "bullet",
+            },
+        ],
+
         tiles: {
-            pos: { x: 50, y: 10 },
+            pos: { x: 60, y: 100 },
             tileSize: 30,
             tileMap: [
                 [2, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],
@@ -81,6 +108,16 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
                 loaded: false,
                 heightOffset: -20,
             },
+            bullet: {
+                resourceUrl: "bullet.png",
+                loaded: false,
+                heightOffset: -7,
+            },
+            background: {
+                resourceUrl: "background.png",
+                loaded: false,
+                zIndex: 0,
+            },
         },
     };
 
@@ -99,6 +136,9 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     public componentDidMount() {
         setInterval(() => {
             this.gameRenderData.imagesToRender.player1.pos.x = 1 + this.gameRenderData.imagesToRender.player1.pos.x;
+            this.gameRenderData.bullets[0].pos.y += 1;
+            this.gameRenderData.bullets[1].pos.x += 1;
+            this.gameRenderData.bullets[2].pos.y += 1;
             this.forceUpdate();
         }, 50);
     }
@@ -123,12 +163,10 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     private imageLoader() {
         for (const imageId of Object.keys(this.assets.images)) {
             const image = this.assets.images[imageId];
-            console.log(this.imageStore[imageId]);
 
             this.imageStore[imageId] = new Image();
             this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
             this.imageStore[imageId].onload = () => {
-
                 // TODO: build better loading mechanism
 
                 this.assets.images[imageId].loaded = true;
@@ -137,24 +175,24 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     }
 
     private drawGameAssets(context: CanvasRenderingContext2D) {
-        console.log(this.gameRenderData);
         const data = this.gameRenderData;
 
         if (context) {
+            // Render anything with a specified ZIndex
+            this.renderZIndexItems(context, data);
 
-            // Draw the Tiles
+            this.checkForDepthRender(context, data, 0, data.tiles.pos.y);
 
+            // Render the Tiles
+
+            let lastY = 0;
             for (let yIndex = 0; yIndex < data.tiles.tileMap.length; yIndex++) {
                 const row = data.tiles.tileMap[yIndex];
-                let lastY = 0;
 
                 for (let xIndex = 0; xIndex < row.length; xIndex++) {
                     const x = data.tiles.pos.x + xIndex * data.tiles.tileSize;
                     const y = data.tiles.pos.y + yIndex * data.tiles.tileSize;
                     lastY = y;
-
-                    const w = data.tiles.tileSize;
-                    const h = data.tiles.tileSize;
 
                     const tileId = "tile" + data.tiles.tileMap[yIndex][xIndex];
                     const imageData = this.imageStore[tileId];
@@ -166,28 +204,66 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
                 this.checkForDepthRender(context, data, lastY, lastY + data.tiles.tileSize);
             }
+
+            this.checkForDepthRender(context, data, lastY, CANVAS_HEIGHT);
         }
     }
 
+    // Checks the list of items to render with a zIndex. These will by
+    // default be rendered before the other elements
+    private renderZIndexItems(context: CanvasRenderingContext2D, data: IGameRenderData) {
+        const sortable = [];
+        for (const imageId of Object.keys(data.imagesToRender)) {
+            const item = data.imagesToRender[imageId];
+            const asset = this.assets.images[imageId];
+            if (asset.zIndex !== undefined) {
+                sortable.push([asset.zIndex, asset, item, imageId]);
+            }
+        }
+        sortable.sort((a: any, b: any) => {
+            return a[0] - b[0];
+        });
+        for (const imageProps of sortable) {
+            const [, , item, imageId] = imageProps;
+            // It'll be ok, but if you know of a better way to do this
+            // Please let me know.
+            // @ts-ignore
+            context.drawImage(this.imageStore[imageId], item.pos.x, item.pos.y);
+        }
+    }
+
+    // Ineffiencetly checks the list of items to render. If it falls
+    // within the range of the tile depth map, goes ahead and renders it
     private checkForDepthRender(
         context: CanvasRenderingContext2D,
         data: IGameRenderData,
         minDepth: number,
         maxDepth: number,
     ) {
+        // render all images to render
 
-        for (const itemToRenderId of Object.keys(this.gameRenderData.imagesToRender)) {
-            const itemToRender = this.gameRenderData.imagesToRender[itemToRenderId];
+        for (const itemToRenderId of Object.keys(data.imagesToRender)) {
+            const itemToRender = data.imagesToRender[itemToRenderId];
+
             const itemY = itemToRender.pos.y + itemToRender.pos.h;
 
-            if (itemY > minDepth && itemY <= maxDepth) {
+            if (itemY >= minDepth && itemY < maxDepth) {
                 context.drawImage(
-                    this.imageStore[data.imagesToRender.player1.resourceId],
-                    data.imagesToRender.player1.pos.x,
-                    data.imagesToRender.player1.pos.y,
-                    data.imagesToRender.player1.pos.w,
-                    data.imagesToRender.player1.pos.h,
+                    this.imageStore[data.imagesToRender[itemToRenderId].resourceId],
+                    data.imagesToRender[itemToRenderId].pos.x,
+                    data.imagesToRender[itemToRenderId].pos.y,
+                    data.imagesToRender[itemToRenderId].pos.w,
+                    data.imagesToRender[itemToRenderId].pos.h,
                 );
+            }
+        }
+
+        // render bullets
+
+        for (const bullet of this.gameRenderData.bullets) {
+            const itemY = bullet.pos.y + bullet.pos.h;
+            if (itemY > minDepth && itemY <= maxDepth) {
+                context.drawImage(this.imageStore[bullet.resourceId], bullet.pos.x, bullet.pos.y);
             }
         }
     }
