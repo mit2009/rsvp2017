@@ -38,7 +38,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
         imagesToRender: {
             player1: {
-                pos: { x: 60, y: 450, w: 30, h: 30 },
+                pos: { x: 60, y: 449, w: 30, h: 30 },
                 resourceId: "player1",
             },
             background: {
@@ -46,6 +46,13 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
                 resourceId: "background",
             },
         },
+
+        monsters: [
+            {
+                pos: { x: 60, y: 420, w: 24, h: 35 },
+                resourceId: "monster1",
+            },
+        ],
 
         bullets: [
             {
@@ -93,6 +100,18 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
                 loaded: false,
                 heightOffset: -20,
             },
+            tile5: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            tile6: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            monster1: {
+                resourceUrl: "monster1.png",
+                loaded: false,
+            },
             bullet: {
                 resourceUrl: "bullet.png",
                 loaded: false,
@@ -124,6 +143,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
             this.gameRenderData.bullets[0].pos.y += 1;
             this.gameRenderData.bullets[1].pos.x += 1;
             this.gameRenderData.bullets[2].pos.y += 1;
+            this.gameRenderData.monsters[0].pos.x += 2;
             this.forceUpdate();
         }, 50);
     }
@@ -198,6 +218,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
     // Checks the list of items to render with a zIndex. These will by
     // default be rendered before the other elements
+
     private renderZIndexItems(context: CanvasRenderingContext2D, data: IGameRenderData) {
         const sortable = [];
         for (const imageId of Object.keys(data.imagesToRender)) {
@@ -221,6 +242,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
     // Ineffiencetly checks the list of items to render. If it falls
     // within the range of the tile depth map, goes ahead and renders it
+
     private checkForDepthRender(
         context: CanvasRenderingContext2D,
         data: IGameRenderData,
@@ -251,6 +273,15 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
             const itemY = bullet.pos.y + bullet.pos.h;
             if (itemY > minDepth && itemY <= maxDepth) {
                 context.drawImage(this.imageStore[bullet.resourceId], bullet.pos.x, bullet.pos.y);
+            }
+        }
+
+        // render monster
+
+        for (const monster of this.gameRenderData.monsters) {
+            const itemY = monster.pos.y + monster.pos.h;
+            if (itemY > minDepth && itemY <= maxDepth) {
+                context.drawImage(this.imageStore[monster.resourceId], monster.pos.x, monster.pos.y);
             }
         }
     }
