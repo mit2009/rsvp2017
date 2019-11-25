@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as gameHandler from "../utils/gameHandler"
+import { getLeaderboard } from "../utils/leaderboard";
 const router = express.Router();
 
 export function getRouter() {
@@ -27,7 +28,21 @@ export function getRouter() {
     });
 
     router.post("/game/start", (_req: express.Request, res: express.Response) => {
+
         res.send(gameHandler.newGame());
+
+    });
+
+    router.post("/game/team", (_req: express.Request, res: express.Response) => {
+
+    });
+
+    router.post("/game/playername", (_req: express.Request, res: express.Response) => {
+
+    });
+
+    router.get("/game/leaderboard", (_req: express.Request, res: express.Response) => {
+        res.json(getLeaderboard());
     });
     //
     // router.post("/game/team", (_req: express.Request, res: express.Response) => {

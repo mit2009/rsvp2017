@@ -7,25 +7,33 @@ export interface ILeaderboardScore {
     score: number;
 }
 
+const fileLocation = "storage/leaderboard.json";
+
 // saves the score to our high tech database
 
 export function saveScore(score: ILeaderboardScore) {
-    fs.readFile("storage/leaderboard.json", (_err: any, contents: any) => {
-        const scores = JSON.parse(contents.toString()).leaderboard;
-        scores.push(score);
-        scores.sort((a: ILeaderboardScore, b: ILeaderboardScore) => {
-            return a.score - b.score;
-        });
+    const scores = getLeaderboard();
 
-        return scores;
+    // TODO: Duplicate Score Detection
+    // If players have both the same name and score, don't bother adding it
+    // That will save the tiny bits of space we have.
+    scores.push(score);
+    scores.sort((a: ILeaderboardScore, b: ILeaderboardScore) => {
+        return b.score - a.score;
     });
+
+    const result = fs.writeFileSync(fileLocation, JSON.stringify({ leaderboard: scores }));
+
+    console.log(result);
+    return scores;
+
 }
 
 // fetches the leaderboard, given a limit of results to retunr
-// default is 10
+// default is all
 
-export function getLeaderboard(limit?: number) {
-    if (limit === undefined) {
-        limit = 10;
-    }
+export function getLeaderboard() {
+    const contents = fs.readFileSync(fileLocation);
+    const scores = JSON.parse(contents.toString()).leaderboard;
+    return scores;
 }

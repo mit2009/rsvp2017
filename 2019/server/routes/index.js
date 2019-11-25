@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var gameHandler = require("../utils/gameHandler");
+var leaderboard_1 = require("../utils/leaderboard");
 var router = express.Router();
 function getRouter() {
     // routes
@@ -25,6 +26,13 @@ function getRouter() {
     });
     router.post("/game/start", function (_req, res) {
         res.send(gameHandler.newGame());
+    });
+    router.post("/game/team", function (_req, res) {
+    });
+    router.post("/game/playername", function (_req, res) {
+    });
+    router.get("/game/leaderboard", function (_req, res) {
+        res.json(leaderboard_1.getLeaderboard());
     });
     //
     // router.post("/game/team", (_req: express.Request, res: express.Response) => {
