@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { ITeamColor } from "../server/api/gameRenderData";
+import { TeamColor } from "../server/api/gameRenderData";
 import { GameApp } from "./components/game";
 
 enum GameState {
@@ -12,7 +12,6 @@ enum GameState {
     NAME_COLLECTION,
     RECAPITULATE,
     ERROR,
-
 }
 
 export interface IGamePageState {
@@ -57,7 +56,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 html = (
                     <div>
                         <h1>choose your character</h1>
-                        <div onClick={this.handleCharacterSelect(ITeamColor.BLUE)}>blue</div>
+                        <div onClick={this.handleCharacterSelect(TeamColor.BLUE)}>blue</div>
                     </div>
                 );
                 break;

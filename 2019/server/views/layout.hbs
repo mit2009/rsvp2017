@@ -55,12 +55,24 @@
             </label>
             <div class="mobile-menu">
                 <ul>
-                    <li class="active"><a href="/">Home</a></li>
-                    <li><a href="/game">Game</a></li>
-                    <li><a href="/webcast">Webcast</a></li>
-                    <li><a href="/products">Products</a></li>
-                    <li><a href="/program">Program</a></li>
-                    <li class="tickets"><a href="">Tickets</a></li>
+                    <li class="{{#if isHome}}active{{/if}}">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="{{#if isGame}}active{{/if}}">
+                        <a href="/game">Game</a>
+                    </li>
+                    <li class="{{#if isWebcast}}active{{/if}}">
+                        <a href="/webcast">Webcast</a>
+                    </li>
+                    <li class="{{#if isProducts}}active{{/if}}">
+                        <a href="/products">Products</a>
+                    </li>
+                    <li class="{{#if isProgram}}active{{/if}}">
+                        <a href="/program">Program</a>
+                    </li>
+                    <li class="tickets">
+                        <a href="">Tickets</a>
+                    </li>
                 </ul>
             </div>
         </div>

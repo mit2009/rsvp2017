@@ -70,6 +70,6 @@
     "react-day-picker": "^7.1.6",
     "react-dom": "^16.2.0",
     "react-select": "^1.2.1",
-    "socket.io": "^2.3.0"
+    "uifx": "^2.0.3"
   }
 }

@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // 2: short wall
 // 3: tall wall
 // 4: player starting location
-// 5: enemy 1 starting location
+// 5: enemy starting location
 // levels are formatted so they're easy to edit with a software called
 // TILED the free tile editing software
 // level software can be found here: https://thorbjorn.itch.io/tiled?download
