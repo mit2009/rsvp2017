@@ -1,9 +1,12 @@
+import { TeamColor } from "../api/gameRenderData";
+
 import * as express from "express";
-import * as gameHandler from "../utils/gameHandler"
-import { getLeaderboard } from "../utils/leaderboard";
+import * as gameHandler from "../utils/gameHandler";
+import { getLeaderboard, ILeaderboardScore, saveScore } from "../utils/leaderboard";
 const router = express.Router();
 
 export function getRouter() {
+
     // routes
 
     router.get("/", (_req: express.Request, res: express.Response) => {
@@ -28,20 +31,14 @@ export function getRouter() {
     });
 
     router.post("/game/start", (_req: express.Request, res: express.Response) => {
-
-        res.send(gameHandler.newGame());
-
+        res.json({ guid: gameHandler.newGame() });
     });
 
     router.post("/game/team", (_req: express.Request, res: express.Response) => {
-        const {guid, teamColor} = _req.body;
+        const { guid, teamColor } = _req.body;
         // console.log(_req.body);
         const success = gameHandler.changeTeam(guid, teamColor);
-        res.json({success});
-    });
-
-    router.post("/game/playername", (_req: express.Request, res: express.Response) => {
-
+        res.json({ success });
     });
 
     router.get("/game/leaderboard", (_req: express.Request, res: express.Response) => {
@@ -51,20 +48,27 @@ export function getRouter() {
     router.post("/game/team", (_req: express.Request, res: express.Response) => {
         const { guid, teamColor } = _req.body;
         const success = gameHandler.changeTeam(guid, teamColor);
-        res.json({success});
+        res.json({ success });
     });
-    //
-    // router.post("/game/playername", (_req: express.Request, res: express.Response) => {
-    //
-    // });
-    //
-    // router.get("/game/leaderoard", (_req: express.Request, res: express.Response) => {
-    //     return {
-    //         leaderoard: [
-    //
-    //         ]
-    //     }
-    // });
+
+    router.post("/game/playername", (_req: express.Request, res: express.Response) => {
+        // TODO: Logic here for associating the guid with the actual score
+        const { guid, playerName } = _req.body;
+        // TODO: Calculate their final score
+        const finalScore = Math.floor(Math.random() * 10000);
+
+        console.log(guid);
+        saveScore(
+            {
+                team: TeamColor.BLUE,
+                name: playerName,
+                score: finalScore,
+            },
+            (leaderboard: ILeaderboardScore[]) => {
+                res.json({ leaderboard, score: finalScore, success: true });
+            },
+        );
+    });
 
     return router;
 }

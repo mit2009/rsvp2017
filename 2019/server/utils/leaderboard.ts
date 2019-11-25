@@ -11,7 +11,7 @@ const fileLocation = "storage/leaderboard.json";
 
 // saves the score to our high tech database
 
-export function saveScore(score: ILeaderboardScore) {
+export function saveScore(score: ILeaderboardScore, callback?: (leaderboard: ILeaderboardScore[]) => void) {
     const scores = getLeaderboard();
 
     // TODO: Duplicate Score Detection
@@ -25,7 +25,7 @@ export function saveScore(score: ILeaderboardScore) {
     const result = fs.writeFileSync(fileLocation, JSON.stringify({ leaderboard: scores }));
 
     console.log(result);
-    return scores;
+    callback(scores);
 
 }
 

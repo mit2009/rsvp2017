@@ -17,5 +17,11 @@ var PlayMode;
     PlayMode[PlayMode["LOOP"] = 1] = "LOOP";
     PlayMode[PlayMode["STOP"] = 2] = "STOP";
 })(PlayMode = exports.PlayMode || (exports.PlayMode = {}));
-;
+var GameCommand;
+(function (GameCommand) {
+    GameCommand[GameCommand["WIN"] = 0] = "WIN";
+    GameCommand[GameCommand["MALLOW_HURT"] = 1] = "MALLOW_HURT";
+    GameCommand[GameCommand["MALLOW_DEATH"] = 2] = "MALLOW_DEATH";
+    GameCommand[GameCommand["MALLOW_MELT"] = 3] = "MALLOW_MELT";
+})(GameCommand = exports.GameCommand || (exports.GameCommand = {}));
 //# sourceMappingURL=gameRenderData.js.map

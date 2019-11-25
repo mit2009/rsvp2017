@@ -1,4 +1,3 @@
-
 export enum TeamColor {
     PINK,
     RED,
@@ -33,10 +32,19 @@ export interface ISoundClip {
     resourceId: string;
 }
 
+
+export enum GameCommand {
+    WIN,            // Win the level and move to next level
+    MALLOW_HURT,    // Mallow gets hit by a bullet but doesn't die
+    MALLOW_DEATH,   // Mallow dies
+    MALLOW_MELT,    // Mallow falls into melty lava of doom
+}
+
 export interface IGameRenderData {
     currentLevel: number;
     score: 100;
     teamColor: TeamColor;
+    gameCommand?: GameCommand;
     livesLeft: number;
     playSound?: ISoundClip[];
     imagesToRender: {
@@ -49,4 +57,4 @@ export interface IGameRenderData {
         tileSize: number;
         level: number;
     };
-};
+}

@@ -8,6 +8,9 @@ yarn-error.log*
 
 .vscode/
 
+# ignore bundle files
+bundle/
+
 superprogram-final.pdf
 
 .sass-cache/
