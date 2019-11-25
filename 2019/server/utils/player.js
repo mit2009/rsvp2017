@@ -5,7 +5,7 @@ var angles_1 = require("./angles");
 var levelData_1 = require("../api/levelData");
 var Player = /** @class */ (function () {
     function Player(xcor, ycor, heading) {
-        this.velocity = 3;
+        this.velocity = 10;
         this.xcor = (xcor + 0.5) * levelData_1.tileWidth;
         this.ycor = (ycor + 0.5) * levelData_1.tileHeight;
         this.startX = this.xcor;
@@ -35,7 +35,6 @@ var Player = /** @class */ (function () {
         }
         var xVel = this.velocity * Math.sin(this.heading) * timeDelta;
         var yVel = -this.velocity * Math.cos(this.heading) * timeDelta;
-        console.log("is dillon being dumb", xVel, yVel);
         if (up) {
             this.xcor += xVel;
             this.ycor += yVel;
