@@ -34,6 +34,9 @@ export const bulletHeight = 15;
 export const monsterWidth = 30;
 export const monsterHeight = 30;
 
+export const walls: number[] = [3,4];
+export const voids: number[] = [1];
+
 export const levelMap: ILevelMap = {
     1:
         // tslint:disable-next-line: prettier

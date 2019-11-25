@@ -47,11 +47,17 @@ export class Game {
         const playerData = this.levelData.playerLocation;
 
         this.player = new Player(playerData.x, playerData.y, 0);
-        this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, 1));
+        this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, 0, 1));
 
         this.lastUpdated = Date.now();
 
         return this.getBlob()
+    }
+
+    updateBullets(timeDelta: number) {
+        for (let b of this.bullets) {
+            b.update(timeDelta);
+        }
     }
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
@@ -59,14 +65,16 @@ export class Game {
         const timeDelta = (currentTime - this.lastUpdated) / 250
 
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-
-        this.bullets = this.bullets.filter((b) => b.update(timeDelta));
+        this.monsters.forEach((m) => m.update(timeDelta));
+        this.updateBullets(timeDelta);
 
         if (fire) {
             this.bullets.push(this.player.fireBullet());
         }
 
         this.lastUpdated = currentTime;
+
+        return this.getBlob();
     }
 
     getBlob() {

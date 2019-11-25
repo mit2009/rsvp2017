@@ -23,6 +23,8 @@ exports.bulletWidth = 15;
 exports.bulletHeight = 15;
 exports.monsterWidth = 30;
 exports.monsterHeight = 30;
+exports.walls = [3, 4];
+exports.voids = [1];
 exports.levelMap = {
     1: 
     // tslint:disable-next-line: prettier

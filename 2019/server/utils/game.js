@@ -25,19 +25,27 @@ var Game = /** @class */ (function () {
         this.levelData = levelData_1.getLevelData(this.currentLevel);
         var playerData = this.levelData.playerLocation;
         this.player = new player_1.Player(playerData.x, playerData.y, 0);
-        this.monsters = this.levelData.enemyLocation.map(function (m) { return new monster_1.Monster(m.x, m.y, 1); });
+        this.monsters = this.levelData.enemyLocation.map(function (m) { return new monster_1.Monster(m.x, m.y, 0, 1); });
         this.lastUpdated = Date.now();
         return this.getBlob();
+    };
+    Game.prototype.updateBullets = function (timeDelta) {
+        for (var _i = 0, _a = this.bullets; _i < _a.length; _i++) {
+            var b = _a[_i];
+            b.update(timeDelta);
+        }
     };
     Game.prototype.update = function (up, down, left, right, fire) {
         var currentTime = Date.now();
         var timeDelta = (currentTime - this.lastUpdated) / 250;
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-        this.bullets = this.bullets.filter(function (b) { return b.update(timeDelta); });
+        this.monsters.forEach(function (m) { return m.update(timeDelta); });
+        this.updateBullets(timeDelta);
         if (fire) {
             this.bullets.push(this.player.fireBullet());
         }
         this.lastUpdated = currentTime;
+        return this.getBlob();
     };
     Game.prototype.getBlob = function () {
         return {
