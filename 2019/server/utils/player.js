@@ -48,29 +48,32 @@ var Player = /** @class */ (function () {
         var mapX = this.xcor / levelData_1.tileWidth;
         for (var _i = 0, _a = [-0.5, 0, 0.5]; _i < _a.length; _i++) {
             var i = _a[_i];
-            if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapY)][Math.floor(mapX + i)])) {
-                this.xcor = (Math.floor(mapX) + 0.5) * levelData_1.tileWidth;
-            }
-            if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapY + i)][Math.floor(mapX)])) {
-                this.ycor = (Math.floor(mapY) + 0.5) * levelData_1.tileHeight;
+            for (var _b = 0, _c = [-0.5, 0, 0.5]; _b < _c.length; _b++) {
+                var j = _c[_b];
+                if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapY)][Math.floor(mapX + i)])) {
+                    this.xcor = (Math.floor(mapX) + 0.5) * levelData_1.tileWidth;
+                }
+                if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX)])) {
+                    this.ycor = (Math.floor(mapY) + 0.5) * levelData_1.tileHeight;
+                }
+                if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX + i)])) {
+                    this.xcor = (Math.floor(mapX) + 0.5) * levelData_1.tileWidth;
+                    this.ycor = (Math.floor(mapY) + 0.5) * levelData_1.tileHeight;
+                }
             }
         }
-        // const finalMapY = this.ycor / tileHeight;
-        // const finalMapX = this.xcor / tileWidth;
-        // if ([[-0.4999, -0.4999], [-0.4999, 0], [-0.4999, 0.4999],
-        //         [0, -0.4999], [0, 0], [0, 0.4999],
-        //         [0.4999, -0.4999], [0.4999, 0], [0.4999, 0.4999]].every(cor =>
-        //             ~voids.indexOf(
-        //                 levelMap[
-        //                     Math.floor(finalMapY + cor[0])
-        //                 ][
-        //                     Math.floor(finalMapX + cor[1])
-        //                 ]) != 0)) {
-        //     this.ycor = this.startY;
-        //     this.xcor = this.startX;
-        //     return false;
-        //
-        //         };
+        var finalMapY = this.ycor / levelData_1.tileHeight;
+        var finalMapX = this.xcor / levelData_1.tileWidth;
+        if ([[-0.4999, -0.4999], [-0.4999, 0], [-0.4999, 0.4999],
+            [0, -0.4999], [0, 0], [0, 0.4999],
+            [0.4999, -0.4999], [0.4999, 0], [0.4999, 0.4999]].every(function (cor) {
+            return ~levelData_1.voids.indexOf(levelMap[Math.floor(finalMapY + cor[0])][Math.floor(finalMapX + cor[1])]) != 0;
+        })) {
+            this.ycor = this.startY;
+            this.xcor = this.startX;
+            return false;
+        }
+        ;
         return true;
     };
     Player.prototype.getBlob = function () {
