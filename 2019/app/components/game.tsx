@@ -3,9 +3,9 @@ import * as React from "react";
 // import UIfx from "uifx";
 
 import { IGameRenderData, PlayMode, TeamColor } from "../../server/api/gameRenderData";
-import { getLevel } from "../../server/api/levelData";
+import { getLevel, heightOffset, tileWidth, tileHeight, widthOffset } from "../../server/api/levelData";
 
-const BASE_RESOURCE_URL = "images/gameAssets/";
+const BASE_RESOURCE_URL = "/images/gameAssets/";
 
 const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 600;
@@ -27,12 +27,16 @@ export interface IAssets {
     sounds?: { [soundId: string]: ISoundAsset };
 }
 
+export interface IGameAppProps {
+    gameData: IGameRenderData;
+}
 export interface IGameAppState {
     mallowColor: string;
     lastRecievedData?: IGameRenderData;
+
 }
 
-export class GameApp extends React.PureComponent<{}, IGameAppState> {
+export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private canvas: HTMLCanvasElement;
 
     private canvasRef: React.RefObject<HTMLCanvasElement>;
@@ -40,60 +44,62 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
 
-    private gameRenderData: IGameRenderData = {
-        // SAMPLE DATA FORMAT HERE:
+    private lastReceivedData: IGameRenderData;
 
-        currentLevel: 1,
-        score: 100,
-        teamColor: TeamColor.BLUE,
-        livesLeft: 3,
+    // private gameRenderData: IGameRenderData = {
+    //     // SAMPLE DATA FORMAT HERE:
 
-        playSound: [
-            {
-                playMode: PlayMode.ONCE,
-                resourceId: "pew",
-            },
-        ],
+    //     currentLevel: 1,
+    //     score: 100,
+    //     teamColor: TeamColor.BLUE,
+    //     livesLeft: 3,
 
-        imagesToRender: {
-            player1: {
-                pos: { x: 60, y: 449, w: 30, h: 30 },
-                resourceId: "player1",
-            },
-            background: {
-                pos: { x: 0, y: 0 },
-                resourceId: "background",
-            },
-        },
+    //     playSound: [
+    //         {
+    //             playMode: PlayMode.ONCE,
+    //             resourceId: "pew",
+    //         },
+    //     ],
 
-        monsters: [
-            {
-                pos: { x: 60, y: 420, w: 24, h: 35 },
-                resourceId: "monster1",
-            },
-        ],
+    //     imagesToRender: {
+    //         player1: {
+    //             pos: { x: 60, y: 449, w: 30, h: 30 },
+    //             resourceId: "player1",
+    //         },
+    //         background: {
+    //             pos: { x: 0, y: 0 },
+    //             resourceId: "background",
+    //         },
+    //     },
 
-        bullets: [
-            {
-                pos: { x: 60, y: 60, w: 15, h: 22 },
-                resourceId: "bullet",
-            },
-            {
-                pos: { x: 100, y: 60, w: 15, h: 22 },
-                resourceId: "bullet",
-            },
-            {
-                pos: { x: 260, y: 60, w: 15, h: 22 },
-                resourceId: "bullet",
-            },
-        ],
+    //     monsters: [
+    //         {
+    //             pos: { x: 60, y: 420, w: 24, h: 35 },
+    //             resourceId: "monster1",
+    //         },
+    //     ],
 
-        tiles: {
-            pos: { x: 60, y: 60 },
-            tileSize: 30,
-            level: 1,
-        },
-    };
+    //     bullets: [
+    //         {
+    //             pos: { x: 60, y: 60, w: 15, h: 22 },
+    //             resourceId: "bullet",
+    //         },
+    //         {
+    //             pos: { x: 100, y: 60, w: 15, h: 22 },
+    //             resourceId: "bullet",
+    //         },
+    //         {
+    //             pos: { x: 260, y: 60, w: 15, h: 22 },
+    //             resourceId: "bullet",
+    //         },
+    //     ],
+
+    //     tiles: {
+    //         pos: { x: 60, y: 60 },
+    //         tileSize: 30,
+    //         level: 1,
+    //     },
+    // };
 
     private assets: IAssets = {
         images: {
@@ -155,7 +161,6 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         this.canvasRef = React.createRef();
         this.state = {
             mallowColor: "green",
-            lastRecievedData: this.gameRenderData,
         };
 
         // Load assets
@@ -163,38 +168,60 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         this.soundLoader();
     }
 
+    public componentWillReceiveProps(props: any) {
+        console.log("RECIEVED NEW PROPS");
+        /*
+        this.setState({
+            lastRecievedData: props.data
+        })
+        */
+        // console.log(props.gameData);
+    }
+
     public componentDidMount() {
-        setInterval(() => {
-            this.gameRenderData.imagesToRender.player1.pos.x = 1 + this.gameRenderData.imagesToRender.player1.pos.x;
-            this.gameRenderData.bullets[0].pos.y += 1;
-            this.gameRenderData.bullets[1].pos.x += 1;
-            this.gameRenderData.bullets[2].pos.y += 1;
-            this.gameRenderData.monsters[0].pos.x += 2;
-            this.forceUpdate();
-        }, 50);
+
+        // setInterval(() => {
+        //     this.gameRenderData.imagesToRender.player1.pos.x = 1 + this.gameRenderData.imagesToRender.player1.pos.x;
+        //     this.gameRenderData.bullets[0].pos.y += 1;
+        //     this.gameRenderData.bullets[1].pos.x += 1;
+        //     this.gameRenderData.bullets[2].pos.y += 1;
+        //     this.gameRenderData.monsters[0].pos.x += 2;
+        //     this.forceUpdate();
+        // }, 50);
     }
 
     public componentDidUpdate() {
-        this.canvas = this.canvasRef.current;
-        this.ctx = this.canvas.getContext("2d");
+        console.log("COMPONENT DID UPDATE");
 
-        setTimeout(() => {
+        this.canvas = this.canvasRef.current;
+        console.log(this.canvas)
+
+        if (this.canvas !== null) {
+            this.ctx = this.canvas.getContext("2d");
             this.drawGameAssets(this.ctx);
-        }, 10);
+        }
+        // setTimeout(() => {
+        //     //
+        // }, 10);
     }
 
     public render() {
-        return (
-            <div className="three-panel">
-                <div className="sidebar sidebar-left">
-                    Level: {this.state.lastRecievedData.currentLevel}<br />
-                    Color: {this.state.lastRecievedData.teamColor}<br />
-                    Lives Left: {this.state.lastRecievedData.livesLeft}
+        console.log("RENDER");
+        if (this.props && this.props.gameData) {
+            return (
+                <div className="three-panel">
+                    <div className="sidebar sidebar-left">
+                        Level: {this.props.gameData.currentLevel}<br />
+                        Color: {this.props.gameData.teamColor}<br />
+                        Lives Left: {this.props.gameData.livesLeft}
+                    </div>
+                    <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
+                    <div className="sidebar sidebar-right" />
                 </div>
-                <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
-                <div className="sidebar sidebar-right" />
-            </div>
-        );
+            );
+        } else {
+            return (<div>loading...</div>);
+        }
     }
 
     private recieveNewData() {
@@ -210,9 +237,14 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
             this.imageStore[imageId] = new Image();
             this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
             this.imageStore[imageId].onload = () => {
+
                 // TODO: build better loading mechanism
 
                 this.assets.images[imageId].loaded = true;
+                this.forceUpdate();
+
+                console.log(this.assets);
+                console.log(this.imageStore);
             };
         }
     }
@@ -241,35 +273,41 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     // Draws the game assets
 
     private drawGameAssets(context: CanvasRenderingContext2D) {
-        const data = this.gameRenderData;
+        // const data = this.props;
 
-        if (context) {
+        console.log(this.props);
+        const data = this.props.gameData;
+
+        if (context && this.props.gameData) {
+
             // Render anything with a specified ZIndex
             this.renderZIndexItems(context, data);
-            this.checkForDepthRender(context, data, 0, data.tiles.pos.y);
+            this.checkForDepthRender(context, data, 0, heightOffset);
 
             // Render the Tiles
 
             let lastY = 0;
-            const tileMap = getLevel(data.tiles.level);
+            const tileMap = getLevel(data.currentLevel);
 
             for (let yIndex = 0; yIndex < tileMap.length; yIndex++) {
                 const row = tileMap[yIndex];
 
                 for (let xIndex = 0; xIndex < row.length; xIndex++) {
-                    const x = data.tiles.pos.x + xIndex * data.tiles.tileSize;
-                    const y = data.tiles.pos.y + yIndex * data.tiles.tileSize;
+
+                    const x = widthOffset + xIndex * tileWidth;
+                    const y = heightOffset + yIndex * tileHeight;
                     lastY = y;
 
                     const tileId = "tile" + tileMap[yIndex][xIndex];
                     const imageData = this.imageStore[tileId];
-                    const heightOffset = this.assets.images[tileId].heightOffset
+                    const graphicHeightOffset = this.assets.images[tileId].heightOffset
                         ? this.assets.images[tileId].heightOffset
                         : 0;
-                    context.drawImage(imageData, x, y + heightOffset);
+
+                    context.drawImage(imageData, x, y + graphicHeightOffset);
                 }
 
-                this.checkForDepthRender(context, data, lastY, lastY + data.tiles.tileSize);
+                this.checkForDepthRender(context, data, lastY, lastY + tileHeight);
             }
 
             this.checkForDepthRender(context, data, lastY, CANVAS_HEIGHT);
@@ -329,7 +367,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
         // render bullets
 
-        for (const bullet of this.gameRenderData.bullets) {
+        for (const bullet of this.props.gameData.bullets) {
             const itemY = bullet.pos.y + bullet.pos.h;
             if (itemY > minDepth && itemY <= maxDepth) {
                 context.drawImage(this.imageStore[bullet.resourceId], bullet.pos.x, bullet.pos.y);
@@ -338,7 +376,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
 
         // render monster
 
-        for (const monster of this.gameRenderData.monsters) {
+        for (const monster of this.props.gameData.monsters) {
             const itemY = monster.pos.y + monster.pos.h;
             if (itemY > minDepth && itemY <= maxDepth) {
                 context.drawImage(this.imageStore[monster.resourceId], monster.pos.x, monster.pos.y);

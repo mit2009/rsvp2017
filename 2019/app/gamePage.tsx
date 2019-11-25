@@ -162,7 +162,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             case GameState.PLAYING:
                 html = (
                     <div>
-                        <GameApp />
+                        <GameApp gameData={this.state.gameData} />
                     </div>
                 );
                 break;
