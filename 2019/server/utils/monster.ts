@@ -26,7 +26,7 @@ export class Monster {
             pos: {
                 x: this.xcor - monsterWidth / 2 + widthOffset,
                 y: this.ycor - monsterHeight / 2 + heightOffset,
-                heading: getBlobHeading(this.heading);
+                heading: getBlobHeading(this.heading),
                 w: monsterWidth,
                 h: monsterHeight
             } as IShape,

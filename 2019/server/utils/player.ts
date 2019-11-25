@@ -62,23 +62,32 @@ export class Player {
             this.ycor -= yVel;
         }
 
-        // const mapY = this.ycor / tileHeight;
-        // const mapX = this.xcor / tileWidth;
-        // for (let i of [-0.5, 0, 0.5]) {
-        //     if (walls.indexOf(levelMap[Math.floor(mapX + i)][Math.floor(mapY)])) {
-        //         this.xcor = (Math.floor(mapX) + 0.5) * tileWidth;
-        //     }
+        const mapY = this.ycor / tileHeight;
+        const mapX = this.xcor / tileWidth;
+        for (let i of [-0.5, 0, 0.5]) {
+            if (~walls.indexOf(levelMap[Math.floor(mapX + i)][Math.floor(mapY)])) {
+                this.xcor = (Math.floor(mapX) + 0.5) * tileWidth;
+            }
 
-        //     if (walls.indexOf(levelMap[Math.floor(mapX)][Math.floor(mapY + i)])) {
-        //         this.ycor = (Math.floor(mapY) + 0.5) * tileHeight;
-        //     }
-        // }
+            if (~walls.indexOf(levelMap[Math.floor(mapX)][Math.floor(mapY + i)])) {
+                this.ycor = (Math.floor(mapY) + 0.5) * tileHeight;
+            }
+        }
 
         // const finalMapY = this.ycor / tileHeight;
         // const finalMapX = this.xcor / tileWidth;
-        // if any([[-0.5, -0.5], [-0.5, 0], [-0.5, 0.5],
-        //         [0, -0.5], [0, 0], [0, 0.5],
-        //         [0.5, -0.5], [0.5, 0], [0.5, 0.5]].map(cor => ));
+        // if ([[-0.4999, -0.4999], [-0.4999, 0], [-0.4999, 0.4999],
+        //         [0, -0.4999], [0, 0], [0, 0.4999],
+        //         [0.4999, -0.4999], [0.4999, 0], [0.4999, 0.4999]].every(cor =>
+        //             ~voids.indexOf(
+        //                 levelMap[
+        //                     Math.floor(finalMapY + cor[0])
+        //                 ][
+        //                     Math.floor(finalMapX + cor[1])
+        //                 ]) != 0)) {
+        //     return false;
+        //
+        //         };
 
         return true;
     }

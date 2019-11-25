@@ -55,7 +55,7 @@ export function getLevel(level: number) {
 }
 
 export interface LevelData {
-    mapData: number[],
+    mapData: number[][],
     playerLocation: Coordinate,
     enemyLocation: Coordinate[]
 }
