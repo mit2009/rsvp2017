@@ -71,18 +71,18 @@ Server returns:
 
 ```
 {
-  leaderboard: [
-    {
+  leaderboard: {
+    1: {
       team: "BLUE",
       name: "Bob Dough",
       score: 6000,
     },
-    {
+    2: {
       team: "PINK",
       name: "Mallow mallw",
       score: 5600,
     }
     ...
-  ]
+  }
 }
 ```

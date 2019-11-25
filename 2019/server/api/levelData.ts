@@ -19,6 +19,9 @@ export interface ILevelMap {
 export const gridWidth = 16;
 export const gridHeight = 16;
 
+export const playerWidth = 30;
+export const playerHeight = 30;
+
 export const levelMap: ILevelMap = {
     1:
         // tslint:disable-next-line: prettier

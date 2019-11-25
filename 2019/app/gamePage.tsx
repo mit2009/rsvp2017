@@ -23,7 +23,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            gameState: GameState.ATTRACT,
+            gameState: GameState.PLAYING,
             level: 1,
         };
     }
@@ -138,7 +138,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         });
     };
 
-    private handleCharacterSelect(color: ITeamColor) {
+    private handleCharacterSelect(color: TeamColor) {
         return () => {
             console.log("submitting team color ", color);
             this.setState({

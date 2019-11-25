@@ -13,6 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // level software can be found here: https://thorbjorn.itch.io/tiled?download
 exports.gridWidth = 16;
 exports.gridHeight = 16;
+exports.playerWidth = 30;
+exports.playerHeight = 30;
 exports.levelMap = {
     1: 
     // tslint:disable-next-line: prettier

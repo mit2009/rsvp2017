@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import { IGameRenderData, TeamColor, PlayMode } from "../../server/api/gameRenderData";
+// import UIfx from "uifx";
+
+import { IGameRenderData, PlayMode, TeamColor } from "../../server/api/gameRenderData";
 import { getLevel } from "../../server/api/levelData";
 
 const BASE_RESOURCE_URL = "images/gameAssets/";
@@ -27,6 +29,7 @@ export interface IAssets {
 
 export interface IGameAppState {
     mallowColor: string;
+    lastRecievedData?: IGameRenderData;
 }
 
 export class GameApp extends React.PureComponent<{}, IGameAppState> {
@@ -142,9 +145,9 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         sounds: {
             pew: {
                 resourceUrl: "pew.mp4",
-                loaded: false
-            }
-        }
+                loaded: false,
+            },
+        },
     };
 
     constructor(props: any) {
@@ -152,11 +155,12 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         this.canvasRef = React.createRef();
         this.state = {
             mallowColor: "green",
+            lastRecievedData: this.gameRenderData,
         };
 
-        // Load all the images
-
+        // Load assets
         this.imageLoader();
+        this.soundLoader();
     }
 
     public componentDidMount() {
@@ -182,7 +186,11 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     public render() {
         return (
             <div className="three-panel">
-                <div className="sidebar sidebar-left" />
+                <div className="sidebar sidebar-left">
+                    Level: {this.state.lastRecievedData.currentLevel}<br />
+                    Color: {this.state.lastRecievedData.teamColor}<br />
+                    Lives Left: {this.state.lastRecievedData.livesLeft}
+                </div>
                 <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
                 <div className="sidebar sidebar-right" />
             </div>
@@ -190,7 +198,7 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
     }
 
     private recieveNewData() {
-        console.log('recieved new data, time to process it');
+        console.log("recieved new data, time to process it");
     }
 
     // Loads the images
@@ -209,6 +217,27 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         }
     }
 
+    // Loads the sounds
+
+    private soundLoader() {
+        for (const soundId of Object.keys(this.assets.sounds)) {
+            const sound = this.assets.sounds[soundId];
+
+            // TODO Implement sound player;
+            console.log(sound);
+
+            /*
+            this.imageStore[imageId] = new Image();
+            this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
+            this.imageStore[imageId].onload = () => {
+                // TODO: build better loading mechanism
+
+                this.assets.images[imageId].loaded = true;
+            };
+            */
+        }
+    }
+
     // Draws the game assets
 
     private drawGameAssets(context: CanvasRenderingContext2D) {
@@ -217,7 +246,6 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         if (context) {
             // Render anything with a specified ZIndex
             this.renderZIndexItems(context, data);
-
             this.checkForDepthRender(context, data, 0, data.tiles.pos.y);
 
             // Render the Tiles

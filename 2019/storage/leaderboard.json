@@ -1,0 +1,14 @@
+{
+    "leaderboard": [
+        {
+            "team": "BLUE",
+            "name": "Bob Dough",
+            "score": 6000
+        },
+        {
+            "team": "PINK",
+            "name": "Mallow mallw",
+            "score": 5600
+        }
+    ]
+}
