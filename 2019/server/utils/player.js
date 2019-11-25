@@ -28,12 +28,12 @@ var Player = /** @class */ (function () {
     Player.prototype.getBlob = function () {
         return {
             pos: {
-                x: this.xcor - levelData_1.playerWidth / 2,
-                y: this.ycor - levelData_1.playerHeight / 2,
+                x: this.xcor - levelData_1.playerWidth / 2 + levelData_1.widthOffset,
+                y: this.ycor - levelData_1.playerHeight / 2 + levelData_1.heightOffset,
                 w: levelData_1.playerWidth,
                 h: levelData_1.playerHeight
             },
-            resourceId: ''
+            resourceId: 'player1'
         };
     };
     return Player;

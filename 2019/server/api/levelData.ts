@@ -19,11 +19,20 @@ export interface ILevelMap {
 export const gridWidth = 16;
 export const gridHeight = 16;
 
+export const tileWidth = 30;
+export const tileHeight = 30;
+
+export const widthOffset = 2 * tileWidth;
+export const heightOffset = 2 * tileHeight;
+
 export const playerWidth = 30;
 export const playerHeight = 30;
 
 export const bulletWidth = 15;
 export const bulletHeight = 15;
+
+export const monsterWidth = 30;
+export const monsterHeight = 30;
 
 export const levelMap: ILevelMap = {
     1:
@@ -40,4 +49,37 @@ function toMatrix(arr: number[], width: number) {
 
 export function getLevel(level: number) {
     return toMatrix(levelMap[level], gridWidth);
+}
+
+export interface LevelData {
+    mapData: number[],
+    playerLocation: Coordinate,
+    enemyLocation: Coordinate[]
+}
+
+export interface Coordinate {
+    x: number,
+    y: number
+}
+
+export function getLevelData(level: number) {
+    const mapData = getLevel(level);
+    let playerLocation;
+    const enemyLocation = [];
+
+    for (let i=0; i < gridHeight; i++) {
+        for (let j=0; j < gridWidth; j++) {
+            if (mapData[i][j] == 4) {
+                playerLocation = {x:j, y:i};
+                mapData[i][j] = 1;
+            }
+            if (mapData[i][j] == 5) {
+                enemyLocation.push({x:j , y:i});
+                mapData[i][j] = 1;
+            }
+        }
+    }
+    return {
+        mapData, playerLocation, enemyLocation
+    } as LevelData
 }

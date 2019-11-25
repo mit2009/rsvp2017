@@ -1,7 +1,7 @@
 import { Bullet } from "./bullet";
 
 import { IRenderableImage, IShape } from "../api/gameRenderData";
-import { playerWidth, playerHeight } from "../api/levelData";
+import { playerWidth, playerHeight, widthOffset, heightOffset } from "../api/levelData";
 
 export class Player {
     xcor: number;
@@ -38,12 +38,12 @@ export class Player {
     getBlob() {
         return {
             pos: {
-                x: this.xcor - playerWidth / 2,
-                y: this.ycor - playerHeight / 2,
+                x: this.xcor - playerWidth / 2 + widthOffset,
+                y: this.ycor - playerHeight / 2 + heightOffset,
                 w: playerWidth,
                 h: playerHeight
             } as IShape,
-            resourceId: ''
+            resourceId: 'player1'
         } as IRenderableImage;
     }
 }

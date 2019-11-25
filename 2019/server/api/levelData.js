@@ -13,10 +13,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // level software can be found here: https://thorbjorn.itch.io/tiled?download
 exports.gridWidth = 16;
 exports.gridHeight = 16;
+exports.tileWidth = 30;
+exports.tileHeight = 30;
+exports.widthOffset = 2 * exports.tileWidth;
+exports.heightOffset = 2 * exports.tileHeight;
 exports.playerWidth = 30;
 exports.playerHeight = 30;
 exports.bulletWidth = 15;
 exports.bulletHeight = 15;
+exports.monsterWidth = 30;
+exports.monsterHeight = 30;
 exports.levelMap = {
     1: 
     // tslint:disable-next-line: prettier
@@ -32,4 +38,25 @@ function getLevel(level) {
     return toMatrix(exports.levelMap[level], exports.gridWidth);
 }
 exports.getLevel = getLevel;
+function getLevelData(level) {
+    var mapData = getLevel(level);
+    var playerLocation;
+    var enemyLocation = [];
+    for (var i = 0; i < exports.gridHeight; i++) {
+        for (var j = 0; j < exports.gridWidth; j++) {
+            if (mapData[i][j] == 4) {
+                playerLocation = { x: j, y: i };
+                mapData[i][j] = 1;
+            }
+            if (mapData[i][j] == 5) {
+                enemyLocation.push({ x: j, y: i });
+                mapData[i][j] = 1;
+            }
+        }
+    }
+    return {
+        mapData: mapData, playerLocation: playerLocation, enemyLocation: enemyLocation
+    };
+}
+exports.getLevelData = getLevelData;
 //# sourceMappingURL=levelData.js.map

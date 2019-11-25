@@ -1,4 +1,5 @@
 import * as socketio from "socket.io";
+import * as gameHandler from "../utils/gameHandler"
 
 interface SocketMap {
     [key: string]: socketio.Socket;
@@ -13,8 +14,18 @@ export function init(http: any) {
     io.on("connection", (socket) => {
         console.log(`${socket.id} connected`);
 
-        socket.on("init", (username: string) => {
-            socketmap[username] = socket;
+        socket.on("init", (guid: string) => {
+            console.log(guid);
+        });
+
+        socket.on("levelUp", (guid: string) => {
+            const blob = gameHandler.levelUp(guid);
+            socket.emit("levelData", JSON.stringify(blob));
+        });
+
+        socket.on("getUpdate", (guid: string) => {
+            const blob = gameHandler.update(guid);
+            socket.emit("levelUpdate", JSON.stringify(blob));
         });
 
         socket.on("disconnect", () => {

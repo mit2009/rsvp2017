@@ -31,12 +31,12 @@ var Bullet = /** @class */ (function () {
     Bullet.prototype.getBlob = function () {
         return {
             pos: {
-                x: this.xcor - levelData_1.bulletWidth / 2,
-                y: this.ycor - levelData_1.bulletHeight / 2,
+                x: this.xcor - levelData_1.bulletWidth / 2 + levelData_1.widthOffset,
+                y: this.ycor - levelData_1.bulletHeight / 2 + levelData_1.heightOffset,
                 w: levelData_1.bulletWidth,
                 h: levelData_1.bulletHeight
             },
-            resourceId: ''
+            resourceId: 'bullet'
         };
     };
     return Bullet;
