@@ -169,10 +169,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     }
 
     public componentDidUpdate() {
-        console.log("COMPONENT DID UPDATE");
-
         this.canvas = this.canvasRef.current;
-        console.log(this.canvas)
 
         if (this.canvas !== null) {
             this.ctx = this.canvas.getContext("2d");
@@ -184,7 +181,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     }
 
     public render() {
-        console.log("RENDER");
         if (this.props && this.props.gameData) {
             return (
                 <div className="three-panel">
@@ -202,10 +198,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         }
     }
 
-    private recieveNewData() {
-        console.log("recieved new data, time to process it");
-    }
-
     // Loads the images
 
     private imageLoader() {
@@ -220,9 +212,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
                 this.assets.images[imageId].loaded = true;
                 this.forceUpdate();
-
-                console.log(this.assets);
-                console.log(this.imageStore);
             };
         }
     }
@@ -252,8 +241,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
     private drawGameAssets(context: CanvasRenderingContext2D) {
         // const data = this.props;
-
-        console.log(this.props);
         const data = this.props.gameData;
 
         if (context && this.props.gameData) {
@@ -332,7 +319,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
             const itemY = itemToRender.pos.y + itemToRender.pos.h;
 
-            if (itemY >= minDepth && itemY < maxDepth) {
+            if (itemY > minDepth && itemY <= maxDepth) {
                 context.drawImage(
                     this.imageStore[data.imagesToRender[itemToRenderId].resourceId],
                     data.imagesToRender[itemToRenderId].pos.x,

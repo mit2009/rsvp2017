@@ -39,14 +39,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         this.socket = socketio("http://localhost:8001");
 
         this.socket.on("levelUpdate", (data: any) => {
-            console.log("levelupdate");
-            this.setState({
-                gameData: JSON.parse(data) as IGameRenderData,
-            });
-        });
-
-        this.socket.on("levelData", (data: any) => {
-            console.log("levelData");
             this.setState({
                 gameData: JSON.parse(data) as IGameRenderData,
             });
@@ -115,7 +107,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         document.removeEventListener("keyup", this.gameControlsRelease);
     }
     public render() {
-        console.log(this.socket);
 
         let html = <div>Loading...</div>;
         switch (this.state.gameState) {
