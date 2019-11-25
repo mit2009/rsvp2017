@@ -59,7 +59,6 @@ export class Game {
         const timeDelta = (currentTime - this.lastUpdated) / 250
 
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-        this.monsters.filter
 
         this.bullets = this.bullets.filter((b) => b.update(timeDelta));
 
