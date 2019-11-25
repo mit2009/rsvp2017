@@ -35,3 +35,10 @@ export function levelUp(guid: string) {
     }
     return errorResponse;
 }
+
+export function update(guid: string, up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
+    if (games.hasOwnProperty(guid)) {
+        return games[guid].update(up, down, left, right, fire);
+    }
+    return errorResponse;
+}

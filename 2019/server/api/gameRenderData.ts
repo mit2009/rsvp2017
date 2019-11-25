@@ -18,6 +18,7 @@ export enum PlayMode {
 export interface IShape {
     x: number;
     y: number;
+    heading?: number; // 0 - 7 like a clockwise starting North
     w?: number;
     h?: number;
 }

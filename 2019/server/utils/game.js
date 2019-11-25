@@ -29,10 +29,11 @@ var Game = /** @class */ (function () {
         this.lastUpdated = Date.now();
         return this.getBlob();
     };
-    Game.prototype.update = function (left, right, forward, fire) {
+    Game.prototype.update = function (up, down, left, right, fire) {
         var currentTime = Date.now();
         var timeDelta = (currentTime - this.lastUpdated) / 250;
-        this.player.update(timeDelta, left, right, forward);
+        this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
+        this.monsters.filter;
         this.bullets = this.bullets.filter(function (b) { return b.update(timeDelta); });
         if (fire) {
             this.bullets.push(this.player.fireBullet());

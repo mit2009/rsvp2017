@@ -1,14 +1,9 @@
 import * as socketio from "socket.io";
 import * as gameHandler from "../utils/gameHandler"
 
-interface SocketMap {
-    [key: string]: socketio.Socket;
-}
-
-const socketmap: SocketMap = {};
 let io: socketio.Server;
 
-export function init(http: any) {
+export function initSocket(http: any) {
     io = require("socket.io")(http);
 
     io.on("connection", (socket) => {
@@ -23,8 +18,8 @@ export function init(http: any) {
             socket.emit("levelData", JSON.stringify(blob));
         });
 
-        socket.on("getUpdate", (guid: string) => {
-            const blob = gameHandler.update(guid);
+        socket.on("getUpdate", (guid: string, up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) => {
+            const blob = gameHandler.update(guid, up, down, left, right, fire);
             socket.emit("levelUpdate", JSON.stringify(blob));
         });
 

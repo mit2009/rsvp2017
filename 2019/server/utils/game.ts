@@ -2,7 +2,7 @@ import { Bullet } from "./bullet";
 import { Player } from "./player";
 import { Monster } from "./monster";
 import { TeamColor, IGameRenderData } from "../api/gameRenderData"
-import { LevelData, Coordinate, getLevelData } from "../api/levelData"
+import { LevelData, getLevelData } from "../api/levelData"
 
 export class Game {
 
@@ -50,15 +50,16 @@ export class Game {
         this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, 1));
 
         this.lastUpdated = Date.now();
-        
+
         return this.getBlob()
     }
 
-    update(left: boolean, right: boolean, forward: boolean, fire: boolean) {
+    update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 250
 
-        this.player.update(timeDelta, left, right, forward);
+        this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
+        this.monsters.filter
 
         this.bullets = this.bullets.filter((b) => b.update(timeDelta));
 

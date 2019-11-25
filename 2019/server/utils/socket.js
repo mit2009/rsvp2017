@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var gameHandler = require("../utils/gameHandler");
-var socketmap = {};
 var io;
-function init(http) {
+function initSocket(http) {
     io = require("socket.io")(http);
     io.on("connection", function (socket) {
         console.log(socket.id + " connected");
@@ -14,8 +13,8 @@ function init(http) {
             var blob = gameHandler.levelUp(guid);
             socket.emit("levelData", JSON.stringify(blob));
         });
-        socket.on("getUpdate", function (guid) {
-            var blob = gameHandler.update(guid);
+        socket.on("getUpdate", function (guid, up, down, left, right, fire) {
+            var blob = gameHandler.update(guid, up, down, left, right, fire);
             socket.emit("levelUpdate", JSON.stringify(blob));
         });
         socket.on("disconnect", function () {
@@ -23,5 +22,5 @@ function init(http) {
         });
     });
 }
-exports.init = init;
+exports.initSocket = initSocket;
 //# sourceMappingURL=socket.js.map

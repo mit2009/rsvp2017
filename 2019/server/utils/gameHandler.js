@@ -27,4 +27,11 @@ function levelUp(guid) {
     return errorResponse;
 }
 exports.levelUp = levelUp;
+function update(guid, up, down, left, right, fire) {
+    if (games.hasOwnProperty(guid)) {
+        return games[guid].update(up, down, left, right, fire);
+    }
+    return errorResponse;
+}
+exports.update = update;
 //# sourceMappingURL=gameHandler.js.map
