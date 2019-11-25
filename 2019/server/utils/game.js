@@ -31,10 +31,7 @@ var Game = /** @class */ (function () {
         return this.getBlob();
     };
     Game.prototype.updateBullets = function (timeDelta) {
-        for (var _i = 0, _a = this.bullets; _i < _a.length; _i++) {
-            var b = _a[_i];
-            b.update(timeDelta);
-        }
+        this.bullets = this.bullets.filter(function (b) { return b.update(timeDelta); });
     };
     Game.prototype.update = function (up, down, left, right, fire) {
         var currentTime = Date.now();

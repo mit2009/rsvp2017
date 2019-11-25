@@ -56,9 +56,7 @@ export class Game {
     }
 
     updateBullets(timeDelta: number) {
-        for (let b of this.bullets) {
-            b.update(timeDelta);
-        }
+        this.bullets = this.bullets.filter(b => b.update(timeDelta));
     }
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {

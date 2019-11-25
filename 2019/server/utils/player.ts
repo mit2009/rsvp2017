@@ -20,7 +20,7 @@ export class Player {
         this.startX = this.xcor;
         this.startY = this.ycor;
 
-        this.heading = heading;
+        this.heading = 2.35619; //heading;
     }
 
     fireBullet() {
@@ -50,53 +50,75 @@ export class Player {
             this.heading += 1 * timeDelta;
         }
 
-        const xVel = this.velocity * Math.sin(this.heading) * timeDelta;
-        const yVel = -this.velocity * Math.cos(this.heading) * timeDelta;
+        let xVel = this.velocity * Math.sin(this.heading) * timeDelta;
+        let yVel = -this.velocity * Math.cos(this.heading) * timeDelta;
 
+        if (up && down) {
+            xVel = 0;
+            yVel = 0;
+        }
         if (up) {
+            xVel = xVel;
+            yVel = yVel;
+        }
+        if (down) {
+            xVel = -xVel;
+            yVel = -yVel;
+        }
+        if (up || down) {
             this.xcor += xVel;
             this.ycor += yVel;
         }
-        if (down) {
-            this.xcor -= xVel;
-            this.ycor -= yVel;
-        }
 
-        const mapY = this.ycor / tileHeight;
-        const mapX = this.xcor / tileWidth;
-        for (let i of [-0.5, 0, 0.5]) {
-            for (let j of [-0.5, 0, 0.5]) {
-                if (~walls.indexOf(levelMap[Math.floor(mapY)][Math.floor(mapX + i)])) {
-                    this.xcor = (Math.floor(mapX) + 0.5) * tileWidth;
+        const mapY = Math.floor(this.ycor / tileHeight);
+        const mapX = Math.floor(this.xcor / tileWidth);
+        const newY = (mapY + 0.5) * tileHeight;
+        const newX = (mapX + 0.5) * tileWidth;
+
+        let nonVoidCount = 0;
+        for (let cor of [[0, 0], [0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]]) {
+            const j = cor[0];
+            const i = cor[1];
+            if (~walls.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX + i)])) {
+                const wallY = (mapY + j + 0.5) * tileHeight;
+                const wallX = (mapX + i + 0.5) * tileWidth;
+                if (Math.abs(this.ycor - wallY) < 30 && Math.abs(this.xcor - wallX) < 30) {
+                    if (j && i) {
+                        if (Math.sign(yVel) == j && Math.sign(xVel) == i) {
+                            if (Math.abs(yVel) < Math.abs(xVel)) {
+                                this.ycor = newY;
+                                this.xcor += Math.sign(xVel);
+                            } else {
+                                this.ycor += Math.sign(xVel);
+                                this.xcor = newX;
+                            }
+                        } else if (Math.sign(yVel) == j) {
+                            this.ycor = newY;
+                        } else if (Math.sign(xVel) == i) {
+                            this.xcor = newX;
+                        }
+                    } else if (j) {
+                        this.ycor = newY;
+                    } else if (i) {
+                        this.xcor = newX;
+                    }
                 }
-
-                if (~walls.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX)])) {
-                    this.ycor = (Math.floor(mapY) + 0.5) * tileHeight;
-                }
-
-                if (~walls.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX + i)])) {
-                    this.xcor = (Math.floor(mapX) + 0.5) * tileWidth;
-                    this.ycor = (Math.floor(mapY) + 0.5) * tileHeight;
+                continue;
+            }
+            if (voids.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX + i)]) == -1) {
+                const voidY = (mapY + j + 0.5) * tileHeight;
+                const voidX = (mapX + i + 0.5) * tileWidth;
+                if (Math.abs(this.ycor - voidY) < 30 && Math.abs(this.xcor - voidX) < 30) {
+                    nonVoidCount += 1;
                 }
             }
         }
 
-        const finalMapY = this.ycor / tileHeight;
-        const finalMapX = this.xcor / tileWidth;
-        if ([[-0.4999, -0.4999], [-0.4999, 0], [-0.4999, 0.4999],
-                [0, -0.4999], [0, 0], [0, 0.4999],
-                [0.4999, -0.4999], [0.4999, 0], [0.4999, 0.4999]].every(cor =>
-                    ~voids.indexOf(
-                        levelMap[
-                            Math.floor(finalMapY + cor[0])
-                        ][
-                            Math.floor(finalMapX + cor[1])
-                        ]) != 0)) {
-            this.ycor = this.startY;
+        if (nonVoidCount == 0) {
             this.xcor = this.startX;
+            this.ycor = this.startY;
             return false;
-
-                };
+        }
 
         return true;
     }
