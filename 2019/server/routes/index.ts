@@ -25,5 +25,25 @@ export function getRouter() {
         });
     });
 
+    router.post("/game/start", (_req: express.Request, res: express.Response) => {
+        
+    });
+
+    router.post("/game/team", (_req: express.Request, res: express.Response) => {
+
+    });
+
+    router.post("/game/playername", (_req: express.Request, res: express.Response) => {
+
+    });
+
+    router.get("/game/leaderoard", (_req: express.Request, res: express.Response) => {
+        return {
+            leaderoard: [
+
+            ]
+        }
+    });
+
     return router;
 }

@@ -22,6 +22,17 @@ function getRouter() {
             isGame: true,
         });
     });
+    router.post("/game/start", function (_req, res) {
+    });
+    router.post("/game/team", function (_req, res) {
+    });
+    router.post("/game/playername", function (_req, res) {
+    });
+    router.get("/game/leaderoard", function (_req, res) {
+        return {
+            leaderoard: []
+        };
+    });
     return router;
 }
 exports.getRouter = getRouter;
