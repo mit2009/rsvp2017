@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { IGameRenderData, ITeamColor } from "../../server/api/gameRenderData";
+import { IGameRenderData, TeamColor, PlayMode } from "../../server/api/gameRenderData";
 import { getLevel } from "../../server/api/levelData";
 
 const BASE_RESOURCE_URL = "images/gameAssets/";
@@ -15,9 +15,14 @@ export interface IImageAsset {
     zIndex?: number;
 }
 
+export interface ISoundAsset {
+    resourceUrl: string;
+    loaded: boolean;
+}
+
 export interface IAssets {
     images: { [imageId: string]: IImageAsset };
-    sounds?: string[];
+    sounds?: { [soundId: string]: ISoundAsset };
 }
 
 export interface IGameAppState {
@@ -36,7 +41,17 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         // SAMPLE DATA FORMAT HERE:
 
         currentLevel: 1,
-        teamColor: ITeamColor.BLUE,
+        score: 100,
+        teamColor: TeamColor.BLUE,
+        livesLeft: 3,
+
+        playSound: [
+            {
+                playMode: PlayMode.ONCE,
+                resourceId: "pew",
+            },
+        ],
+
         imagesToRender: {
             player1: {
                 pos: { x: 60, y: 449, w: 30, h: 30 },
@@ -124,6 +139,12 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
                 zIndex: 0,
             },
         },
+        sounds: {
+            pew: {
+                resourceUrl: "pew.mp4",
+                loaded: false
+            }
+        }
     };
 
     constructor(props: any) {
@@ -168,6 +189,12 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
         );
     }
 
+    private recieveNewData() {
+        console.log('recieved new data, time to process it');
+    }
+
+    // Loads the images
+
     private imageLoader() {
         for (const imageId of Object.keys(this.assets.images)) {
             const image = this.assets.images[imageId];
@@ -181,6 +208,8 @@ export class GameApp extends React.PureComponent<{}, IGameAppState> {
             };
         }
     }
+
+    // Draws the game assets
 
     private drawGameAssets(context: CanvasRenderingContext2D) {
         const data = this.gameRenderData;

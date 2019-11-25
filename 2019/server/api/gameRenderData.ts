@@ -1,5 +1,5 @@
 
-export enum ITeamColor {
+export enum TeamColor {
     PINK,
     RED,
     ORANGE,
@@ -8,6 +8,12 @@ export enum ITeamColor {
     BLUE,
     PURPLE,
     SILVER,
+}
+
+export enum PlayMode {
+    ONCE,
+    LOOP,
+    STOP,
 }
 
 export interface IShape {
@@ -22,16 +28,23 @@ export interface IRenderableImage {
     resourceId: string;
 }
 
+export interface ISoundClip {
+    playMode: PlayMode;
+    resourceId: string;
+}
+
 export interface IGameRenderData {
     currentLevel: number;
-    teamColor: ITeamColor;
+    score: 100;
+    teamColor: TeamColor;
     livesLeft: number;
+    playSound?: ISoundClip[];
     imagesToRender: {
         [player1: string]: IRenderableImage;
     };
     bullets: IRenderableImage[];
     monsters: IRenderableImage[];
-    tiles: {
+    tiles?: {
         pos: IShape;
         tileSize: number;
         level: number;

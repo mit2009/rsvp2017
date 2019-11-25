@@ -138,11 +138,11 @@ body {
 
 .navigation {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&1+1,0+100 */
-  background: -moz-linear-gradient(top, black 0%, black 1%, rgba(0, 0, 0, 0) 100%);
+  background: -moz-linear-gradient(top, black 0%, rgba(0, 0, 0, 0) 100%);
   /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, black 0%, black 1%, rgba(0, 0, 0, 0) 100%);
+  background: -webkit-linear-gradient(top, black 0%, rgba(0, 0, 0, 0) 100%);
   /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, black 0%, black 1%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0) 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00000000',GradientType=0 );
   /* IE6-9 */
@@ -151,7 +151,7 @@ body {
   left: 0;
   right: 0;
   z-index: 2;
-  padding: 20px 20px 40px; }
+  padding: 20px 20px 60px; }
   .navigation .logo-container {
     background-image: url("/images/mallow-icon.png");
     background-repeat: no-repeat;
@@ -349,6 +349,14 @@ body {
   .navigation .desktop {
     display: none; }
   .navigation .mobile {
-    display: block; } }
+    display: block; }
+  .game-page .three-panel {
+    width: 300px;
+    flex-wrap: wrap; }
+  .game-page canvas {
+    width: 100%; }
+  .game-page .sidebar {
+    width: 100%;
+    height: 150px; } }
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
