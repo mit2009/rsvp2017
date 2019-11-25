@@ -1,7 +1,7 @@
 import { Bullet } from "./bullet";
 import { getBlobHeading } from "./angles";
 import { IRenderableImage, IShape } from "../api/gameRenderData";
-import { playerWidth, playerHeight, widthOffset, heightOffset, tileWidth, tileHeight, walls, voids} from "../api/levelData";
+import { playerWidth, playerHeight, widthOffset, heightOffset, tileWidth, tileHeight, walls, voids } from "../api/levelData";
 
 export class Player {
     startX: number;
@@ -32,7 +32,7 @@ export class Player {
         let counter = 0;
 
         while (counter + increment < timeDelta) {
-            if (! this.updateHelper(increment, up, down, left, right, levelMap)) {
+            if (!this.updateHelper(increment, up, down, left, right, levelMap)) {
                 return false
             }
             counter += increment;
@@ -42,16 +42,17 @@ export class Player {
     }
 
     updateHelper(timeDelta: number, up: boolean, down: boolean, left: boolean, right: boolean, levelMap: number[][]) {
-        console.log(levelMap);
+
         if (left) {
-          this.heading -= 1 * timeDelta;
+            this.heading -= 1 * timeDelta;
         }
         if (right) {
-          this.heading += 1 * timeDelta;
+            this.heading += 1 * timeDelta;
         }
 
         const xVel = this.velocity * Math.sin(this.heading) * timeDelta;
-        const yVel = -this.velocity * Math.cos(this.heading)  * timeDelta;
+        const yVel = -this.velocity * Math.cos(this.heading) * timeDelta;
+        console.log("is dillon being dumb", xVel, yVel);
         if (up) {
             this.xcor += xVel;
             this.ycor += yVel;
@@ -61,17 +62,17 @@ export class Player {
             this.ycor -= yVel;
         }
 
-        const mapY = this.ycor / tileHeight;
-        const mapX = this.xcor / tileWidth;
-        for (let i of [-0.5, 0, 0.5]) {
-            if (walls.indexOf(levelMap[Math.floor(mapX + i)][Math.floor(mapY)])) {
-                this.xcor = (Math.floor(mapX) + 0.5) * tileWidth;
-            }
+        // const mapY = this.ycor / tileHeight;
+        // const mapX = this.xcor / tileWidth;
+        // for (let i of [-0.5, 0, 0.5]) {
+        //     if (walls.indexOf(levelMap[Math.floor(mapX + i)][Math.floor(mapY)])) {
+        //         this.xcor = (Math.floor(mapX) + 0.5) * tileWidth;
+        //     }
 
-            if (walls.indexOf(levelMap[Math.floor(mapX)][Math.floor(mapY + i)])) {
-                this.ycor = (Math.floor(mapY) + 0.5) * tileHeight;
-            }
-        }
+        //     if (walls.indexOf(levelMap[Math.floor(mapX)][Math.floor(mapY + i)])) {
+        //         this.ycor = (Math.floor(mapY) + 0.5) * tileHeight;
+        //     }
+        // }
 
         // const finalMapY = this.ycor / tileHeight;
         // const finalMapX = this.xcor / tileWidth;

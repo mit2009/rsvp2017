@@ -43,6 +43,7 @@ export class Game {
         this.bullets = [];
         this.monsters = [];
 
+        console.log("Level", this.currentLevel);
         this.levelData = getLevelData(this.currentLevel);
         const playerData = this.levelData.playerLocation;
 

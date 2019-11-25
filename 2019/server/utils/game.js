@@ -22,6 +22,7 @@ var Game = /** @class */ (function () {
         this.currentLevel += 1;
         this.bullets = [];
         this.monsters = [];
+        console.log("Level", this.currentLevel);
         this.levelData = levelData_1.getLevelData(this.currentLevel);
         var playerData = this.levelData.playerLocation;
         this.player = new player_1.Player(playerData.x, playerData.y, 0);

@@ -34,7 +34,7 @@ export const bulletHeight = 15;
 export const monsterWidth = 30;
 export const monsterHeight = 30;
 
-export const walls: number[] = [3,4];
+export const walls: number[] = [3, 4];
 export const voids: number[] = [1];
 
 export const levelMap: ILevelMap = {
@@ -70,14 +70,14 @@ export function getLevelData(level: number) {
     let playerLocation;
     const enemyLocation = [];
 
-    for (let i=0; i < gridHeight; i++) {
-        for (let j=0; j < gridWidth; j++) {
+    for (let i = 0; i < gridHeight; i++) {
+        for (let j = 0; j < gridWidth; j++) {
             if (mapData[i][j] == 5) {
-                playerLocation = {x:j, y:i};
+                playerLocation = { x: j, y: i };
                 mapData[i][j] = 1;
             }
             if (mapData[i][j] == 6) {
-                enemyLocation.push({x:j , y:i});
+                enemyLocation.push({ x: j, y: i });
                 mapData[i][j] = 1;
             }
         }

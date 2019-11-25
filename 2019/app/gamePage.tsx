@@ -206,6 +206,11 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private handleStart = () => {
         // starts the game
         this.socket.emit("levelUp", this.state.guid);
+
+        setInterval(() => {
+            this.socket.emit("getUpdate", this.state.guid, true, false, false, false, false);
+        }, 500);
+
         this.setState({
             gameState: GameState.PLAYING,
         });
