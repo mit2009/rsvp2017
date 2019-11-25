@@ -53,7 +53,11 @@ var Game = /** @class */ (function () {
             livesLeft: this.livesLeft,
             playSound: [],
             imagesToRender: {
-                'player1': this.player.getBlob()
+                player1: this.player.getBlob(),
+                background: {
+                    pos: { x: 0, y: 0 },
+                    resourceId: "background",
+                },
             },
             bullets: this.bullets.map(function (b) { return b.getBlob(); }),
             monsters: this.monsters.map(function (m) { return m.getBlob(); }),

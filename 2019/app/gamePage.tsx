@@ -78,6 +78,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         } else if (event.keyCode === 39 || event.keyCode === 68) {
             // right
             this.keyStore[3] = true;
+        } else if (event.key === " ") {
+            this.keyStore[4] = true;
         }
     };
 
@@ -94,6 +96,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         } else if (event.keyCode === 39 || event.keyCode === 68) {
             // right
             this.keyStore[3] = false;
+        } else if (event.key === " ") {
+            this.keyStore[4] = false;
         }
     };
 

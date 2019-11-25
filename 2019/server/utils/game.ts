@@ -84,7 +84,11 @@ export class Game {
             livesLeft: this.livesLeft,
             playSound: [],
             imagesToRender: {
-                'player1': this.player.getBlob()
+                player1: this.player.getBlob(),
+                background: {
+                    pos: { x: 0, y: 0 },
+                    resourceId: "background",
+                },
             },
             bullets: this.bullets.map(b => b.getBlob()),
             monsters: this.monsters.map(m => m.getBlob()),

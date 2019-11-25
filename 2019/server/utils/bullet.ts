@@ -13,7 +13,7 @@ export class Bullet {
     bounces: number;
 
     maxBounces: number = 2;
-    velocity: number = 100;
+    velocity: number = 20;
 
     constructor(xcor: number, ycor: number, heading: number, playerFired: boolean) {
         this.xcor = xcor;
