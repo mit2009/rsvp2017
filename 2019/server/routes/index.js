@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var gameRenderData_1 = require("../api/gameRenderData");
 var express = require("express");
 var gameHandler = require("../utils/gameHandler");
 var leaderboard_1 = require("../utils/leaderboard");
@@ -33,8 +34,6 @@ function getRouter() {
         var success = gameHandler.changeTeam(guid, teamColor);
         res.json({ success: success });
     });
-    router.post("/game/playername", function (_req, res) {
-    });
     router.get("/game/leaderboard", function (_req, res) {
         res.json(leaderboard_1.getLeaderboard());
     });
@@ -43,18 +42,20 @@ function getRouter() {
         var success = gameHandler.changeTeam(guid, teamColor);
         res.json({ success: success });
     });
-    //
-    // router.post("/game/playername", (_req: express.Request, res: express.Response) => {
-    //
-    // });
-    //
-    // router.get("/game/leaderoard", (_req: express.Request, res: express.Response) => {
-    //     return {
-    //         leaderoard: [
-    //
-    //         ]
-    //     }
-    // });
+    router.post("/game/playername", function (_req, res) {
+        // TODO: Logic here for associating the guid with the actual score
+        var _a = _req.body, guid = _a.guid, playerName = _a.playerName;
+        // TODO: Calculate their final score
+        var finalScore = Math.floor(Math.random() * 10000);
+        console.log(guid);
+        leaderboard_1.saveScore({
+            team: gameRenderData_1.TeamColor.BLUE,
+            name: playerName,
+            score: finalScore,
+        }, function (leaderboard) {
+            res.json({ leaderboard: leaderboard, score: finalScore, success: true });
+        });
+    });
     return router;
 }
 exports.getRouter = getRouter;

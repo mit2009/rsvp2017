@@ -4,8 +4,8 @@ import * as ReactDOM from "react-dom";
 import axios from "axios";
 
 import { TeamColor } from "../server/api/gameRenderData";
-import { GameApp } from "./components/game";
 import { ILeaderboardScore } from "../server/utils/leaderboard";
+import { GameApp } from "./components/game";
 
 enum GameState {
     ATTRACT,
@@ -23,26 +23,31 @@ export interface IGamePageState {
     level: number;
     leaderboard?: ILeaderboardScore[];
     guid?: string;
+    nameValue: string;
+    score: number;
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            gameState: GameState.ATTRACT,
+            gameState: GameState.NAME_COLLECTION,
             level: 1,
+            nameValue: "",
         };
         axios
             .get("game/leaderboard")
             .then(res => {
                 this.setState({
-                    leaderboard: res.data
+                    leaderboard: res.data,
                 });
                 console.log(res);
             })
             .catch(err => {
                 console.log(err);
             });
+
+        this.handleNameChange = this.handleNameChange.bind(this);
     }
 
     public render() {
@@ -91,8 +96,13 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     <div>
                         <h1>you died</h1>
                         <h2>your final score</h2>
-                        <input placeholder="Nickname" type="text" />
-                        <button onClick={this.handleNameSubmission}>Submit</button>
+                        <input
+                            placeholder="Nickname"
+                            type="text"
+                            value={this.state.nameValue}
+                            onChange={this.handleNameChange}
+                        />
+                        <button onClick={this.handleNameSubmit}>Submit</button>
                     </div>
                 );
                 break;
@@ -101,6 +111,9 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     <div>
                         <h1>you died</h1>
                         <h2>your final score</h2>
+                        <p>{JSON.stringify(this.state.leaderboard)}</p>
+                        <p>{this.state.score}</p>
+                        <button onClick={this.handleRestart}>Restart</button>
                     </div>
                 );
                 break;
@@ -135,6 +148,20 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         return html;
     }
 
+    private handleRestart = () => {
+        this.setState({
+            gameState: GameState.STAGING,
+        });
+    };
+
+    private handleNameChange(event: any) {
+        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "");
+
+        this.setState({
+            nameValue,
+        });
+    }
+
     private handleEnterGame = () => {
         // post to server, store token in state
         console.log("HEY");
@@ -160,11 +187,21 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         });
     };
 
-    private handleNameSubmission = () => {
+    private handleNameSubmit = () => {
         // starts the game
-        this.setState({
-            gameState: GameState.RECAPITULATE,
-        });
+        console.log("hello");
+        axios
+            .post("/game/playername", { playerName: this.state.nameValue })
+            .then((res: any) => {
+                console.log(res);
+
+                this.setState({
+                    leaderboard: res.data.leaderboard,
+                    score: res.data.score,
+                    gameState: GameState.RECAPITULATE,
+                });
+            })
+            .catch((err: any) => console.log(err));
     };
 
     private handleCharacterSelect(color: TeamColor) {

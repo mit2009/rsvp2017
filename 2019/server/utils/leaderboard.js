@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
 var fileLocation = "storage/leaderboard.json";
 // saves the score to our high tech database
-function saveScore(score) {
+function saveScore(score, callback) {
     var scores = getLeaderboard();
     // TODO: Duplicate Score Detection
     // If players have both the same name and score, don't bother adding it
@@ -14,7 +14,7 @@ function saveScore(score) {
     });
     var result = fs.writeFileSync(fileLocation, JSON.stringify({ leaderboard: scores }));
     console.log(result);
-    return scores;
+    callback(scores);
 }
 exports.saveScore = saveScore;
 // fetches the leaderboard, given a limit of results to retunr
