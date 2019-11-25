@@ -57,12 +57,12 @@ export function getLevel(level: number) {
 export interface LevelData {
     mapData: number[][],
     playerLocation: Coordinate,
-    enemyLocation: Coordinate[]
+    enemyLocation: Coordinate[];
 }
 
 export interface Coordinate {
-    x: number,
-    y: number
+    x: number;
+    y: number;
 }
 
 export function getLevelData(level: number) {

@@ -9,6 +9,8 @@ import { GameApp } from "./components/game";
 
 import * as socketio from "socket.io-client";
 
+const SOCKET_URL = "http://localhost:8001";
+
 enum GameState {
     ATTRACT,
     CHOOSE_CHARACTER,
@@ -31,12 +33,13 @@ export interface IGamePageState {
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
-    private socket: SocketIOClient.Socket;
+
+    private socket: SocketIOClient.Socket = socketio(SOCKET_URL);
+
     private keyStore: boolean[] = [false, false, false, false, false];
 
     constructor(props: any) {
         super(props);
-        this.socket = socketio("http://localhost:8001");
 
         this.socket.on("levelUpdate", (data: any) => {
             this.setState({
