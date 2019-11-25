@@ -11,7 +11,7 @@ export class Player {
     ycor: number;
     heading: number;
 
-    velocity: number = 3;
+    velocity: number = 10;
     turningAngle: number;
 
     constructor(xcor: number, ycor: number, heading: number) {
@@ -52,7 +52,7 @@ export class Player {
 
         const xVel = this.velocity * Math.sin(this.heading) * timeDelta;
         const yVel = -this.velocity * Math.cos(this.heading) * timeDelta;
-        console.log("is dillon being dumb", xVel, yVel);
+
         if (up) {
             this.xcor += xVel;
             this.ycor += yVel;

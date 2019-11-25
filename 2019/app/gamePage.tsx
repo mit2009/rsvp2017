@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 
 import axios from "axios";
 
-import { TeamColor, IGameRenderData } from "../server/api/gameRenderData";
+import { IGameRenderData, TeamColor } from "../server/api/gameRenderData";
 import { ILeaderboardScore } from "../server/utils/leaderboard";
 import { GameApp } from "./components/game";
 
@@ -32,6 +32,7 @@ export interface IGamePageState {
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private socket: SocketIOClient.Socket;
+    private keyStore: boolean[] = [false, false, false, false, false];
 
     constructor(props: any) {
         super(props);
@@ -72,6 +73,47 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         this.handleNameChange = this.handleNameChange.bind(this);
     }
 
+    private gameControls = (event: any) => {
+        if (event.keyCode === 38 || event.keyCode === 87) {
+            // up
+            this.keyStore[0] = true;
+        } else if (event.keyCode === 37 || event.keyCode === 65) {
+            // left
+            this.keyStore[2] = true;
+        } else if (event.keyCode === 40 || event.keyCode === 83) {
+            // down
+            this.keyStore[1] = true;
+        } else if (event.keyCode === 39 || event.keyCode === 68) {
+            // right
+            this.keyStore[3] = true;
+        }
+    };
+
+    private gameControlsRelease = (event: any) => {
+        if (event.keyCode === 38 || event.keyCode === 87) {
+            // up
+            this.keyStore[0] = false;
+        } else if (event.keyCode === 37 || event.keyCode === 65) {
+            // left
+            this.keyStore[2] = false;
+        } else if (event.keyCode === 40 || event.keyCode === 83) {
+            // down
+            this.keyStore[1] = false;
+        } else if (event.keyCode === 39 || event.keyCode === 68) {
+            // right
+            this.keyStore[3] = false;
+        }
+    };
+
+
+    public componentDidMount() {
+        document.addEventListener("keydown", this.gameControls);
+        document.addEventListener("keyup", this.gameControlsRelease);
+    }
+    public componentWillUnmount() {
+        document.removeEventListener("keydown", this.gameControls);
+        document.removeEventListener("keyup", this.gameControlsRelease);
+    }
     public render() {
         console.log(this.socket);
 
@@ -208,8 +250,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         this.socket.emit("levelUp", this.state.guid);
 
         setInterval(() => {
-            this.socket.emit("getUpdate", this.state.guid, true, false, false, false, false);
-        }, 500);
+            this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
+        }, 60);
 
         this.setState({
             gameState: GameState.PLAYING,

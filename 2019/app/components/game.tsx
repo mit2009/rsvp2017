@@ -168,28 +168,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         this.soundLoader();
     }
 
-    public componentWillReceiveProps(props: any) {
-        console.log("RECIEVED NEW PROPS");
-        /*
-        this.setState({
-            lastRecievedData: props.data
-        })
-        */
-        // console.log(props.gameData);
-    }
-
-    public componentDidMount() {
-
-        // setInterval(() => {
-        //     this.gameRenderData.imagesToRender.player1.pos.x = 1 + this.gameRenderData.imagesToRender.player1.pos.x;
-        //     this.gameRenderData.bullets[0].pos.y += 1;
-        //     this.gameRenderData.bullets[1].pos.x += 1;
-        //     this.gameRenderData.bullets[2].pos.y += 1;
-        //     this.gameRenderData.monsters[0].pos.x += 2;
-        //     this.forceUpdate();
-        // }, 50);
-    }
-
     public componentDidUpdate() {
         console.log("COMPONENT DID UPDATE");
 
