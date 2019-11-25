@@ -6,8 +6,19 @@ import * as path from "path";
 
 import { getRouter } from "./routes/index";
 import { getRouter as getStadiaRouter } from "./routes/stadia";
+import { saveScore } from "./utils/leaderboard";
+
+import { TeamColor } from "./api/gameRenderData";
 
 const app = express();
+
+// testing leaderboards;
+console.log("leaderboards test");
+saveScore({
+    team: TeamColor,
+    name: "Mallow mallw",
+    score: 5800,
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -20,7 +31,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/stadia", getStadiaRouter());
 app.use("/", getRouter());
-
 
 // catch 404 and forward to error handler
 app.use((req: express.Request, _res: express.Response, next: express.NextFunction) => {
