@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+var gameHandler = require("../utils/gameHandler");
 var router = express.Router();
 function getRouter() {
     // routes
@@ -23,16 +24,24 @@ function getRouter() {
         });
     });
     router.post("/game/start", function (_req, res) {
+        res.send(gameHandler.newGame());
     });
-    router.post("/game/team", function (_req, res) {
-    });
-    router.post("/game/playername", function (_req, res) {
-    });
-    router.get("/game/leaderoard", function (_req, res) {
-        return {
-            leaderoard: []
-        };
-    });
+    //
+    // router.post("/game/team", (_req: express.Request, res: express.Response) => {
+    //
+    // });
+    //
+    // router.post("/game/playername", (_req: express.Request, res: express.Response) => {
+    //
+    // });
+    //
+    // router.get("/game/leaderoard", (_req: express.Request, res: express.Response) => {
+    //     return {
+    //         leaderoard: [
+    //
+    //         ]
+    //     }
+    // });
     return router;
 }
 exports.getRouter = getRouter;

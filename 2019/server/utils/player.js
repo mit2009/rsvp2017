@@ -26,9 +26,11 @@ var Player = /** @class */ (function () {
     };
     Player.prototype.getBlob = function () {
         return {
-            xcor: this.xcor,
-            ycor: this.ycor,
-            heading: this.heading
+            pos: {
+                x: this.xcor,
+                y: this.ycor,
+                heading: this.heading
+            }
         };
     };
     return Player;

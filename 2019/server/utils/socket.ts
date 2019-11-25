@@ -1,25 +1,24 @@
-let io, socketmap;
+import * as socketio from "socket.io";
 
-module.exports = {
-  init: (http) => {
+interface SocketMap {
+    [key: string]: socketio.Socket;
+}
+
+const socketmap: SocketMap = {};
+let io: socketio.Server;
+
+export function init(http: any) {
     io = require("socket.io")(http);
 
-    socketmap = {};
     io.on("connection", (socket) => {
-      console.log(`${socket.id} connected`);
+        console.log(`${socket.id} connected`);
 
-      socket.on("init", (username) => {
-        socketmap[username] = socket;
-      });
+        socket.on("init", (username: string) => {
+            socketmap[username] = socket;
+        });
 
-      socket.on("disconnect", () => {
-        console.log(`${socket.id} disconnected`);
-      });
+        socket.on("disconnect", () => {
+            console.log(`${socket.id} disconnected`);
+        });
     });
-  },
-
-  addUser: (user, socket) => (socketmap[user] = socket),
-  getUser: (user) => socketmap[user],
-  deleteUser: (user) => delete socketmap[user],
-  getIo: () => io,
-};
+}

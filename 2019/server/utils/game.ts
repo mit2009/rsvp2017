@@ -1,15 +1,21 @@
 import { Bullet } from "./bullet";
 import { Player } from "./player";
+import { TeamColor, IGameRenderData } from "../api/gameRenderData"
 
 export class Game {
     lastUpdated: number;
 
+    teamColor: TeamColor;
+
+    currentLevel: number;
     score: number;
 
-    level: number;
+    livesLeft: number;
 
     player: Player;
     bullets: Bullet[];
+
+    maxLives: number = 3;
 
     constructor() {
         this.lastUpdated = Date.now();
@@ -17,7 +23,8 @@ export class Game {
         this.bullets = [];
 
         this.score = 0;
-        this.level = 1;
+        this.currentLevel = 1;
+        this.livesLeft = this.maxLives;
     }
 
     update(left: boolean, right: boolean, forward: boolean, fire: boolean) {
@@ -37,8 +44,20 @@ export class Game {
 
     getBlob() {
         return {
-            player: this.player.getBlob(),
-            bullets: this.bullets.map((b) => b.getBlob()),
-        }
+            currentLevel: this.currentLevel,
+            score: this.score,
+            teamColor: this.teamColor,
+            livesLeft: this.livesLeft,
+            playSound: [],
+            imagesToRender: {
+            },
+            bullets: [],
+            monsters: [],
+            tiles: {
+
+            }
+            //player: this.player.getBlob(),
+            // bullets: this.bullets.map((b) => b.getBlob()),
+        } as IGameRenderData
     }
 }

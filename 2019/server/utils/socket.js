@@ -1,21 +1,18 @@
-var io, socketmap;
-module.exports = {
-    init: function (http) {
-        io = require("socket.io")(http);
-        socketmap = {};
-        io.on("connection", function (socket) {
-            console.log(socket.id + " connected");
-            socket.on("init", function (username) {
-                socketmap[username] = socket;
-            });
-            socket.on("disconnect", function () {
-                console.log(socket.id + " disconnected");
-            });
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var socketmap = {};
+var io;
+function init(http) {
+    io = require("socket.io")(http);
+    io.on("connection", function (socket) {
+        console.log(socket.id + " connected");
+        socket.on("init", function (username) {
+            socketmap[username] = socket;
         });
-    },
-    addUser: function (user, socket) { return (socketmap[user] = socket); },
-    getUser: function (user) { return socketmap[user]; },
-    deleteUser: function (user) { return delete socketmap[user]; },
-    getIo: function () { return io; },
-};
+        socket.on("disconnect", function () {
+            console.log(socket.id + " disconnected");
+        });
+    });
+}
+exports.init = init;
 //# sourceMappingURL=socket.js.map

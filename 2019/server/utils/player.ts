@@ -1,5 +1,8 @@
 import { Bullet } from "./bullet";
 
+import { IRenderableImage, IShape } from "../api/gameRenderData";
+import { playerWidth, playerHeight } from "../api/levelData";
+
 export class Player {
     xcor: number;
     ycor: number;
@@ -34,9 +37,11 @@ export class Player {
 
     getBlob() {
         return {
-            xcor: this.xcor,
-            ycor: this.ycor,
-            heading: this.heading
+            pos: {
+                x: this.xcor,
+                y: this.ycor,
+                heading: this.heading
+            }
         }
     }
 }

@@ -63,6 +63,7 @@
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.15.3",
+    "guid-typescript": "^1.0.9",
     "hbs": "^4.0.1",
     "path": "^0.12.7",
     "react": "^16.2.0",
