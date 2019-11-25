@@ -6,8 +6,8 @@ var levelData_1 = require("../api/levelData");
 var Player = /** @class */ (function () {
     function Player(xcor, ycor, heading) {
         this.velocity = 50;
-        this.xcor = xcor;
-        this.ycor = ycor;
+        this.xcor = (xcor + 0.5) * levelData_1.tileWidth;
+        this.ycor = (ycor + 0.5) * levelData_1.tileHeight;
         this.heading = heading;
     }
     Player.prototype.fireBullet = function () {
@@ -22,21 +22,26 @@ var Player = /** @class */ (function () {
             this.heading += 1 * timeDelta;
         }
         if (up) {
-            console.log("here");
             this.xcor += this.velocity * Math.sin(this.heading) * timeDelta;
             this.ycor -= this.velocity * Math.cos(this.heading) * timeDelta;
+        }
+        if (down) {
+            this.xcor -= this.velocity * Math.sin(this.heading) * timeDelta;
+            this.ycor += this.velocity * Math.cos(this.heading) * timeDelta;
         }
     };
     Player.prototype.getBlobHeading = function () {
         var degreesHeading = angles_1.radians_to_degrees(this.heading);
-        degreesHeading += 45;
+        degreesHeading = degreesHeading % 360;
+        degreesHeading = (degreesHeading + 360 + 22.5) % 360;
+        return Math.floor(degreesHeading / 45);
     };
     Player.prototype.getBlob = function () {
         return {
             pos: {
                 x: this.xcor - levelData_1.playerWidth / 2 + levelData_1.widthOffset,
                 y: this.ycor - levelData_1.playerHeight / 2 + levelData_1.heightOffset,
-                heading: 0,
+                heading: this.getBlobHeading(),
                 w: levelData_1.playerWidth,
                 h: levelData_1.playerHeight
             },

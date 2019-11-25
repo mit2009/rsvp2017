@@ -44,11 +44,11 @@ function getLevelData(level) {
     var enemyLocation = [];
     for (var i = 0; i < exports.gridHeight; i++) {
         for (var j = 0; j < exports.gridWidth; j++) {
-            if (mapData[i][j] == 4) {
+            if (mapData[i][j] == 5) {
                 playerLocation = { x: j, y: i };
                 mapData[i][j] = 1;
             }
-            if (mapData[i][j] == 5) {
+            if (mapData[i][j] == 6) {
                 enemyLocation.push({ x: j, y: i });
                 mapData[i][j] = 1;
             }

@@ -1,7 +1,7 @@
 import { Bullet } from "./bullet";
 import { radians_to_degrees } from "./angles";
 import { IRenderableImage, IShape } from "../api/gameRenderData";
-import { playerWidth, playerHeight, widthOffset, heightOffset } from "../api/levelData";
+import { playerWidth, playerHeight, widthOffset, heightOffset, tileWidth, tileHeight} from "../api/levelData";
 
 export class Player {
     xcor: number;
@@ -12,8 +12,8 @@ export class Player {
     turningAngle: number;
 
     constructor(xcor: number, ycor: number, heading: number) {
-        this.xcor = xcor;
-        this.ycor = ycor;
+        this.xcor = (xcor + 0.5) * tileWidth;
+        this.ycor = (ycor + 0.5) * tileHeight;
         this.heading = heading;
     }
 
@@ -30,15 +30,20 @@ export class Player {
           this.heading += 1 * timeDelta;
         }
         if (up) {
-            console.log("here");
             this.xcor += this.velocity * Math.sin(this.heading) * timeDelta;
             this.ycor -= this.velocity * Math.cos(this.heading)  * timeDelta;
+        }
+        if (down) {
+            this.xcor -= this.velocity * Math.sin(this.heading) * timeDelta;
+            this.ycor += this.velocity * Math.cos(this.heading)  * timeDelta;
         }
     }
 
     getBlobHeading() {
         let degreesHeading = radians_to_degrees(this.heading);
-        degreesHeading += 45;
+        degreesHeading = degreesHeading % 360;
+        degreesHeading = (degreesHeading + 360 + 22.5) % 360;
+        return Math.floor(degreesHeading / 45);
     }
 
     getBlob() {
@@ -46,7 +51,7 @@ export class Player {
             pos: {
                 x: this.xcor - playerWidth / 2 + widthOffset,
                 y: this.ycor - playerHeight / 2 + heightOffset,
-                heading: 0,
+                heading: this.getBlobHeading(),
                 w: playerWidth,
                 h: playerHeight
             } as IShape,

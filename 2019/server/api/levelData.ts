@@ -69,11 +69,11 @@ export function getLevelData(level: number) {
 
     for (let i=0; i < gridHeight; i++) {
         for (let j=0; j < gridWidth; j++) {
-            if (mapData[i][j] == 4) {
+            if (mapData[i][j] == 5) {
                 playerLocation = {x:j, y:i};
                 mapData[i][j] = 1;
             }
-            if (mapData[i][j] == 5) {
+            if (mapData[i][j] == 6) {
                 enemyLocation.push({x:j , y:i});
                 mapData[i][j] = 1;
             }

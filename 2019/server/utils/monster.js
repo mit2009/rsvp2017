@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var levelData_1 = require("../api/levelData");
 var Monster = /** @class */ (function () {
     function Monster(xcor, ycor, ai) {
-        this.xcor = xcor;
-        this.ycor = ycor;
+        this.xcor = (xcor + 0.5) * levelData_1.tileWidth;
+        this.ycor = (ycor + 0.5) * levelData_1.tileHeight;
         this.ai = ai;
     }
     Monster.prototype.getBlob = function () {
