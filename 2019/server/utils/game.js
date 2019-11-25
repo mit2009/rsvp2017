@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
 var Game = /** @class */ (function () {
     function Game() {
+        this.teamColor = null;
+        // monsters: Monster[];
         this.maxLives = 3;
         this.lastUpdated = Date.now();
         this.player = new player_1.Player(350, 350, 0);
@@ -11,6 +13,10 @@ var Game = /** @class */ (function () {
         this.currentLevel = 1;
         this.livesLeft = this.maxLives;
     }
+    Game.prototype.changeTeam = function (team) {
+        this.teamColor = team;
+        return true;
+    };
     Game.prototype.update = function (left, right, forward, fire) {
         var currentTime = Date.now();
         var timeDelta = (currentTime - this.lastUpdated) / 250;
@@ -28,10 +34,14 @@ var Game = /** @class */ (function () {
             teamColor: this.teamColor,
             livesLeft: this.livesLeft,
             playSound: [],
-            imagesToRender: {},
-            bullets: [],
-            monsters: [],
-            tiles: {}
+            imagesToRender: {
+                'player1': this.player.getBlob()
+            },
+            bullets: this.bullets.map(function (b) { return b.getBlob(); }),
+            monsters: []
+            // tiles : {
+            //
+            // }
             //player: this.player.getBlob(),
             // bullets: this.bullets.map((b) => b.getBlob()),
         };

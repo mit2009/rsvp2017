@@ -5,7 +5,7 @@ import { TeamColor, IGameRenderData } from "../api/gameRenderData"
 export class Game {
     lastUpdated: number;
 
-    teamColor: TeamColor;
+    teamColor: TeamColor = null;
 
     currentLevel: number;
     score: number;
@@ -14,6 +14,7 @@ export class Game {
 
     player: Player;
     bullets: Bullet[];
+    // monsters: Monster[];
 
     maxLives: number = 3;
 
@@ -25,6 +26,11 @@ export class Game {
         this.score = 0;
         this.currentLevel = 1;
         this.livesLeft = this.maxLives;
+    }
+
+    changeTeam(team: TeamColor) {
+        this.teamColor = team;
+        return true;
     }
 
     update(left: boolean, right: boolean, forward: boolean, fire: boolean) {
@@ -50,12 +56,13 @@ export class Game {
             livesLeft: this.livesLeft,
             playSound: [],
             imagesToRender: {
+                'player1': this.player.getBlob()
             },
-            bullets: [],
-            monsters: [],
-            tiles: {
-
-            }
+            bullets: this.bullets.map(b => b.getBlob()),
+            monsters: []
+            // tiles : {
+            //
+            // }
             //player: this.player.getBlob(),
             // bullets: this.bullets.map((b) => b.getBlob()),
         } as IGameRenderData

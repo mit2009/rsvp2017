@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var bullet_1 = require("./bullet");
+var levelData_1 = require("../api/levelData");
 var Player = /** @class */ (function () {
     function Player(xcor, ycor, heading) {
         this.velocity = 50;
@@ -27,10 +28,12 @@ var Player = /** @class */ (function () {
     Player.prototype.getBlob = function () {
         return {
             pos: {
-                x: this.xcor,
-                y: this.ycor,
-                heading: this.heading
-            }
+                x: this.xcor - levelData_1.playerWidth / 2,
+                y: this.ycor - levelData_1.playerHeight / 2,
+                w: levelData_1.playerWidth,
+                h: levelData_1.playerHeight
+            },
+            resourceId: ''
         };
     };
     return Player;

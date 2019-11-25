@@ -38,10 +38,12 @@ export class Player {
     getBlob() {
         return {
             pos: {
-                x: this.xcor,
-                y: this.ycor,
-                heading: this.heading
-            }
-        }
+                x: this.xcor - playerWidth / 2,
+                y: this.ycor - playerHeight / 2,
+                w: playerWidth,
+                h: playerHeight
+            } as IShape,
+            resourceId: ''
+        } as IRenderableImage;
     }
 }

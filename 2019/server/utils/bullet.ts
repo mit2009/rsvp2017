@@ -1,3 +1,6 @@
+import { IRenderableImage, IShape } from "../api/gameRenderData";
+import { bulletWidth, bulletHeight } from "../api/levelData";
+
 export class Bullet {
     xcor: number;
     ycor: number;
@@ -47,8 +50,13 @@ export class Bullet {
 
     getBlob() {
         return {
-            xcor: this.xcor,
-            ycor: this.ycor
-        }
+            pos: {
+                x: this.xcor - bulletWidth / 2,
+                y: this.ycor - bulletHeight / 2,
+                w: bulletWidth,
+                h: bulletHeight
+            } as IShape,
+            resourceId: ''
+        } as IRenderableImage;
     }
 }

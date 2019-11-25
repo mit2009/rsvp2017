@@ -15,6 +15,8 @@ exports.gridWidth = 16;
 exports.gridHeight = 16;
 exports.playerWidth = 30;
 exports.playerHeight = 30;
+exports.bulletWidth = 15;
+exports.bulletHeight = 15;
 exports.levelMap = {
     1: 
     // tslint:disable-next-line: prettier

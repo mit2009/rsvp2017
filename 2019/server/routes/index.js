@@ -28,16 +28,21 @@ function getRouter() {
         res.send(gameHandler.newGame());
     });
     router.post("/game/team", function (_req, res) {
+        var _a = _req.body, guid = _a.guid, teamColor = _a.teamColor;
+        // console.log(_req.body);
+        var success = gameHandler.changeTeam(guid, teamColor);
+        res.json({ success: success });
     });
     router.post("/game/playername", function (_req, res) {
     });
     router.get("/game/leaderboard", function (_req, res) {
         res.json(leaderboard_1.getLeaderboard());
     });
-    //
-    // router.post("/game/team", (_req: express.Request, res: express.Response) => {
-    //
-    // });
+    router.post("/game/team", function (_req, res) {
+        var _a = _req.body, guid = _a.guid, teamColor = _a.teamColor;
+        var success = gameHandler.changeTeam(guid, teamColor);
+        res.json({ success: success });
+    });
     //
     // router.post("/game/playername", (_req: express.Request, res: express.Response) => {
     //

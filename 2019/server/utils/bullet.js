@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var levelData_1 = require("../api/levelData");
 var Bullet = /** @class */ (function () {
     function Bullet(xcor, ycor, heading, playerFired) {
         this.maxBounces = 2;
@@ -29,8 +30,13 @@ var Bullet = /** @class */ (function () {
     };
     Bullet.prototype.getBlob = function () {
         return {
-            xcor: this.xcor,
-            ycor: this.ycor
+            pos: {
+                x: this.xcor - levelData_1.bulletWidth / 2,
+                y: this.ycor - levelData_1.bulletHeight / 2,
+                w: levelData_1.bulletWidth,
+                h: levelData_1.bulletHeight
+            },
+            resourceId: ''
         };
     };
     return Bullet;

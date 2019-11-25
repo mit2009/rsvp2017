@@ -22,6 +22,9 @@ export const gridHeight = 16;
 export const playerWidth = 30;
 export const playerHeight = 30;
 
+export const bulletWidth = 15;
+export const bulletHeight = 15;
+
 export const levelMap: ILevelMap = {
     1:
         // tslint:disable-next-line: prettier
