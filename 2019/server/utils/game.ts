@@ -95,7 +95,7 @@ export class Game {
             // tiles : {
             //
             // }
-            //player: this.player.getBlob(),
+            // player: this.player.getBlob(),
             // bullets: this.bullets.map((b) => b.getBlob()),
         } as IGameRenderData
     }
