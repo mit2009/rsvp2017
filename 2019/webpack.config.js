@@ -26,7 +26,6 @@ module.exports = {
         app: ['./app/app.scss'],
         game: ['./app/gamePage.tsx']
     },
-
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, './server/public/bundle')

@@ -52,12 +52,15 @@ export function getRouter() {
     });
 
     router.post("/game/playername", (_req: express.Request, res: express.Response) => {
+
         // TODO: Logic here for associating the guid with the actual score
         const { guid, playerName } = _req.body;
+
         // TODO: Calculate their final score
         const finalScore = Math.floor(Math.random() * 10000);
 
         console.log(guid);
+
         saveScore(
             {
                 team: TeamColor.BLUE,

@@ -3,9 +3,11 @@ import * as ReactDOM from "react-dom";
 
 import axios from "axios";
 
-import { TeamColor } from "../server/api/gameRenderData";
+import { TeamColor, IGameRenderData } from "../server/api/gameRenderData";
 import { ILeaderboardScore } from "../server/utils/leaderboard";
 import { GameApp } from "./components/game";
+
+import * as socketio from "socket.io-client";
 
 enum GameState {
     ATTRACT,
@@ -21,6 +23,7 @@ enum GameState {
 export interface IGamePageState {
     gameState: GameState;
     level: number;
+    gameData?: IGameRenderData;
     leaderboard?: ILeaderboardScore[];
     guid?: string;
     nameValue: string;
@@ -28,12 +31,31 @@ export interface IGamePageState {
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
+    private socket: SocketIOClient.Socket;
+
     constructor(props: any) {
         super(props);
+        this.socket = socketio("http://localhost:8001");
+
+        this.socket.on("levelUpdate", (data: any) => {
+            console.log("levelupdate");
+            this.setState({
+                gameData: JSON.parse(data) as IGameRenderData,
+            });
+        });
+
+        this.socket.on("levelData", (data: any) => {
+            console.log("levelData");
+            this.setState({
+                gameData: JSON.parse(data) as IGameRenderData,
+            });
+        });
+
         this.state = {
-            gameState: GameState.NAME_COLLECTION,
+            gameState: GameState.ATTRACT,
             level: 1,
             nameValue: "",
+            score: 0,
         };
         axios
             .get("game/leaderboard")
@@ -51,6 +73,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     }
 
     public render() {
+        console.log(this.socket);
+
         let html = <div>Loading...</div>;
         switch (this.state.gameState) {
             case GameState.ATTRACT:
@@ -181,7 +205,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleStart = () => {
         // starts the game
-
+        this.socket.emit("levelUp", this.state.guid);
         this.setState({
             gameState: GameState.PLAYING,
         });

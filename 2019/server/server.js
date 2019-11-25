@@ -39,7 +39,7 @@ var server = http.createServer(app);
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
-socket_1.initSocket(http);
+socket_1.initSocket(server);
 /**
  * Normalize a port into a number, string, or false.
  */
