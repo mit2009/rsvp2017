@@ -28,16 +28,15 @@ export function getRouter() {
     });
 
     router.post("/game/start", (_req: express.Request, res: express.Response) => {
-
-        res.send(gameHandler.newGame());
+        res.json({ guid: gameHandler.newGame() });
 
     });
 
     router.post("/game/team", (_req: express.Request, res: express.Response) => {
-        const {guid, teamColor} = _req.body;
+        const { guid, teamColor } = _req.body;
         // console.log(_req.body);
         const success = gameHandler.changeTeam(guid, teamColor);
-        res.json({success});
+        res.json({ success });
     });
 
     router.post("/game/playername", (_req: express.Request, res: express.Response) => {
@@ -51,7 +50,7 @@ export function getRouter() {
     router.post("/game/team", (_req: express.Request, res: express.Response) => {
         const { guid, teamColor } = _req.body;
         const success = gameHandler.changeTeam(guid, teamColor);
-        res.json({success});
+        res.json({ success });
     });
     //
     // router.post("/game/playername", (_req: express.Request, res: express.Response) => {

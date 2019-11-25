@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+
+import axios from "axios";
+
 import { TeamColor } from "../server/api/gameRenderData";
 import { GameApp } from "./components/game";
+import { ILeaderboardScore } from "../server/utils/leaderboard";
 
 enum GameState {
     ATTRACT,
@@ -17,15 +21,28 @@ enum GameState {
 export interface IGamePageState {
     gameState: GameState;
     level: number;
+    leaderboard?: ILeaderboardScore[];
+    guid?: string;
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            gameState: GameState.PLAYING,
+            gameState: GameState.ATTRACT,
             level: 1,
         };
+        axios
+            .get("game/leaderboard")
+            .then(res => {
+                this.setState({
+                    leaderboard: res.data
+                });
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     public render() {
@@ -35,6 +52,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 html = (
                     <div>
                         <h1>Intro Page!</h1>
+                        <div>{JSON.stringify(this.state.leaderboard)}</div>
                         <button onClick={this.handleEnterGame} className="play-btn">
                             Play!
                         </button>
@@ -119,13 +137,24 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleEnterGame = () => {
         // post to server, store token in state
-        this.setState({
-            gameState: GameState.CHOOSE_CHARACTER,
-        });
+        console.log("HEY");
+
+        axios
+            .post("/game/start")
+            .then((res: any) => {
+                console.log(res);
+
+                this.setState({
+                    guid: res.data.guid,
+                    gameState: GameState.CHOOSE_CHARACTER,
+                });
+            })
+            .catch((err: any) => console.log(err));
     };
 
     private handleStart = () => {
         // starts the game
+
         this.setState({
             gameState: GameState.PLAYING,
         });
@@ -141,11 +170,22 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private handleCharacterSelect(color: TeamColor) {
         return () => {
             console.log("submitting team color ", color);
-            this.setState({
-                gameState: GameState.STAGING,
-            });
+
+            axios
+                .post("/game/team", {
+                    teamColor: color,
+                    guid: this.state.guid,
+                })
+                .then((res: any) => {
+                    console.log(res);
+
+                    this.setState({
+                        gameState: GameState.STAGING,
+                    });
+                })
+                .catch((err: any) => console.log(err));
         };
-    };
+    }
 }
 
 ReactDOM.render(<GamePage />, document.getElementById("game-content"));

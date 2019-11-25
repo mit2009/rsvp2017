@@ -25,7 +25,7 @@ function getRouter() {
         });
     });
     router.post("/game/start", function (_req, res) {
-        res.send(gameHandler.newGame());
+        res.json({ guid: gameHandler.newGame() });
     });
     router.post("/game/team", function (_req, res) {
         var _a = _req.body, guid = _a.guid, teamColor = _a.teamColor;
