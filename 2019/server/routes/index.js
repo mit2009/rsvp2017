@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
+var leaderboard_1 = require("../utils/leaderboard");
 var router = express.Router();
 function getRouter() {
     // routes
@@ -28,10 +29,8 @@ function getRouter() {
     });
     router.post("/game/playername", function (_req, res) {
     });
-    router.get("/game/leaderoard", function (_req, res) {
-        return {
-            leaderoard: []
-        };
+    router.get("/game/leaderboard", function (_req, res) {
+        res.json(leaderboard_1.getLeaderboard());
     });
     return router;
 }

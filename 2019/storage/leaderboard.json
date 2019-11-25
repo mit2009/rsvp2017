@@ -1,14 +1,1 @@
-{
-    "leaderboard": [
-        {
-            "team": "BLUE",
-            "name": "Bob Dough",
-            "score": 6000
-        },
-        {
-            "team": "PINK",
-            "name": "Mallow mallw",
-            "score": 5600
-        }
-    ]
-}
+{"leaderboard":[{"team":4,"name":"Mallow mallw","score":49336},{"team":4,"name":"Mallow mallw","score":46372},{"team":4,"name":"Mallow mallw","score":39356},{"team":4,"name":"Mallow mallw","score":38370},{"team":4,"name":"Mallow mallw","score":30570},{"team":4,"name":"Mallow mallw","score":29710},{"team":4,"name":"Mallow mallw","score":9808},{"team":1,"name":"Bob Dough","score":6000},{"team":4,"name":"Mallow mallw","score":5800},{"team":2,"name":"Mallow mallw","score":5600},{"team":4,"name":"Mallow mallw","score":2425},{"team":4,"name":"Mallow mallw","score":491}]}

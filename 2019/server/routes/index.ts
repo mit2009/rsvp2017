@@ -1,4 +1,5 @@
 import * as express from "express";
+import { getLeaderboard } from "../utils/leaderboard";
 const router = express.Router();
 
 export function getRouter() {
@@ -26,7 +27,7 @@ export function getRouter() {
     });
 
     router.post("/game/start", (_req: express.Request, res: express.Response) => {
-        
+
     });
 
     router.post("/game/team", (_req: express.Request, res: express.Response) => {
@@ -37,12 +38,8 @@ export function getRouter() {
 
     });
 
-    router.get("/game/leaderoard", (_req: express.Request, res: express.Response) => {
-        return {
-            leaderoard: [
-
-            ]
-        }
+    router.get("/game/leaderboard", (_req: express.Request, res: express.Response) => {
+        res.json(getLeaderboard());
     });
 
     return router;

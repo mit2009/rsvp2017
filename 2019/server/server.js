@@ -7,16 +7,7 @@ var http = require("http");
 var path = require("path");
 var index_1 = require("./routes/index");
 var stadia_1 = require("./routes/stadia");
-var leaderboard_1 = require("./utils/leaderboard");
-var gameRenderData_1 = require("./api/gameRenderData");
 var app = express();
-// testing leaderboards;
-console.log("leaderboards test");
-leaderboard_1.saveScore({
-    team: gameRenderData_1.TeamColor,
-    name: "Mallow mallw",
-    score: 5800,
-});
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
