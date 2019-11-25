@@ -48,10 +48,10 @@ var Player = /** @class */ (function () {
         var mapX = this.xcor / levelData_1.tileWidth;
         for (var _i = 0, _a = [-0.5, 0, 0.5]; _i < _a.length; _i++) {
             var i = _a[_i];
-            if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapX + i)][Math.floor(mapY)])) {
+            if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapY)][Math.floor(mapX + i)])) {
                 this.xcor = (Math.floor(mapX) + 0.5) * levelData_1.tileWidth;
             }
-            if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapX)][Math.floor(mapY + i)])) {
+            if (~levelData_1.walls.indexOf(levelMap[Math.floor(mapY + i)][Math.floor(mapX)])) {
                 this.ycor = (Math.floor(mapY) + 0.5) * levelData_1.tileHeight;
             }
         }
@@ -66,6 +66,8 @@ var Player = /** @class */ (function () {
         //                 ][
         //                     Math.floor(finalMapX + cor[1])
         //                 ]) != 0)) {
+        //     this.ycor = this.startY;
+        //     this.xcor = this.startX;
         //     return false;
         //
         //         };

@@ -65,11 +65,11 @@ export class Player {
         const mapY = this.ycor / tileHeight;
         const mapX = this.xcor / tileWidth;
         for (let i of [-0.5, 0, 0.5]) {
-            if (~walls.indexOf(levelMap[Math.floor(mapX + i)][Math.floor(mapY)])) {
+            if (~walls.indexOf(levelMap[Math.floor(mapY)][Math.floor(mapX + i)])) {
                 this.xcor = (Math.floor(mapX) + 0.5) * tileWidth;
             }
 
-            if (~walls.indexOf(levelMap[Math.floor(mapX)][Math.floor(mapY + i)])) {
+            if (~walls.indexOf(levelMap[Math.floor(mapY + i)][Math.floor(mapX)])) {
                 this.ycor = (Math.floor(mapY) + 0.5) * tileHeight;
             }
         }
@@ -85,6 +85,8 @@ export class Player {
         //                 ][
         //                     Math.floor(finalMapX + cor[1])
         //                 ]) != 0)) {
+        //     this.ycor = this.startY;
+        //     this.xcor = this.startX;
         //     return false;
         //
         //         };
