@@ -51,20 +51,16 @@
                 <div class="mask mask-purple" id="purple-mask"></div>
                 -->
 
-                <div class="test-background"></div>
+                <div class="full-page-background"></div>
 
-
-
-
-
-                <svg class="clipping-mask" width="900" height="385" viewBox="0 0 900 385" fill="none"
-
+                {{!-- <svg class="clipping-mask" width="900" height="385"
+                    viewBox="0 0 900 385" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path d="M253.5 44L155.5 83L202 168L269.5 141L253.5 44Z"
                         stroke="black" />
                     <rect x="0.5" y="0.5" width="899" height="384"
                         stroke="black" />
-                </svg>
+                </svg> --}}
 
             </div>
             <div>
@@ -82,14 +78,59 @@
             <p class="info-date">
                 December 09 &middot; Monday 7:30PM
             </p>
-
+            <div>
+                <a class="tickets-btn big-pushy rsvp-btn" href="/">Tickets</a>
+                <a class="game-btn big-pushy" href="/">The Game</a>
+            </div>
         </div>
     </div>
 </div>
 {{!-- <script type="text/javascript" src="/bundle/bookings.js"></script> --}}
 
-        </div> <!-- div flex-item -->
-    </div> <!-- div flex-container full-background -->
-    <div id="home-content"></div>
+</div> <!-- div flex-item -->
+</div> <!-- div flex-container full-background -->
+<div id="home-content"></div>
 </div>
+
 <script type="text/javascript" src="/bundle/homepage.js"></script>
+
+<script type="text/javascript">
+    window.onload = () => {
+        console.log("loaded");
+
+        var urlP = 'none';
+        function parseQueryString(url) {
+            var urlParams = {};
+            url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+                function ($0, $1, $2, $3) {
+                    urlParams[$1] = $3;
+                });
+            return urlParams;
+        }
+
+        function setRSVPUrl() {
+            var urlParams = parseQueryString(location.search);
+
+            if (urlParams['invite'] != undefined) {
+                urlP = urlParams['invite'];
+
+                console.log(urlParams);
+
+                for (const elem of document.getElementsByClassName("rsvp-btn")) {
+                    console.log(elem);
+                    elem.href = 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite'];
+                }
+
+            } else {
+                // $('.rsvp-btn').text('Ticket System')
+            }
+
+            // Clears the url to a blank state incase they want to share the URL
+            // Elaine, do you remember why this was commented out? - Victor, Nov 27, 2018 3:41am
+            // Oh hey, this was a comment from last year!
+            // window.history.replaceState({}, document.title, "/");
+        }
+
+        setRSVPUrl();
+    }
+</script>

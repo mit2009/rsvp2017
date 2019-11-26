@@ -2,20 +2,15 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import axios from "axios";
+// @ts-ignore
 import UIfx from "uifx";
 
-const selectionFx = new UIfx(
-    "/sounds/selection.mp3",
-    {
-        volume: 1,
-    }
-)
-const closeFx = new UIfx(
-    "/sounds/close.mp3",
-    {
-        volume: 1,
-    }
-)
+const selectionFx = new UIfx("/sounds/selection.mp3", {
+    volume: 1,
+});
+const closeFx = new UIfx("/sounds/close.mp3", {
+    volume: 1,
+});
 
 import { GameCommand, IGameRenderData, TeamColor } from "../server/api/gameRenderData";
 import { ILeaderboardScore } from "../server/utils/leaderboard";
@@ -23,7 +18,7 @@ import { GameApp } from "./components/game";
 
 import * as socketio from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:8001";
+const SOCKET_URL = "http://18.21.182.184:8001";
 
 enum GameState {
     ATTRACT,
@@ -51,6 +46,7 @@ export interface IGamePageState {
     score: number;
     musicPlaying: boolean;
     enterKeyIsDown: boolean;
+    finalMessage: string;
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
@@ -73,9 +69,21 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     gameState: GameState.STAGING,
                     level: formattedData.currentLevel + 1,
                 });
-            } else if (formattedData.gameCommand === GameCommand.FINAL_WIN || formattedData.gameCommand === GameCommand.MALLOW_DEATH) {
+            } else if (
+                formattedData.gameCommand === GameCommand.FINAL_WIN
+            ) {
                 this.setState({
+                    finalMessage: "you win",
                     gameState: GameState.NAME_COLLECTION,
+                    score: formattedData.score,
+                });
+            } else if (
+                formattedData.gameCommand === GameCommand.MALLOW_DEATH
+            ) {
+                this.setState({
+                    finalMessage: "game over",
+                    gameState: GameState.NAME_COLLECTION,
+                    score: formattedData.score,
                 });
             } else {
                 this.setState({
@@ -91,6 +99,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             score: 0,
             musicPlaying: !DEBUG ? true : debugMusicPlaying,
             enterKeyIsDown: false,
+            finalMessage: "game over",
         };
 
         axios
@@ -216,7 +225,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                             </button>
                             <button
                                 onClick={() => {
-
                                     selectionFx.play();
                                     this.setState({
                                         gameState: GameState.INSTRUCTIONS,
@@ -267,30 +275,37 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 backgroundImage = "staging";
                 html = (
                     <div className="game-sized-container">
-                        <div>
-                            <h1>ready for <em>level {this.state.level}</em>?</h1>
-                            <div className="button-container">
-                                <div>
-                                    <button className="big-pushy" onClick={this.handleStart}>Start Level</button>
-                                </div>
+                        <h1>
+                            ready for <em>level {this.state.level}</em>?
+                        </h1>
+                        <div className="button-container">
+                            <div>
+                                <button className="big-pushy" onClick={this.handleStart}>
+                                    Start Level
+                                </button>
                             </div>
-                            <div className="hit-enter">(Or hit enter)</div>
                         </div>
+                        <div className="hit-enter">(Or hit enter)</div>
                     </div>
                 );
                 break;
             case GameState.NAME_COLLECTION:
+                backgroundImage = "name-collection";
                 html = (
-                    <div>
-                        <h1>you died</h1>
-                        <h2>your final score</h2>
-                        <input
-                            placeholder="Nickname"
-                            type="text"
-                            value={this.state.nameValue}
-                            onChange={this.handleNameChange}
-                        />
-                        <button onClick={this.handleNameSubmit}>Submit</button>
+                    <div className="game-sized-container">
+                        <h1>{this.state.finalMessage}</h1>
+                        <h2>{this.state.score}</h2>
+                        <div className="input-section">
+                            <input
+                                placeholder="Nickname"
+                                type="text"
+                                value={this.state.nameValue}
+                                onChange={this.handleNameChange}
+                            />
+                            <button className="big-pushy" onClick={this.handleNameSubmit}>
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 );
                 break;
@@ -306,20 +321,26 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 );
                 break;
             case GameState.INSTRUCTIONS:
+                backgroundImage = "instructions";
                 html = (
-                    <div>
-                        <h1>Instructions!</h1>
-                        <button
-                            onClick={() => {
-                                closeFx.play();
-                                this.setState({
-                                    gameState: GameState.ATTRACT,
-                                });
-                            }}
-                            className="play-btn"
-                        >
-                            Back!
-                        </button>
+                    <div className="game-sized-container">
+                        <h1>Deep within the Candy Cosmos...</h1>
+                        <h2>The 2.009 Marshmallows need your help!</h2>
+                        <p>Move your mallow around the Graham Cracker Islands and clear any Monster Munchkins that may be lurking. And who knows! You might just be a hero.</p>
+                        <p>What adventures await them next?</p>
+                        <div className="button-container">
+                            <button
+                                onClick={() => {
+                                    closeFx.play();
+                                    this.setState({
+                                        gameState: GameState.ATTRACT,
+                                    });
+                                }}
+                                className="big-pushy play-btn"
+                            >
+                                Back!
+                            </button>
+                        </div>
                     </div>
                 );
                 break;
@@ -353,7 +374,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     };
 
     private handleNameChange(event: any) {
-        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").substring(0, 20);
+        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").substring(0);
         this.setState({
             nameValue,
         });
@@ -396,24 +417,25 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleNameSubmit = () => {
         // starts the game
-        axios
-            .post("/game/playername", {
-                guid: this.state.guid,
-                playerName: this.state.nameValue
-            })
-            .then((res: any) => {
-                this.setState({
-                    leaderboard: res.data.leaderboard,
-                    score: res.data.score,
-                    gameState: GameState.ATTRACT,
-                });
-            })
-            .catch((err: any) => console.log(err));
+        if (this.state.nameValue !== "") {
+            axios
+                .post("/game/playername", {
+                    guid: this.state.guid,
+                    playerName: this.state.nameValue,
+                })
+                .then((res: any) => {
+                    this.setState({
+                        leaderboard: res.data.leaderboard,
+                        score: res.data.score,
+                        gameState: GameState.ATTRACT,
+                    });
+                })
+                .catch((err: any) => console.log(err));
+        }
     };
 
     private handleCharacterSelect(color: TeamColor) {
         return () => {
-
             selectionFx.play();
             axios
                 .post("/game/team", {

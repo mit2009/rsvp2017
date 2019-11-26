@@ -1,4 +1,6 @@
 @import "reset.scss";
+@import "homepage.scss";
+@import "navigation.scss";
 
 $colors: "pink", "red", "orange", "yellow", "green", "blue", "purple", "silver";
 
@@ -16,769 +18,35 @@ body {
   color: #fff;
 }
 
-.navigation {
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&1+1,0+100 */
-  background: -moz-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0) 100%
-  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+.big-pushy {
+  background-color: #a7cee0;
+  border: 4px solid #cae8ef;
+  color: #242627;
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  padding: 20px 20px 60px;
+  font-family: Barlow, sans-serif;
+  text-transform: uppercase;
+  font-size: 30px;
+  border-radius: 6px;
+  margin-right: 18px;
+  padding: 10px 24px;
+  box-shadow: 0px 10px 0px #0d4d63, 0px 20px 10px rgba(0, 0, 0, 1);
+  outline: none;
+  transition: 0.1s all linear;
+  opacity: 1;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
 
-  .logo-container {
-    background-image: url("/images/mallow-icon.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 55px;
-    height: 49px;
-    display: inline-block;
-    position: fixed;
-    left: 20px;
-    top: 20px;
+  &:hover {
+    background-color: #dbe4e9;
+    cursor: pointer;
+    transform: translateY(2px);
+    box-shadow: 0px 8px 0px #0d4d63, 0px 18px 10px rgba(0, 0, 0, 1);
+    opacity: 1;
   }
-
-  .mobile {
-    display: none;
-    position: fixed;
-    z-index: 1;
-
-    .menu-btn {
-      position: fixed;
-      z-index: 9;
-      left: -50px;
-    }
-
-    .menu-btn-hit-area {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 80px;
-      width: 80px;
-      display: block;
-      z-index: 10;
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
-
-      .hotdog {
-        position: fixed;
-        width: 26px;
-        height: 3px;
-        background-color: #fff;
-        border-radius: 1.5px;
-        transition: 0.2s all;
-      }
-
-      .hotdog-top {
-        left: 22px;
-        top: 26px;
-      }
-
-      .hotdog-middle {
-        left: 22px;
-        top: 36px;
-      }
-
-      .hotdog-bottom {
-        left: 22px;
-        top: 46px;
-      }
-    }
-
-    .mobile-menu {
-      /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,131313+100&1+0,0+100 */
-      background: -moz-linear-gradient(left, rgba(0, 0, 0, 1) 0%, rgba(19, 19, 19, 0) 100%); /* FF3.6-15 */
-      background: -webkit-linear-gradient(
-        left,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(19, 19, 19, 0) 100%
-      ); /* Chrome10-25,Safari5.1-6 */
-      background: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(19, 19, 19, 0) 100%
-      ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00131313',GradientType=1 ); /* IE6-9 */
-
-      position: fixed;
-      z-index: 6;
-      top: 0;
-      bottom: 0;
-      left: -300px;
-      width: 300px;
-      transition: 0.2s all;
-
-      ul {
-        margin-top: 80px;
-        margin-left: 25px;
-
-        li {
-          display: block;
-          text-align: left;
-          margin-bottom: 15px;
-
-          a {
-            display: inline-block;
-          }
-
-          &.tickets {
-            margin-left: 12px;
-          }
-
-          &.active {
-            a:after {
-              border: none;
-              border-left: 2px solid rgb(255, 221, 27);
-              left: -3px;
-              top: 6px;
-              bottom: 6px;
-            }
-          }
-        }
-      }
-    }
-
-    .menu-btn:checked ~ .menu-btn-hit-area {
-      .hotdog-top {
-        transform: rotate(45deg) translate(6px, 7px);
-      }
-
-      .hotdog-middle {
-        opacity: 0;
-        transform: translateX(-10px);
-      }
-
-      .hotdog-bottom {
-        transform: rotate(-45deg) translate(7px, -8px);
-      }
-    }
-
-    .menu-btn:checked ~ .mobile-menu {
-      left: 0;
-      transition: 0.2s all;
-    }
-  }
-
-  ul {
-    text-align: right;
-
-    li {
-      position: relative;
-      font-family: Barlow, sans-serif;
-      text-transform: uppercase;
-      font-weight: 300;
-      letter-spacing: 2px;
-      display: inline-block;
-
-      a {
-        color: #fff;
-        text-decoration: none;
-        padding: 10px 15px;
-        display: inline-block;
-      }
-
-      &.tickets {
-        a {
-          background-color: #fff;
-          border-radius: 5px;
-          box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.4);
-          color: #000;
-          font-weight: 700;
-        }
-      }
-
-      &.active {
-        a {
-          position: relative;
-
-          &:after {
-            content: "";
-            position: absolute;
-            left: 10px;
-            right: 10px;
-            top: 0;
-            bottom: 0;
-            z-index: -1;
-            border-bottom: 2px solid rgb(255, 221, 27);
-          }
-        }
-      }
-    }
-  }
-}
-
-.home-page {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  z-index: 1;
-
-  // <div class="mallow mallow-blue in" />
-  // <div class="mallow mallow-pink out" />
-
-<<<<<<< HEAD
-  .mallow {
-    // general class for EVERY mallow
-    // position absolute;
-=======
-  .clipping-mask{
-    z-index: 20;
-    position: absolute;
-    top: -100px;
-    left: -100px;
-  }
-
-  .mask{
-    transform-origin: left top;
-    position: absolute;
-    top: -100px;
-    left: -100px;
-    width: 900px;
-    height: 385px;
-    z-index: 3;
-
-    &.mask-yellow{
-      background-image: url("../server/public/images/yellow-mask.png");
-    }
-
-    &.mask-silver{
-      background-image: url("../server/public/images/silver-mask.png");
-    }
-
-    &.mask-green{
-      background-image: url("../server/public/images/green-mask.png");
-    }
-
-    &.mask-blue{
-      background-image: url("../server/public/images/blue-mask.png");
-    }
-
-    &.mask-orange{
-      background-image: url("../server/public/images/orange-mask.png");
-    }
-
-    &.mask-pink{
-      background-image: url("../server/public/images/pink-mask.png");
-    }
-
-    &.mask-red{
-      background-image: url("../server/public/images/red-mask.png");
-    }
-
-    &.mask-purple{
-      background-image: url("../server/public/images/purple-mask.png");
-    }
-  }
-
-  .test-background{
-    background-image: url("/images/danger-confetti.png");
-    transform-origin: left top;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-
-    -webkit-mask-image: url(/images/yellow-mask.png);
-    mask-image: url(../server/public/images/yellow-mask.png);
-    -webkit-mask-origin: left top;
-    -webkit-mask-position: -100px -100px;
-    -webkit-mask-size: 900px 385px;
-    -webkit-mask-repeat: no-repeat;
-  }
-
-#mallow-red-reference{
-  left: 57px;
-  top: 169px;
-  transform: rotate(-220deg);
-  visibility: visible;
-}
-
-#mallow-orange-reference{
-  left: 518px;
-  top: 95px;
-  transform: rotate(90deg);
-  visibility: hidden;
-}
-
-#mallow-yellow-reference{
-  transform: rotate(-20deg);
-  left: 96px;
-  top: 39px;
-  visibility: hidden;
-}
-
-#mallow-green-reference{
-  left: -50px;
-  top: 98px;
-  transform: rotate(90deg);
-  visibility: hidden;
-}
-
-#mallow-blue-reference{
-  left: 683px;
-  top: 69px;
-  transform: rotate(180deg);
-  visibility: hidden;
-}
-
-#mallow-purple-reference{
-  left: 207px;
-  top: 41px;
-  transform: rotate(20deg);
-  visibility: hidden;
-}
-
-#mallow-silver-reference{
-  left: 469px;
-  top: 28px;
-  visibility: hidden;
-}
-
-#mallow-pink-reference{
-  left: 419px;
-  top: 88px;
-  transform: rotate(-90deg);
-  visibility: hidden;
-}
-
-  .mallow {
-    // general class for EVERY mallow
-    // position absolute;
-    width: 69px;
-    height: 69px;
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    position: absolute;
-
-    &.mallow-yellow {
-      // background image for yellow mallow
-      background-image: url("../server/public/images/mallow-yellow.png");
-      transform-origin: left top;
-
-
-      &.in {
-        // in position
-        transform: rotate(-20deg);
-        left: 96px;
-        top: 39px;
-
-        // -webkit-mask-image: url(/images/yellow-mask.png);
-        // mask-image: url(../server/public/images/yellow-mask.png);
-        // -webkit-mask-origin: left top;
-        // -webkit-mask-position: -100px -100px;
-        // -webkit-mask-size: 900px 385px;
-        // -webkit-mask-repeat: no-repeat;
-        //
-        -webkit-animation-name: yellow-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: yellow-mallow-expose;
-        animation-duration: 4s;
-
-        //-webkit-clip-path: url(#yellow-clipping-mask);
-        //clip-path: url(#yellow-clipping-mask);
-        //-webkit-mask-image: url(../server/public/images/yellow-mask.png);
-        //mask-image: url(../server/public/images/yellow-mask.png);
-        //-webkit-mask-position: left top;
-        //-webkit-mask-size: 900px 385px;
-        //mask-position: center center;
-        //-webkit-mask-repeat: no-repeat;
-        //mask-repeat: no-repeat;
-      }
-      &.out {
-        // out position
-        transform: rotate(-20deg);
-        left: 78px;
-        top: -11px;
-
-        // -webkit-mask-image: url(/images/yellow-mask.png);
-        // mask-image: url(../server/public/images/yellow-mask.png);
-        // -webkit-mask-origin: left top;
-        // -webkit-mask-position: -100px -100px;
-        // -webkit-mask-size: 900px 385px;
-        // -webkit-mask-repeat: no-repeat;
-
-        //-webkit-mask-image: url("../server/public/images/yellow-mask.png");
-        //mask-image: url(../server/public/images/yellow-mask.png);
-        //-webkit-mask-position: left top;
-        //-webkit-mask-size: 900px 385px;
-
-
-        //-webkit-mask-repeat: no-repeat;
-
-
-        //background-image: url("../server/public/images/yellow-mask.png");
-        //transform-origin: left top;
-        //position: absolute;
-        //top: -100px;
-        //left: -100px;
-        //width: 100%;
-        //height: 100%;
-        //z-index: -25;
-
-      }
-    }
->>>>>>> updating with mallow positions and more
-
-    &.mallow-blue {
-      // background image for blue mallow
-
-      &.in {
-        // in position
-<<<<<<< HEAD
-=======
-        left: 683px;
-        top: 69px;
-        transform: rotate(180deg);
-
-        -webkit-animation-name: blue-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: blue-mallow-expose;
-        animation-duration: 4s;
->>>>>>> updating with mallow positions and more
-      }
-      &.out {
-        // out position
-      }
-
-    }
-
-    &.mallow-pink {
-      // background image
-
-      &.in {
-        // in position
-<<<<<<< HEAD
-      }
-      &.out {
-        // out position
-=======
-        left: 419px;
-        top: 88px;
-        transform: rotate(-90deg);
-
-        -webkit-animation-name: pink-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: pink-mallow-expose;
-        animation-duration: 4s;
-
-      }
-      &.out {
-        // out position
-        left: 406px;
-        top: 85px;
-        transform: rotate(20deg);
-      }
-
-    }
-
-    &.mallow-red {
-      // background image
-      background-image: url("../server/public/images/mallow-red.png");
-      transform-origin: right top;
-
-      &.in {
-        // in position
-        left: 57px;
-        top: 169px;
-        transform: rotate(-220deg);
-
-        -webkit-animation-name: pink-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: pink-mallow-expose;
-        animation-duration: 4s;
-      }
-      &.out {
-        // out position
-        left: 30px;
-        top: 131px;
-        transform: rotate(-40deg);
-      }
-
-    }
-
-    &.mallow-orange {
-      // background image
-      background-image: url("../server/public/images/mallow-orange.png");
-      transform-origin: right bottom;
-
-      &.in {
-        // in position
-        left: 518px;
-        top: 95px;
-        transform: rotate(90deg);
-
-        -webkit-animation-name: orange-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: orange-mallow-expose;
-        animation-duration: 4s;
-
-      }
-      &.out {
-        // out position
-        left: 534px;
-        top: 89px;
-        transform: rotate(-20deg);
-      }
-    }
-
-    &.mallow-green {
-      // background image
-      background-image: url("../server/public/images/mallow-green.png");
-      transform-origin: right bottom;
-
-      &.in {
-        // in position
-        left: -50px;
-        top: 98px;
-        transform: rotate(90deg);
-
-        -webkit-animation-name: green-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: green-mallow-expose;
-        animation-duration: 4s;
-
-      }
-      &.out {
-        // out position
-        left: -33px;
-        top: 90px;
-        transform: rotate(-20deg);
-      }
-    }
-
-    &.mallow-purple {
-      // background image
-      background-image: url("../server/public/images/mallow-purple.png");
-      transform-origin: right bottom;
-
-      &.in {
-        // in position
-        left: 207px;
-        top: 41px;
-        transform: rotate(20deg);
-
-        -webkit-animation-name: purple-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: purple-mallow-expose;
-        animation-duration: 4s;
-      }
-      &.out {
-        // out position
-        left: 232px;
-        top: -20px;
-        transform: rotate(20deg);
-      }
-    }
-
-    &.mallow-silver {
-      // background image
-      background-image: url("../server/public/images/mallow-silver.png");
-      transform-origin: right bottom;
-
-      &.in {
-        // in position
-        left: 469px;
-        top: 28px;
-
-        -webkit-animation-name: silver-mallow-expose;
-        -webkit-animation-duration: 4s;
-        animation-name: silver-mallow-expose;
-        animation-duration: 4s;
-      }
-      &.out {
-        // out position
-        left: 469px;
-        top: -32px;
->>>>>>> updating with mallow positions and more
-      }
-    }
-  }
-
-<<<<<<< HEAD
-=======
-  /* Safari 4.0 - 8.0 */
-@-webkit-keyframes yellow-mallow-expose {
-  0%   {left:96px; top:39px;}
-  90%  {left:78px; top:-11px;}
-  100% {left:96px; top:39px;}
-}
-
-/* Standard syntax */
-@keyframes yellow-mallow-expose {
-  0%   {left:96px; top:39px;}
-  90%  {left:78px; top:-11px;}
-  100% {left:96px; top:39px;}
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes blue-mallow-expose {
-0%   {left:683px; top:69px; transform: rotate(180deg);}
-90%  {left:681px; top:35px; transform: rotate(20deg);}
-100% {left:683px; top:69px; transform: rotate(180deg);}
-}
-
-/* Standard syntax */
-@keyframes blue-mallow-expose {
-0%   {left:683px; top:69px; transform: rotate(180deg);}
-90%  {left:681px; top:35px; transform: rotate(20deg);}
-100% {left:683px; top:69px; transform: rotate(180deg);}]
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes pink-mallow-expose {
-0%   {left:419px; top:88px; transform: rotate(-90deg);}
-90%  {left:406px; top:85px; transform: rotate(20deg);}
-100% {left:419px; top:88px; transform: rotate(-90deg);}
-}
-
-/* Standard syntax */
-@keyframes pink-mallow-expose {
-0%   {left:419px; top:88px; transform: rotate(-90deg);}
-90%  {left:406px; top:85px; transform: rotate(20deg);}
-100% {left:419px; top:88px; transform: rotate(-90deg);}
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes red-mallow-expose {
-0%   {left:57px; top:169px; transform: rotate(-220deg);}
-90%  {left:30px; top:131px; transform: rotate(-40deg)}
-100% {left:57px; top:169px; transform: rotate(-220deg);}
-}
-
-/* Standard syntax */
-@keyframes red-mallow-expose {
-0%   {left:57px; top:169px; transform: rotate(-220deg);}
-90%  {left:30px; top:131px; transform: rotate(-40deg)}
-100% {left:57px; top:169px; transform: rotate(-220deg);}
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes orange-mallow-expose {
-0%   {left:518px; top:95px; transform: rotate(90deg);}
-90%  {left:534px; top:89px; transform: rotate(-20deg);}
-100% {left:518px; top:95px; transform: rotate(90deg);}
-}
-
-/* Standard syntax */
-@keyframes orange-mallow-expose {
-0%   {left:518px; top:95px; transform: rotate(90deg);}
-90%  {left:534px; top:89px; transform: rotate(-20deg);}
-100% {left:518px; top:95px; transform: rotate(90deg);}
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes green-mallow-expose {
-0%   {left:-50px; top:98px; transform: rotate(90deg)}
-90%  {left:-33px; top:90px; transform: rotate(-20deg);}
-100% {left:-50px; top:98px; transform: rotate(90deg)}
-}
-
-/* Standard syntax */
-@keyframes green-mallow-expose {
-0%   {left:-50px; top:98px; transform: rotate(90deg)}
-90%  {left:-33px; top:90px; transform: rotate(-20deg);}
-100% {left:-50px; top:98px; transform: rotate(90deg)}
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes purple-mallow-expose {
-0%   {left:207px; top:41px; transform: rotate(20deg);}
-90%  {left:232px; top:-20px; transform: rotate(20deg);}
-100% {left:207px; top:41px; transform: rotate(20deg);}
-}
-
-/* Standard syntax */
-@-webkit-keyframes purple-mallow-expose {
-0%   {left:207px; top:41px; transform: rotate(20deg);}
-90%  {left:232px; top:-20px; transform: rotate(20deg);}
-100% {left:207px; top:41px; transform: rotate(20deg);}
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes silver-mallow-expose {
-0%   {left:469px; top:28px;}
-90%  {left:469px; top:-32px;}
-100% {left:469px; top:28px;}
-}
-
-/* Standard syntax */
-@-webkit-keyframes silver-mallow-expose {
-0%   {left:469px; top:28px;}
-90%  {left:469px; top:-32px;}
-100% {left:469px; top:28px;}
-}
-
-
-
-
->>>>>>> updating with mallow positions and more
-  .flex-container {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-
-    &.full-background {
-      background-image: url("/images/danger-confetti.png");
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center center;
-    }
-  }
-
-  .flex-item {
-    display: inline-block;
-    width: 700px;
-    position: relative;
-  }
-
-  .mallow-container {
-    width: 900px;
-    height: 385px;
-    position: absolute;
-    left: -100px;
-    top: -100px;
-    border: 1px solid yellow;
-    z-index: 999;
-  }
-
-  .ignite-text {
-    z-index: -1;
-  }
-
-  .flame-gif {
-    z-index: 1;
-    position: absolute;
-    top: -368px;
-    left: -245px;
-  }
-
-  .info-title {
-    font-family: "Fjalla One", sans-serif;
-    font-size: 40px;
-    text-align: center;
-    color: #ffffff;
-    margin: 0px;
-  }
-
-  .info-date {
-    font-family: "Fjalla One", sans-serif;
-    font-size: 50px;
-    text-align: center;
-    color: #ffffff;
-    margin: 0px;
+  &:active {
+    transform: translateY(8px);
+    box-shadow: 0px 2px 0px rgb(187, 187, 187), 0px 12px 10px rgba(0, 0, 0, 1);
   }
 }
 
@@ -787,35 +55,6 @@ body {
   width: 100%;
   height: 100%;
   font-family: Barlow, sans-serif;
-
-  .big-pushy {
-    background-color: #a7cee0;
-    border: 4px solid #cae8ef;
-
-    font-family: Barlow, sans-serif;
-    text-transform: uppercase;
-    font-size: 30px;
-    border-radius: 6px;
-    margin-right: 18px;
-    padding: 10px 24px;
-    box-shadow: 0px 10px 0px #0d4d63, 0px 20px 10px rgba(0, 0, 0, 1);
-    outline: none;
-    transition: 0.1s all;
-    opacity: 1;
-    font-weight: 600;
-
-    &:hover {
-      background-color: #fff;
-      cursor: pointer;
-      transform: translateY(2px);
-      box-shadow: 0px 8px 0px #0d4d63, 0px 18px 10px rgba(0, 0, 0, 1);
-      opacity: 1;
-    }
-    &:active {
-      transform: translateY(8px);
-      box-shadow: 0px 2px 0px rgb(187, 187, 187), 0px 12px 10px rgba(0, 0, 0, 1);
-    }
-  }
 
   .game-sized-container {
     width: 1000px;
@@ -860,6 +99,108 @@ body {
         letter-spacing: 1px;
         text-transform: uppercase;
         font-weight: 600;
+      }
+    }
+
+    &.name-collection {
+      background-image: url("/images/gameAssets/name-collection-background.png");
+      background-size: cover;
+      background-position: center;
+
+      .game-sized-container {
+        background-image: url("/images/gameAssets/name-collection-main.png");
+        background-size: cover;
+        position: relative;
+        background-position: center;
+      }
+
+      .input-section {
+        position: absolute;
+        bottom: 100px;
+        text-align: center;
+        width: 100%;
+
+        input {
+          font-size: 50px;
+          font-weight: 500;
+          background-color: transparent;
+          color: #fff;
+          border: 4px solid #cae8ef;
+          outline: none;
+          font-family: Barlow, sans-serif;
+          text-transform: uppercase;
+          font-size: 30px;
+          border-radius: 6px;
+          margin-right: 18px;
+          padding: 10px 24px;
+          position: relative;
+          top: 8px;
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+          }
+        }
+      }
+
+      h1 {
+        width: 100%;
+        text-align: center;
+        font-weight: 600;
+        font-size: 90px;
+        margin-top: 50px;
+        text-transform: uppercase;
+      }
+      h2 {
+        text-shadow: 0 0 10px #fff;
+        display: inline-block;
+        position: absolute;
+        left: 110px;
+        top: 183px;
+        width: 450px;
+        font-weight: 500;
+        font-size: 100px;
+        text-align: right;
+      }
+    }
+
+    &.instructions {
+      background-image: url("/images/gameAssets/attract-background.png");
+      background-size: cover;
+
+      .game-sized-container {
+        width: 600px;
+
+        h1 {
+          text-shadow: 0 0 10px #fff;
+          width: 100%;
+          text-align: center;
+          font-weight: 600;
+          font-size: 60px;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+          margin-top: 40px;
+        }
+
+        h2 {
+          display: inline-block;
+          font-weight: 500;
+          font-size: 30px;
+          opacity: 0.5;
+          margin-bottom: 40px;
+        }
+
+        p {
+          font-size: 24px;
+          line-height: 32px;
+          margin-bottom: 30px;
+          letter-spacing: 1px;
+        }
+
+        .button-container {
+          position: absolute;
+          bottom: 60px;
+          width: 100%;
+        }
       }
     }
 
@@ -1182,6 +523,21 @@ body {
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
+      }
+    }
+
+    .background-container.instructions {
+      .game-sized-container {
+        width: 300px;
+
+        h1 {
+          margin-top: 10px;
+          font-size: 32px;
+        }
+
+        .button-container {
+          position: static;
+        }
       }
     }
   }

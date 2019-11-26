@@ -1,0 +1,608 @@
+.home-page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+
+  .mallow {
+    width: 69px;
+    height: 69px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+  }
+
+  .mallow-yellow {
+    // background image for yellow mallow
+    background-image: url("../server/public/images/mallow-yellow.png");
+    transform-origin: left top;
+
+    &.in {
+      // in position
+      transform: rotate(-20deg);
+      left: 96px;
+      top: 39px;
+
+      // -webkit-mask-image: url(/images/yellow-mask.png);
+      // mask-image: url(../server/public/images/yellow-mask.png);
+      // -webkit-mask-origin: left top;
+      // -webkit-mask-position: -100px -100px;
+      // -webkit-mask-size: 900px 385px;
+      // -webkit-mask-repeat: no-repeat;
+      //
+      //   -webkit-animation-name: yellow-mallow-expose;
+      //   -webkit-animation-duration: 4s;
+      //   animation-name: yellow-mallow-expose;
+      //   animation-duration: 4s;
+
+      //-webkit-clip-path: url(#yellow-clipping-mask);
+      //clip-path: url(#yellow-clipping-mask);
+      //-webkit-mask-image: url(../server/public/images/yellow-mask.png);
+      //mask-image: url(../server/public/images/yellow-mask.png);
+      //-webkit-mask-position: left top;
+      //-webkit-mask-size: 900px 385px;
+      //mask-position: center center;
+      //-webkit-mask-repeat: no-repeat;
+      //mask-repeat: no-repeat;
+    }
+
+    &.out {
+      // out position
+      transform: rotate(-20deg);
+      left: 78px;
+      top: -11px;
+
+      // -webkit-mask-image: url(/images/yellow-mask.png);
+      // mask-image: url(../server/public/images/yellow-mask.png);
+      // -webkit-mask-origin: left top;
+      // -webkit-mask-position: -100px -100px;
+      // -webkit-mask-size: 900px 385px;
+      // -webkit-mask-repeat: no-repeat;
+
+      //-webkit-mask-image: url("../server/public/images/yellow-mask.png");
+      //mask-image: url(../server/public/images/yellow-mask.png);
+      //-webkit-mask-position: left top;
+      //-webkit-mask-size: 900px 385px;
+
+      //-webkit-mask-repeat: no-repeat;
+
+      //background-image: url("../server/public/images/yellow-mask.png");
+      //transform-origin: left top;
+      //position: absolute;
+      //top: -100px;
+      //left: -100px;
+      //width: 100%;
+      //height: 100%;
+      //z-index: -25;
+    }
+  }
+
+  //   .clipping-mask {
+  //     z-index: 20;
+  //     position: absolute;
+  //     top: -100px;
+  //     left: -100px;
+  //   }
+
+  //   .mask {
+  //     transform-origin: left top;
+  //     position: absolute;
+  //     top: -100px;
+  //     left: -100px;
+  //     width: 900px;
+  //     height: 385px;
+  //     z-index: 3;
+
+  //     &.mask-yellow {
+  //       background-image: url("../server/public/images/yellow-mask.png");
+  //     }
+
+  //     &.mask-silver {
+  //       background-image: url("../server/public/images/silver-mask.png");
+  //     }
+
+  //     &.mask-green {
+  //       background-image: url("../server/public/images/green-mask.png");
+  //     }
+
+  //     &.mask-blue {
+  //       background-image: url("../server/public/images/blue-mask.png");
+  //     }
+
+  //     &.mask-orange {
+  //       background-image: url("../server/public/images/orange-mask.png");
+  //     }
+
+  //     &.mask-pink {
+  //       background-image: url("../server/public/images/pink-mask.png");
+  //     }
+
+  //     &.mask-red {
+  //       background-image: url("../server/public/images/red-mask.png");
+  //     }
+
+  //     &.mask-purple {
+  //       background-image: url("../server/public/images/purple-mask.png");
+  //     }
+  //   }
+
+  //   .full-page-background {
+  //     background-image: url("/images/danger-confetti.png");
+  //     transform-origin: left top;
+  //     position: absolute;
+  //     width: 100%;
+  //     height: 100%;
+  //     z-index: 3;
+
+  //     // -webkit-mask-image: url(/images/yellow-mask.png);
+  //     // mask-image: url(../server/public/images/yellow-mask.png);
+  //     // -webkit-mask-origin: left top;
+  //     // -webkit-mask-position: -100px -100px;
+  //     // -webkit-mask-size: 900px 385px;
+  //     // -webkit-mask-repeat: no-repeat;
+  //   }
+
+  //   #mallow-red-reference {
+  //     left: 57px;
+  //     top: 169px;
+  //     transform: rotate(-220deg);
+  //     visibility: visible;
+  //   }
+
+  //   #mallow-orange-reference {
+  //     left: 518px;
+  //     top: 95px;
+  //     transform: rotate(90deg);
+  //     visibility: hidden;
+  //   }
+
+  //   #mallow-yellow-reference {
+  //     transform: rotate(-20deg);
+  //     left: 96px;
+  //     top: 39px;
+  //     visibility: hidden;
+  //   }
+
+  //   #mallow-green-reference {
+  //     left: -50px;
+  //     top: 98px;
+  //     transform: rotate(90deg);
+  //     visibility: hidden;
+  //   }
+
+  //   #mallow-blue-reference {
+  //     left: 683px;
+  //     top: 69px;
+  //     transform: rotate(180deg);
+  //     visibility: hidden;
+  //   }
+
+  //   #mallow-purple-reference {
+  //     left: 207px;
+  //     top: 41px;
+  //     transform: rotate(20deg);
+  //     visibility: hidden;
+  //   }
+
+  //   #mallow-silver-reference {
+  //     left: 469px;
+  //     top: 28px;
+  //     visibility: hidden;
+  //   }
+
+  //   #mallow-pink-reference {
+  //     left: 419px;
+  //     top: 88px;
+  //     transform: rotate(-90deg);
+  //     visibility: hidden;
+  //   }
+
+  //   .mallow {
+  //     // general class for EVERY mallow
+  //     // position absolute;
+  //     width: 69px;
+  //     height: 69px;
+  //     background-size: contain;
+  //     background-position: center center;
+  //     background-repeat: no-repeat;
+  //     position: absolute;
+
+  //     &.mallow-yellow {
+  //       // background image for yellow mallow
+  //       background-image: url("../server/public/images/mallow-yellow.png");
+  //       transform-origin: left top;
+
+  //       &.in {
+  //         // in position
+  //         transform: rotate(-20deg);
+  //         left: 96px;
+  //         top: 39px;
+
+  //         // -webkit-mask-image: url(/images/yellow-mask.png);
+  //         // mask-image: url(../server/public/images/yellow-mask.png);
+  //         // -webkit-mask-origin: left top;
+  //         // -webkit-mask-position: -100px -100px;
+  //         // -webkit-mask-size: 900px 385px;
+  //         // -webkit-mask-repeat: no-repeat;
+  //         //
+  //         -webkit-animation-name: yellow-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: yellow-mallow-expose;
+  //         animation-duration: 4s;
+
+  //         //-webkit-clip-path: url(#yellow-clipping-mask);
+  //         //clip-path: url(#yellow-clipping-mask);
+  //         //-webkit-mask-image: url(../server/public/images/yellow-mask.png);
+  //         //mask-image: url(../server/public/images/yellow-mask.png);
+  //         //-webkit-mask-position: left top;
+  //         //-webkit-mask-size: 900px 385px;
+  //         //mask-position: center center;
+  //         //-webkit-mask-repeat: no-repeat;
+  //         //mask-repeat: no-repeat;
+  //       }
+
+  //       &.out {
+  //         // out position
+  //         transform: rotate(-20deg);
+  //         left: 78px;
+  //         top: -11px;
+
+  //         // -webkit-mask-image: url(/images/yellow-mask.png);
+  //         // mask-image: url(../server/public/images/yellow-mask.png);
+  //         // -webkit-mask-origin: left top;
+  //         // -webkit-mask-position: -100px -100px;
+  //         // -webkit-mask-size: 900px 385px;
+  //         // -webkit-mask-repeat: no-repeat;
+
+  //         //-webkit-mask-image: url("../server/public/images/yellow-mask.png");
+  //         //mask-image: url(../server/public/images/yellow-mask.png);
+  //         //-webkit-mask-position: left top;
+  //         //-webkit-mask-size: 900px 385px;
+
+  //         //-webkit-mask-repeat: no-repeat;
+
+  //         //background-image: url("../server/public/images/yellow-mask.png");
+  //         //transform-origin: left top;
+  //         //position: absolute;
+  //         //top: -100px;
+  //         //left: -100px;
+  //         //width: 100%;
+  //         //height: 100%;
+  //         //z-index: -25;
+  //       }
+  //     }
+
+  //     &.mallow-blue {
+  //       // background image for blue mallow
+
+  //       &.in {
+  //         // in position
+  //         left: 683px;
+  //         top: 69px;
+  //         transform: rotate(180deg);
+
+  //         -webkit-animation-name: blue-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: blue-mallow-expose;
+  //         animation-duration: 4s;
+  //       }
+
+  //       &.out {
+  //         // out position
+  //       }
+  //     }
+
+  //     &.mallow-pink {
+  //       // background image
+
+  //       &.in {
+  //         // in position
+  //         left: 419px;
+  //         top: 88px;
+  //         transform: rotate(-90deg);
+
+  //         -webkit-animation-name: pink-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: pink-mallow-expose;
+  //         animation-duration: 4s;
+  //       }
+  //       &.out {
+  //         // out position
+  //         left: 406px;
+  //         top: 85px;
+  //         transform: rotate(20deg);
+  //       }
+  //     }
+
+  //     &.mallow-red {
+  //       // background image
+  //       background-image: url("../server/public/images/mallow-red.png");
+  //       transform-origin: right top;
+
+  //       &.in {
+  //         // in position
+  //         left: 57px;
+  //         top: 169px;
+  //         transform: rotate(-220deg);
+
+  //         -webkit-animation-name: pink-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: pink-mallow-expose;
+  //         animation-duration: 4s;
+  //       }
+  //       &.out {
+  //         // out position
+  //         left: 30px;
+  //         top: 131px;
+  //         transform: rotate(-40deg);
+  //       }
+  //     }
+
+  //     &.mallow-orange {
+  //       // background image
+  //       background-image: url("../server/public/images/mallow-orange.png");
+  //       transform-origin: right bottom;
+
+  //       &.in {
+  //         // in position
+  //         left: 518px;
+  //         top: 95px;
+  //         transform: rotate(90deg);
+
+  //         -webkit-animation-name: orange-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: orange-mallow-expose;
+  //         animation-duration: 4s;
+  //       }
+  //       &.out {
+  //         // out position
+  //         left: 534px;
+  //         top: 89px;
+  //         transform: rotate(-20deg);
+  //       }
+  //     }
+
+  //     &.mallow-green {
+  //       // background image
+  //       background-image: url("../server/public/images/mallow-green.png");
+  //       transform-origin: right bottom;
+
+  //       &.in {
+  //         // in position
+  //         left: -50px;
+  //         top: 98px;
+  //         transform: rotate(90deg);
+
+  //         -webkit-animation-name: green-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: green-mallow-expose;
+  //         animation-duration: 4s;
+  //       }
+  //       &.out {
+  //         // out position
+  //         left: -33px;
+  //         top: 90px;
+  //         transform: rotate(-20deg);
+  //       }
+  //     }
+
+  //     &.mallow-purple {
+  //       // background image
+  //       background-image: url("../server/public/images/mallow-purple.png");
+  //       transform-origin: right bottom;
+
+  //       &.in {
+  //         // in position
+  //         left: 207px;
+  //         top: 41px;
+  //         transform: rotate(20deg);
+
+  //         -webkit-animation-name: purple-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: purple-mallow-expose;
+  //         animation-duration: 4s;
+  //       }
+  //       &.out {
+  //         // out position
+  //         left: 232px;
+  //         top: -20px;
+  //         transform: rotate(20deg);
+  //       }
+  //     }
+
+  //     &.mallow-silver {
+  //       // background image
+  //       background-image: url("../server/public/images/mallow-silver.png");
+  //       transform-origin: right bottom;
+
+  //       &.in {
+  //         // in position
+  //         left: 469px;
+  //         top: 28px;
+
+  //         -webkit-animation-name: silver-mallow-expose;
+  //         -webkit-animation-duration: 4s;
+  //         animation-name: silver-mallow-expose;
+  //         animation-duration: 4s;
+  //       }
+  //       &.out {
+  //         // out position
+  //         left: 469px;
+  //         top: -32px;
+  //       }
+  //     }
+  //   }
+
+  .flex-container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    &.full-background {
+      background-image: url("/images/danger-confetti.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
+  }
+
+  .flex-item {
+    display: inline-block;
+    width: 700px;
+    position: relative;
+  }
+
+  .mallow-container {
+    width: 900px;
+    height: 385px;
+    position: absolute;
+    left: -100px;
+    top: -100px;
+    border: 1px solid yellow;
+    z-index: 999;
+  }
+
+  .ignite-text {
+    z-index: -1;
+  }
+
+  .flame-gif {
+    z-index: 1;
+    position: absolute;
+    top: -368px;
+    left: -245px;
+  }
+
+  .info-title {
+    font-family: "Fjalla One", sans-serif;
+    font-size: 40px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0px;
+  }
+
+  .info-date {
+    font-family: "Fjalla One", sans-serif;
+    font-size: 50px;
+    text-align: center;
+    color: #ffffff;
+    margin: 0px;
+  }
+}
+
+//   /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes yellow-mallow-expose {
+//   0%   {left:96px; top:39px;}
+//   90%  {left:78px; top:-11px;}
+//   100% {left:96px; top:39px;}
+// }
+
+// /* Standard syntax */
+// @keyframes yellow-mallow-expose {
+//   0%   {left:96px; top:39px;}
+//   90%  {left:78px; top:-11px;}
+//   100% {left:96px; top:39px;}
+// }
+
+// /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes blue-mallow-expose {
+// 0%   {left:683px; top:69px; transform: rotate(180deg);}
+// 90%  {left:681px; top:35px; transform: rotate(20deg);}
+// 100% {left:683px; top:69px; transform: rotate(180deg);}
+// }
+
+// /* Standard syntax */
+// @keyframes blue-mallow-expose {
+// 0%   {left:683px; top:69px; transform: rotate(180deg);}
+// 90%  {left:681px; top:35px; transform: rotate(20deg);}
+// 100% {left:683px; top:69px; transform: rotate(180deg);}]
+// }
+
+// /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes pink-mallow-expose {
+// 0%   {left:419px; top:88px; transform: rotate(-90deg);}
+// 90%  {left:406px; top:85px; transform: rotate(20deg);}
+// 100% {left:419px; top:88px; transform: rotate(-90deg);}
+// }
+
+// /* Standard syntax */
+// @keyframes pink-mallow-expose {
+// 0%   {left:419px; top:88px; transform: rotate(-90deg);}
+// 90%  {left:406px; top:85px; transform: rotate(20deg);}
+// 100% {left:419px; top:88px; transform: rotate(-90deg);}
+// }
+
+// /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes red-mallow-expose {
+// 0%   {left:57px; top:169px; transform: rotate(-220deg);}
+// 90%  {left:30px; top:131px; transform: rotate(-40deg)}
+// 100% {left:57px; top:169px; transform: rotate(-220deg);}
+// }
+
+// /* Standard syntax */
+// @keyframes red-mallow-expose {
+// 0%   {left:57px; top:169px; transform: rotate(-220deg);}
+// 90%  {left:30px; top:131px; transform: rotate(-40deg)}
+// 100% {left:57px; top:169px; transform: rotate(-220deg);}
+// }
+
+// /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes orange-mallow-expose {
+// 0%   {left:518px; top:95px; transform: rotate(90deg);}
+// 90%  {left:534px; top:89px; transform: rotate(-20deg);}
+// 100% {left:518px; top:95px; transform: rotate(90deg);}
+// }
+
+// /* Standard syntax */
+// @keyframes orange-mallow-expose {
+// 0%   {left:518px; top:95px; transform: rotate(90deg);}
+// 90%  {left:534px; top:89px; transform: rotate(-20deg);}
+// 100% {left:518px; top:95px; transform: rotate(90deg);}
+// }
+
+// /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes green-mallow-expose {
+// 0%   {left:-50px; top:98px; transform: rotate(90deg)}
+// 90%  {left:-33px; top:90px; transform: rotate(-20deg);}
+// 100% {left:-50px; top:98px; transform: rotate(90deg)}
+// }
+
+// /* Standard syntax */
+// @keyframes green-mallow-expose {
+// 0%   {left:-50px; top:98px; transform: rotate(90deg)}
+// 90%  {left:-33px; top:90px; transform: rotate(-20deg);}
+// 100% {left:-50px; top:98px; transform: rotate(90deg)}
+// }
+
+// /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes purple-mallow-expose {
+// 0%   {left:207px; top:41px; transform: rotate(20deg);}
+// 90%  {left:232px; top:-20px; transform: rotate(20deg);}
+// 100% {left:207px; top:41px; transform: rotate(20deg);}
+// }
+
+// /* Standard syntax */
+// @-webkit-keyframes purple-mallow-expose {
+// 0%   {left:207px; top:41px; transform: rotate(20deg);}
+// 90%  {left:232px; top:-20px; transform: rotate(20deg);}
+// 100% {left:207px; top:41px; transform: rotate(20deg);}
+// }
+
+// /* Safari 4.0 - 8.0 */
+// @-webkit-keyframes silver-mallow-expose {
+// 0%   {left:469px; top:28px;}
+// 90%  {left:469px; top:-32px;}
+// 100% {left:469px; top:28px;}
+// }
+
+// /* Standard syntax */
+// @-webkit-keyframes silver-mallow-expose {
+// 0%   {left:469px; top:28px;}
+// 90%  {left:469px; top:-32px;}
+// 100% {left:469px; top:28px;}
+// }
