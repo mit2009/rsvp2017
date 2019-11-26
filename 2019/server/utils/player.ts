@@ -13,9 +13,9 @@ export class Player {
 
     private lastFired: number;
 
-    private velocity: number = 15;
+    private velocity: number = 17;
     private turningAngle: number = 0.5;
-    private fireFrequency: number = 500;
+    private fireFrequency: number = 400;
 
     constructor(xcor: number, ycor: number, heading: number) {
         this.xcor = (xcor + 0.5) * tileWidth;

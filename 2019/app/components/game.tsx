@@ -123,7 +123,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             tile4: {
                 resourceUrl: "tile3.png",
                 loaded: false,
-                heightOffset: -20,
+                heightOffset: -10,
             },
             tile5: {
                 resourceUrl: "tile1.png",

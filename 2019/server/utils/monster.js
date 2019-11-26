@@ -5,10 +5,10 @@ var bullet_1 = require("./bullet");
 var levelData_1 = require("../api/levelData");
 var AIs = {
     6: [{ delay: 1, deltaHeading: 0, fire: false }],
-    7: [{ delay: 500, deltaHeading: 0, fire: true }],
-    8: [{ delay: 500, deltaHeading: 0, fire: true }],
-    9: [{ delay: 500, deltaHeading: 0, fire: true }],
-    10: [{ delay: 500, deltaHeading: 0, fire: true }],
+    7: [{ delay: 1000, deltaHeading: 0, fire: true }],
+    8: [{ delay: 1000, deltaHeading: 0, fire: true }],
+    9: [{ delay: 1000, deltaHeading: 0, fire: true }],
+    10: [{ delay: 1000, deltaHeading: 0, fire: true }],
     11: [{ delay: 500, deltaHeading: Math.PI / 4, fire: true }],
 };
 var Monster = /** @class */ (function () {

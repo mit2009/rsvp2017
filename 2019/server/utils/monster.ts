@@ -9,13 +9,13 @@ interface Action {
     fire: boolean,
 }
 
-const AIs: {[key: number]: Action[]} = {
-    6:  [{delay: 1, deltaHeading: 0, fire: false}],
-    7:  [{delay: 500, deltaHeading: 0, fire: true}],
-    8:  [{delay: 500, deltaHeading: 0, fire: true}],
-    9:  [{delay: 500, deltaHeading: 0, fire: true}],
-    10: [{delay: 500, deltaHeading: 0, fire: true}],
-    11: [{delay: 500, deltaHeading: Math.PI / 4, fire: true}],
+const AIs: { [key: number]: Action[] } = {
+    6: [{ delay: 1, deltaHeading: 0, fire: false }],
+    7: [{ delay: 1000, deltaHeading: 0, fire: true }],
+    8: [{ delay: 1000, deltaHeading: 0, fire: true }],
+    9: [{ delay: 1000, deltaHeading: 0, fire: true }],
+    10: [{ delay: 1000, deltaHeading: 0, fire: true }],
+    11: [{ delay: 500, deltaHeading: Math.PI / 4, fire: true }],
 }
 
 export class Monster {
@@ -55,7 +55,7 @@ export class Monster {
 
     fireBullet() {
         const bulletOffset = 0;
-        return new Bullet(this.xcor + bulletOffset  * Math.sin(this.heading), this.ycor  - bulletOffset  * Math.cos(this.heading), this.heading, false, 0);
+        return new Bullet(this.xcor + bulletOffset * Math.sin(this.heading), this.ycor - bulletOffset * Math.cos(this.heading), this.heading, false, 0);
     }
 
     getBlob() {
