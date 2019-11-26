@@ -29,7 +29,6 @@ function getRouter() {
     });
     router.post("/game/team", function (_req, res) {
         var _a = _req.body, guid = _a.guid, teamColor = _a.teamColor;
-        // console.log(_req.body);
         var success = gameHandler.changeTeam(guid, teamColor);
         res.json({ success: success });
     });

@@ -36,7 +36,7 @@ export class Game {
 
     constructor() {
         this.score = 100;
-        this.currentLevel = 2;
+        this.currentLevel = 0;
         this.livesLeft = this.maxLives;
 
         this.ableToLevel = false;
@@ -162,7 +162,6 @@ export class Game {
 
         this.lastUpdated = currentTime;
         const blob = this.getBlob();
-        console.log(blob);
         return blob;
     }
 
