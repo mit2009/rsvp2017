@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var guid_typescript_1 = require("guid-typescript");
 var game_1 = require("./game");
-var errorResponse = {
-    status: 'WHAT ARE YOU DOING?'
+var gameDoesNotExistResponse = {
+    error: 'Game does not exist'
 };
 var games = {};
 function newGame() {
@@ -24,14 +24,14 @@ function levelUp(guid) {
     if (games.hasOwnProperty(guid)) {
         return games[guid].levelUp();
     }
-    return errorResponse;
+    return gameDoesNotExistResponse;
 }
 exports.levelUp = levelUp;
 function update(guid, up, down, left, right, fire) {
     if (games.hasOwnProperty(guid)) {
         return games[guid].update(up, down, left, right, fire);
     }
-    return errorResponse;
+    return gameDoesNotExistResponse;
 }
 exports.update = update;
 //# sourceMappingURL=gameHandler.js.map

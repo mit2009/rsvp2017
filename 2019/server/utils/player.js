@@ -10,13 +10,13 @@ var Player = /** @class */ (function () {
         this.ycor = (ycor + 0.5) * levelData_1.tileHeight;
         this.startX = this.xcor;
         this.startY = this.ycor;
-        this.heading = 2.35619; //heading;
+        this.heading = 0; //heading;
     }
     Player.prototype.fireBullet = function () {
         return new bullet_1.Bullet(this.xcor, this.ycor, this.heading, true);
     };
     Player.prototype.update = function (timeDelta, up, down, left, right, levelMap) {
-        var increment = 10;
+        var increment = 1;
         var counter = 0;
         while (counter + increment < timeDelta) {
             if (!this.updateHelper(increment, up, down, left, right, levelMap)) {

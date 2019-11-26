@@ -4,6 +4,10 @@ import { Monster } from "./monster";
 import { TeamColor, IGameRenderData } from "../api/gameRenderData"
 import { LevelData, getLevelData } from "../api/levelData"
 
+const unableToLevelResponse = {
+    error: 'Unable to level',
+}
+
 export class Game {
 
     teamColor: TeamColor = null;
@@ -37,26 +41,29 @@ export class Game {
     }
 
     levelUp() {
-        this.ableToLevel = false;
-        this.currentLevel += 1;
+        if (this.ableToLevel) {
+            this.ableToLevel = false;
+            this.currentLevel += 1;
 
-        this.bullets = [];
-        this.monsters = [];
+            this.bullets = [];
+            this.monsters = [];
 
-        console.log("Level", this.currentLevel);
-        this.levelData = getLevelData(this.currentLevel);
-        const playerData = this.levelData.playerLocation;
+            console.log("Level", this.currentLevel);
+            this.levelData = getLevelData(this.currentLevel);
+            const playerData = this.levelData.playerLocation;
 
-        this.player = new Player(playerData.x, playerData.y, 0);
-        this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, 0, 1));
+            this.player = new Player(playerData.x, playerData.y, 0);
+            this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, 0, 1));
 
-        this.lastUpdated = Date.now();
+            this.lastUpdated = Date.now();
+            return this.getBlob()
+        }
 
-        return this.getBlob()
+        return unableToLevelResponse;
     }
 
     updateBullets(timeDelta: number) {
-        this.bullets = this.bullets.filter(b => b.update(timeDelta));
+        this.bullets = this.bullets.filter(b => b.update(timeDelta, this.levelData.mapData));
     }
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
@@ -77,7 +84,7 @@ export class Game {
     }
 
     getBlob() {
-        return {
+        const output = {
             currentLevel: this.currentLevel,
             score: this.score,
             teamColor: this.teamColor,
@@ -92,11 +99,7 @@ export class Game {
             },
             bullets: this.bullets.map(b => b.getBlob()),
             monsters: this.monsters.map(m => m.getBlob()),
-            // tiles : {
-            //
-            // }
-            // player: this.player.getBlob(),
-            // bullets: this.bullets.map((b) => b.getBlob()),
         } as IGameRenderData
+        return output;
     }
 }

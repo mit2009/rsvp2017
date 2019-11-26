@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
 var monster_1 = require("./monster");
 var levelData_1 = require("../api/levelData");
+var unableToLevelResponse = {
+    error: 'Unable to level',
+};
 var Game = /** @class */ (function () {
     function Game() {
         this.teamColor = null;
@@ -18,20 +21,24 @@ var Game = /** @class */ (function () {
         return true;
     };
     Game.prototype.levelUp = function () {
-        this.ableToLevel = false;
-        this.currentLevel += 1;
-        this.bullets = [];
-        this.monsters = [];
-        console.log("Level", this.currentLevel);
-        this.levelData = levelData_1.getLevelData(this.currentLevel);
-        var playerData = this.levelData.playerLocation;
-        this.player = new player_1.Player(playerData.x, playerData.y, 0);
-        this.monsters = this.levelData.enemyLocation.map(function (m) { return new monster_1.Monster(m.x, m.y, 0, 1); });
-        this.lastUpdated = Date.now();
-        return this.getBlob();
+        if (this.ableToLevel) {
+            this.ableToLevel = false;
+            this.currentLevel += 1;
+            this.bullets = [];
+            this.monsters = [];
+            console.log("Level", this.currentLevel);
+            this.levelData = levelData_1.getLevelData(this.currentLevel);
+            var playerData = this.levelData.playerLocation;
+            this.player = new player_1.Player(playerData.x, playerData.y, 0);
+            this.monsters = this.levelData.enemyLocation.map(function (m) { return new monster_1.Monster(m.x, m.y, 0, 1); });
+            this.lastUpdated = Date.now();
+            return this.getBlob();
+        }
+        return unableToLevelResponse;
     };
     Game.prototype.updateBullets = function (timeDelta) {
-        this.bullets = this.bullets.filter(function (b) { return b.update(timeDelta); });
+        var _this = this;
+        this.bullets = this.bullets.filter(function (b) { return b.update(timeDelta, _this.levelData.mapData); });
     };
     Game.prototype.update = function (up, down, left, right, fire) {
         var currentTime = Date.now();
@@ -46,7 +53,7 @@ var Game = /** @class */ (function () {
         return this.getBlob();
     };
     Game.prototype.getBlob = function () {
-        return {
+        var output = {
             currentLevel: this.currentLevel,
             score: this.score,
             teamColor: this.teamColor,
@@ -62,6 +69,7 @@ var Game = /** @class */ (function () {
             bullets: this.bullets.map(function (b) { return b.getBlob(); }),
             monsters: this.monsters.map(function (m) { return m.getBlob(); }),
         };
+        return output;
     };
     return Game;
 }());

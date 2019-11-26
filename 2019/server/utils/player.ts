@@ -20,7 +20,7 @@ export class Player {
         this.startX = this.xcor;
         this.startY = this.ycor;
 
-        this.heading = 2.35619; //heading;
+        this.heading = 0; //heading;
     }
 
     fireBullet() {
@@ -28,7 +28,7 @@ export class Player {
     }
 
     update(timeDelta: number, up: boolean, down: boolean, left: boolean, right: boolean, levelMap: number[][]) {
-        const increment = 10;
+        const increment = 1;
         let counter = 0;
 
         while (counter + increment < timeDelta) {

@@ -3,8 +3,8 @@ import { Game } from "./game";
 import { TeamColor} from "../api/gameRenderData";
 
 
-const errorResponse = {
-    status: 'WHAT ARE YOU DOING?'
+const gameDoesNotExistResponse = {
+    error: 'Game does not exist'
 }
 
 interface Memory {
@@ -33,12 +33,12 @@ export function levelUp(guid: string) {
     if (games.hasOwnProperty(guid)) {
         return games[guid].levelUp();
     }
-    return errorResponse;
+    return gameDoesNotExistResponse;
 }
 
 export function update(guid: string, up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
     if (games.hasOwnProperty(guid)) {
         return games[guid].update(up, down, left, right, fire);
     }
-    return errorResponse;
+    return gameDoesNotExistResponse;
 }
