@@ -33,7 +33,6 @@ export interface IGameAppProps {
 }
 export interface IGameAppState {
     mallowColor: string;
-    lastRecievedData?: IGameRenderData;
 
 }
 
@@ -45,7 +44,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
 
-    private lastReceivedData: IGameRenderData;
 
     // private gameRenderData: IGameRenderData = {
     //     // SAMPLE DATA FORMAT HERE:
@@ -143,11 +141,13 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 resourceUrl: "bullet.png",
                 loaded: false,
             },
+
             background: {
                 resourceUrl: "background.png",
                 loaded: false,
                 zIndex: 0,
             },
+
         },
         sounds: {
             pew: {
@@ -210,20 +210,32 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                     console.log("loaded item heading with ", imageId + h);
                     this.imageStore[imageId + h] = new Image();
                     this.imageStore[imageId + h].src = BASE_RESOURCE_URL + image.resourceUrl.replace("#", h + "");
-                    this.imageStore[imageId + h].onload = () => {
-                        // TODO: build better loading mechanism
-                        this.assets.images[imageId + h].loaded = true;
+                    this.imageStore[imageId + h].onload = (e) => {
+
+                        // // @ts-ignore
+                        // const pathName = e.target.src;
+                        // const fileName = pathName.split("/")[pathName.split("/").length - 1].split(".")[0];
+                        // console.log(fileName);
+
+                        // // TODO: build better loading mechanism
+                        // this.assets.images[fileName].loaded = true;
+
+                        // console.log(this.assets.images);
                         this.forceUpdate();
                     };
                 }
             } else {
                 this.imageStore[imageId] = new Image();
                 this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
-                this.imageStore[imageId].onload = t => {
-                    console.log(t.currentTarget);
-                    // TODO: build better loading mechanism
+                this.imageStore[imageId].onload = (e) => {
 
-                    this.assets.images[imageId].loaded = true;
+                    // // @ts-ignore
+                    // const pathName = e.target.src;
+                    // const fileName = pathName.split("/")[pathName.split("/").length - 1].split(".")[0];
+
+                    // // TODO: build better loading mechanism
+
+                    // this.assets.images[fileName].loaded = true;
                     this.forceUpdate();
                 };
             }
@@ -315,7 +327,10 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             // It'll be ok, but if you know of a better way to do this
             // Please let me know.
             // @ts-ignore
-            context.drawImage(this.imageStore[imageId], item.pos.x, item.pos.y);
+
+
+            // TEMPORARILY COMMENTED OUT
+            // context.drawImage(this.imageStore[imageId], item.pos.x, item.pos.y);
         }
     }
 
