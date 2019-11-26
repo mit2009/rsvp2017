@@ -323,7 +323,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     // Checks the list of items to render with a zIndex. These will by
     // default be rendered before the other elements
     /*
-    
+
         private renderZIndexItems(context: CanvasRenderingContext2D, data: IGameRenderData) {
             const sortable = [];
             for (const imageId of Object.keys(data.imagesToRender)) {
@@ -341,13 +341,13 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 // It'll be ok, but if you know of a better way to do this
                 // Please let me know.
                 // @ts-ignore
-    
-    
+
+
                 // TEMPORARILY COMMENTED OUT
                 // context.drawImage(this.imageStore[imageId], item.pos.x, item.pos.y);
             }
         }
-    
+
         */
 
     // Ineffiencetly checks the list of items to render. If it falls
