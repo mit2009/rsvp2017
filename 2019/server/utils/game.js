@@ -48,8 +48,9 @@ var Game = /** @class */ (function () {
         }
         this.incrementalUpdateBullets(timeDelta - counter);
     };
-    Game.prototype.bulletEntityOverlap = function (b, o) {
-        return (Math.abs(b.xcor - o.xcor) < 22.5) && (Math.abs(b.ycor - o.ycor) < 22.5);
+    Game.prototype.bulletEntityOverlap = function (b, o, overlap) {
+        if (overlap === void 0) { overlap = 22.5; }
+        return (Math.abs(b.xcor - o.xcor) < overlap) && (Math.abs(b.ycor - o.ycor) < overlap);
     };
     Game.prototype.incrementalUpdateBullets = function (timeDelta) {
         var _this = this;
@@ -88,12 +89,19 @@ var Game = /** @class */ (function () {
         var currentTime = Date.now();
         var timeDelta = (currentTime - this.lastUpdated) / 240;
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-        this.monsters.forEach(function (m) {
+        this.monsters = this.monsters.filter(function (m) {
             var bullet = m.update();
             if (bullet) {
                 console.log('new bullet');
                 _this.bullets.push(bullet);
             }
+            var collide = _this.bulletEntityOverlap(m, _this.player);
+            if (collide) {
+                _this.score += enemyBonusScore;
+                _this.livesLeft -= 1;
+                return false;
+            }
+            return true;
         });
         this.updateBullets(timeDelta);
         if (fire) {

@@ -76,8 +76,8 @@ export class Game {
         this.incrementalUpdateBullets(timeDelta - counter);
     }
 
-    bulletEntityOverlap(b: Bullet, o: any) {
-        return (Math.abs(b.xcor - o.xcor) < 22.5) && (Math.abs(b.ycor - o.ycor) < 22.5);
+    bulletEntityOverlap(b: any, o: any, overlap: number = 22.5) {
+        return (Math.abs(b.xcor - o.xcor) < overlap) && (Math.abs(b.ycor - o.ycor) < overlap);
     }
 
     incrementalUpdateBullets(timeDelta: number) {
@@ -108,12 +108,19 @@ export class Game {
         const timeDelta = (currentTime - this.lastUpdated) / 240;
 
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-        this.monsters.forEach((m) => {
+        this.monsters = this.monsters.filter((m) => {
             const bullet = m.update();
             if (bullet) {
                 console.log('new bullet');
                 this.bullets.push(bullet);
             }
+            const collide = this.bulletEntityOverlap(m, this.player);
+            if (collide) {
+                this.score += enemyBonusScore;
+                this.livesLeft -= 1;
+                return false;
+            }
+            return true;
         });
         this.updateBullets(timeDelta);
 
