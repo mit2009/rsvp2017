@@ -11,7 +11,7 @@ function initSocket(http) {
         });
         socket.on("levelUp", function (guid) {
             var blob = gameHandler.levelUp(guid);
-            socket.emit("levelData", JSON.stringify(blob));
+            setTimeout(function () { return socket.emit("levelData", JSON.stringify(blob), 1000); });
         });
         socket.on("getUpdate", function (guid, up, down, left, right, fire) {
             var blob = gameHandler.update(guid, up, down, left, right, fire);

@@ -15,7 +15,7 @@ export function initSocket(http: any) {
 
         socket.on("levelUp", (guid: string) => {
             const blob = gameHandler.levelUp(guid);
-            socket.emit("levelData", JSON.stringify(blob));
+            setTimeout(() => socket.emit("levelData", JSON.stringify(blob), 1000));
         });
 
         socket.on("getUpdate", (guid: string, up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) => {
