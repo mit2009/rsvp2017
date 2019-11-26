@@ -75,6 +75,7 @@ export class Game {
         let increment = 1;
         while (counter + increment < timeDelta) {
             this.incrementalUpdateBullets(increment);
+            counter += increment;
         }
         this.incrementalUpdateBullets(timeDelta - counter);
     }
@@ -110,7 +111,6 @@ export class Game {
         if (this.final) {
             return this.getBlob();
         }
-
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 240;
 
