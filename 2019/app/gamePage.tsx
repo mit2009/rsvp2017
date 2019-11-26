@@ -383,7 +383,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         // starts the game
         console.log("hello");
         axios
-            .post("/game/playername", { playerName: this.state.nameValue })
+            .post("/game/playername", {
+                guid: this.state.guid,
+                playerName: this.state.nameValue
+            })
             .then((res: any) => {
                 console.log(res);
 

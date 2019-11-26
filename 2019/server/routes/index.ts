@@ -58,8 +58,8 @@ export function getRouter() {
         // TODO: Calculate their final score
         const finalScore = gameHandler.getScore(guid);
         const teamColor = gameHandler.getColor(guid);
-        if (finalScore == -1 || teamColor == -1) {
-            res.status(500).send("Invalid game for High Score");
+        if (finalScore === -1 || teamColor === -1) {
+            res.status(400).send("Invalid game for High Score");
             return;
         }
         saveScore(
