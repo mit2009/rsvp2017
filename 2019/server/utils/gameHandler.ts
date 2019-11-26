@@ -49,3 +49,10 @@ export function getScore(guid: string) {
     }
     return -1;
 }
+
+export function getColor(guid: string) {
+    if (games.hasOwnProperty(guid)) {
+        return games[guid].getColor();
+    }
+    return -1;
+}

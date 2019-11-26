@@ -36,7 +36,7 @@ export class Game {
 
     constructor() {
         this.score = 100;
-        this.currentLevel = 0;
+        this.currentLevel = 2;
         this.livesLeft = this.maxLives;
 
         this.ableToLevel = false;
@@ -191,6 +191,13 @@ export class Game {
     getScore() {
         if (this.final) {
             return this.score;
+        }
+        return -1;
+    }
+
+    getColor() {
+        if (this.final) {
+            return this.teamColor;
         }
         return -1;
     }

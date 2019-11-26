@@ -16,7 +16,7 @@ var Game = /** @class */ (function () {
         this.teamColor = null;
         this.maxLives = 5;
         this.score = 100;
-        this.currentLevel = 0;
+        this.currentLevel = 2;
         this.livesLeft = this.maxLives;
         this.ableToLevel = false;
         this.final = false;
@@ -163,6 +163,12 @@ var Game = /** @class */ (function () {
     Game.prototype.getScore = function () {
         if (this.final) {
             return this.score;
+        }
+        return -1;
+    };
+    Game.prototype.getColor = function () {
+        if (this.final) {
+            return this.teamColor;
         }
         return -1;
     };

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var gameRenderData_1 = require("../api/gameRenderData");
 var express = require("express");
 var gameHandler = require("../utils/gameHandler");
 var leaderboard_1 = require("../utils/leaderboard");
@@ -47,12 +46,13 @@ function getRouter() {
         var _a = _req.body, guid = _a.guid, playerName = _a.playerName;
         // TODO: Calculate their final score
         var finalScore = gameHandler.getScore(guid);
-        if (finalScore == -1) {
+        var teamColor = gameHandler.getColor(guid);
+        if (finalScore == -1 || teamColor == -1) {
             res.status(500).send("Invalid game for High Score");
             return;
         }
         leaderboard_1.saveScore({
-            team: gameRenderData_1.TeamColor.BLUE,
+            team: teamColor,
             name: playerName,
             score: finalScore,
         }, function (leaderboard) {

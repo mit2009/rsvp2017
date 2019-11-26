@@ -41,4 +41,11 @@ function getScore(guid) {
     return -1;
 }
 exports.getScore = getScore;
+function getColor(guid) {
+    if (games.hasOwnProperty(guid)) {
+        return games[guid].getColor();
+    }
+    return -1;
+}
+exports.getColor = getColor;
 //# sourceMappingURL=gameHandler.js.map
