@@ -4,18 +4,18 @@ import { IRenderableImage, IShape } from "../api/gameRenderData";
 import { playerWidth, playerHeight, widthOffset, heightOffset, tileWidth, tileHeight, walls, voids } from "../api/levelData";
 
 export class Player {
-    startX: number;
-    startY: number;
+    private startX: number;
+    private startY: number;
 
-    xcor: number;
-    ycor: number;
-    heading: number;
+    private xcor: number;
+    private ycor: number;
+    private heading: number;
 
-    lastFired: number;
+    private lastFired: number;
 
-    velocity: number = 10;
-    turningAngle: number;
-    fireFrequency: number = 500;
+    private velocity: number = 12;
+    private turningAngle: number;
+    private fireFrequency: number = 500;
 
     constructor(xcor: number, ycor: number, heading: number) {
         this.xcor = (xcor + 0.5) * tileWidth;
