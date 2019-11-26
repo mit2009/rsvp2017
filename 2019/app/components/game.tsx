@@ -140,7 +140,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             bullet: {
                 resourceUrl: "bullet.png",
                 loaded: false,
-                heightOffset: -7,
             },
             background: {
                 resourceUrl: "background.png",
