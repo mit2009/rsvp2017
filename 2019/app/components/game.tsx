@@ -272,8 +272,8 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private drawGameAssets(context: CanvasRenderingContext2D) {
         // const data = this.props;
         const data = this.props.gameData;
-
-        if (context && this.props.gameData) {
+        console.log(data);
+        if (context && (this.props.gameData !== null && this.props.gameData !== undefined)) {
 
             // TODO: abstract
             context.clearRect(0, 0, 600, 600);
