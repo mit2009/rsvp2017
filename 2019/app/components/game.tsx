@@ -13,6 +13,7 @@ const CANVAS_HEIGHT = 600;
 export interface IImageAsset {
     resourceUrl: string;
     loaded: boolean;
+    hasHeading?: boolean;
     heightOffset?: number;
     zIndex?: number;
 }
@@ -104,8 +105,9 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private assets: IAssets = {
         images: {
             player1: {
-                resourceUrl: "roopop.png",
+                resourceUrl: "player-blue-#.png",
                 loaded: false,
+                hasHeading: true,
             },
             tile1: {
                 resourceUrl: "tile0.png",
@@ -200,18 +202,33 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     // Loads the images
 
     private imageLoader() {
-        for (const imageId of Object.keys(this.assets.images)) {
+        for (let imageId of Object.keys(this.assets.images)) {
             const image = this.assets.images[imageId];
 
-            this.imageStore[imageId] = new Image();
-            this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
-            this.imageStore[imageId].onload = () => {
+            if (image.hasHeading) {
+                for (let h = 0; h < 8; h++) {
+                    console.log("loaded item heading with ", imageId + h);
+                    this.imageStore[imageId + h] = new Image();
+                    this.imageStore[imageId + h].src = BASE_RESOURCE_URL + image.resourceUrl.replace("#", h + "");
+                    this.imageStore[imageId + h].onload = () => {
 
-                // TODO: build better loading mechanism
+                        // TODO: build better loading mechanism
 
-                this.assets.images[imageId].loaded = true;
-                this.forceUpdate();
-            };
+                        this.assets.images[imageId + h].loaded = true;
+                        this.forceUpdate();
+                    };
+                }
+            } else {
+                this.imageStore[imageId] = new Image();
+                this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
+                this.imageStore[imageId].onload = () => {
+
+                    // TODO: build better loading mechanism
+
+                    this.assets.images[imageId].loaded = true;
+                    this.forceUpdate();
+                };
+            }
         }
     }
 
@@ -321,13 +338,25 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             const itemY = itemToRender.pos.y + itemToRender.pos.h;
 
             if (itemY > minDepth && itemY <= maxDepth) {
-                context.drawImage(
-                    this.imageStore[data.imagesToRender[itemToRenderId].resourceId],
-                    data.imagesToRender[itemToRenderId].pos.x,
-                    data.imagesToRender[itemToRenderId].pos.y,
-                    data.imagesToRender[itemToRenderId].pos.w,
-                    data.imagesToRender[itemToRenderId].pos.h,
-                );
+                if (this.assets.images[itemToRenderId].hasHeading) {
+
+                    context.drawImage(
+                        this.imageStore[data.imagesToRender[itemToRenderId].resourceId + itemToRender.pos.heading],
+                        data.imagesToRender[itemToRenderId].pos.x,
+                        data.imagesToRender[itemToRenderId].pos.y,
+                        data.imagesToRender[itemToRenderId].pos.w,
+                        data.imagesToRender[itemToRenderId].pos.h,
+                    );
+
+                } else {
+                    context.drawImage(
+                        this.imageStore[data.imagesToRender[itemToRenderId].resourceId],
+                        data.imagesToRender[itemToRenderId].pos.x,
+                        data.imagesToRender[itemToRenderId].pos.y,
+                        data.imagesToRender[itemToRenderId].pos.w,
+                        data.imagesToRender[itemToRenderId].pos.h,
+                    );
+                }
             }
         }
 
@@ -336,7 +365,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         for (const bullet of this.props.gameData.bullets) {
             const itemY = bullet.pos.y + bullet.pos.h;
             if (itemY > minDepth && itemY <= maxDepth) {
-                context.drawImage(this.imageStore[bullet.resourceId], bullet.pos.x, bullet.pos.y);
+                context.drawImage(this.imageStore[bullet.resourceId], bullet.pos.x, bullet.pos.y, bullet.pos.w, bullet.pos.h);
             }
         }
 

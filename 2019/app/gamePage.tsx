@@ -24,6 +24,11 @@ enum GameState {
     ERROR,
 }
 
+// DEBUG
+const DEBUG = true;
+const debugGameState = GameState.ATTRACT;
+const debugMusicPlaying = true;
+
 export interface IGamePageState {
     gameState: GameState;
     level: number;
@@ -44,8 +49,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     constructor(props: any) {
         super(props);
 
-        //this.backgroundSoundRef = React.createRef();
-
         this.socket.on("levelUpdate", (data: any) => {
             console.log(JSON.parse(data));
             this.setState({
@@ -54,12 +57,14 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         });
 
         this.state = {
-            gameState: GameState.ATTRACT,
+            gameState: !DEBUG ? GameState.ATTRACT : debugGameState,
             level: 1,
             nameValue: "",
             score: 0,
-            musicPlaying: true,
+            musicPlaying: !DEBUG ? true : debugMusicPlaying,
         };
+
+
         axios
             .get("game/leaderboard")
             .then(res => {
@@ -242,8 +247,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         }
 
         return (<div className={`background-container ${backgroundImage}`}>
-            <audio ref={(input) => { this.backgroundSoundRef = input }} src={"/sounds/background-sound.mp3"} autoPlay />
             {html}
+            <audio ref={(input) => { this.backgroundSoundRef = input }} src={"/sounds/background-sound.mp3"} autoPlay />
         </div>);
     }
 
@@ -264,7 +269,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private handleEnterGame = () => {
         // post to server, store token in state
         console.log("Starting Game. Exciting!");
-        this.backgroundSoundRef.pause();
+        // this.backgroundSoundRef.pause();
 
         axios
             .post("/game/start")
