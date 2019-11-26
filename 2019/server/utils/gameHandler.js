@@ -34,4 +34,11 @@ function update(guid, up, down, left, right, fire) {
     return gameDoesNotExistResponse;
 }
 exports.update = update;
+function getScore(guid) {
+    if (games.hasOwnProperty(guid)) {
+        return games[guid].getScore();
+    }
+    return -1;
+}
+exports.getScore = getScore;
 //# sourceMappingURL=gameHandler.js.map

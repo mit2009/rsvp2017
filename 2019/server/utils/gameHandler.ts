@@ -42,3 +42,10 @@ export function update(guid: string, up: boolean, down: boolean, left: boolean, 
     }
     return gameDoesNotExistResponse;
 }
+
+export function getScore(guid: string) {
+    if (games.hasOwnProperty(guid)) {
+        return games[guid].getScore();
+    }
+    return -1;
+}

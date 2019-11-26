@@ -57,10 +57,11 @@ export function getRouter() {
         const { guid, playerName } = _req.body;
 
         // TODO: Calculate their final score
-        const finalScore = Math.floor(Math.random() * 10000);
-
-        console.log(guid);
-
+        const finalScore = gameHandler.getScore(guid);
+        if (finalScore == -1) {
+            res.status(500).send("Invalid game for High Score");
+            return;
+        }
         saveScore(
             {
                 team: TeamColor.BLUE,

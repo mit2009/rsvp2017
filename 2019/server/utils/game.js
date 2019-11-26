@@ -19,6 +19,7 @@ var Game = /** @class */ (function () {
         this.currentLevel = 0;
         this.livesLeft = this.maxLives;
         this.ableToLevel = false;
+        this.final = false;
     }
     Game.prototype.changeTeam = function (team) {
         this.teamColor = team;
@@ -86,13 +87,15 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.update = function (up, down, left, right, fire) {
         var _this = this;
+        if (this.final) {
+            return this.getBlob();
+        }
         var currentTime = Date.now();
         var timeDelta = (currentTime - this.lastUpdated) / 100;
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
         this.monsters = this.monsters.filter(function (m) {
             var bullet = m.update();
             if (bullet) {
-                console.log('new bullet');
                 _this.bullets.push(bullet);
             }
             var collide = _this.bulletEntityOverlap(m, _this.player);
@@ -112,19 +115,21 @@ var Game = /** @class */ (function () {
             }
         }
         if (this.monsters.length == 0) {
-            if (this.ableToLevel == false) {
+            if (this.ableToLevel == false && this.final == false) {
                 this.score += baseLevelScore + deltaLevelScore * (this.currentLevel);
             }
             if (this.currentLevel == levelData_1.getLevelCount()) {
+                this.final = true;
                 this.gameCommand = gameRenderData_1.GameCommand.FINAL_WIN;
             }
             else {
+                this.ableToLevel = true;
                 this.gameCommand = gameRenderData_1.GameCommand.WIN;
             }
-            this.ableToLevel = true;
         }
         if (this.livesLeft == 0) {
             this.gameCommand = gameRenderData_1.GameCommand.MALLOW_DEATH;
+            this.final = true;
         }
         if (this.score < 0) {
             this.score = 0;
@@ -154,6 +159,12 @@ var Game = /** @class */ (function () {
         };
         this.gameCommand = null;
         return output;
+    };
+    Game.prototype.getScore = function () {
+        if (this.final) {
+            return this.score;
+        }
+        return -1;
     };
     return Game;
 }());

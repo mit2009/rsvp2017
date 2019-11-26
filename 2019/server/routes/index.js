@@ -46,8 +46,11 @@ function getRouter() {
         // TODO: Logic here for associating the guid with the actual score
         var _a = _req.body, guid = _a.guid, playerName = _a.playerName;
         // TODO: Calculate their final score
-        var finalScore = Math.floor(Math.random() * 10000);
-        console.log(guid);
+        var finalScore = gameHandler.getScore(guid);
+        if (finalScore == -1) {
+            res.status(500).send("Invalid game for High Score");
+            return;
+        }
         leaderboard_1.saveScore({
             team: gameRenderData_1.TeamColor.BLUE,
             name: playerName,

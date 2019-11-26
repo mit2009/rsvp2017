@@ -32,12 +32,15 @@ export class Game {
     monsters: Monster[];
     gameCommand: GameCommand;
 
+    final:boolean;
+
     constructor() {
         this.score = 100;
         this.currentLevel = 0;
         this.livesLeft = this.maxLives;
 
         this.ableToLevel = false;
+        this.final = false;
     }
 
     changeTeam(team: TeamColor) {
@@ -104,6 +107,10 @@ export class Game {
     }
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
+        if (this.final) {
+            return this.getBlob();
+        }
+
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 100;
 
@@ -111,7 +118,6 @@ export class Game {
         this.monsters = this.monsters.filter((m) => {
             const bullet = m.update();
             if (bullet) {
-                console.log('new bullet');
                 this.bullets.push(bullet);
             }
             const collide = this.bulletEntityOverlap(m, this.player);
@@ -133,19 +139,21 @@ export class Game {
         }
 
         if (this.monsters.length == 0) {
-            if (this.ableToLevel == false) {
+            if (this.ableToLevel == false && this.final == false) {
                 this.score += baseLevelScore + deltaLevelScore * (this.currentLevel);
             }
             if (this.currentLevel == getLevelCount()) {
+                this.final = true;
                 this.gameCommand = GameCommand.FINAL_WIN;
             } else {
+                this.ableToLevel = true;
                 this.gameCommand = GameCommand.WIN;
             }
-            this.ableToLevel = true;
         }
 
         if (this.livesLeft == 0) {
             this.gameCommand = GameCommand.MALLOW_DEATH;
+            this.final = true;
         }
 
         if (this.score < 0) {
@@ -178,5 +186,12 @@ export class Game {
         } as IGameRenderData
         this.gameCommand = null;
         return output;
+    }
+
+    getScore() {
+        if (this.final) {
+            return this.score;
+        }
+        return -1;
     }
 }
