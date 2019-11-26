@@ -69,6 +69,7 @@ export interface LevelData {
 export interface Coordinate {
     x: number;
     y: number;
+    h: number;
 }
 
 export function getLevelData(level: number) {
@@ -79,11 +80,23 @@ export function getLevelData(level: number) {
     for (let i = 0; i < gridHeight; i++) {
         for (let j = 0; j < gridWidth; j++) {
             if (mapData[i][j] === 5) {
-                playerLocation = { x: j, y: i };
+                playerLocation = { x: j, y: i , h: 0};
                 mapData[i][j] = 1;
             }
             if (mapData[i][j] === 6) {
-                enemyLocation.push({ x: j, y: i });
+                enemyLocation.push({ x: j, y: i, h: Math.PI });
+                mapData[i][j] = 1;
+            }
+            if (mapData[i][j] === 7) {
+                enemyLocation.push({ x: j, y: i, h: Math.PI });
+                mapData[i][j] = 1;
+            }
+            if (mapData[i][j] === 8) {
+                enemyLocation.push({ x: j, y: i, h: Math.PI });
+                mapData[i][j] = 1;
+            }
+            if (mapData[i][j] === 9) {
+                enemyLocation.push({ x: j, y: i, h: Math.PI });
                 mapData[i][j] = 1;
             }
         }

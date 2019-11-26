@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var levelData_1 = require("../api/levelData");
 var Bullet = /** @class */ (function () {
     function Bullet(xcor, ycor, heading, playerFired) {
-        this.maxBounces = 2;
+        this.maxBounces = 1;
         this.velocity = 22;
         this.xcor = xcor;
         this.ycor = ycor;
