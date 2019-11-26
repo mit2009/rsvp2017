@@ -63,7 +63,37 @@ export class Game {
     }
 
     updateBullets(timeDelta: number) {
-        this.bullets = this.bullets.filter(b => b.update(timeDelta, this.levelData.mapData));
+        let counter = 0;
+        let increment = 1;
+        while (counter + increment < timeDelta) {
+            this.incrementalUpdateBullets(increment);
+        }
+        this.incrementalUpdateBullets(timeDelta - counter);
+    }
+
+    bulletEntityOverlap(b: Bullet, o: any) {
+        return (Math.abs(b.xcor - o.xcor) < 22.5) && (Math.abs(b.ycor - o.ycor) < 22.5);
+    }
+
+    incrementalUpdateBullets(timeDelta: number) {
+        const bullets = []
+        for (let b of this.bullets) {
+            if (b.update(timeDelta, this.levelData.mapData)) {
+                if (b.getFiredByPlayer()) {
+                    const aliveMonsters = this.monsters.filter(m => !this.bulletEntityOverlap(b, m));
+                    if (aliveMonsters.length != this.monsters.length) {
+                        this.monsters = aliveMonsters;
+                    } else {
+                        bullets.push(b);
+                    }
+                } else if (this.bulletEntityOverlap(b, this.player)) {
+                    this.livesLeft -= 1;
+                } else {
+                    bullets.push(b);;
+                }
+            }
+        }
+        this.bullets = bullets;
     }
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {

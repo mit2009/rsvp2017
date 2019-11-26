@@ -37,8 +37,45 @@ var Game = /** @class */ (function () {
         return unableToLevelResponse;
     };
     Game.prototype.updateBullets = function (timeDelta) {
+        var counter = 0;
+        var increment = 1;
+        while (counter + increment < timeDelta) {
+            this.incrementalUpdateBullets(increment);
+        }
+        this.incrementalUpdateBullets(timeDelta - counter);
+    };
+    Game.prototype.bulletEntityOverlap = function (b, o) {
+        return (Math.abs(b.xcor - o.xcor) < 22.5) && (Math.abs(b.ycor - o.ycor) < 22.5);
+    };
+    Game.prototype.incrementalUpdateBullets = function (timeDelta) {
         var _this = this;
-        this.bullets = this.bullets.filter(function (b) { return b.update(timeDelta, _this.levelData.mapData); });
+        var bullets = [];
+        var _loop_1 = function (b) {
+            if (b.update(timeDelta, this_1.levelData.mapData)) {
+                if (b.getFiredByPlayer()) {
+                    var aliveMonsters = this_1.monsters.filter(function (m) { return !_this.bulletEntityOverlap(b, m); });
+                    if (aliveMonsters.length != this_1.monsters.length) {
+                        this_1.monsters = aliveMonsters;
+                    }
+                    else {
+                        bullets.push(b);
+                    }
+                }
+                else if (this_1.bulletEntityOverlap(b, this_1.player)) {
+                    this_1.livesLeft -= 1;
+                }
+                else {
+                    bullets.push(b);
+                    ;
+                }
+            }
+        };
+        var this_1 = this;
+        for (var _i = 0, _a = this.bullets; _i < _a.length; _i++) {
+            var b = _a[_i];
+            _loop_1(b);
+        }
+        this.bullets = bullets;
     };
     Game.prototype.update = function (up, down, left, right, fire) {
         var currentTime = Date.now();

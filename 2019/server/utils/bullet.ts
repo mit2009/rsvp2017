@@ -27,8 +27,11 @@ export class Bullet {
         this.bounces = 0;
     }
 
+    getFiredByPlayer() {
+        return this.playerFired;
+    }
+
     update(timeDelta: number, levelMap: number[][]) {
-        console.log(this.deltaX * timeDelta);
         this.xcor += this.deltaX * timeDelta;
         const xmapY = Math.floor(this.ycor / tileHeight);
         const xmapX = Math.floor((this.xcor + (bulletWidth / 2) * Math.sign(this.deltaX)) / tileHeight);

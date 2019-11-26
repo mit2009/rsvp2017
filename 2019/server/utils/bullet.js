@@ -12,8 +12,10 @@ var Bullet = /** @class */ (function () {
         this.playerFired = playerFired;
         this.bounces = 0;
     }
+    Bullet.prototype.getFiredByPlayer = function () {
+        return this.playerFired;
+    };
     Bullet.prototype.update = function (timeDelta, levelMap) {
-        console.log(this.deltaX * timeDelta);
         this.xcor += this.deltaX * timeDelta;
         var xmapY = Math.floor(this.ycor / levelData_1.tileHeight);
         var xmapX = Math.floor((this.xcor + (levelData_1.bulletWidth / 2) * Math.sign(this.deltaX)) / levelData_1.tileHeight);
