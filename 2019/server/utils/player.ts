@@ -13,7 +13,7 @@ export class Player {
 
     private lastFired: number;
 
-    private velocity: number = 17;
+    private velocity: number = 18;
     private turningAngle: number = 0.5;
     private fireFrequency: number = 400;
 
