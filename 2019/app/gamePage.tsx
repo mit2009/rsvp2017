@@ -38,6 +38,7 @@ export interface IGamePageState {
     nameValue: string;
     score: number;
     musicPlaying: boolean;
+    enterKeyIsDown: boolean;
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
@@ -50,24 +51,18 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         super(props);
 
         this.socket.on("levelUpdate", (data: any) => {
-<<<<<<< HEAD
             const formattedData = JSON.parse(data) as IGameRenderData;
+            // TODO: factor this out into win
             if (formattedData.gameCommand === GameCommand.WIN) {
-                console.log("hey");
                 this.setState({
-                    gameState: GameState.STAGING
+                    gameState: GameState.STAGING,
+                    level: formattedData.currentLevel + 1,
                 })
             } else {
                 this.setState({
                     gameData: formattedData,
                 });
             }
-=======
-            console.log(JSON.parse(data));
-            this.setState({
-                gameData: JSON.parse(data) as IGameRenderData,
-            });
->>>>>>> 64a45df94b08ee2c7f897fd9ec568989553cbb0f
         });
 
         this.state = {
@@ -76,6 +71,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             nameValue: "",
             score: 0,
             musicPlaying: !DEBUG ? true : debugMusicPlaying,
+            enterKeyIsDown: false,
         };
 
 
@@ -109,6 +105,23 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             this.keyStore[3] = true;
         } else if (event.key === " ") {
             // this.keyStore[4] = true;
+        } else if (event.key === "Enter") {
+            if (this.state.enterKeyIsDown === false) {
+                if (this.state.gameState === GameState.ATTRACT) {
+                    this.setState({
+                        enterKeyIsDown: true,
+                        gameState: GameState.CHOOSE_CHARACTER
+                    })
+                } else if (this.state.gameState === GameState.CHOOSE_CHARACTER) {
+                    this.handleCharacterSelect(TeamColor.BLUE)();
+                } else if (this.state.gameState === GameState.STAGING) {
+                    this.setState({
+                        enterKeyIsDown: true,
+                    }, () => {
+                        this.handleStart();
+                    })
+                }
+            }
         }
     };
 
@@ -134,6 +147,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             this.keyStore[3] = false;
         } else if (event.key === " ") {
             this.keyStore[4] = false;
+        } else if (event.key === "Enter") {
+            this.setState({
+                enterKeyIsDown: false
+            })
         }
     };
 
@@ -282,7 +299,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleNameChange(event: any) {
         const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").str.substring(0, 20);;
-
         this.setState({
             nameValue,
         });
@@ -310,8 +326,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         this.socket.emit("levelUp", this.state.guid);
 
         setInterval(() => {
-            this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
-            this.keyStore[4] = false;
+            if (this.state.gameState === GameState.PLAYING) {
+                this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
+                this.keyStore[4] = false;
+            }
         }, 80);
 
         this.setState({

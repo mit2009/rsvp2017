@@ -211,9 +211,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                     this.imageStore[imageId + h] = new Image();
                     this.imageStore[imageId + h].src = BASE_RESOURCE_URL + image.resourceUrl.replace("#", h + "");
                     this.imageStore[imageId + h].onload = () => {
-
                         // TODO: build better loading mechanism
-
                         this.assets.images[imageId + h].loaded = true;
                         this.forceUpdate();
                     };
@@ -221,8 +219,8 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             } else {
                 this.imageStore[imageId] = new Image();
                 this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
-                this.imageStore[imageId].onload = () => {
-
+                this.imageStore[imageId].onload = t => {
+                    console.log(t.currentTarget);
                     // TODO: build better loading mechanism
 
                     this.assets.images[imageId].loaded = true;

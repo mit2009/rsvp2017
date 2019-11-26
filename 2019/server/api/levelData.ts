@@ -10,6 +10,10 @@ export interface ILevelMap {
 // 3: tall wall
 // 4: player starting location
 // 5: enemy starting location
+// 6: fixed shooting enemy: shoots up
+// 7: fixed shooting enemy: shoots right
+// 8: fixed shooting enemy: shoots down
+// 9: fixed shooting enemy: shoots left
 
 // levels are formatted so they're easy to edit with a software called
 // TILED the free tile editing software
