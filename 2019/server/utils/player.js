@@ -6,18 +6,20 @@ var levelData_1 = require("../api/levelData");
 var Player = /** @class */ (function () {
     function Player(xcor, ycor, heading) {
         this.velocity = 12;
+        this.turningAngle = 1;
         this.fireFrequency = 500;
         this.xcor = (xcor + 0.5) * levelData_1.tileWidth;
         this.ycor = (ycor + 0.5) * levelData_1.tileHeight;
         this.startX = this.xcor;
         this.startY = this.ycor;
         this.lastFired = -1;
-        this.heading = 0; //heading;
+        this.heading = heading;
     }
     Player.prototype.fireBullet = function () {
         if (Date.now() - this.lastFired > this.fireFrequency) {
             this.lastFired = Date.now();
-            return new bullet_1.Bullet(this.xcor, this.ycor, this.heading, true);
+            var bulletOffset = 15;
+            return new bullet_1.Bullet(this.xcor + bulletOffset * Math.sin(this.heading), this.ycor - bulletOffset * Math.cos(this.heading), this.heading, true);
         }
         return false;
     };
@@ -34,10 +36,10 @@ var Player = /** @class */ (function () {
     };
     Player.prototype.updateHelper = function (timeDelta, up, down, left, right, levelMap) {
         if (left) {
-            this.heading -= 1 * timeDelta;
+            this.heading -= this.turningAngle * timeDelta;
         }
         if (right) {
-            this.heading += 1 * timeDelta;
+            this.heading += this.turningAngle * timeDelta;
         }
         var xVel = this.velocity * Math.sin(this.heading) * timeDelta;
         var yVel = -this.velocity * Math.cos(this.heading) * timeDelta;

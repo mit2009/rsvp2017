@@ -14,7 +14,7 @@ export class Player {
     private lastFired: number;
 
     private velocity: number = 12;
-    private turningAngle: number;
+    private turningAngle: number = 1;
     private fireFrequency: number = 500;
 
     constructor(xcor: number, ycor: number, heading: number) {
@@ -25,13 +25,14 @@ export class Player {
 
         this.lastFired = -1;
 
-        this.heading = 0; //heading;
+        this.heading = heading;
     }
 
     fireBullet() {
         if (Date.now() - this.lastFired > this.fireFrequency) {
             this.lastFired = Date.now();
-            return new Bullet(this.xcor, this.ycor, this.heading, true);
+            const bulletOffset = 15;
+            return new Bullet(this.xcor + bulletOffset  * Math.sin(this.heading), this.ycor  - bulletOffset  * Math.cos(this.heading), this.heading, true);
         }
         return false;
     }
@@ -53,10 +54,10 @@ export class Player {
     updateHelper(timeDelta: number, up: boolean, down: boolean, left: boolean, right: boolean, levelMap: number[][]) {
 
         if (left) {
-            this.heading -= 1 * timeDelta;
+            this.heading -= this.turningAngle * timeDelta;
         }
         if (right) {
-            this.heading += 1 * timeDelta;
+            this.heading += this.turningAngle * timeDelta;
         }
 
         let xVel = this.velocity * Math.sin(this.heading) * timeDelta;
