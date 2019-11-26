@@ -5,7 +5,7 @@ var angles_1 = require("./angles");
 var levelData_1 = require("../api/levelData");
 var Player = /** @class */ (function () {
     function Player(xcor, ycor, heading) {
-        this.velocity = 10;
+        this.velocity = 12;
         this.fireFrequency = 500;
         this.xcor = (xcor + 0.5) * levelData_1.tileWidth;
         this.ycor = (ycor + 0.5) * levelData_1.tileHeight;

@@ -283,7 +283,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
         setInterval(() => {
             this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
-        }, 60);
+        }, 80);
 
         this.setState({
             gameState: GameState.PLAYING,

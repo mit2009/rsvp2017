@@ -268,7 +268,9 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                         ? this.assets.images[tileId].heightOffset
                         : 0;
 
-                    context.drawImage(imageData, x, y + graphicHeightOffset);
+                    if (tileId !== "tile1") {
+                        context.drawImage(imageData, x, y + graphicHeightOffset);
+                    }
                 }
 
                 this.checkForDepthRender(context, data, lastY, lastY + tileHeight);
