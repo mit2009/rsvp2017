@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
 var monster_1 = require("./monster");
+var gameRenderData_1 = require("../api/gameRenderData");
 var levelData_1 = require("../api/levelData");
 var unableToLevelResponse = {
     error: 'Unable to level',
@@ -9,7 +10,7 @@ var unableToLevelResponse = {
 var Game = /** @class */ (function () {
     function Game() {
         this.teamColor = null;
-        this.maxLives = 3;
+        this.maxLives = 5;
         this.score = 0;
         this.currentLevel = 0;
         this.livesLeft = this.maxLives;
@@ -26,7 +27,6 @@ var Game = /** @class */ (function () {
             this.currentLevel += 1;
             this.bullets = [];
             this.monsters = [];
-            console.log("Level", this.currentLevel);
             this.levelData = levelData_1.getLevelData(this.currentLevel);
             var playerData = this.levelData.playerLocation;
             this.player = new player_1.Player(playerData.x, playerData.y, 0);
@@ -62,6 +62,7 @@ var Game = /** @class */ (function () {
                     }
                 }
                 else if (this_1.bulletEntityOverlap(b, this_1.player)) {
+                    this_1.gameCommand = gameRenderData_1.GameCommand.MALLOW_HURT;
                     this_1.livesLeft -= 1;
                 }
                 else {
@@ -89,6 +90,13 @@ var Game = /** @class */ (function () {
                 this.bullets.push(bullet);
             }
         }
+        if (this.monsters.length == 0) {
+            this.gameCommand = gameRenderData_1.GameCommand.WIN;
+            this.ableToLevel = true;
+        }
+        if (this.livesLeft == 0) {
+            this.gameCommand = gameRenderData_1.GameCommand.MALLOW_DEATH;
+        }
         this.lastUpdated = currentTime;
         return this.getBlob();
     };
@@ -98,6 +106,7 @@ var Game = /** @class */ (function () {
             score: this.score,
             teamColor: this.teamColor,
             livesLeft: this.livesLeft,
+            gameCommand: this.gameCommand,
             playSound: [],
             imagesToRender: {
                 player1: this.player.getBlob(),
@@ -109,6 +118,7 @@ var Game = /** @class */ (function () {
             bullets: this.bullets.map(function (b) { return b.getBlob(); }),
             monsters: this.monsters.map(function (m) { return m.getBlob(); }),
         };
+        this.gameCommand = null;
         return output;
     };
     return Game;

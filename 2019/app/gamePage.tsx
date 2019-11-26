@@ -47,6 +47,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         //this.backgroundSoundRef = React.createRef();
 
         this.socket.on("levelUpdate", (data: any) => {
+            console.log(JSON.parse(data));
             this.setState({
                 gameData: JSON.parse(data) as IGameRenderData,
             });

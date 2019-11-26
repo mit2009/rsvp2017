@@ -18,18 +18,18 @@ var Bullet = /** @class */ (function () {
     Bullet.prototype.update = function (timeDelta, levelMap) {
         this.xcor += this.deltaX * timeDelta;
         var xmapY = Math.floor(this.ycor / levelData_1.tileHeight);
-        var xmapX = Math.floor((this.xcor + (levelData_1.bulletWidth / 2) * Math.sign(this.deltaX)) / levelData_1.tileHeight);
+        var xmapX = Math.floor((this.xcor + (levelData_1.bulletWidth / 2) * Math.sign(this.deltaX)) / levelData_1.tileWidth);
         if (~levelData_1.walls.indexOf(levelMap[xmapY][xmapX])) {
             this.deltaX = -this.deltaX;
-            this.xcor = Math.floor(this.xcor * 4) / 4;
+            this.xcor = Math.floor(this.xcor * 4) / 4 + Math.sign(this.deltaX);
             this.bounces += 1;
         }
         this.ycor += this.deltaY * timeDelta;
         var ymapY = Math.floor((this.ycor + (levelData_1.bulletHeight / 2) * Math.sign(this.deltaY)) / levelData_1.tileHeight);
-        var ymapX = Math.floor(this.xcor / levelData_1.tileHeight);
+        var ymapX = Math.floor(this.xcor / levelData_1.tileWidth);
         if (~levelData_1.walls.indexOf(levelMap[ymapY][ymapX])) {
             this.deltaY = -this.deltaY;
-            this.ycor = Math.floor(this.ycor * 4) / 4;
+            this.ycor = Math.floor(this.ycor * 4) / 4 + Math.sign(this.deltaX);
             this.bounces += 1;
         }
         if (this.bounces > this.maxBounces) {

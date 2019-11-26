@@ -1,7 +1,7 @@
 import { Bullet } from "./bullet";
 import { Player } from "./player";
 import { Monster } from "./monster";
-import { TeamColor, IGameRenderData } from "../api/gameRenderData"
+import { TeamColor, IGameRenderData, GameCommand } from "../api/gameRenderData"
 import { LevelData, getLevelData } from "../api/levelData"
 
 const unableToLevelResponse = {
@@ -16,7 +16,7 @@ export class Game {
     score: number;
     livesLeft: number;
 
-    maxLives: number = 3;
+    maxLives: number = 5;
 
     ableToLevel: boolean;
 
@@ -25,6 +25,7 @@ export class Game {
     bullets: Bullet[];
     levelData: LevelData;
     monsters: Monster[];
+    gameCommand: GameCommand;
 
     constructor() {
         this.score = 0;
@@ -48,7 +49,6 @@ export class Game {
             this.bullets = [];
             this.monsters = [];
 
-            console.log("Level", this.currentLevel);
             this.levelData = getLevelData(this.currentLevel);
             const playerData = this.levelData.playerLocation;
 
@@ -87,6 +87,7 @@ export class Game {
                         bullets.push(b);
                     }
                 } else if (this.bulletEntityOverlap(b, this.player)) {
+                    this.gameCommand = GameCommand.MALLOW_HURT;
                     this.livesLeft -= 1;
                 } else {
                     bullets.push(b);;
@@ -111,6 +112,15 @@ export class Game {
             }
         }
 
+        if (this.monsters.length == 0) {
+            this.gameCommand = GameCommand.WIN;
+            this.ableToLevel = true;
+        }
+
+        if (this.livesLeft == 0) {
+            this.gameCommand = GameCommand.MALLOW_DEATH;
+        }
+
         this.lastUpdated = currentTime;
 
         return this.getBlob();
@@ -122,6 +132,7 @@ export class Game {
             score: this.score,
             teamColor: this.teamColor,
             livesLeft: this.livesLeft,
+            gameCommand: this.gameCommand,
             playSound: [],
             imagesToRender: {
                 player1: this.player.getBlob(),
@@ -133,6 +144,7 @@ export class Game {
             bullets: this.bullets.map(b => b.getBlob()),
             monsters: this.monsters.map(m => m.getBlob()),
         } as IGameRenderData
+        this.gameCommand = null;
         return output;
     }
 }
