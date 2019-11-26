@@ -134,7 +134,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 loaded: false,
             },
             monster1: {
-                resourceUrl: "monster1.png",
+                resourceUrl: "monster1-4.png",
                 loaded: false,
             },
             bullet: {

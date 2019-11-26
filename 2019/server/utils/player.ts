@@ -14,7 +14,7 @@ export class Player {
     private lastFired: number;
 
     private velocity: number = 12;
-    private turningAngle: number = 1;
+    private turningAngle: number = 0.5;
     private fireFrequency: number = 500;
 
     constructor(xcor: number, ycor: number, heading: number) {
@@ -32,7 +32,7 @@ export class Player {
         if (Date.now() - this.lastFired > this.fireFrequency) {
             this.lastFired = Date.now();
             const bulletOffset = 15;
-            return new Bullet(this.xcor + bulletOffset  * Math.sin(this.heading), this.ycor  - bulletOffset  * Math.cos(this.heading), this.heading, true);
+            return new Bullet(this.xcor + bulletOffset * Math.sin(this.heading), this.ycor - bulletOffset * Math.cos(this.heading), this.heading, true);
         }
         return false;
     }

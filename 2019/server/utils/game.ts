@@ -32,7 +32,7 @@ export class Game {
     monsters: Monster[];
     gameCommand: GameCommand;
 
-    final:boolean;
+    final: boolean;
 
     constructor() {
         this.score = 100;
@@ -112,7 +112,7 @@ export class Game {
         }
 
         const currentTime = Date.now();
-        const timeDelta = (currentTime - this.lastUpdated) / 100;
+        const timeDelta = (currentTime - this.lastUpdated) / 240;
 
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
         this.monsters = this.monsters.filter((m) => {
