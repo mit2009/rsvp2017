@@ -52,10 +52,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             const formattedData = JSON.parse(data) as IGameRenderData;
 
             // TODO: factor this out into win
-            console.log("what is happening");
-            console.log(GameCommand.WIN);
-            console.log(formattedData.gameCommand);
-
             if (formattedData.gameCommand === GameCommand.WIN) {
                 this.setState({
                     gameState: GameState.STAGING,
@@ -252,10 +248,13 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 );
                 break;
             case GameState.STAGING:
+                backgroundImage = "staging";
                 html = (
-                    <div>
-                        <h1>ready for level {this.state.level}</h1>
-                        <button onClick={this.handleStart}>Start Level (or hit enter)</button>
+                    <div className="game-sized-container">
+                        <div>
+                            <h1>ready for level {this.state.level}</h1>
+                            <button onClick={this.handleStart}>Start Level (or hit enter)</button>
+                        </div>
                     </div>
                 );
                 break;

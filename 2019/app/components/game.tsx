@@ -275,6 +275,9 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
         if (context && this.props.gameData) {
 
+            // TODO: abstract
+            context.clearRect(0, 0, 600, 600);
+
             // Render anything with a specified ZIndex
             this.renderZIndexItems(context, data);
             this.checkForDepthRender(context, data, 0, heightOffset);
