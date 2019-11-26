@@ -21,7 +21,6 @@ var Monster = /** @class */ (function () {
         this.lastActionTime = Date.now();
     }
     Monster.prototype.update = function () {
-        // console.log('update');
         var ai = AIs[this.ai];
         var lastAct = ai[this.lastAction];
         if (Date.now() - this.lastActionTime > lastAct.delay) {
@@ -31,7 +30,6 @@ var Monster = /** @class */ (function () {
             if (lastAct.fire) {
                 return this.fireBullet();
             }
-            // console.log('delayed');
         }
         return false;
     };

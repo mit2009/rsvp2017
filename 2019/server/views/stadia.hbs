@@ -39,9 +39,6 @@
         bullets
     }) {
 
-        console.log(player);
-        console.log(bullets);
-
         ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
         ctx.fillRect(0,0, 700, 700);
         ctx.save();
@@ -65,14 +62,12 @@
     }
 
     const start = function() {
-        console.log("here");
         user = name.value;
         axios
             .post("stadia/new", {
                 user
             })
             .then((res) => {
-                console.log(res.data);
                 drawItem(res.data);
                 intervalId = setInterval(update, 100);
             })

@@ -40,7 +40,6 @@ export class Monster {
     }
 
     update() {
-        // console.log('update');
         const ai = AIs[this.ai];
         const lastAct = ai[this.lastAction]
         if (Date.now() - this.lastActionTime > lastAct.delay) {
@@ -50,8 +49,6 @@ export class Monster {
             if (lastAct.fire) {
                 return this.fireBullet();
             }
-
-            // console.log('delayed');
         }
         return false;
     }
