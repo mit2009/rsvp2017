@@ -1,35 +1,44 @@
 {
-    "leaderboard": [{
-        "team": 4,
-        "name": "Mallow mallw",
-        "score": 49336
-    }, {
-        "team": 5,
-        "name": "sammuel",
-        "score": 93
-    }, {
-        "team": 5,
-        "name": "merry",
-        "score": 85
-    }, {
-        "team": 5,
-        "name": "123",
-        "score": 67
-    }, {
-        "team": 5,
-        "name": "bob",
-        "score": 62
-    }, {
-        "team": 5,
-        "name": "bob",
-        "score": 32
-    }, {
-        "team": 5,
-        "name": "Johnny",
-        "score": 20
-    }, {
-        "team": 5,
-        "name": "bob",
-        "score": 20
-    }]
+    "leaderboard": [
+        {
+            "team": 4,
+            "name": "Mallow mallw",
+            "score": 49336
+        },
+        {
+            "team": 5,
+            "name": "sammuel",
+            "score": 93
+        },
+        {
+            "team": 5,
+            "name": "merry",
+            "score": 85
+        },
+        {
+            "team": 5,
+            "name": "123",
+            "score": 67
+        },
+        {
+            "team": 5,
+            "name": "bob",
+            "score": 62
+        },
+        {
+            "team": 5,
+            "name": "bob",
+            "score": 32
+        },
+        {
+            "team": 5,
+            "name": "Johnny",
+            "score": 20
+        },
+        {
+            "team": 5,
+            "name": "bob",
+            "score": 20
+        }
+    ]
 }

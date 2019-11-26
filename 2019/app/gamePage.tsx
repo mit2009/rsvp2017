@@ -252,8 +252,13 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 html = (
                     <div className="game-sized-container">
                         <div>
-                            <h1>ready for level {this.state.level}</h1>
-                            <button onClick={this.handleStart}>Start Level (or hit enter)</button>
+                            <h1>ready for <em>level {this.state.level}</em>?</h1>
+                            <div className="button-container">
+                                <div>
+                                    <button className="big-pushy" onClick={this.handleStart}>Start Level</button>
+                                </div>
+                            </div>
+                            <div className="hit-enter">(Or hit enter)</div>
                         </div>
                     </div>
                 );
@@ -384,7 +389,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 this.setState({
                     leaderboard: res.data.leaderboard,
                     score: res.data.score,
-                    gameState: GameState.RECAPITULATE,
+                    gameState: GameState.ATTRACT,
                 });
             })
             .catch((err: any) => console.log(err));
