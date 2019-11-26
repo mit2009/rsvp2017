@@ -1,17 +1,15 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-
 import axios from "axios";
 
-import { IGameRenderData, TeamColor, GameCommand } from "../server/api/gameRenderData";
+import { GameCommand, IGameRenderData, TeamColor } from "../server/api/gameRenderData";
 import { ILeaderboardScore } from "../server/utils/leaderboard";
 import { GameApp } from "./components/game";
 
 import * as socketio from "socket.io-client";
 
 const SOCKET_URL = "http://localhost:8001";
-
 
 enum GameState {
     ATTRACT,
@@ -57,7 +55,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 this.setState({
                     gameState: GameState.STAGING,
                     level: formattedData.currentLevel + 1,
-                })
+                });
             } else {
                 this.setState({
                     gameData: formattedData,
@@ -73,7 +71,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             musicPlaying: !DEBUG ? true : debugMusicPlaying,
             enterKeyIsDown: false,
         };
-
 
         axios
             .get("game/leaderboard")
@@ -108,18 +105,26 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         } else if (event.key === "Enter") {
             if (this.state.enterKeyIsDown === false) {
                 if (this.state.gameState === GameState.ATTRACT) {
-                    this.setState({
-                        enterKeyIsDown: true,
-                        gameState: GameState.CHOOSE_CHARACTER
-                    })
+                    this.setState(
+                        {
+                            enterKeyIsDown: true,
+                        },
+                        this.handleEnterGame,
+                    );
                 } else if (this.state.gameState === GameState.CHOOSE_CHARACTER) {
-                    this.handleCharacterSelect(TeamColor.BLUE)();
+                    this.setState(
+                        {
+                            enterKeyIsDown: true,
+                        },
+                        this.handleCharacterSelect(TeamColor.BLUE),
+                    );
                 } else if (this.state.gameState === GameState.STAGING) {
-                    this.setState({
-                        enterKeyIsDown: true,
-                    }, () => {
-                        this.handleStart();
-                    })
+                    this.setState(
+                        {
+                            enterKeyIsDown: true,
+                        },
+                        this.handleStart,
+                    );
                 }
             }
         }
@@ -130,7 +135,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             console.log("KEY DOWN!");
             this.keyStore[4] = true;
         }
-    }
+    };
 
     private gameControlsRelease = (event: any) => {
         if (event.keyCode === 38 || event.keyCode === 87) {
@@ -149,8 +154,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             this.keyStore[4] = false;
         } else if (event.key === "Enter") {
             this.setState({
-                enterKeyIsDown: false
-            })
+                enterKeyIsDown: false,
+            });
         }
     };
 
@@ -210,13 +215,28 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     <div className="game-sized-container">
                         <h1>choose your marshmallow</h1>
                         <div className="character-container">
-                            <div onClick={this.handleCharacterSelect(TeamColor.ORANGE)} className="mallow mallow-orange" />
-                            <div onClick={this.handleCharacterSelect(TeamColor.PURPLE)} className="mallow mallow-purple" />
-                            <div onClick={this.handleCharacterSelect(TeamColor.SILVER)} className="mallow mallow-silver" />
+                            <div
+                                onClick={this.handleCharacterSelect(TeamColor.ORANGE)}
+                                className="mallow mallow-orange"
+                            />
+                            <div
+                                onClick={this.handleCharacterSelect(TeamColor.PURPLE)}
+                                className="mallow mallow-purple"
+                            />
+                            <div
+                                onClick={this.handleCharacterSelect(TeamColor.SILVER)}
+                                className="mallow mallow-silver"
+                            />
                             <div onClick={this.handleCharacterSelect(TeamColor.BLUE)} className="mallow mallow-blue" />
-                            <div onClick={this.handleCharacterSelect(TeamColor.YELLOW)} className="mallow mallow-yellow" />
+                            <div
+                                onClick={this.handleCharacterSelect(TeamColor.YELLOW)}
+                                className="mallow mallow-yellow"
+                            />
                             <div onClick={this.handleCharacterSelect(TeamColor.PINK)} className="mallow mallow-pink" />
-                            <div onClick={this.handleCharacterSelect(TeamColor.GREEN)} className="mallow mallow-green" />
+                            <div
+                                onClick={this.handleCharacterSelect(TeamColor.GREEN)}
+                                className="mallow mallow-green"
+                            />
                             <div onClick={this.handleCharacterSelect(TeamColor.RED)} className="mallow mallow-red" />
                         </div>
                     </div>
@@ -285,10 +305,18 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 html = <div>Error! Please refresh the page.</div>;
         }
 
-        return (<div className={`background-container ${backgroundImage}`}>
-            {html}
-            <audio ref={(input) => { this.backgroundSoundRef = input }} src={"/sounds/background-sound.mp3"} autoPlay />
-        </div>);
+        return (
+            <div className={`background-container ${backgroundImage}`}>
+                {html}
+                <audio
+                    ref={input => {
+                        this.backgroundSoundRef = input;
+                    }}
+                    src={"/sounds/background-sound.mp3"}
+                    autoPlay
+                />
+            </div>
+        );
     }
 
     private handleRestart = () => {
@@ -298,7 +326,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     };
 
     private handleNameChange(event: any) {
-        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").str.substring(0, 20);;
+        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").str.substring(0, 20);
         this.setState({
             nameValue,
         });
