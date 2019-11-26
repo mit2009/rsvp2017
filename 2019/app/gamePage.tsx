@@ -9,7 +9,7 @@ import { GameApp } from "./components/game";
 
 import * as socketio from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:8001";
+const SOCKET_URL = "http://18.21.182.184:8001";
 
 enum GameState {
     ATTRACT,
@@ -44,6 +44,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private keyStore: boolean[] = [false, false, false, false, false];
 
+    private timer: NodeJS.Timer;
     private backgroundSoundRef: HTMLAudioElement;
 
     constructor(props: any) {
@@ -367,7 +368,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         // starts the game
         this.socket.emit("levelUp", this.state.guid);
 
-        setInterval(() => {
+        clearInterval(this.timer);
+        this.timer = setInterval(() => {
             if (this.state.gameState === GameState.PLAYING) {
                 this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
                 this.keyStore[4] = false;
@@ -381,7 +383,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleNameSubmit = () => {
         // starts the game
-        console.log("hello");
         axios
             .post("/game/playername", {
                 guid: this.state.guid,
