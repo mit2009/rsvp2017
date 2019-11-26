@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 
 import axios from "axios";
 
-import { IGameRenderData, TeamColor } from "../server/api/gameRenderData";
+import { IGameRenderData, TeamColor, GameCommand } from "../server/api/gameRenderData";
 import { ILeaderboardScore } from "../server/utils/leaderboard";
 import { GameApp } from "./components/game";
 
@@ -50,9 +50,17 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         super(props);
 
         this.socket.on("levelUpdate", (data: any) => {
-            this.setState({
-                gameData: JSON.parse(data) as IGameRenderData,
-            });
+            const formattedData = JSON.parse(data) as IGameRenderData;
+            if (formattedData.gameCommand === GameCommand.WIN) {
+                console.log("hey");
+                this.setState({
+                    gameState: GameState.STAGING
+                })
+            } else {
+                this.setState({
+                    gameData: formattedData,
+                });
+            }
         });
 
         this.state = {
@@ -93,9 +101,16 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             // right
             this.keyStore[3] = true;
         } else if (event.key === " ") {
-            this.keyStore[4] = true;
+            // this.keyStore[4] = true;
         }
     };
+
+    private gameControlsShoot = (event: any) => {
+        if (event.key === " ") {
+            console.log("KEY DOWN!");
+            this.keyStore[4] = true;
+        }
+    }
 
     private gameControlsRelease = (event: any) => {
         if (event.keyCode === 38 || event.keyCode === 87) {
@@ -117,6 +132,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     public componentDidMount() {
         document.addEventListener("keydown", this.gameControls);
+        document.addEventListener("keypress", this.gameControlsShoot);
         document.addEventListener("keyup", this.gameControlsRelease);
     }
     public componentWillUnmount() {
@@ -288,6 +304,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
         setInterval(() => {
             this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
+            this.keyStore[4] = false;
         }, 80);
 
         this.setState({
