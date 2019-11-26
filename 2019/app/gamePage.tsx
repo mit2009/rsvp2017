@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+
 import axios from "axios";
 
 import { IGameRenderData, TeamColor } from "../server/api/gameRenderData";
@@ -10,6 +11,7 @@ import { GameApp } from "./components/game";
 import * as socketio from "socket.io-client";
 
 const SOCKET_URL = "http://localhost:8001";
+
 
 enum GameState {
     ATTRACT,
@@ -30,15 +32,19 @@ export interface IGamePageState {
     guid?: string;
     nameValue: string;
     score: number;
+    musicPlaying: boolean;
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 
     private keyStore: boolean[] = [false, false, false, false, false];
+    private backgroundSoundRef: HTMLAudioElement;
 
     constructor(props: any) {
         super(props);
+
+        //this.backgroundSoundRef = React.createRef();
 
         this.socket.on("levelUpdate", (data: any) => {
             this.setState({
@@ -51,6 +57,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             level: 1,
             nameValue: "",
             score: 0,
+            musicPlaying: true,
         };
         axios
             .get("game/leaderboard")
@@ -233,7 +240,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 html = <div>Error! Please refresh the page.</div>;
         }
 
-        return <div className={`background-container ${backgroundImage}`}>{html}</div>;
+        return (<div className={`background-container ${backgroundImage}`}>
+            <audio ref={(input) => { this.backgroundSoundRef = input }} src={"/sounds/background-sound.mp3"} autoPlay />
+            {html}
+        </div>);
     }
 
     private handleRestart = () => {
@@ -243,7 +253,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     };
 
     private handleNameChange(event: any) {
-        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "");
+        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").str.substring(0, 20);;
 
         this.setState({
             nameValue,
@@ -252,7 +262,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleEnterGame = () => {
         // post to server, store token in state
-        console.log("HEY");
+        console.log("Starting Game. Exciting!");
+        this.backgroundSoundRef.pause();
 
         axios
             .post("/game/start")
