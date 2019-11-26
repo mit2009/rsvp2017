@@ -2,8 +2,8 @@ import { IRenderableImage, IShape } from "../api/gameRenderData";
 import { bulletWidth, bulletHeight, widthOffset, heightOffset, tileWidth, tileHeight, walls } from "../api/levelData";
 
 export class Bullet {
-    private xcor: number;
-    private ycor: number;
+    public xcor: number;
+    public ycor: number;
 
     private deltaX: number;
     private deltaY: number;
@@ -12,10 +12,10 @@ export class Bullet {
 
     private bounces: number;
 
-    private maxBounces: number = 1;
+    private maxBounces: number;
     private velocity: number = 22;
 
-    constructor(xcor: number, ycor: number, heading: number, playerFired: boolean) {
+    constructor(xcor: number, ycor: number, heading: number, playerFired: boolean, maxBounces: number = 1) {
         this.xcor = xcor;
         this.ycor = ycor;
 
@@ -25,6 +25,7 @@ export class Bullet {
         this.playerFired = playerFired;
 
         this.bounces = 0;
+        this.maxBounces = maxBounces;
     }
 
     getFiredByPlayer() {

@@ -1,16 +1,43 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var angles_1 = require("./angles");
+var bullet_1 = require("./bullet");
 var levelData_1 = require("../api/levelData");
+var AIs = {
+    6: [{ delay: 1, deltaHeading: 0, fire: false }],
+    7: [{ delay: 500, deltaHeading: 0, fire: true }],
+    8: [{ delay: 500, deltaHeading: 0, fire: true }],
+    9: [{ delay: 500, deltaHeading: 0, fire: true }],
+    10: [{ delay: 500, deltaHeading: 0, fire: true }],
+    11: [{ delay: 500, deltaHeading: Math.PI / 4, fire: true }],
+};
 var Monster = /** @class */ (function () {
     function Monster(xcor, ycor, heading, ai) {
         this.xcor = (xcor + 0.5) * levelData_1.tileWidth;
         this.ycor = (ycor + 0.5) * levelData_1.tileHeight;
         this.heading = heading;
         this.ai = ai;
+        this.lastAction = 0;
+        this.lastActionTime = Date.now();
     }
-    Monster.prototype.update = function (timeDelta) {
-        return true;
+    Monster.prototype.update = function () {
+        // console.log('update');
+        var ai = AIs[this.ai];
+        var lastAct = ai[this.lastAction];
+        if (Date.now() - this.lastActionTime > lastAct.delay) {
+            this.heading += lastAct.deltaHeading;
+            this.lastAction = (this.lastAction + 1) % ai.length;
+            this.lastActionTime = Date.now();
+            if (lastAct.fire) {
+                return this.fireBullet();
+            }
+            // console.log('delayed');
+        }
+        return false;
+    };
+    Monster.prototype.fireBullet = function () {
+        var bulletOffset = 0;
+        return new bullet_1.Bullet(this.xcor + bulletOffset * Math.sin(this.heading), this.ycor - bulletOffset * Math.cos(this.heading), this.heading, false, 0);
     };
     Monster.prototype.getBlob = function () {
         return {

@@ -277,7 +277,12 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                     const y = heightOffset + yIndex * tileHeight;
                     lastY = y;
 
-                    const tileId = "tile" + tileMap[yIndex][xIndex];
+                    let tileValue = tileMap[yIndex][xIndex];
+                    if (tileValue > 4) {
+                        tileValue = 2;
+                    }
+
+                    const tileId = "tile" + tileValue;
                     const imageData = this.imageStore[tileId];
                     const graphicHeightOffset = this.assets.images[tileId].heightOffset
                         ? this.assets.images[tileId].heightOffset

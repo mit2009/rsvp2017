@@ -7,8 +7,8 @@ export class Player {
     private startX: number;
     private startY: number;
 
-    private xcor: number;
-    private ycor: number;
+    public xcor: number;
+    public ycor: number;
     private heading: number;
 
     private lastFired: number;

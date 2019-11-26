@@ -39,6 +39,7 @@ export enum GameCommand {
     MALLOW_HURT,    // Mallow gets hit by a bullet but doesn't die
     MALLOW_DEATH,   // Mallow dies
     MALLOW_MELT,    // Mallow falls into melty lava of doom
+    FINAL_WIN,      // You a champ
 }
 
 export interface IGameRenderData {

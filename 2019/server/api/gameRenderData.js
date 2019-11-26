@@ -23,5 +23,6 @@ var GameCommand;
     GameCommand[GameCommand["MALLOW_HURT"] = 1] = "MALLOW_HURT";
     GameCommand[GameCommand["MALLOW_DEATH"] = 2] = "MALLOW_DEATH";
     GameCommand[GameCommand["MALLOW_MELT"] = 3] = "MALLOW_MELT";
+    GameCommand[GameCommand["FINAL_WIN"] = 4] = "FINAL_WIN";
 })(GameCommand = exports.GameCommand || (exports.GameCommand = {}));
 //# sourceMappingURL=gameRenderData.js.map

@@ -74,6 +74,11 @@ export interface Coordinate {
     x: number;
     y: number;
     h: number;
+    class?: number;
+}
+
+export function getLevelCount() {
+    return Object.keys(levelMap).length;
 }
 
 export function getLevelData(level: number) {
@@ -85,23 +90,27 @@ export function getLevelData(level: number) {
         for (let j = 0; j < gridWidth; j++) {
             if (mapData[i][j] === 5) {
                 playerLocation = { x: j, y: i , h: 0};
-                mapData[i][j] = 1;
+                mapData[i][j] = 2;
             }
             if (mapData[i][j] === 6) {
-                enemyLocation.push({ x: j, y: i, h: Math.PI });
-                mapData[i][j] = 1;
+                enemyLocation.push({ x: j, y: i, h: Math.PI, class: 6});
+                mapData[i][j] = 2;
             }
             if (mapData[i][j] === 7) {
-                enemyLocation.push({ x: j, y: i, h: Math.PI });
-                mapData[i][j] = 1;
+                enemyLocation.push({ x: j, y: i, h: 0, class: 7 });
+                mapData[i][j] = 2;
             }
             if (mapData[i][j] === 8) {
-                enemyLocation.push({ x: j, y: i, h: Math.PI });
-                mapData[i][j] = 1;
+                enemyLocation.push({ x: j, y: i, h: Math.PI / 2, class: 8 });
+                mapData[i][j] = 2;
             }
             if (mapData[i][j] === 9) {
-                enemyLocation.push({ x: j, y: i, h: Math.PI });
-                mapData[i][j] = 1;
+                enemyLocation.push({ x: j, y: i, h: Math.PI, class: 9 });
+                mapData[i][j] = 2;
+            }
+            if (mapData[i][j] === 10) {
+                enemyLocation.push({ x: j, y: i, h: Math.PI * 3 / 2, class: 10 });
+                mapData[i][j] = 2;
             }
         }
     }

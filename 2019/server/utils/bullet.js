@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var levelData_1 = require("../api/levelData");
 var Bullet = /** @class */ (function () {
-    function Bullet(xcor, ycor, heading, playerFired) {
-        this.maxBounces = 1;
+    function Bullet(xcor, ycor, heading, playerFired, maxBounces) {
+        if (maxBounces === void 0) { maxBounces = 1; }
         this.velocity = 22;
         this.xcor = xcor;
         this.ycor = ycor;
@@ -11,6 +11,7 @@ var Bullet = /** @class */ (function () {
         this.deltaY = -this.velocity * Math.cos(heading);
         this.playerFired = playerFired;
         this.bounces = 0;
+        this.maxBounces = maxBounces;
     }
     Bullet.prototype.getFiredByPlayer = function () {
         return this.playerFired;

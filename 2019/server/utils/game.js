@@ -30,7 +30,7 @@ var Game = /** @class */ (function () {
             this.levelData = levelData_1.getLevelData(this.currentLevel);
             var playerData = this.levelData.playerLocation;
             this.player = new player_1.Player(playerData.x, playerData.y, 0);
-            this.monsters = this.levelData.enemyLocation.map(function (m) { return new monster_1.Monster(m.x, m.y, 0, 1); });
+            this.monsters = this.levelData.enemyLocation.map(function (m) { return new monster_1.Monster(m.x, m.y, m.h, m.class); });
             this.lastUpdated = Date.now();
             return this.getBlob();
         }
@@ -79,10 +79,17 @@ var Game = /** @class */ (function () {
         this.bullets = bullets;
     };
     Game.prototype.update = function (up, down, left, right, fire) {
+        var _this = this;
         var currentTime = Date.now();
         var timeDelta = (currentTime - this.lastUpdated) / 240;
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-        this.monsters.forEach(function (m) { return m.update(timeDelta); });
+        this.monsters.forEach(function (m) {
+            var bullet = m.update();
+            if (bullet) {
+                console.log('new bullet');
+                _this.bullets.push(bullet);
+            }
+        });
         this.updateBullets(timeDelta);
         if (fire) {
             var bullet = this.player.fireBullet();
@@ -91,13 +98,19 @@ var Game = /** @class */ (function () {
             }
         }
         if (this.monsters.length == 0) {
-            this.gameCommand = gameRenderData_1.GameCommand.WIN;
-            this.ableToLevel = true;
+            if (this.currentLevel == levelData_1.getLevelCount()) {
+                this.gameCommand = gameRenderData_1.GameCommand.FINAL_WIN;
+            }
+            else {
+                this.gameCommand = gameRenderData_1.GameCommand.WIN;
+                this.ableToLevel = true;
+            }
         }
         if (this.livesLeft == 0) {
             this.gameCommand = gameRenderData_1.GameCommand.MALLOW_DEATH;
         }
         this.lastUpdated = currentTime;
+        console.log(this.getBlob());
         return this.getBlob();
     };
     Game.prototype.getBlob = function () {

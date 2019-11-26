@@ -2,7 +2,7 @@ import { Bullet } from "./bullet";
 import { Player } from "./player";
 import { Monster } from "./monster";
 import { TeamColor, IGameRenderData, GameCommand } from "../api/gameRenderData"
-import { LevelData, getLevelData } from "../api/levelData"
+import { LevelData, getLevelCount, getLevelData } from "../api/levelData"
 
 const unableToLevelResponse = {
     error: 'Unable to level',
@@ -53,7 +53,7 @@ export class Game {
             const playerData = this.levelData.playerLocation;
 
             this.player = new Player(playerData.x, playerData.y, 0);
-            this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, 0, 1));
+            this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, m.h, m.class));
 
             this.lastUpdated = Date.now();
             return this.getBlob()
@@ -102,7 +102,13 @@ export class Game {
         const timeDelta = (currentTime - this.lastUpdated) / 240;
 
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-        this.monsters.forEach((m) => m.update(timeDelta));
+        this.monsters.forEach((m) => {
+            const bullet = m.update();
+            if (bullet) {
+                console.log('new bullet');
+                this.bullets.push(bullet);
+            }
+        });
         this.updateBullets(timeDelta);
 
         if (fire) {
@@ -113,8 +119,12 @@ export class Game {
         }
 
         if (this.monsters.length == 0) {
-            this.gameCommand = GameCommand.WIN;
-            this.ableToLevel = true;
+            if (this.currentLevel == getLevelCount()) {
+                this.gameCommand = GameCommand.FINAL_WIN;
+            } else {
+                this.gameCommand = GameCommand.WIN;
+                this.ableToLevel = true;
+            }
         }
 
         if (this.livesLeft == 0) {
@@ -122,7 +132,7 @@ export class Game {
         }
 
         this.lastUpdated = currentTime;
-
+        console.log(this.getBlob());
         return this.getBlob();
     }
 
