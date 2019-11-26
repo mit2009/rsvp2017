@@ -49,12 +49,11 @@ body {
   .mobile {
     display: none;
     position: fixed;
-    overflow: hidden;
     z-index: 1;
 
     .menu-btn {
       position: fixed;
-      z-index: 2;
+      z-index: 9;
       left: -50px;
     }
 
@@ -65,7 +64,9 @@ body {
       height: 80px;
       width: 80px;
       display: block;
-      z-index: 3;
+      z-index: 10;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
 
       .hotdog {
         position: fixed;
@@ -108,11 +109,10 @@ body {
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#00131313',GradientType=1 ); /* IE6-9 */
 
       position: fixed;
-      z-index: 1;
+      z-index: 6;
       top: 0;
       bottom: 0;
       left: -300px;
-      //left: 0;
       width: 300px;
       transition: 0.2s all;
 
@@ -627,7 +627,8 @@ body {
     }
 
     canvas {
-      width: 100%;
+      width: 300px;
+      height: 300px;
     }
 
     .sidebar {

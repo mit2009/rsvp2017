@@ -2,6 +2,20 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import axios from "axios";
+import UIfx from "uifx";
+
+const selectionFx = new UIfx(
+    "/sounds/selection.mp3",
+    {
+        volume: 1,
+    }
+)
+const closeFx = new UIfx(
+    "/sounds/close.mp3",
+    {
+        volume: 1,
+    }
+)
 
 import { GameCommand, IGameRenderData, TeamColor } from "../server/api/gameRenderData";
 import { ILeaderboardScore } from "../server/utils/leaderboard";
@@ -139,7 +153,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private gameControlsShoot = (event: any) => {
         if (event.key === " ") {
-            console.log("KEY DOWN!");
             this.keyStore[4] = true;
         }
     };
@@ -203,7 +216,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                             </button>
                             <button
                                 onClick={() => {
-                                    console.log("page click!");
+
+                                    selectionFx.play();
                                     this.setState({
                                         gameState: GameState.INSTRUCTIONS,
                                     });
@@ -297,7 +311,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                         <h1>Instructions!</h1>
                         <button
                             onClick={() => {
-                                console.log("page click!");
+                                closeFx.play();
                                 this.setState({
                                     gameState: GameState.ATTRACT,
                                 });
@@ -319,7 +333,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             default:
                 html = <div>Error! Please refresh the page.</div>;
         }
-
         return (
             <div className={`background-container ${backgroundImage}`}>
                 {html}
@@ -328,7 +341,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                         this.backgroundSoundRef = input;
                     }}
                     src={"/sounds/background-sound.mp3"}
-                    autoPlay
                 />
             </div>
         );
@@ -350,12 +362,12 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private handleEnterGame = () => {
         // post to server, store token in state
         console.log("Starting Game. Exciting!");
-        this.backgroundSoundRef.pause();
+        this.backgroundSoundRef.play();
+        selectionFx.play();
 
         axios
             .post("/game/start")
             .then((res: any) => {
-                console.log(res);
                 this.setState({
                     guid: res.data.guid,
                     gameState: GameState.CHOOSE_CHARACTER,
@@ -366,6 +378,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleStart = () => {
         // starts the game
+        selectionFx.play();
         this.socket.emit("levelUp", this.state.guid);
 
         clearInterval(this.timer);
@@ -389,8 +402,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 playerName: this.state.nameValue
             })
             .then((res: any) => {
-                console.log(res);
-
                 this.setState({
                     leaderboard: res.data.leaderboard,
                     score: res.data.score,
@@ -402,8 +413,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleCharacterSelect(color: TeamColor) {
         return () => {
-            console.log("submitting team color ", color);
 
+            selectionFx.play();
             axios
                 .post("/game/team", {
                     teamColor: color,
