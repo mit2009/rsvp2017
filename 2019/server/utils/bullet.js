@@ -16,14 +16,14 @@ var Bullet = /** @class */ (function () {
         console.log(this.deltaX * timeDelta);
         this.xcor += this.deltaX * timeDelta;
         var xmapY = Math.floor(this.ycor / levelData_1.tileHeight);
-        var xmapX = Math.floor(this.xcor / levelData_1.tileHeight);
+        var xmapX = Math.floor(this.xcor + levelData_1.bulletWidth / levelData_1.tileHeight);
         if (~levelData_1.walls.indexOf(levelMap[xmapY][xmapX])) {
             this.deltaX = -this.deltaX;
             this.xcor = (xmapX + Math.sign(this.deltaX) + 0.5 - (Math.sign(this.deltaX) * 0.25)) * levelData_1.tileWidth;
             this.bounces += 1;
         }
         this.ycor += this.deltaY * timeDelta;
-        var ymapY = Math.floor(this.ycor / levelData_1.tileHeight);
+        var ymapY = Math.floor(this.ycor + levelData_1.bulletHeight / levelData_1.tileHeight);
         var ymapX = Math.floor(this.xcor / levelData_1.tileHeight);
         if (~levelData_1.walls.indexOf(levelMap[ymapY][ymapX])) {
             this.deltaY = -this.deltaY;
