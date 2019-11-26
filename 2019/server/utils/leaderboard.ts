@@ -34,6 +34,6 @@ export function saveScore(score: ILeaderboardScore, callback?: (leaderboard: ILe
 
 export function getLeaderboard() {
     const contents = fs.readFileSync(fileLocation);
-    const scores = JSON.parse(contents.toString()).leaderboard;
+    const scores = JSON.parse(contents.toString()).leaderboard.subarray(0,10);
     return scores;
 }

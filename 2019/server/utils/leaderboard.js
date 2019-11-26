@@ -21,7 +21,7 @@ exports.saveScore = saveScore;
 // default is all
 function getLeaderboard() {
     var contents = fs.readFileSync(fileLocation);
-    var scores = JSON.parse(contents.toString()).leaderboard;
+    var scores = JSON.parse(contents.toString()).leaderboard.subarray(0, 10);
     return scores;
 }
 exports.getLeaderboard = getLeaderboard;
