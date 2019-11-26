@@ -25,7 +25,7 @@ export function saveScore(score: ILeaderboardScore, callback?: (leaderboard: ILe
     const result = fs.writeFileSync(fileLocation, JSON.stringify({ leaderboard: scores }));
 
     console.log(result);
-    callback(scores);
+    callback(scores.slice(0,8));
 
 }
 
@@ -34,6 +34,6 @@ export function saveScore(score: ILeaderboardScore, callback?: (leaderboard: ILe
 
 export function getLeaderboard() {
     const contents = fs.readFileSync(fileLocation);
-    const scores = JSON.parse(contents.toString()).leaderboard.subarray(0,10);
+    const scores = JSON.parse(contents.toString()).leaderboard.slice(0,8);
     return scores;
 }
