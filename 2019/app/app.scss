@@ -319,6 +319,7 @@ body {
   font-family: Barlow, sans-serif;
 
   .big-pushy {
+    background-color: #ddd;
     font-family: Barlow, sans-serif;
     text-transform: uppercase;
     border: none;
@@ -329,10 +330,11 @@ body {
     box-shadow: 0px 10px 0px rgb(187, 187, 187), 0px 20px 10px rgba(0, 0, 0, 1);
     outline: none;
     transition: 0.1s all;
-    opacity: 0.9;
+    opacity: 1;
     font-weight: 600;
 
     &:hover {
+      background-color: #fff;
       cursor: pointer;
       transform: translateY(2px);
       box-shadow: 0px 8px 0px rgb(187, 187, 187), 0px 18px 10px rgba(0, 0, 0, 1);
@@ -382,6 +384,7 @@ body {
 
       h1 {
         font-size: 60px;
+        margin-top: 30px;
         letter-spacing: 1px;
         text-transform: uppercase;
         font-weight: 600;
@@ -511,6 +514,76 @@ body {
     .sidebar {
       width: 100%;
       height: 150px;
+    }
+
+    .game-sized-container {
+      width: 300px;
+    }
+
+    .big-pushy {
+      margin-bottom: 26px;
+      width: 100%;
+      font-size: 24px;
+      padding: 6px 12px;
+    }
+
+    .background-container.attract {
+      .game-sized-container {
+        background-size: 450px;
+        background-repeat: no-repeat;
+        background-position: left top;
+
+        .button-container {
+          bottom: auto;
+          top: 260px;
+        }
+
+        .highscores-container {
+          top: 410px;
+          bottom: auto;
+          font-size: 20px;
+
+          h1 {
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+          }
+
+          .highscore-row {
+            margin-bottom: 6px;
+          }
+
+          .score {
+            width: 70px;
+          }
+
+          .color {
+            height: 15px;
+            width: 15px;
+          }
+
+          .name {
+            width: 160px;
+          }
+        }
+      }
+    }
+
+    .background-container.choose-character {
+      h1 {
+        font-size: 30px;
+      }
+
+      .character-container {
+        top: 140px;
+        bottom: auto;
+      }
+
+      .mallow {
+        width: 140px;
+        height: 80px;
+        margin-bottom: 15px;
+      }
     }
   }
 }
