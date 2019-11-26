@@ -31,7 +31,7 @@ export class Bullet {
         console.log(this.deltaX * timeDelta);
         this.xcor += this.deltaX * timeDelta;
         const xmapY = Math.floor(this.ycor / tileHeight);
-        const xmapX = Math.floor((this.xcor + bulletWidth / 2) / tileHeight);
+        const xmapX = Math.floor((this.xcor + (bulletWidth / 2) * Math.sign(this.deltaX)) / tileHeight);
         if (~walls.indexOf(levelMap[xmapY][xmapX])) {
             this.deltaX = -this.deltaX;
             this.xcor = Math.floor(this.xcor * 4) / 4;
@@ -39,7 +39,7 @@ export class Bullet {
         }
         this.ycor += this.deltaY * timeDelta;
 
-        const ymapY = Math.floor((this.ycor + bulletHeight / 2) / tileHeight);
+        const ymapY = Math.floor((this.ycor + (bulletHeight / 2) * Math.sign(this.deltaY)) / tileHeight);
         const ymapX = Math.floor(this.xcor / tileHeight);
         if (~walls.indexOf(levelMap[ymapY][ymapX])) {
             this.deltaY = -this.deltaY;
