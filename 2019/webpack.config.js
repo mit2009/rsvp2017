@@ -24,6 +24,7 @@ if (IS_PRODUCTION) {
 module.exports = {
     entry: {
         app: ['./app/app.scss'],
+        homepage: ['./app/homepage.tsx'],
         game: ['./app/gamePage.tsx']
     },
     output: {
