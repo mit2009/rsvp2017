@@ -371,7 +371,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
                 this.keyStore[4] = false;
             }
-        }, 80);
+        }, 60);
 
         this.setState({
             gameState: GameState.PLAYING,

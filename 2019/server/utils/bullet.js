@@ -4,7 +4,7 @@ var levelData_1 = require("../api/levelData");
 var Bullet = /** @class */ (function () {
     function Bullet(xcor, ycor, heading, playerFired, maxBounces) {
         if (maxBounces === void 0) { maxBounces = 1; }
-        this.velocity = 22;
+        this.velocity = 23;
         this.xcor = xcor;
         this.ycor = ycor;
         this.deltaX = this.velocity * Math.sin(heading);

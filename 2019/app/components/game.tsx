@@ -192,7 +192,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                             <h3 className="score">{this.props.gameData.score}</h3>
                             <h2>Score</h2>
                         </div>
-                        Lives Left: {this.props.gameData.livesLeft}
+                        <div className="lives">{this.props.gameData.livesLeft} &times;</div>
                     </div>
                     <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
                     <div className="sidebar sidebar-right" />
