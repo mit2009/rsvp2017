@@ -7,11 +7,15 @@ var levelData_1 = require("../api/levelData");
 var unableToLevelResponse = {
     error: 'Unable to level',
 };
+var baseLevelScore = 100;
+var deltaLevelScore = 50;
+var enemyBonusScore = 50;
+var bulletPenaltyScore = -1;
 var Game = /** @class */ (function () {
     function Game() {
         this.teamColor = null;
         this.maxLives = 5;
-        this.score = 0;
+        this.score = 100;
         this.currentLevel = 0;
         this.livesLeft = this.maxLives;
         this.ableToLevel = false;
@@ -55,6 +59,7 @@ var Game = /** @class */ (function () {
                 if (b.getFiredByPlayer()) {
                     var aliveMonsters = this_1.monsters.filter(function (m) { return !_this.bulletEntityOverlap(b, m); });
                     if (aliveMonsters.length != this_1.monsters.length) {
+                        this_1.score += enemyBonusScore * (this_1.monsters.length - aliveMonsters.length);
                         this_1.monsters = aliveMonsters;
                     }
                     else {
@@ -94,24 +99,32 @@ var Game = /** @class */ (function () {
         if (fire) {
             var bullet = this.player.fireBullet();
             if (bullet) {
+                this.score += bulletPenaltyScore;
                 this.bullets.push(bullet);
             }
         }
         if (this.monsters.length == 0) {
+            if (this.ableToLevel == false) {
+                this.score += baseLevelScore + deltaLevelScore * (this.currentLevel);
+            }
             if (this.currentLevel == levelData_1.getLevelCount()) {
                 this.gameCommand = gameRenderData_1.GameCommand.FINAL_WIN;
             }
             else {
                 this.gameCommand = gameRenderData_1.GameCommand.WIN;
-                this.ableToLevel = true;
             }
+            this.ableToLevel = true;
         }
         if (this.livesLeft == 0) {
             this.gameCommand = gameRenderData_1.GameCommand.MALLOW_DEATH;
         }
+        if (this.score < 0) {
+            this.score = 0;
+        }
         this.lastUpdated = currentTime;
-        console.log(this.getBlob());
-        return this.getBlob();
+        var blob = this.getBlob();
+        console.log(blob);
+        return blob;
     };
     Game.prototype.getBlob = function () {
         var output = {

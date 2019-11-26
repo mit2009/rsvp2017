@@ -8,6 +8,11 @@ const unableToLevelResponse = {
     error: 'Unable to level',
 }
 
+const baseLevelScore = 100;
+const deltaLevelScore = 50;
+const enemyBonusScore = 50;
+const bulletPenaltyScore = -1;
+
 export class Game {
 
     teamColor: TeamColor = null;
@@ -28,7 +33,7 @@ export class Game {
     gameCommand: GameCommand;
 
     constructor() {
-        this.score = 0;
+        this.score = 100;
         this.currentLevel = 0;
         this.livesLeft = this.maxLives;
 
@@ -82,6 +87,7 @@ export class Game {
                 if (b.getFiredByPlayer()) {
                     const aliveMonsters = this.monsters.filter(m => !this.bulletEntityOverlap(b, m));
                     if (aliveMonsters.length != this.monsters.length) {
+                        this.score += enemyBonusScore * (this.monsters.length - aliveMonsters.length);
                         this.monsters = aliveMonsters;
                     } else {
                         bullets.push(b);
@@ -114,26 +120,35 @@ export class Game {
         if (fire) {
             const bullet = this.player.fireBullet();
             if (bullet) {
+                this.score += bulletPenaltyScore;
                 this.bullets.push(bullet);
             }
         }
 
         if (this.monsters.length == 0) {
+            if (this.ableToLevel == false) {
+                this.score += baseLevelScore + deltaLevelScore * (this.currentLevel);
+            }
             if (this.currentLevel == getLevelCount()) {
                 this.gameCommand = GameCommand.FINAL_WIN;
             } else {
                 this.gameCommand = GameCommand.WIN;
-                this.ableToLevel = true;
             }
+            this.ableToLevel = true;
         }
 
         if (this.livesLeft == 0) {
             this.gameCommand = GameCommand.MALLOW_DEATH;
         }
 
+        if (this.score < 0) {
+            this.score = 0;
+        }
+
         this.lastUpdated = currentTime;
-        console.log(this.getBlob());
-        return this.getBlob();
+        const blob = this.getBlob();
+        console.log(blob);
+        return blob;
     }
 
     getBlob() {
