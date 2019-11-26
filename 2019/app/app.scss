@@ -1,5 +1,7 @@
 @import "reset.scss";
 
+$colors: "pink", "red", "orange", "yellow", "green", "blue", "purple", "silver";
+
 html,
 body {
   width: 100%;
@@ -311,15 +313,158 @@ body {
 }
 
 .game-page {
-  text-align: center;
-  position: absolute;
   bottom: 0;
   width: 100%;
-  height: calc(100% - #{$navHeight});
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+  font-family: Barlow, sans-serif;
 
+  .big-pushy {
+    font-family: Barlow, sans-serif;
+    text-transform: uppercase;
+    border: none;
+    font-size: 30px;
+    border-radius: 6px;
+    margin-right: 18px;
+    padding: 10px 24px;
+    box-shadow: 0px 10px 0px rgb(187, 187, 187), 0px 20px 10px rgba(0, 0, 0, 1);
+    outline: none;
+    transition: 0.1s all;
+    opacity: 0.9;
+    font-weight: 600;
+
+    &:hover {
+      cursor: pointer;
+      transform: translateY(2px);
+      box-shadow: 0px 8px 0px rgb(187, 187, 187), 0px 18px 10px rgba(0, 0, 0, 1);
+      opacity: 1;
+    }
+    &:active {
+      transform: translateY(8px);
+      box-shadow: 0px 2px 0px rgb(187, 187, 187), 0px 12px 10px rgba(0, 0, 0, 1);
+    }
+  }
+
+  .game-sized-container {
+    width: 1000px;
+    height: 600px;
+    position: absolute;
+  }
+
+  .background-container {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.attract {
+      background-image: url("/images/gameAssets/attract-background.png");
+      background-size: cover;
+
+      .game-sized-container {
+        background-image: url("/images/gameAssets/attract-main.png");
+        background-size: cover;
+      }
+
+      .button-container {
+        position: absolute;
+        text-align: left;
+        bottom: 0;
+        left: 0;
+      }
+    }
+
+    &.choose-character {
+      background-image: url("/images/gameAssets/choose-character-background.png");
+      background-size: cover;
+
+      h1 {
+        font-size: 60px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .highscores-container {
+    font-size: 24px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    h1 {
+      font-size: 30px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #fff;
+      text-align: left;
+      letter-spacing: 2px;
+    }
+    .highscore-row {
+      margin-bottom: 10px;
+    }
+    .color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50px;
+      border: 1px solid #fff;
+
+      // TODO: set colors for color-pink, color-red, etc using actual colors
+
+      background-color: blue;
+      margin-right: 20px;
+    }
+
+    .score {
+      display: inline-block;
+      width: 80px;
+      text-align: left;
+      margin-right: 20px;
+    }
+
+    .name {
+      display: inline-block;
+      overflow: hidden;
+      width: 200px;
+      text-align: left;
+    }
+  }
+  .character-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .mallow {
+      width: 240px;
+      height: 150px;
+      margin-bottom: 40px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      transition: 0.2s all;
+
+      @each $color in $colors {
+        &.mallow-#{$color} {
+          background-image: url("/images/gameAssets/choose-character-#{$color}.png");
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: 0.2s all;
+      }
+    }
+  }
   .three-panel {
     display: flex;
     width: 1000px;

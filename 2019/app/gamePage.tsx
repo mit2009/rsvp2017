@@ -33,7 +33,6 @@ export interface IGamePageState {
 }
 
 export class GamePage extends React.PureComponent<{}, IGamePageState> {
-
     private socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 
     private keyStore: boolean[] = [false, false, false, false, false];
@@ -104,7 +103,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         }
     };
 
-
     public componentDidMount() {
         document.addEventListener("keydown", this.gameControls);
         document.addEventListener("keyup", this.gameControlsRelease);
@@ -114,36 +112,61 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         document.removeEventListener("keyup", this.gameControlsRelease);
     }
     public render() {
-
+        let backgroundImage = "";
         let html = <div>Loading...</div>;
         switch (this.state.gameState) {
             case GameState.ATTRACT:
+                const leaderboard = this.state.leaderboard ? this.state.leaderboard : [];
+                backgroundImage = "attract";
                 html = (
-                    <div>
-                        <h1>Intro Page!</h1>
-                        <div>{JSON.stringify(this.state.leaderboard)}</div>
-                        <button onClick={this.handleEnterGame} className="play-btn">
-                            Play!
-                        </button>
-                        <button
-                            onClick={() => {
-                                console.log("page click!");
-                                this.setState({
-                                    gameState: GameState.INSTRUCTIONS,
-                                });
-                            }}
-                            className="instructions-btn"
-                        >
-                            Instructions!
-                        </button>
+                    <div className="game-sized-container start-page">
+                        {/* <div>{JSON.stringify(this.state.leaderboard)}</div> */}
+                        <div className="highscores-container">
+                            <h1>Highscores</h1>
+                            {leaderboard.map((value, key) => {
+                                return (
+                                    <div key={key} className="highscore-row">
+                                        <div className="score">{value.score}</div>
+                                        <div className={`color color-${TeamColor[value.team].toLowerCase()}`} />
+                                        <div className="name">{value.name}</div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="button-container">
+                            <button onClick={this.handleEnterGame} className="big-pushy play-btn">
+                                Start Game
+                            </button>
+                            <button
+                                onClick={() => {
+                                    console.log("page click!");
+                                    this.setState({
+                                        gameState: GameState.INSTRUCTIONS,
+                                    });
+                                }}
+                                className="big-pushy instructions-btn"
+                            >
+                                Instructions
+                            </button>
+                        </div>
                     </div>
                 );
                 break;
             case GameState.CHOOSE_CHARACTER:
+                backgroundImage = "choose-character";
                 html = (
-                    <div>
-                        <h1>choose your character</h1>
-                        <div onClick={this.handleCharacterSelect(TeamColor.BLUE)}>blue</div>
+                    <div className="game-sized-container">
+                        <h1>choose your marshmallow</h1>
+                        <div className="character-container">
+                            <div onClick={this.handleCharacterSelect(TeamColor.ORANGE)} className="mallow mallow-orange" />
+                            <div onClick={this.handleCharacterSelect(TeamColor.PURPLE)} className="mallow mallow-purple" />
+                            <div onClick={this.handleCharacterSelect(TeamColor.SILVER)} className="mallow mallow-silver" />
+                            <div onClick={this.handleCharacterSelect(TeamColor.BLUE)} className="mallow mallow-blue" />
+                            <div onClick={this.handleCharacterSelect(TeamColor.YELLOW)} className="mallow mallow-yellow" />
+                            <div onClick={this.handleCharacterSelect(TeamColor.PINK)} className="mallow mallow-pink" />
+                            <div onClick={this.handleCharacterSelect(TeamColor.GREEN)} className="mallow mallow-green" />
+                            <div onClick={this.handleCharacterSelect(TeamColor.RED)} className="mallow mallow-red" />
+                        </div>
                     </div>
                 );
                 break;
@@ -209,7 +232,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             default:
                 html = <div>Error! Please refresh the page.</div>;
         }
-        return html;
+
+        return <div className={`background-container ${backgroundImage}`}>{html}</div>;
     }
 
     private handleRestart = () => {
@@ -234,7 +258,6 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             .post("/game/start")
             .then((res: any) => {
                 console.log(res);
-
                 this.setState({
                     guid: res.data.guid,
                     gameState: GameState.CHOOSE_CHARACTER,
