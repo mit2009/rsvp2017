@@ -87,7 +87,7 @@ var Game = /** @class */ (function () {
     Game.prototype.update = function (up, down, left, right, fire) {
         var _this = this;
         var currentTime = Date.now();
-        var timeDelta = (currentTime - this.lastUpdated) / 240;
+        var timeDelta = (currentTime - this.lastUpdated) / 100;
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
         this.monsters = this.monsters.filter(function (m) {
             var bullet = m.update();

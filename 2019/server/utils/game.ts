@@ -105,7 +105,7 @@ export class Game {
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
         const currentTime = Date.now();
-        const timeDelta = (currentTime - this.lastUpdated) / 240;
+        const timeDelta = (currentTime - this.lastUpdated) / 100;
 
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
         this.monsters = this.monsters.filter((m) => {
