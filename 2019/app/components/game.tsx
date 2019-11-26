@@ -186,8 +186,12 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             return (
                 <div className="three-panel">
                     <div className="sidebar sidebar-left">
-                        Level: {this.props.gameData.currentLevel}<br />
-                        Color: {this.props.gameData.teamColor}<br />
+                        <div className="level">
+                            <h3>{this.props.gameData.currentLevel}</h3>
+                            <h2>Level</h2>
+                            <h3 className="score">{this.props.gameData.score}</h3>
+                            <h2>Score</h2>
+                        </div>
                         Lives Left: {this.props.gameData.livesLeft}
                     </div>
                     <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
