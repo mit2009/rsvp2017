@@ -9,7 +9,7 @@ import { GameApp } from "./components/game";
 
 import * as socketio from "socket.io-client";
 
-const SOCKET_URL = "http://18.21.182.184:8001";
+const SOCKET_URL = "http://localhost:8001";
 
 enum GameState {
     ATTRACT,

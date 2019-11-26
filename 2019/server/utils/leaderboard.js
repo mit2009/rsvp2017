@@ -14,14 +14,14 @@ function saveScore(score, callback) {
     });
     var result = fs.writeFileSync(fileLocation, JSON.stringify({ leaderboard: scores }));
     console.log(result);
-    callback(scores);
+    callback(scores.slice(0, 8));
 }
 exports.saveScore = saveScore;
 // fetches the leaderboard, given a limit of results to retunr
 // default is all
 function getLeaderboard() {
     var contents = fs.readFileSync(fileLocation);
-    var scores = JSON.parse(contents.toString()).leaderboard;
+    var scores = JSON.parse(contents.toString()).leaderboard.slice(0, 8);
     return scores;
 }
 exports.getLeaderboard = getLeaderboard;
