@@ -42,12 +42,15 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.update = function (up, down, left, right, fire) {
         var currentTime = Date.now();
-        var timeDelta = (currentTime - this.lastUpdated) / 250;
+        var timeDelta = (currentTime - this.lastUpdated) / 240;
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
         this.monsters.forEach(function (m) { return m.update(timeDelta); });
         this.updateBullets(timeDelta);
         if (fire) {
-            this.bullets.push(this.player.fireBullet());
+            var bullet = this.player.fireBullet();
+            if (bullet) {
+                this.bullets.push(bullet);
+            }
         }
         this.lastUpdated = currentTime;
         return this.getBlob();

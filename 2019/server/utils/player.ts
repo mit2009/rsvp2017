@@ -11,8 +11,11 @@ export class Player {
     ycor: number;
     heading: number;
 
+    lastFired: number;
+
     velocity: number = 10;
     turningAngle: number;
+    fireFrequency: number = 500;
 
     constructor(xcor: number, ycor: number, heading: number) {
         this.xcor = (xcor + 0.5) * tileWidth;
@@ -20,11 +23,17 @@ export class Player {
         this.startX = this.xcor;
         this.startY = this.ycor;
 
+        this.lastFired = -1;
+
         this.heading = 0; //heading;
     }
 
     fireBullet() {
-        return new Bullet(this.xcor, this.ycor, this.heading, true);
+        if (Date.now() - this.lastFired > this.fireFrequency) {
+            this.lastFired = Date.now();
+            return new Bullet(this.xcor, this.ycor, this.heading, true);
+        }
+        return false;
     }
 
     update(timeDelta: number, up: boolean, down: boolean, left: boolean, right: boolean, levelMap: number[][]) {

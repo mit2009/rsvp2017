@@ -68,14 +68,17 @@ export class Game {
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
         const currentTime = Date.now();
-        const timeDelta = (currentTime - this.lastUpdated) / 250
+        const timeDelta = (currentTime - this.lastUpdated) / 240;
 
         this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
         this.monsters.forEach((m) => m.update(timeDelta));
         this.updateBullets(timeDelta);
 
         if (fire) {
-            this.bullets.push(this.player.fireBullet());
+            const bullet = this.player.fireBullet();
+            if (bullet) {
+                this.bullets.push(bullet);
+            }
         }
 
         this.lastUpdated = currentTime;

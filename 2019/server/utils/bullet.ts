@@ -31,19 +31,19 @@ export class Bullet {
         console.log(this.deltaX * timeDelta);
         this.xcor += this.deltaX * timeDelta;
         const xmapY = Math.floor(this.ycor / tileHeight);
-        const xmapX = Math.floor(this.xcor + bulletWidth / tileHeight);
+        const xmapX = Math.floor((this.xcor + bulletWidth / 2) / tileHeight);
         if (~walls.indexOf(levelMap[xmapY][xmapX])) {
             this.deltaX = -this.deltaX;
-            this.xcor = (xmapX + Math.sign(this.deltaX) + 0.5  - (Math.sign(this.deltaX) * 0.25)) * tileWidth;
+            this.xcor = Math.floor(this.xcor * 4) / 4;
             this.bounces += 1;
         }
         this.ycor += this.deltaY * timeDelta;
 
-        const ymapY = Math.floor(this.ycor + bulletHeight / tileHeight);
+        const ymapY = Math.floor((this.ycor + bulletHeight / 2) / tileHeight);
         const ymapX = Math.floor(this.xcor / tileHeight);
         if (~walls.indexOf(levelMap[ymapY][ymapX])) {
             this.deltaY = -this.deltaY;
-            this.ycor = (ymapY + Math.sign(this.deltaY) + 0.5  - (Math.sign(this.deltaY) * 0.25)) * tileHeight;
+            this.ycor = Math.floor(this.ycor * 4) / 4;
             this.bounces += 1;
         }
         if (this.bounces > this.maxBounces) {
