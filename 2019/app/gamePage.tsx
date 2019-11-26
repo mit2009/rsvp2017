@@ -50,11 +50,20 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
         this.socket.on("levelUpdate", (data: any) => {
             const formattedData = JSON.parse(data) as IGameRenderData;
+
             // TODO: factor this out into win
+            console.log("what is happening");
+            console.log(GameCommand.WIN);
+            console.log(formattedData.gameCommand);
+
             if (formattedData.gameCommand === GameCommand.WIN) {
                 this.setState({
                     gameState: GameState.STAGING,
                     level: formattedData.currentLevel + 1,
+                });
+            } else if (formattedData.gameCommand === GameCommand.FINAL_WIN || formattedData.gameCommand === GameCommand.MALLOW_DEATH) {
+                this.setState({
+                    gameState: GameState.NAME_COLLECTION,
                 });
             } else {
                 this.setState({
@@ -326,7 +335,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     };
 
     private handleNameChange(event: any) {
-        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").str.substring(0, 20);
+        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").substring(0, 20);
         this.setState({
             nameValue,
         });
