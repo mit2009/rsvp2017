@@ -2,7 +2,7 @@ import * as React from "react";
 
 // import UIfx from "uifx";
 
-import { IGameRenderData, PlayMode, TeamColor } from "../../server/api/gameRenderData";
+import { IGameRenderData } from "../../server/api/gameRenderData";
 import { getLevel, heightOffset, tileWidth, tileHeight, widthOffset } from "../../server/api/levelData";
 
 const BASE_RESOURCE_URL = "/images/gameAssets/";
@@ -214,7 +214,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                     console.log("loaded item heading with ", imageId + h);
                     this.imageStore[imageId + h] = new Image();
                     this.imageStore[imageId + h].src = BASE_RESOURCE_URL + image.resourceUrl.replace("#", h + "");
-                    this.imageStore[imageId + h].onload = (e) => {
+                    this.imageStore[imageId + h].onload = () => {
 
                         // // @ts-ignore
                         // const pathName = e.target.src;
@@ -231,7 +231,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             } else {
                 this.imageStore[imageId] = new Image();
                 this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
-                this.imageStore[imageId].onload = (e) => {
+                this.imageStore[imageId].onload = () => {
 
                     // // @ts-ignore
                     // const pathName = e.target.src;
@@ -279,7 +279,8 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             context.clearRect(0, 0, 600, 600);
 
             // Render anything with a specified ZIndex
-            this.renderZIndexItems(context, data);
+
+            // this.renderZIndexItems(context, data);
             this.checkForDepthRender(context, data, 0, heightOffset);
 
             // Render the Tiles
@@ -321,30 +322,33 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
     // Checks the list of items to render with a zIndex. These will by
     // default be rendered before the other elements
-
-    private renderZIndexItems(context: CanvasRenderingContext2D, data: IGameRenderData) {
-        const sortable = [];
-        for (const imageId of Object.keys(data.imagesToRender)) {
-            const item = data.imagesToRender[imageId];
-            const asset = this.assets.images[imageId];
-            if (asset.zIndex !== undefined) {
-                sortable.push([asset.zIndex, asset, item, imageId]);
+    /*
+    
+        private renderZIndexItems(context: CanvasRenderingContext2D, data: IGameRenderData) {
+            const sortable = [];
+            for (const imageId of Object.keys(data.imagesToRender)) {
+                const item = data.imagesToRender[imageId];
+                const asset = this.assets.images[imageId];
+                if (asset.zIndex !== undefined) {
+                    sortable.push([asset.zIndex, asset, item, imageId]);
+                }
+            }
+            sortable.sort((a: any, b: any) => {
+                return a[0] - b[0];
+            });
+            for (const imageProps of sortable) {
+                const [, , item, imageId] = imageProps;
+                // It'll be ok, but if you know of a better way to do this
+                // Please let me know.
+                // @ts-ignore
+    
+    
+                // TEMPORARILY COMMENTED OUT
+                // context.drawImage(this.imageStore[imageId], item.pos.x, item.pos.y);
             }
         }
-        sortable.sort((a: any, b: any) => {
-            return a[0] - b[0];
-        });
-        for (const imageProps of sortable) {
-            const [, , item, imageId] = imageProps;
-            // It'll be ok, but if you know of a better way to do this
-            // Please let me know.
-            // @ts-ignore
-
-
-            // TEMPORARILY COMMENTED OUT
-            // context.drawImage(this.imageStore[imageId], item.pos.x, item.pos.y);
-        }
-    }
+    
+        */
 
     // Ineffiencetly checks the list of items to render. If it falls
     // within the range of the tile depth map, goes ahead and renders it

@@ -43,6 +43,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 
     private keyStore: boolean[] = [false, false, false, false, false];
+
     private backgroundSoundRef: HTMLAudioElement;
 
     constructor(props: any) {
@@ -348,7 +349,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private handleEnterGame = () => {
         // post to server, store token in state
         console.log("Starting Game. Exciting!");
-        // this.backgroundSoundRef.pause();
+        this.backgroundSoundRef.pause();
 
         axios
             .post("/game/start")
