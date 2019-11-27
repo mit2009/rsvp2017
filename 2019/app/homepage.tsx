@@ -24,6 +24,16 @@ const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
     return (dist);
 }
 
+function convertStringMatrixToAngle(matrix: string) {
+    console.log(`MATRIX: ${matrix}`);
+    const start = matrix.indexOf('(');
+    const end = matrix.indexOf(',');
+    const value = matrix.substring(start + 1, end);
+    const radians = Math.acos(parseFloat(value));
+    const degrees = 180 * radians / Math.PI;
+    return degrees;
+}
+
 for (const color of colors) {
 
     if ($(".mallow-" + color + ".out").length !== 0) {
@@ -34,8 +44,8 @@ for (const color of colors) {
                 top: $(".mallow-" + color + ".in").offset().top - $(".mallow-yellow.out").offset().top,
                 left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
             },
-            rotateOut: $(".mallow-" + color + ".out").css("transform"),
-            rotateIn: $(".mallow-" + color + ".in").css("transform"),
+            rotateOut: convertStringMatrixToAngle($(".mallow-" + color + ".out").css("transform")),
+            rotateIn: convertStringMatrixToAngle($(".mallow-" + color + ".in").css("transform")),
         };
         console.log(mallowData);
 
