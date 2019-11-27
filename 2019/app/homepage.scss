@@ -25,6 +25,40 @@
     visibility: hidden;
   }
 
+  .mallow-red {
+    background-image: url("../server/public/images/mallow-red.png");
+    transform-origin: left top;
+
+    &.in {
+        left: 57px;
+        top: 169px;
+        transform: rotate(-220deg);
+    }
+
+    &.out {
+        left: 30px;
+        top: 131px;
+        transform: rotate(-40deg);
+    }
+  }
+
+  .mallow-orange {
+    background-image: url("../server/public/images/mallow-orange.png");
+    transform-origin: left top;
+
+    &.in {
+        left: 518px;
+        top: 95px;
+        transform: rotate(90deg);
+    }
+
+    &.out {
+        left: 534px;
+        top: 89px;
+        transform: rotate(-20deg);
+    }
+  }
+
   .mallow-yellow {
     background-image: url("../server/public/images/mallow-yellow.png");
     transform-origin: left top;
@@ -39,6 +73,23 @@
       transform: rotate(-20deg);
       left: 178px;
       top: 89px;
+    }
+  }
+
+  .mallow-green {
+    background-image: url("../server/public/images/mallow-green.png");
+    transform-origin: left top;
+
+    &.in {
+        left: -50px;
+        top: 98px;
+        transform: rotate(90deg);
+    }
+
+    &.out {
+        left: -33px;
+        top: 90px;
+        transform: rotate(-20deg);
     }
   }
 
@@ -58,6 +109,24 @@
       transform: rotate(0);
     }
   }
+
+  .mallow-purple {
+    background-image: url("../server/public/images/mallow-purple.png");
+    transform-origin: left top;
+
+    &.in {
+        left: 207px;
+        top: 41px;
+        transform: rotate(20deg);
+    }
+
+    &.out {
+        left: 232px;
+        top: -20px;
+        transform: rotate(20deg);
+    }
+  }
+
 
   .mallow-silver {
     background-image: url("../server/public/images/mallow-silver.png");

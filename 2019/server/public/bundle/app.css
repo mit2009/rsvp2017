@@ -145,6 +145,28 @@ table {
     opacity: 0.1; }
   .home-page .hide {
     visibility: hidden; }
+  .home-page .mallow-red {
+    background-image: url(66d3fcc66dd4682d4759f78cec38bd04.png);
+    transform-origin: left top; }
+    .home-page .mallow-red.in {
+      left: 57px;
+      top: 169px;
+      transform: rotate(-220deg); }
+    .home-page .mallow-red.out {
+      left: 30px;
+      top: 131px;
+      transform: rotate(-40deg); }
+  .home-page .mallow-orange {
+    background-image: url(8b688e2db494dc54ef4c1afaf5a97cd6.png);
+    transform-origin: left top; }
+    .home-page .mallow-orange.in {
+      left: 518px;
+      top: 95px;
+      transform: rotate(90deg); }
+    .home-page .mallow-orange.out {
+      left: 534px;
+      top: 89px;
+      transform: rotate(-20deg); }
   .home-page .mallow-yellow {
     background-image: url(abda94a2e7cda9249c8e1183be78653c.png);
     transform-origin: left top; }
@@ -156,6 +178,17 @@ table {
       transform: rotate(-20deg);
       left: 178px;
       top: 89px; }
+  .home-page .mallow-green {
+    background-image: url(1b2fb5833c19d513198dcfea4ee36780.png);
+    transform-origin: left top; }
+    .home-page .mallow-green.in {
+      left: -50px;
+      top: 98px;
+      transform: rotate(90deg); }
+    .home-page .mallow-green.out {
+      left: -33px;
+      top: 90px;
+      transform: rotate(-20deg); }
   .home-page .mallow-blue {
     background-image: url(f29247d255f3317bd5d37956d842d0c0.png);
     transform-origin: left top; }
@@ -167,6 +200,17 @@ table {
       left: 783px;
       top: 150px;
       transform: rotate(0); }
+  .home-page .mallow-purple {
+    background-image: url(40b416cf77469d934631267d24a95828.png);
+    transform-origin: left top; }
+    .home-page .mallow-purple.in {
+      left: 207px;
+      top: 41px;
+      transform: rotate(20deg); }
+    .home-page .mallow-purple.out {
+      left: 232px;
+      top: -20px;
+      transform: rotate(20deg); }
   .home-page .mallow-silver {
     background-image: url(2c980babadc9e349994f4944de4aaa06.png);
     transform-origin: right bottom; }
