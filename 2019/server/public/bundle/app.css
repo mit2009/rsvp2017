@@ -142,7 +142,7 @@ table {
     background-position: center center;
     background-repeat: no-repeat;
     position: absolute;
-    opacity: 0.4; }
+    visibility: hidden; }
   .home-page .hide {
     visibility: hidden; }
   .home-page .mallow-red {
@@ -250,6 +250,7 @@ table {
   .home-page .flex-item {
     display: inline-block;
     width: 700px;
+    height: 400px;
     position: relative; }
   .home-page .mallow-container {
     width: 900px;
@@ -265,6 +266,7 @@ table {
     width: 100%;
     text-align: center; }
     .home-page .everything-else .big-pushy {
+      margin: none;
       font-family: "montserrat", sans-serif;
       font-weight: 400;
       letter-spacing: 1px;
@@ -278,9 +280,17 @@ table {
         background-color: #fa8517;
         border-color: #ffcc23;
         box-shadow: 0px 8px 0px #6e0c0c, 0px 18px 10px black; }
-  .home-page .ignite-text {
-    position: relative;
-    z-index: 2; }
+  .home-page .ignite-text-container {
+    position: absolute;
+    z-index: 4;
+    left: -100px;
+    top: -100px;
+    width: 900px;
+    height: 385px; }
+    .home-page .ignite-text-container .ignite-text {
+      position: absolute;
+      left: 100px;
+      top: 100px; }
   .home-page .flame-gif {
     z-index: 1;
     position: absolute;
@@ -304,6 +314,31 @@ table {
     margin-bottom: 20px;
     letter-spacing: 1px;
     text-shadow: 0 0 10px #000; }
+
+.under-the-fold {
+  padding: 50px;
+  font-size: 24px;
+  line-height: 36px;
+  font-family: "montserrat", sans-serif; }
+
+@media only screen and (max-width: 800px) {
+  .home-page .flex-item .mallow-container {
+    transform: scale(0.45); }
+  .home-page .flex-item .ignite-text-container {
+    transform: scale(0.45); }
+  .home-page .flex-item .everything-else {
+    width: 320px;
+    left: 50%;
+    padding: 0 20px;
+    margin-left: -180px;
+    line-height: 32px; }
+  .home-page .flex-item .info-title {
+    font-size: 24px; }
+  .home-page .flex-item .info-date {
+    line-height: 26px; }
+  .home-page .flex-item .big-pushy {
+    width: 260px;
+    margin-right: 0; } }
 
 .navigation {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&1+1,0+100 */

@@ -18,7 +18,7 @@
     background-repeat: no-repeat;
     position: absolute;
 
-    opacity: 0.4;
+    visibility: hidden;
   }
 
   .hide {
@@ -30,15 +30,15 @@
     transform-origin: left top;
 
     &.in {
-        left: 215px;
-        top: 218px;
-        transform: rotate(-40deg);
+      left: 215px;
+      top: 218px;
+      transform: rotate(-40deg);
     }
 
     &.out {
-        left: 145px;
-        top: 285px;
-        transform: rotate(-40deg);
+      left: 145px;
+      top: 285px;
+      transform: rotate(-40deg);
     }
   }
 
@@ -47,15 +47,15 @@
     transform-origin: left top;
 
     &.in {
-        left: 674px;
-        top: 199px;
-        transform: rotate(-20deg);
+      left: 674px;
+      top: 199px;
+      transform: rotate(-20deg);
     }
 
     &.out {
-        left: 594px;
-        top: 229px;
-        transform: rotate(-20deg);
+      left: 594px;
+      top: 229px;
+      transform: rotate(-20deg);
     }
   }
 
@@ -115,15 +115,15 @@
     transform-origin: left top;
 
     &.in {
-        left: 334px;
-        top: 122px;
-        transform: rotate(20deg);
+      left: 334px;
+      top: 122px;
+      transform: rotate(20deg);
     }
 
     &.out {
-        left: 372px;
-        top: 50px;
-        transform: rotate(20deg);
+      left: 372px;
+      top: 50px;
+      transform: rotate(20deg);
     }
   }
 
@@ -151,15 +151,15 @@
     transform-origin: right bottom;
 
     &.in {
-        left: 436px;
-        top: 185px;
-        transform: rotate(20deg);
+      left: 436px;
+      top: 185px;
+      transform: rotate(20deg);
     }
 
     &.out {
-        left: 516px;
-        top: 215px;
-        transform: rotate(20deg);
+      left: 516px;
+      top: 215px;
+      transform: rotate(20deg);
     }
   }
 
@@ -565,6 +565,7 @@
   .flex-item {
     display: inline-block;
     width: 700px;
+    height: 400px;
     position: relative;
   }
 
@@ -584,6 +585,7 @@
     width: 100%;
     text-align: center;
     .big-pushy {
+      margin: none;
       font-family: "montserrat", sans-serif;
       font-weight: 400;
       letter-spacing: 1px;
@@ -603,9 +605,19 @@
     }
   }
 
-  .ignite-text {
-    position: relative;
-    z-index: 2;
+  .ignite-text-container {
+    position: absolute;
+    z-index: 4;
+    left: -100px;
+    top: -100px;
+    width: 900px;
+    height: 385px;
+
+    .ignite-text {
+      position: absolute;
+      left: 100px;
+      top: 100px;
+    }
   }
 
   .flame-gif {
@@ -635,6 +647,43 @@
     margin-bottom: 20px;
     letter-spacing: 1px;
     text-shadow: 0 0 10px #000;
+  }
+}
+
+.under-the-fold {
+  padding: 50px;
+  font-size: 24px;
+  line-height: 36px;
+  font-family: "montserrat", sans-serif;
+}
+
+@media only screen and (max-width: 800px) {
+  .home-page {
+    .flex-item {
+      .mallow-container {
+        transform: scale(0.45);
+      }
+      .ignite-text-container {
+        transform: scale(0.45);
+      }
+      .everything-else {
+        width: 320px;
+        left: 50%;
+        padding: 0 20px;
+        margin-left: -180px;
+        line-height: 32px;
+      }
+      .info-title {
+        font-size: 24px;
+      }
+      .info-date {
+        line-height: 26px;
+      }
+      .big-pushy {
+        width: 260px;
+        margin-right: 0;
+      }
+    }
   }
 }
 
