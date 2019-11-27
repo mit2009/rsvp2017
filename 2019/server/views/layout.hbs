@@ -20,6 +20,29 @@
     <link
         href="https://fonts.googleapis.com/css?family=Barlow:300,400,500,600,700&display=swap"
         rel="stylesheet">
+
+    <!-- these fb property tags are actually hard to find. here's a link: https://developers.facebook.com/docs/sharing/webmasters#markup -->
+    <meta property="og:url" content="http://009ignite.com">
+    <meta property="og:type" content="event">
+    <meta content="2.009 Product Launch" property="og:site_name">
+    <meta content="RSVP for 2.009 Final Presentations" property="og:title">
+    <meta content="http://009ignite.com" property="og:url">
+    <meta content="1 Semester, 8 Teams, 8 New Products!"
+        property="og:description">
+    <meta content="http://009ignite.com/images/ignite-og.png"
+        property="og:image">
+
+    <!-- and now time for Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta name="twitter:site" content="@009minions">
+    <meta name="twitter:creator" content="@009minions">
+    <meta name="twitter:title" content="2.009 Product Launch">
+    <meta name="twitter:url" content="http://009ignite.com">
+    <meta name="twitter:description"
+        content="1 Semester, 8 Teams, 8 New Products!">
+    <meta name="twitter:image"
+        content="http://009ignite.com/images/ignite-og.png">
 </head>
 
 <body>
@@ -36,14 +59,14 @@
                     <li class="{{#if isGame}}active{{/if}}">
                         <a href="/game">Game</a>
                     </li>
-                    <li class="{{#if isWebcast}}active{{/if}}">
-                        <a href="/webcast">Webcast</a>
+                    <li class="disabled-nav {{#if isWebcast}}active{{/if}}">
+                        <a href="#">Webcast</a>
                     </li>
-                    <li class="{{#if isProducts}}active{{/if}}">
-                        <a href="/products">Products</a>
+                    <li class="disabled-nav {{#if isProducts}}active{{/if}}">
+                        <a href="#">Products</a>
                     </li>
-                    <li class="{{#if isProgram}}active{{/if}}">
-                        <a href="/program">Program</a>
+                    <li class="disabled-nav {{#if isProgram}}active{{/if}}">
+                        <a href="#">Program</a>
                     </li>
                     {{!-- <li class="tickets">
                         <a class="rsvp-btn" href="/">Tickets</a>
@@ -66,14 +89,14 @@
                     <li class="{{#if isGame}}active{{/if}}">
                         <a href="/game">Game</a>
                     </li>
-                    <li class="{{#if isWebcast}}active{{/if}}">
-                        <a href="/webcast">Webcast</a>
+                    <li class="disabled-nav {{#if isWebcast}}active{{/if}}">
+                        <a href="#">Webcast</a>
                     </li>
-                    <li class="{{#if isProducts}}active{{/if}}">
-                        <a href="/products">Products</a>
+                    <li class="disabled-nav {{#if isProducts}}active{{/if}}">
+                        <a href="#">Products</a>
                     </li>
-                    <li class="{{#if isProgram}}active{{/if}}">
-                        <a href="/program">Program</a>
+                    <li class="disabled-nav {{#if isProgram}}active{{/if}}">
+                        <a href="#">Program</a>
                     </li>
                     {{!-- <li class="tickets">
                         <a class="rsvp-btn" href="">Tickets</a>
