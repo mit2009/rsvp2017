@@ -30,15 +30,15 @@
     transform-origin: left top;
 
     &.in {
-        left: 57px;
-        top: 169px;
-        transform: rotate(-40deg);
+      left: 57px;
+      top: 169px;
+      transform: rotate(-40deg);
     }
 
     &.out {
-        left: 30px;
-        top: 131px;
-        transform: rotate(-40deg);
+      left: 30px;
+      top: 131px;
+      transform: rotate(-40deg);
     }
   }
 
@@ -47,15 +47,15 @@
     transform-origin: left top;
 
     &.in {
-        left: 518px;
-        top: 95px;
-        transform: rotate(-20deg);
+      left: 518px;
+      top: 95px;
+      transform: rotate(-20deg);
     }
 
     &.out {
-        left: 534px;
-        top: 89px;
-        transform: rotate(-20deg);
+      left: 534px;
+      top: 89px;
+      transform: rotate(-20deg);
     }
   }
 
@@ -81,15 +81,15 @@
     transform-origin: left top;
 
     &.in {
-        left: 103px;
-        top: 200px;
-        transform: rotate(-20deg);
+      left: 103px;
+      top: 200px;
+      transform: rotate(-20deg);
     }
 
     &.out {
-        left: 46px;
-        top: 200px;
-        transform: rotate(-20deg);
+      left: 46px;
+      top: 200px;
+      transform: rotate(-20deg);
     }
   }
 
@@ -115,18 +115,17 @@
     transform-origin: left top;
 
     &.in {
-        left: 207px;
-        top: 41px;
-        transform: rotate(20deg);
+      left: 207px;
+      top: 41px;
+      transform: rotate(20deg);
     }
 
     &.out {
-        left: 232px;
-        top: -20px;
-        transform: rotate(20deg);
+      left: 232px;
+      top: -20px;
+      transform: rotate(20deg);
     }
   }
-
 
   .mallow-silver {
     background-image: url("../server/public/images/mallow-silver.png");
@@ -152,15 +151,15 @@
     transform-origin: right bottom;
 
     &.in {
-        left: 419px;
-        top: 88px;
-        transform: rotate(20deg);
+      left: 419px;
+      top: 88px;
+      transform: rotate(20deg);
     }
 
     &.out {
-        left: 406px;
-        top: 85px;
-        transform: rotate(20deg);
+      left: 406px;
+      top: 85px;
+      transform: rotate(20deg);
     }
   }
 
@@ -596,18 +595,10 @@
       margin-bottom: 25px;
 
       &:hover {
-        background-color: #e2e2e2;
-        cursor: pointer;
-        transform: translateY(2px);
-        box-shadow: 0px 8px 0px #bbb, 0px 18px 10px rgba(0, 0, 0, 1);
-        opacity: 1;
-
-        &.rsvp-btn {
-          color: rgb(36, 0, 0);
-          background-color: #fa8517;
-          border-color: #ffcc23;
-          box-shadow: 0px 8px 0px rgb(110, 12, 12), 0px 18px 10px rgba(0, 0, 0, 1);
-        }
+        color: rgb(247, 240, 240);
+        background-color: #fa8517;
+        border-color: #ffcc23;
+        box-shadow: 0px 8px 0px rgb(110, 12, 12), 0px 18px 10px rgba(0, 0, 0, 1);
       }
     }
   }
