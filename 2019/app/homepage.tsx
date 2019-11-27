@@ -34,27 +34,33 @@ function convertStringMatrixToAngle(matrix: string) {
     return degrees;
 }
 
-for (const color of colors) {
+function init() {
+    for (const color of colors) {
 
-    if ($(".mallow-" + color + ".out").length !== 0) {
-        mallowData[color] = {
-            out: $(".mallow-" + color + ".out").offset(),
-            in: $(".mallow-" + color + ".in").offset(),
-            diff: {
-                top: $(".mallow-" + color + ".in").offset().top - $(".mallow-" + color + ".out").offset().top,
-                left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
-            },
-            rotateOut: convertStringMatrixToAngle($(".mallow-" + color + ".out").css("transform")),
-            rotateIn: convertStringMatrixToAngle($(".mallow-" + color + ".in").css("transform")),
-        };
-        console.log(mallowData);
+        if ($(".mallow-" + color + ".out").length !== 0) {
+            mallowData[color] = {
+                out: $(".mallow-" + color + ".out").offset(),
+                in: $(".mallow-" + color + ".in").offset(),
+                diff: {
+                    top: $(".mallow-" + color + ".in").offset().top - $(".mallow-" + color + ".out").offset().top,
+                    left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
+                },
+                rotateOut: convertStringMatrixToAngle($(".mallow-" + color + ".out").css("transform")),
+                rotateIn: convertStringMatrixToAngle($(".mallow-" + color + ".in").css("transform")),
+            };
+            console.log(mallowData);
 
-        $(".mallow-clipped-" + color).attr({
-            x: mallowData[color].diff.left,
-            y: mallowData[color].diff.top,
-        }).css({ visibility: "visible" })
+            $(".mallow-clipped-" + color).attr({
+                x: mallowData[color].diff.left,
+                y: mallowData[color].diff.top,
+            }).css({ visibility: "visible" })
+        }
     }
 }
+
+$(() => {
+    init();
+});
 
 
 document.addEventListener("mousemove", event => {
@@ -66,7 +72,7 @@ document.addEventListener("mousemove", event => {
 
             $('.mallow-' + color).attr("x", 30);
             $('.mallow-' + color).attr("y", 30);
-
+            console.log(color, mallowData[color]);
             const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left + colorOffset[color].x, mallowData[color].in.top + colorOffset[color].y)
             // console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
             // console.log(distFromMallow);
