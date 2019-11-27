@@ -1,3 +1,4 @@
+import * as $ from "jQuery";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
@@ -69,17 +70,13 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     gameState: GameState.STAGING,
                     level: formattedData.currentLevel + 1,
                 });
-            } else if (
-                formattedData.gameCommand === GameCommand.FINAL_WIN
-            ) {
+            } else if (formattedData.gameCommand === GameCommand.FINAL_WIN) {
                 this.setState({
                     finalMessage: "you win",
                     gameState: GameState.NAME_COLLECTION,
                     score: formattedData.score,
                 });
-            } else if (
-                formattedData.gameCommand === GameCommand.MALLOW_DEATH
-            ) {
+            } else if (formattedData.gameCommand === GameCommand.MALLOW_DEATH) {
                 this.setState({
                     finalMessage: "game over",
                     gameState: GameState.NAME_COLLECTION,
@@ -155,15 +152,34 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                         },
                         this.handleStart,
                     );
+                } else if (this.state.gameState === GameState.NAME_COLLECTION) {
+                    this.handleNameSubmit();
                 }
             }
         }
+    };
+
+    private gameControlsMobile = (e: any) => {
+        // Cache the client X/Y coordinates
+        const clientX = e.touches[0].clientX;
+        const clientY = e.touches[0].clientY;
+
+        console.log(clientX, clientY);
+        console.log($(".mobile-control").offset().left);
+        console.log($(".mobile-control").offset().top);
     };
 
     private gameControlsShoot = (event: any) => {
         if (event.key === " ") {
             this.keyStore[4] = true;
         }
+    };
+
+    private gameControlsFire = () => {
+        this.keyStore[4] = true;
+    };
+    private gameControlsUnfire = () => {
+        this.keyStore[4] = false;
     };
 
     private gameControlsRelease = (event: any) => {
@@ -192,11 +208,15 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         document.addEventListener("keydown", this.gameControls);
         document.addEventListener("keypress", this.gameControlsShoot);
         document.addEventListener("keyup", this.gameControlsRelease);
+        document.addEventListener("touchmove", this.gameControlsMobile, false);
     }
+
     public componentWillUnmount() {
         document.removeEventListener("keydown", this.gameControls);
         document.removeEventListener("keyup", this.gameControlsRelease);
+        document.removeEventListener("touchmove", this.gameControlsMobile);
     }
+
     public render() {
         let backgroundImage = "";
         let html = <div>Loading...</div>;
@@ -326,7 +346,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                     <div className="game-sized-container">
                         <h1>Deep within the Candy Cosmos...</h1>
                         <h2>The 2.009 Marshmallows need your help!</h2>
-                        <p>Move your mallow around the Graham Cracker Islands and clear any Monster Munchkins that may be lurking. And who knows! You might just be a hero.</p>
+                        <p>
+                            Move your mallow around the Graham Cracker Islands and clear any Monster Munchkins that may
+                            be lurking. And who knows! You might just be a hero.
+                        </p>
                         <p>What adventures await them next?</p>
                         <div className="button-container">
                             <button
@@ -347,7 +370,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             case GameState.PLAYING:
                 html = (
                     <div className="playing">
-                        <GameApp gameData={this.state.gameData} />
+                        <GameApp fire={this.gameControlsFire} unfire={this.gameControlsUnfire} gameData={this.state.gameData} />
                     </div>
                 );
                 break;

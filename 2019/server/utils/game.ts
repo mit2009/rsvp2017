@@ -9,11 +9,11 @@ const unableToLevelResponse = {
 }
 
 const SOUNDS = {
-    bulletShoot : 'bulletShoot',
-    enemyHurt : 'enemyHurt',
-    playerHurt : 'playerHurt',
-    playerDie : 'playerDie',
-    levelFinish : 'levelUp',
+    bulletShoot: 'bulletShoot',
+    enemyHurt: 'enemyHurt',
+    playerHurt: 'playerHurt',
+    playerDie: 'playerDie',
+    levelFinish: 'levelUp',
     levelStart: 'levelStart',
 }
 

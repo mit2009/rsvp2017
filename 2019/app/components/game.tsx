@@ -1,6 +1,6 @@
 import * as React from "react";
 
-// import UIfx from "uifx";
+import UIfx from "uifx";
 
 import { IGameRenderData } from "../../server/api/gameRenderData";
 import { getLevel, heightOffset, tileWidth, tileHeight, widthOffset } from "../../server/api/levelData";
@@ -30,6 +30,8 @@ export interface IAssets {
 
 export interface IGameAppProps {
     gameData: IGameRenderData;
+    fire?: () => void
+    unfire?: () => void
 }
 export interface IGameAppState {
     mallowColor: string;
@@ -43,6 +45,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private ctx: CanvasRenderingContext2D;
 
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
+    private soundStore: any = {}
 
 
     // private gameRenderData: IGameRenderData = {
@@ -150,8 +153,28 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
         },
         sounds: {
-            pew: {
-                resourceUrl: "pew.mp4",
+            bulletShoot: {
+                resourceUrl: "player-shoot-sound.wav",
+                loaded: false,
+            },
+            enemyHurt: {
+                resourceUrl: "success-hit-sound.wav",
+                loaded: false,
+            },
+            playerHurt: {
+                resourceUrl: "player-hit-sound.wav",
+                loaded: false,
+            },
+            playerDie: {
+                resourceUrl: "game-over-sound.wav",
+                loaded: false,
+            },
+            levelUp: {
+                resourceUrl: "new-level-sound.wav",
+                loaded: false,
+            },
+            levelStart: {
+                resourceUrl: "win-game-sound.wav",
                 loaded: false,
             },
         },
@@ -187,15 +210,25 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 <div className="three-panel">
                     <div className="sidebar sidebar-left">
                         <div className="level">
-                            <h3>{this.props.gameData.currentLevel}</h3>
-                            <h2>Level</h2>
-                            <h3 className="score">{this.props.gameData.score}</h3>
-                            <h2>Score</h2>
+                            <div className="mobile-level">
+                                <h3>{this.props.gameData.currentLevel}</h3>
+                                <h2>Level</h2>
+                            </div>
+                            <div className="mobile-score">
+                                <h3 className="score">{this.props.gameData.score}</h3>
+                                <h2>Score</h2>
+                            </div>
                         </div>
                         <div className="lives">{this.props.gameData.livesLeft} &times;</div>
                     </div>
                     <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
-                    <div className="sidebar sidebar-right" />
+                    <div className="sidebar sidebar-right">
+                        <div className="mobile-control">
+                        </div>
+                        <div onPointerDown={this.props.fire} onPointerUp={this.props.unfire}
+
+                            className="big-pushy mobile-control-shoot">fire</div>
+                    </div>
                 </div>
             );
         } else {
@@ -255,6 +288,10 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             // TODO Implement sound player;
             console.log(sound);
 
+            this.soundStore[soundId] = new UIfx(BASE_RESOURCE_URL + sound.resourceUrl, {
+                volume: 1,
+            });
+
             /*
             this.imageStore[imageId] = new Image();
             this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
@@ -272,6 +309,14 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private drawGameAssets(context: CanvasRenderingContext2D) {
         // const data = this.props;
         const data = this.props.gameData;
+
+        // random sound loader goes here for some reason
+        if (this.props.gameData.playSound.length > 0) {
+            for (const sound of this.props.gameData.playSound) {
+                console.log(this.soundStore);
+                this.soundStore[sound.resourceId].play();
+            }
+        }
 
         if (context && (this.props.gameData !== null && this.props.gameData !== undefined)) {
 

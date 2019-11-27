@@ -316,10 +316,27 @@ table {
     text-shadow: 0 0 10px #000; }
 
 .under-the-fold {
-  padding: 50px;
-  font-size: 24px;
-  line-height: 36px;
-  font-family: "montserrat", sans-serif; }
+  padding: 200px 100px 50px;
+  font-size: 18px;
+  line-height: 28px;
+  font-family: "montserrat", sans-serif;
+  background-image: url("/images/danger-text.png");
+  background-size: cover;
+  background-position: top center; }
+  .under-the-fold p {
+    margin-bottom: 30px; }
+  .under-the-fold .text-container {
+    max-width: 700px;
+    margin: 0 auto; }
+  .under-the-fold h2 {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px; }
+  .under-the-fold em {
+    color: #ff9a26;
+    font-weight: 500; }
 
 @media only screen and (max-width: 800px) {
   .home-page .flex-item .mallow-container {
@@ -338,7 +355,9 @@ table {
     line-height: 26px; }
   .home-page .flex-item .big-pushy {
     width: 260px;
-    margin-right: 0; } }
+    margin-right: 0; }
+  .home-page .under-the-fold {
+    padding: 40px; } }
 
 .navigation {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&1+1,0+100 */
@@ -799,6 +818,9 @@ body {
         font-size: 50px;
         font-weight: bold;
         text-shadow: 0px 0px 5px white; }
+    .game-page .sidebar.sidebar-right .mobile-control,
+    .game-page .sidebar.sidebar-right .mobile-control-shoot {
+      display: none; }
 
 @media only screen and (max-width: 800px) {
   .navigation .logo-container {
@@ -869,6 +891,58 @@ body {
       margin-top: 10px;
       font-size: 32px; }
     .game-page .background-container.instructions .game-sized-container .button-container {
-      position: static; } }
+      position: static; }
+  .game-page .background-container {
+    background-image: url("/images/gameAssets/mobile-playing-background.png");
+    background-size: cover;
+    background-position: center center; }
+    .game-page .background-container .sidebar-left {
+      background-image: url("/images/gameAssets/mobile-playing-main.png");
+      background-size: cover;
+      background-position: center center; }
+      .game-page .background-container .sidebar-left .level {
+        top: 18px;
+        left: 68px; }
+        .game-page .background-container .sidebar-left .level h3 {
+          font-size: 20px !important; }
+        .game-page .background-container .sidebar-left .level h2 {
+          font-size: 20px !important; }
+      .game-page .background-container .sidebar-left .lives {
+        font-size: 30px;
+        text-align: right;
+        bottom: 47px;
+        left: 45px; }
+      .game-page .background-container .sidebar-left .mobile-level {
+        position: absolute;
+        left: 90px;
+        top: 0; }
+      .game-page .background-container .sidebar-left .mobile-score {
+        position: absolute;
+        left: 0;
+        top: 0; }
+    .game-page .background-container .sidebar-right {
+      position: relative; }
+      .game-page .background-container .sidebar-right .mobile-control {
+        position: absolute;
+        left: 20px;
+        display: block;
+        top: 20px;
+        width: 120px;
+        height: 120px;
+        background-color: none;
+        background-image: url("/images/gameAssets/mobile-playing-control.png");
+        background-size: cover;
+        background-position: center; }
+      .game-page .background-container .sidebar-right .mobile-control-shoot {
+        position: absolute;
+        left: 193px;
+        display: block;
+        top: 50px;
+        width: auto !important;
+        height: auto !important;
+        transition: none !important; }
+    .game-page .background-container .playing .three-panel::before {
+      background: transparent;
+      background-image: none; } }
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY3NzIiwic291cmNlUm9vdCI6IiJ9*/
