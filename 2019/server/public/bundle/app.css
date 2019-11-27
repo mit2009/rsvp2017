@@ -494,6 +494,10 @@ table {
           bottom: 0;
           z-index: -1;
           border-bottom: 2px solid #ffdd1b; }
+      .navigation ul li.disabled-nav {
+        opacity: 0.2; }
+        .navigation ul li.disabled-nav a:hover {
+          cursor: not-allowed; }
 
 html,
 body {

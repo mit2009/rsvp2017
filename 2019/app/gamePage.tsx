@@ -19,7 +19,7 @@ import { GameApp } from "./components/game";
 
 import * as socketio from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:8001";
+const SOCKET_URL = "http://18.21.160.239:8001";
 
 enum GameState {
     ATTRACT,
@@ -159,14 +159,68 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         }
     };
 
+    private calcOctant(fingerX: number, fingerY: number, centerX: number, centerY: number) {
+        const threshold = 100;
+        const deltaX = fingerX - centerX;
+        const deltaY = fingerY - centerY;
+        if (Math.pow(deltaX, 2) + Math.pow(deltaY, 2) < Math.pow(threshold, 2)) {
+            const angle = Math.atan2(deltaX, deltaY);
+            const adjustAngle = angle + 2 * Math.PI + Math.PI / 8;
+            const section = Math.floor(adjustAngle / (Math.PI / 4) % 8);
+            return section;
+        }
+        return -1;
+    }
+
+    private gameControlsGoodbye = (e: any) => {
+
+        this.keyStore[0] = false;
+        this.keyStore[1] = false;
+        this.keyStore[2] = false;
+        this.keyStore[3] = false;
+    }
     private gameControlsMobile = (e: any) => {
         // Cache the client X/Y coordinates
         const clientX = e.touches[0].clientX;
         const clientY = e.touches[0].clientY;
+        const oct = this.calcOctant(clientX, clientY, $(".mobile-control").offset().left + $(".mobile-control").width() / 2, $(".mobile-control").offset().top + $(".mobile-control").height() / 2);
 
-        console.log(clientX, clientY);
-        console.log($(".mobile-control").offset().left);
-        console.log($(".mobile-control").offset().top);
+        this.keyStore[0] = false;
+        this.keyStore[1] = false;
+        this.keyStore[2] = false;
+        this.keyStore[3] = false;
+
+        switch (oct) {
+            case 4:
+                this.keyStore[0] = true;
+                break;
+            case 5:
+                this.keyStore[2] = true;
+                this.keyStore[0] = true;
+                break;
+            case 6:
+                this.keyStore[2] = true;
+                break;
+            case 7:
+                this.keyStore[1] = true;
+                this.keyStore[2] = true;
+                break;
+            case 0:
+                this.keyStore[1] = true;
+                break;
+            case 1:
+                this.keyStore[3] = true;
+                this.keyStore[1] = true;
+                break;
+            case 2:
+                this.keyStore[3] = true;
+                break;
+            case 3:
+                this.keyStore[0] = true;
+                this.keyStore[3] = true;
+                break;
+
+        }
     };
 
     private gameControlsShoot = (event: any) => {
@@ -209,12 +263,15 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         document.addEventListener("keypress", this.gameControlsShoot);
         document.addEventListener("keyup", this.gameControlsRelease);
         document.addEventListener("touchmove", this.gameControlsMobile, false);
+        document.addEventListener("touchstart", this.gameControlsMobile, false);
+        document.addEventListener("touchend", this.gameControlsGoodbye, false);
     }
 
     public componentWillUnmount() {
         document.removeEventListener("keydown", this.gameControls);
         document.removeEventListener("keyup", this.gameControlsRelease);
         document.removeEventListener("touchmove", this.gameControlsMobile);
+        document.removeEventListener("touchend", this.gameControlsGoodbye);
     }
 
     public render() {

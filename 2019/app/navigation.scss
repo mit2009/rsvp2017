@@ -193,6 +193,14 @@
           }
         }
       }
+      &.disabled-nav {
+        opacity: 0.2;
+        a {
+          &:hover {
+            cursor: not-allowed;
+          }
+        }
+      }
     }
   }
 }
