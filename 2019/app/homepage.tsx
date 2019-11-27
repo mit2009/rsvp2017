@@ -56,17 +56,38 @@ function init() {
             }).css({ visibility: "visible" })
         }
     }
+
+    $(".rsvp-btn").on("mouseover", () => {
+        $(".flame-gif").attr("src", "images/flame.gif");
+        $(".flame-gif").show();
+    });
+
+    $(".rsvp-btn").on("mouseout", () => {
+        $(".flame-gif").hide();
+    });
+
+    $(".game-btn").on("mouseover", () => {
+        $(".flame-gif").attr("src", "images/flame.gif");
+        $(".flame-gif").show();
+    });
+
+    $(".game-btn").on("mouseout", () => {
+        $(".flame-gif").hide();
+    });
 }
 
 $(() => {
     init();
 });
 
+window.addEventListener("resize", event => {
+    init();
+})
 
 document.addEventListener("mousemove", event => {
     const mouseLeft = event.pageX
     const mouseTop = event.pageY;
-    // console.log($(".mallow-yellow.in").offset().left);
+
     for (const color of colors) {
         if ($(".mallow-clipped-" + color).length !== 0) {
 
@@ -85,28 +106,18 @@ document.addEventListener("mousemove", event => {
                     x: mallowData[color].diff.left * percentageToMallow,
                     y: mallowData[color].diff.top * percentageToMallow
                 });
-                if (isRotate.indexOf(color) > -1) {
 
-                }
             } else {
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left,
                     y: mallowData[color].diff.top
                 });
-                if (isRotate.indexOf(color) > -1) {
-
-                }
             }
 
         }
     }
 });
 
-console.log($('.mallow-yellow'));
-$('.mallow-yellow').attr({
-    "x": 50,
-    "y": 50
-});
 
 // export class Homepage extends React.PureComponent<{}, {}> {
 

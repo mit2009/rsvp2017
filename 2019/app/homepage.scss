@@ -81,15 +81,15 @@
     transform-origin: left top;
 
     &.in {
-        left: 103px;
-        top: 200px;
-        transform: rotate(-20deg);
+      left: 103px;
+      top: 200px;
+      transform: rotate(-20deg);
     }
 
     &.out {
-        left: 46px;
-        top: 200px;
-        transform: rotate(-20deg);
+      left: 46px;
+      top: 200px;
+      transform: rotate(-20deg);
     }
   }
 
@@ -126,7 +126,6 @@
         transform: rotate(20deg);
     }
   }
-
 
   .mallow-silver {
     background-image: url("../server/public/images/mallow-silver.png");
@@ -596,18 +595,10 @@
       margin-bottom: 25px;
 
       &:hover {
-        background-color: #e2e2e2;
-        cursor: pointer;
-        transform: translateY(2px);
-        box-shadow: 0px 8px 0px #bbb, 0px 18px 10px rgba(0, 0, 0, 1);
-        opacity: 1;
-
-        &.rsvp-btn {
-          color: rgb(36, 0, 0);
-          background-color: #fa8517;
-          border-color: #ffcc23;
-          box-shadow: 0px 8px 0px rgb(110, 12, 12), 0px 18px 10px rgba(0, 0, 0, 1);
-        }
+        color: rgb(247, 240, 240);
+        background-color: #fa8517;
+        border-color: #ffcc23;
+        box-shadow: 0px 8px 0px rgb(110, 12, 12), 0px 18px 10px rgba(0, 0, 0, 1);
       }
     }
   }
