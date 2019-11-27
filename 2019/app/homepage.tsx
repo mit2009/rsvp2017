@@ -5,6 +5,16 @@ import * as $ from "jQuery";
 const THRESH = 300;
 const colors = ["red", "orange", "yellow", "green", "blue", "purple", "silver", "pink"];
 const isRotate = ["blue"];
+const colorOffset: {[key: string]: {[key: string]: number}} = {
+    'red': {x: 0, y: 0},
+    'orange': {x: 0, y: 0},
+    'yellow': {x: 25, y: 19},
+    'green': {x: 0, y: 0},
+    'blue': {x: 0, y: 0},
+    'purple': {x: 0, y: 0},
+    'silver': {x: 0, y: 0},
+    'pink': {x: 0, y: 0}
+}
 const mallowData: any = {}
 
 const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
@@ -47,14 +57,15 @@ document.addEventListener("mousemove", event => {
             $('.mallow-' + color).attr("x", 30);
             $('.mallow-' + color).attr("y", 30);
 
-            const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left, mallowData[color].in.top)
-
+            const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left + colorOffset[color].x, mallowData[color].in.top + colorOffset[color].y)
+            // console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
             // console.log(distFromMallow);
 
             if (distFromMallow < THRESH) {
                 console.log("here");
 
-                const percentageToMallow = Math.min(1, (distFromMallow) / THRESH)
+                const percentageToMallow = Math.min(1, Math.sin((distFromMallow) / THRESH * Math.PI / 2));
+                // console.log((distFromMallow) / THRESH, Math.pow((distFromMallow) / THRESH, 0.25));
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left * percentageToMallow,
                     y: mallowData[color].diff.top * percentageToMallow
@@ -167,4 +178,3 @@ $('.mallow-yellow').attr({
 // }
 
 // ReactDOM.render(<Homepage />, document.getElementById("home-content"));
-
