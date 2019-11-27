@@ -89,7 +89,10 @@ export class Player {
         for (let cor of [[0, 0], [0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]]) {
             const j = cor[0];
             const i = cor[1];
-            if (~walls.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX + i)])) {
+            if ((mapY + j < 0) || (mapX + i < 0) || (mapY + j >= levelMap.length) || (mapX + i >= levelMap[mapY + j].length)) {
+                continue;
+            }
+            if (~walls.indexOf(levelMap[mapY + j][mapX + i])) {
                 const wallY = (mapY + j + 0.5) * tileHeight;
                 const wallX = (mapX + i + 0.5) * tileWidth;
                 if (Math.abs(this.ycor - wallY) < 30 && Math.abs(this.xcor - wallX) < 30) {
@@ -115,7 +118,7 @@ export class Player {
                 }
                 continue;
             }
-            if (voids.indexOf(levelMap[Math.floor(mapY + j)][Math.floor(mapX + i)]) == -1) {
+            if (voids.indexOf(levelMap[mapY + j][mapX + i]) == -1) {
                 const voidY = (mapY + j + 0.5) * tileHeight;
                 const voidX = (mapX + i + 0.5) * tileWidth;
                 if (Math.abs(this.ycor - voidY) < 30 && Math.abs(this.xcor - voidX) < 30) {
