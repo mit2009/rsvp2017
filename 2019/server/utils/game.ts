@@ -1,11 +1,27 @@
 import { Bullet } from "./bullet";
 import { Player } from "./player";
 import { Monster } from "./monster";
-import { TeamColor, IGameRenderData, GameCommand } from "../api/gameRenderData"
+import { TeamColor, IGameRenderData, GameCommand, PlayMode, ISoundClip } from "../api/gameRenderData"
 import { LevelData, getLevelCount, getLevelData } from "../api/levelData"
 
 const unableToLevelResponse = {
     error: 'Unable to level',
+}
+
+const SOUNDS = {
+    bulletShoot : 'bulletShoot',
+    enemyHurt : 'enemyHurt',
+    playerHurt : 'playerHurt',
+    playerDie : 'playerDie',
+    levelFinish : 'levelUp',
+    levelStart: 'levelStart',
+}
+
+function singleSoundClip(resourceId: string) {
+    return {
+        playMode: PlayMode.ONCE,
+        resourceId
+    } as ISoundClip;
 }
 
 const baseLevelScore = 100;
@@ -31,6 +47,7 @@ export class Game {
     levelData: LevelData;
     monsters: Monster[];
     gameCommand: GameCommand;
+    playSound: ISoundClip[];
 
     final: boolean;
 
@@ -63,8 +80,11 @@ export class Game {
             this.player = new Player(playerData.x, playerData.y, 0);
             this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, m.h, m.class));
 
+            this.playSound = [singleSoundClip(SOUNDS.levelFinish)];
+
             this.lastUpdated = Date.now();
-            return this.getBlob()
+            const blob = this.getBlob();
+            return blob;
         }
 
         return unableToLevelResponse;
@@ -93,11 +113,13 @@ export class Game {
                     if (aliveMonsters.length != this.monsters.length) {
                         this.score += enemyBonusScore * (this.monsters.length - aliveMonsters.length);
                         this.monsters = aliveMonsters;
+                        this.playSound.push(singleSoundClip(SOUNDS.enemyHurt));
                     } else {
                         bullets.push(b);
                     }
                 } else if (this.bulletEntityOverlap(b, this.player)) {
                     this.gameCommand = GameCommand.MALLOW_HURT;
+                    this.playSound.push(singleSoundClip(SOUNDS.playerHurt));
                     this.livesLeft -= 1;
                 } else {
                     bullets.push(b);;
@@ -124,6 +146,8 @@ export class Game {
             if (collide) {
                 this.score += enemyBonusScore;
                 this.livesLeft -= 1;
+                this.gameCommand = GameCommand.MALLOW_HURT;
+                this.playSound.push(singleSoundClip(SOUNDS.playerHurt));
                 return false;
             }
             return true;
@@ -133,6 +157,7 @@ export class Game {
         if (fire) {
             const bullet = this.player.fireBullet();
             if (bullet) {
+                this.playSound.push(singleSoundClip(SOUNDS.bulletShoot));
                 this.score += bulletPenaltyScore;
                 this.bullets.push(bullet);
             }
@@ -149,11 +174,13 @@ export class Game {
                 this.ableToLevel = true;
                 this.gameCommand = GameCommand.WIN;
             }
+            this.playSound = [singleSoundClip(SOUNDS.levelFinish)];
         }
 
         if (this.livesLeft == 0) {
             this.gameCommand = GameCommand.MALLOW_DEATH;
             this.final = true;
+            this.playSound = [singleSoundClip(SOUNDS.playerDie)];
         }
 
         if (this.score < 0) {
@@ -172,7 +199,7 @@ export class Game {
             teamColor: this.teamColor,
             livesLeft: this.livesLeft,
             gameCommand: this.gameCommand,
-            playSound: [],
+            playSound: this.playSound,
             imagesToRender: {
                 player1: this.player.getBlob(),
                 background: {
@@ -183,7 +210,9 @@ export class Game {
             bullets: this.bullets.map(b => b.getBlob()),
             monsters: this.monsters.map(m => m.getBlob()),
         } as IGameRenderData
+        this.playSound = [];
         this.gameCommand = null;
+        // console.log(output);
         return output;
     }
 
