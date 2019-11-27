@@ -185,6 +185,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         const clientY = e.touches[0].clientY;
         const oct = this.calcOctant(clientX, clientY, $(".mobile-control").offset().left + $(".mobile-control").width() / 2, $(".mobile-control").offset().top + $(".mobile-control").height() / 2);
 
+        e.preventDefault();
+
         this.keyStore[0] = false;
         this.keyStore[1] = false;
         this.keyStore[2] = false;
