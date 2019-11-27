@@ -52,20 +52,16 @@ document.addEventListener("mousemove", event => {
             // console.log(distFromMallow);
 
             if (distFromMallow < THRESH) {
-                console.log("here");
-
                 const percentageToMallow = Math.min(1, (distFromMallow) / THRESH)
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left * percentageToMallow,
                     y: mallowData[color].diff.top * percentageToMallow
-                })
+                });
             } else {
-                console.log("ehr2");
-
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left,
                     y: mallowData[color].diff.top
-                })
+                });
             }
         }
     }

@@ -17,6 +17,8 @@
     background-position: center center;
     background-repeat: no-repeat;
     position: absolute;
+
+    opacity: 0.1;
   }
 
   .hide {
@@ -24,69 +26,98 @@
   }
 
   .mallow-yellow {
-    // background image for yellow mallow
     background-image: url("../server/public/images/mallow-yellow.png");
     transform-origin: left top;
 
     &.in {
-      // in position
       transform: rotate(-20deg);
       left: 196px;
       top: 139px;
-
-      // -webkit-mask-image: url(/images/yellow-mask.png);
-      // mask-image: url(../server/public/images/yellow-mask.png);
-      // -webkit-mask-origin: left top;
-      // -webkit-mask-position: -100px -100px;
-      // -webkit-mask-size: 900px 385px;
-      // -webkit-mask-repeat: no-repeat;
-      //
-      //   -webkit-animation-name: yellow-mallow-expose;
-      //   -webkit-animation-duration: 4s;
-      //   animation-name: yellow-mallow-expose;
-      //   animation-duration: 4s;
-
-      //-webkit-clip-path: url(#yellow-clipping-mask);
-      //clip-path: url(#yellow-clipping-mask);
-      //-webkit-mask-image: url(../server/public/images/yellow-mask.png);
-      //mask-image: url(../server/public/images/yellow-mask.png);
-      //-webkit-mask-position: left top;
-      //-webkit-mask-size: 900px 385px;
-      //mask-position: center center;
-      //-webkit-mask-repeat: no-repeat;
-      //mask-repeat: no-repeat;
     }
 
     &.out {
-      // out position
       transform: rotate(-20deg);
       left: 178px;
       top: 89px;
-
-      // -webkit-mask-image: url(/images/yellow-mask.png);
-      // mask-image: url(../server/public/images/yellow-mask.png);
-      // -webkit-mask-origin: left top;
-      // -webkit-mask-position: -100px -100px;
-      // -webkit-mask-size: 900px 385px;
-      // -webkit-mask-repeat: no-repeat;
-
-      //-webkit-mask-image: url("../server/public/images/yellow-mask.png");
-      //mask-image: url(../server/public/images/yellow-mask.png);
-      //-webkit-mask-position: left top;
-      //-webkit-mask-size: 900px 385px;
-
-      //-webkit-mask-repeat: no-repeat;
-
-      //background-image: url("../server/public/images/yellow-mask.png");
-      //transform-origin: left top;
-      //position: absolute;
-      //top: -100px;
-      //left: -100px;
-      //width: 100%;
-      //height: 100%;
-      //z-index: -25;
     }
   }
+
+  .mallow-blue {
+    background-image: url("../server/public/images/mallow-blue.png");
+    transform-origin: left top;
+
+    &.in {
+      left: 783px;
+      top: 150px;
+      transform: rotate(180deg);
+    }
+
+    &.out {
+      left: 783px;
+      top: 150px;
+      transform: rotate(0);
+    }
+  }
+
+  .mallow-silver {
+    background-image: url("../server/public/images/mallow-silver.png");
+    transform-origin: right bottom;
+
+    &.in {
+      left: 565px;
+      top: 128px;
+    }
+
+    &.out {
+      left: 565px;
+      top: 66px;
+    }
+  }
+
+  // -webkit-mask-image: url(/images/yellow-mask.png);
+  // mask-image: url(../server/public/images/yellow-mask.png);
+  // -webkit-mask-origin: left top;
+  // -webkit-mask-position: -100px -100px;
+  // -webkit-mask-size: 900px 385px;
+  // -webkit-mask-repeat: no-repeat;
+  //
+  //   -webkit-animation-name: yellow-mallow-expose;
+  //   -webkit-animation-duration: 4s;
+  //   animation-name: yellow-mallow-expose;
+  //   animation-duration: 4s;
+
+  //-webkit-clip-path: url(#yellow-clipping-mask);
+  //clip-path: url(#yellow-clipping-mask);
+  //-webkit-mask-image: url(../server/public/images/yellow-mask.png);
+  //mask-image: url(../server/public/images/yellow-mask.png);
+  //-webkit-mask-position: left top;
+  //-webkit-mask-size: 900px 385px;
+  //mask-position: center center;
+  //-webkit-mask-repeat: no-repeat;
+  //mask-repeat: no-repeat;
+
+  // -webkit-mask-image: url(/images/yellow-mask.png);
+  // mask-image: url(../server/public/images/yellow-mask.png);
+  // -webkit-mask-origin: left top;
+  // -webkit-mask-position: -100px -100px;
+  // -webkit-mask-size: 900px 385px;
+  // -webkit-mask-repeat: no-repeat;
+
+  //-webkit-mask-image: url("../server/public/images/yellow-mask.png");
+  //mask-image: url(../server/public/images/yellow-mask.png);
+  //-webkit-mask-position: left top;
+  //-webkit-mask-size: 900px 385px;
+
+  //-webkit-mask-repeat: no-repeat;
+
+  //background-image: url("../server/public/images/yellow-mask.png");
+  //transform-origin: left top;
+  //position: absolute;
+  //top: -100px;
+  //left: -100px;
+  //width: 100%;
+  //height: 100%;
+  //z-index: -25;
 
   //   .clipping-mask {
   //     z-index: 20;
@@ -283,26 +314,6 @@
   //       }
   //     }
 
-  .mallow-blue {
-    // background image for blue mallow
-
-    background-image: url("../server/public/images/mallow-blue.png");
-    transform-origin: left top;
-
-    &.in {
-      // in position
-      left: 783px;
-      top: 150px;
-      transform: rotate(180deg);
-    }
-
-    &.out {
-      left: 783px;
-      top: 150px;
-      transform: rotate(0);
-    }
-  }
-
   //     &.mallow-pink {
   //       // background image
 
@@ -478,6 +489,13 @@
     z-index: 1;
   }
 
+  .everything-else {
+    position: absolute;
+    top: 190px;
+    left: calc(50% - 350px);
+    width: 100%;
+  }
+
   .ignite-text {
     position: relative;
     z-index: 2;
@@ -491,19 +509,23 @@
   }
 
   .info-title {
-    font-family: "Fjalla One", sans-serif;
-    font-size: 40px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 30px;
     text-align: center;
     color: #ffffff;
-    margin: 0px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
   }
 
   .info-date {
-    font-family: "Fjalla One", sans-serif;
-    font-size: 50px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
     text-align: center;
     color: #ffffff;
     margin: 0px;
+    letter-spacing: 1px;
   }
 }
 

@@ -141,7 +141,8 @@ table {
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
-    position: absolute; }
+    position: absolute;
+    opacity: 0.1; }
   .home-page .hide {
     visibility: hidden; }
   .home-page .mallow-yellow {
@@ -166,6 +167,15 @@ table {
       left: 783px;
       top: 150px;
       transform: rotate(0); }
+  .home-page .mallow-silver {
+    background-image: url(2c980babadc9e349994f4944de4aaa06.png);
+    transform-origin: right bottom; }
+    .home-page .mallow-silver.in {
+      left: 565px;
+      top: 128px; }
+    .home-page .mallow-silver.out {
+      left: 565px;
+      top: 66px; }
   .home-page .flex-container {
     overflow: hidden;
     display: flex;
@@ -191,6 +201,11 @@ table {
     top: -100px;
     border: 1px solid yellow;
     z-index: 1; }
+  .home-page .everything-else {
+    position: absolute;
+    top: 190px;
+    left: calc(50% - 350px);
+    width: 100%; }
   .home-page .ignite-text {
     position: relative;
     z-index: 2; }
@@ -200,17 +215,21 @@ table {
     top: -368px;
     left: -245px; }
   .home-page .info-title {
-    font-family: "Fjalla One", sans-serif;
-    font-size: 40px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 30px;
     text-align: center;
     color: #ffffff;
-    margin: 0px; }
+    margin-top: 20px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 3px; }
   .home-page .info-date {
-    font-family: "Fjalla One", sans-serif;
-    font-size: 50px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
     text-align: center;
     color: #ffffff;
-    margin: 0px; }
+    margin: 0px;
+    letter-spacing: 1px; }
 
 .navigation {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&1+1,0+100 */
