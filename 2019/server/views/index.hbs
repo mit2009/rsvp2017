@@ -2,28 +2,38 @@
     <div class="flex-container full-background">
         <div class="flex-item">
             <div class="mallow-container">
-                <!-- width="900" height="385" viewBox="0 0 900 385" -->
 
+                <!-- yellow -->
                 <svg class="svg-graphic" width="900" height="385"
                     viewBox="0 0 900 385" xmlns="http://www.w3.org/2000/svg"
                     xlink="http://www.w3.org/1999/xlink" version="1.1">
                     <g>
-                        <clipPath id="hexagonal-mask">
-
+                        <clipPath id="yellow-mask">
                             <path
                                 d="M253.5 44L155.5 83L202 168L269.5 141L253.5 44Z"
                                 stroke="black" />
                         </clipPath>
+                        <clipPath id="blue-mask">
+                            <path
+                                d="M867.528 153.994L786.261 124L756.733 204.006L838 234L867.528 153.994Z"
+                                stroke="black" />
+                        </clipPath>
 
                     </g>
-                    <a>
-                        <image class="hide mallow-clipped-yellow" x="0" y="0"
-                            clip-path="url(#hexagonal-mask)"
-                            xlink:href="/images/mallow-background/yellow-mallow-out.png" />
-                    </a>
+                    <image class="hide mallow-clipped-yellow" x="0" y="0"
+                        clip-path="url(#yellow-mask)"
+                        xlink:href="/images/mallow-background/yellow-mallow-out.png" />
+
+                    <image class="hide mallow-clipped-blue" x="0" y="0"
+                        clip-path="url(#blue-mask)"
+                        xlink:href="/images/mallow-background/blue-mallow-out.png" />
                 </svg>
                 <div class="mallow mallow-yellow in"></div>
                 <div class="mallow mallow-yellow out"></div>
+
+                <div class="mallow mallow-blue in"></div>
+                <div class="mallow mallow-blue out"></div>
+
             </div>
 
             <!-- <svg width="900" height="385" viewBox="0 0 900 385" fill="none"

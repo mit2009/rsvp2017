@@ -13,21 +13,23 @@ const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
     return (dist);
 }
 
-console.log('awef', $(".mallow-yellow.out").offset());
 for (const color of colors) {
-    mallowData[color] = {
-        out: $(".mallow-yellow.out").offset(),
-        in: $(".mallow-yellow.in").offset(),
-        diff: {
-            top: $(".mallow-yellow.in").offset().top - $(".mallow-yellow.out").offset().top,
-            left: $(".mallow-yellow.in").offset().left - $(".mallow-yellow.out").offset().left
-        }
-    };
 
-    $(".mallow-clipped-" + color).attr({
-        x: mallowData[color].diff.left,
-        y: mallowData[color].diff.top,
-    }).css({ visibility: "visible" })
+    if ($(".mallow-" + color + ".out").length !== 0) {
+        mallowData[color] = {
+            out: $(".mallow-" + color + ".out").offset(),
+            in: $(".mallow-" + color + ".in").offset(),
+            diff: {
+                top: $(".mallow-" + color + ".in").offset().top - $(".mallow-yellow.out").offset().top,
+                left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
+            }
+        };
+
+        $(".mallow-clipped-" + color).attr({
+            x: mallowData[color].diff.left,
+            y: mallowData[color].diff.top,
+        }).css({ visibility: "visible" })
+    }
 }
 
 
@@ -36,7 +38,8 @@ document.addEventListener("mousemove", event => {
     const mouseTop = event.pageY;
     // console.log($(".mallow-yellow.in").offset().left);
     for (const color of colors) {
-        if ($(".mallow-clipped-" + color)) {
+        if ($(".mallow-clipped-" + color).length !== 0) {
+
             $('.mallow-' + color).attr("x", 30);
             $('.mallow-' + color).attr("y", 30);
 

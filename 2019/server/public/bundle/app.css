@@ -131,6 +131,10 @@ table {
   height: 100%;
   position: relative;
   z-index: 1; }
+  .home-page .svg-graphic {
+    position: absolute;
+    left: 0;
+    top: 0; }
   .home-page .mallow {
     width: 69px;
     height: 69px;

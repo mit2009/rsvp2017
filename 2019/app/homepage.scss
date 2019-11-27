@@ -4,6 +4,12 @@
   position: relative;
   z-index: 1;
 
+  .svg-graphic {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
   .mallow {
     width: 69px;
     height: 69px;
