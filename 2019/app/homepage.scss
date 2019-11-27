@@ -651,10 +651,33 @@
 }
 
 .under-the-fold {
-  padding: 50px;
-  font-size: 24px;
-  line-height: 36px;
+  padding: 200px 100px 50px;
+  font-size: 18px;
+  line-height: 28px;
   font-family: "montserrat", sans-serif;
+  background-image: url("/images/danger-text.png");
+  background-size: cover;
+  background-position: top center;
+
+  p {
+    margin-bottom: 30px;
+  }
+  .text-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  em {
+    color: rgb(255, 154, 38);
+    font-weight: 500;
+  }
 }
 
 @media only screen and (max-width: 800px) {
@@ -683,6 +706,9 @@
         width: 260px;
         margin-right: 0;
       }
+    }
+    .under-the-fold {
+      padding: 40px;
     }
   }
 }

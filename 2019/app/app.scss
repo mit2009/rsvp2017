@@ -410,6 +410,10 @@ body {
       }
     }
     &.sidebar-right {
+      .mobile-control,
+      .mobile-control-shoot {
+        display: none;
+      }
       // background-color: rgb(107, 148, 141);
     }
   }
@@ -537,6 +541,83 @@ body {
 
         .button-container {
           position: static;
+        }
+      }
+    }
+
+    .background-container {
+      background-image: url("/images/gameAssets/mobile-playing-background.png");
+      background-size: cover;
+      background-position: center center;
+
+      .sidebar-left {
+        background-image: url("/images/gameAssets/mobile-playing-main.png");
+        background-size: cover;
+        background-position: center center;
+
+        .level {
+          top: 18px;
+          left: 68px;
+          h3 {
+            font-size: 20px !important;
+          }
+          h2 {
+            font-size: 20px !important;
+          }
+        }
+        .lives {
+          font-size: 30px;
+          text-align: right;
+          bottom: 47px;
+          left: 45px;
+        }
+        .mobile-level {
+          position: absolute;
+          left: 90px;
+          top: 0;
+        }
+        .mobile-score {
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+
+      .sidebar-right {
+        position: relative;
+
+        // background-image: url("/images/gameAssets/mobile-playing-main.png");
+        // background-size: cover;
+        // background-position: center center;
+        .mobile-control {
+          position: absolute;
+          left: 20px;
+          display: block;
+          top: 20px;
+          width: 120px;
+          height: 120px;
+          background-color: none;
+          background-image: url("/images/gameAssets/mobile-playing-control.png");
+          background-size: cover;
+          background-position: center;
+        }
+        .mobile-control-shoot {
+          position: absolute;
+          left: 193px;
+          display: block;
+          top: 50px;
+          width: auto !important;
+          height: auto !important;
+          transition: none !important;
+        }
+      }
+
+      .playing {
+        .three-panel {
+          &::before {
+            background: transparent;
+            background-image: none;
+          }
         }
       }
     }

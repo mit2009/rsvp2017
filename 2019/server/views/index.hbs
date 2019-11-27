@@ -105,8 +105,7 @@
             </div>
 
             <div>
-                <img src="" class="flame-gif" alt="animated flame"
-                    width="1160px">
+                <img src="" class="flame-gif" width="1160px">
             </div>
 
             <div class="everything-else">
@@ -118,7 +117,8 @@
                 </p>
                 <div>
                     <div>
-                        <a class="tickets-btn big-pushy rsvp-btn" href="/">RSVP
+                        <a class="tickets-btn big-pushy rsvp-btn"
+                            href="https://2009.mit.edu/apps/rsvp/new_guest/">RSVP
                             SYSTEM</a>
                     </div>
                     <div>
@@ -191,97 +191,42 @@
     </div>
 
     <div class="under-the-fold">
-        <p>
-        The student teams and staff of MIT's 2.009 Product Engineering
-        Processes class invite you
-        to participate in the extraordinary launch of their 8 new product
-        prototypes. The theme is IGNITE! Ignite is a call to make something
-        happen—to do
-        something new. Instigating
-        play, growth, revolution, curiosity, feelings, connection, and much
-        more.
-    </p>
-    <p>
-        During the presentations, guests are invited to review products and
-        provide feedback to the
-        student teams via forms provided at the event. This is a valued part of
-        the educational
-        experience. So, too, is the reception that follows at Kresge, where you
-        can mingle with
-        students and friends and try out the products at team booths.
-    </p>
-        <div>
-        Monday, December 9, 2019
-    </div>
-    <div>
-        MIT Kresge Auditorium
-     </div>
-            <div>
-        Presentations 7:30 PM sharp-10:00 PM
-        Reserved seating until 7:15 PM
-    </div>
-    <div>
-        <p>
-        Tickets for the general public are available via a lottery. We recommend
-        that you enter the
-        lottery early. We will be holding 3 lotteries (Dec 2, Dec 5 and Dec 6),
-        so the earlier you enter
-        the lottery, the more chances you will have to be selected for a ticket.
-    </p>
-    <p>
-        You are also enthusiastically encouraged to invite other colleagues,
-        friends, and family by
-        using the RSVP website to generate an invitation for them to enter the
-        seat lottery.
-    </p>
-    <p>
-        If you cannot attend, you may watch the presentations live on
-        the webcast linked from the
-        presentation home page or on Facebook Live on the  MechE Facebook page .
-        We hope to see you there!
-    </p>
-    <p>
-        Sincerely,<br>
-        The 2.009 staff <br>
-        David Wallace, Nicholas Albaugh, Erika Anderson, Atissa Banuazizi, Jared
-        Berezin, Audrey
-        Bosquet, Danny Braunstein, John Brisson, Kelly Chen, Keith Clavin, Grace
-        Connors, Bill
-        Cormier, James Dudley, Chevalley Duhart, Lauren Futami, Danny Goldfield,
-        Steve Haberek,
-        Victor Hung, David Larson, Laura McKee, Peter Nielsen, Christine Noh,
-        Nate Phipps, Rob
-        Podoloff, Josh Ramos, Ellen Roche, Juergen Schoenstein, Tasker Smith,
-        Elizabeth Soergel,
-        Juhan Sonin, Rebecca Thorndike-Breeze, Geoff Tsai, Georgia Van de Zande,
-        Richard
-        Wiesman
-    </p>
-
-        <h2> Parking information and assistance: </h2>
-        <p>
-        The  MIT Stata parking garage  (32 Vassar St, Cambridge, MA 02139, under
-        the Ray and
-        Maria Stata Center) will be open for guest parking starting from 5 pm.
-        Please allow 10-15
-        minutes to walk from the garage to Kresge Auditorium (48 Massachusetts
-        Ave, Cambridge,
-        MA 02139). The  Kresge lot , adjoining the auditorium, is also available
-        for guests with
-        special needs. Please contact us if you have special requirements.
-    </p>
-    <p>
-        If needed, guests may take a shuttle bus to Kresge Auditorium and back
-        to the Stata Center
-        Garage. The bus will run continuously between the Stata Center and
-        Kresge Auditorium
-        from 5:30-7:30PM and 10:15-11:00PM.
-        <p>
+        <div class="text-container">
+            <h2>Hello!</h2>
             <p>
-
-        If you need further assistance, please  email us .
-    </p>
+                The student teams and staff of MIT's 2.009 Product Engineering
+                Processes class invite you
+                to participate in the extraordinary launch of their 8 new
+                product
+                prototypes. The theme is <em>IGNITE</em>! Ignite is a call to
+                make
+                something
+                happen—to do
+                something new. Instigating
+                play, growth, revolution, curiosity, feelings, connection, and
+                much
+                more.
+            </p>
+            <p>
+                During the presentations, guests are invited to review products
+                and
+                provide feedback to the
+                student teams via forms provided at the event. This is a valued
+                part of
+                the educational
+                experience. Following the event, we'd love for you to join us at
+                the reception
+                where you
+                can mingle with
+                students and friends and try out the products at team booths.
+            </p>
+            <p>
+                Sincerely,<br>
+                The 2.009 Students and Staff
+            </p>
+        </div>
     </div>
+    <img src="/images/danger-bottom.png" width="100%" />
 </div>
 {{!-- <script type="text/javascript" src="/bundle/bookings.js"></script> --}}
 
@@ -315,12 +260,13 @@
                 console.log(urlParams);
 
                 for (const elem of document.getElementsByClassName("rsvp-btn")) {
-                    console.log(elem);
                     elem.href = 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite'];
                 }
 
             } else {
-                // $('.rsvp-btn').text('Ticket System')
+                for (const elem of document.getElementsByClassName("rsvp-btn")) {
+                    elem.innerHtml = "TICKET SYSTEM";
+                }
             }
 
             // Clears the url to a blank state incase they want to share the URL
@@ -331,4 +277,15 @@
 
         setRSVPUrl();
     }
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async
+    src="https://www.googletagmanager.com/gtag/js?id=UA-71118626-3"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-71118626-3');
 </script>

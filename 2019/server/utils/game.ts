@@ -9,11 +9,11 @@ const unableToLevelResponse = {
 }
 
 const SOUNDS = {
-    bulletShoot : 'bulletShoot',
-    enemyHurt : 'enemyHurt',
-    playerHurt : 'playerHurt',
-    playerDie : 'playerDie',
-    levelFinish : 'levelUp',
+    bulletShoot: 'bulletShoot',
+    enemyHurt: 'enemyHurt',
+    playerHurt: 'playerHurt',
+    playerDie: 'playerDie',
+    levelFinish: 'levelUp',
     levelStart: 'levelStart',
 }
 
@@ -54,9 +54,9 @@ export class Game {
     final: boolean;
 
     constructor() {
-        this.score = 1000000;
-        this.currentLevel = 1;
-        this.livesLeft = 1; // this.maxLives;
+        this.score = 0;
+        this.currentLevel = 0;
+        this.livesLeft = this.maxLives;
 
         this.ableToLevel = false;
         this.final = false;
