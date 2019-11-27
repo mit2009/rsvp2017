@@ -151,7 +151,7 @@ table {
     .home-page .mallow-red.in {
       left: 57px;
       top: 169px;
-      transform: rotate(-220deg); }
+      transform: rotate(-40deg); }
     .home-page .mallow-red.out {
       left: 30px;
       top: 131px;
@@ -162,7 +162,7 @@ table {
     .home-page .mallow-orange.in {
       left: 518px;
       top: 95px;
-      transform: rotate(90deg); }
+      transform: rotate(-20deg); }
     .home-page .mallow-orange.out {
       left: 534px;
       top: 89px;
@@ -182,12 +182,12 @@ table {
     background-image: url(1b2fb5833c19d513198dcfea4ee36780.png);
     transform-origin: left top; }
     .home-page .mallow-green.in {
-      left: -50px;
-      top: 98px;
-      transform: rotate(90deg); }
+      left: 103px;
+      top: 200px;
+      transform: rotate(-20deg); }
     .home-page .mallow-green.out {
-      left: -33px;
-      top: 90px;
+      left: 46px;
+      top: 200px;
       transform: rotate(-20deg); }
   .home-page .mallow-blue {
     background-image: url(f29247d255f3317bd5d37956d842d0c0.png);
@@ -195,7 +195,7 @@ table {
     .home-page .mallow-blue.in {
       left: 783px;
       top: 150px;
-      transform: rotate(180deg); }
+      transform: rotate(0); }
     .home-page .mallow-blue.out {
       left: 783px;
       top: 150px;
@@ -220,6 +220,17 @@ table {
     .home-page .mallow-silver.out {
       left: 565px;
       top: 66px; }
+  .home-page .mallow-pink {
+    background-image: url(a2dede8b182303a24be9b1172edaab20.png);
+    transform-origin: right bottom; }
+    .home-page .mallow-pink.in {
+      left: 419px;
+      top: 88px;
+      transform: rotate(20deg); }
+    .home-page .mallow-pink.out {
+      left: 406px;
+      top: 85px;
+      transform: rotate(20deg); }
   .home-page .flex-container {
     overflow: hidden;
     display: flex;
