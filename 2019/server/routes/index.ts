@@ -2,7 +2,7 @@ import { TeamColor } from "../api/gameRenderData";
 
 import * as express from "express";
 import * as gameHandler from "../utils/gameHandler";
-import { getLeaderboard, ILeaderboardScore, saveScore } from "../utils/leaderboard";
+import { getLeaderboard, ILeaderboardScore, saveScore, deleteScore } from "../utils/leaderboard";
 const router = express.Router();
 
 export function getRouter() {
@@ -52,12 +52,10 @@ export function getRouter() {
 
     router.post("/game/playername", (_req: express.Request, res: express.Response) => {
 
-        // TODO: Logic here for associating the guid with the actual score
-        const { guid, playerName } = _req.body;
-
-        // TODO: Calculate their final score
+        let { guid, playerName } = _req.body;
         const finalScore = gameHandler.getScore(guid);
         const teamColor = gameHandler.getColor(guid);
+
         if (finalScore === -1 || teamColor === -1) {
             res.status(400).send("Invalid game for High Score");
             return;
@@ -65,13 +63,42 @@ export function getRouter() {
         saveScore(
             {
                 team: teamColor,
-                name: playerName,
+                name: playerName.replace(/[^A-Za-z0-9]/g, "").substring(0).toUpperCase(),
                 score: finalScore,
             },
             (leaderboard: ILeaderboardScore[]) => {
                 res.json({ leaderboard, score: finalScore, success: true });
             },
         );
+    });
+
+    const expectedPassword = 'THIS IS BOAT';
+    router.post("/game/delete/playername", (_req: express.Request, res: express.Response) => {
+        console.log(_req.body);
+
+        let { playerName, password } = _req.body;
+
+        if (password != expectedPassword) {
+            res.status(400).send('Unallowed Operation');
+            return;
+        }
+
+        deleteScore(playerName,
+        (count: number) => {
+            res.json({ deleted: count });
+        });
+    });
+
+    router.post("/slack/delete/playername", (_req: express.Request, res: express.Response) => {
+        let { playerName, password } = JSON.parse(JSON.parse(_req.body.payload).actions[0].value);
+        if (password != expectedPassword) {
+            res.status(400).send('Unallowed Operation');
+            return;
+        }
+        deleteScore(playerName,
+        (count: number) => {
+            res.json({ deleted: count });
+        });
     });
 
     return router;

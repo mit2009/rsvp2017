@@ -52,9 +52,9 @@ export class Game {
     final: boolean;
 
     constructor() {
-        this.score = 100;
-        this.currentLevel = 0;
-        this.livesLeft = this.maxLives;
+        this.score = 1000000;
+        this.currentLevel = 1;
+        this.livesLeft = 1; // this.maxLives;
 
         this.ableToLevel = false;
         this.final = false;
@@ -177,7 +177,7 @@ export class Game {
             this.playSound = [singleSoundClip(SOUNDS.levelFinish)];
         }
 
-        if (this.livesLeft == 0) {
+        if (this.livesLeft <= 0) {
             this.gameCommand = GameCommand.MALLOW_DEATH;
             this.final = true;
             this.playSound = [singleSoundClip(SOUNDS.playerDie)];
