@@ -87,7 +87,7 @@ window.addEventListener("resize", event => {
 document.addEventListener("mousemove", event => {
     const mouseLeft = event.pageX
     const mouseTop = event.pageY;
-    // console.log($(".mallow-yellow.in").offset().left);
+
     for (const color of colors) {
         if ($(".mallow-clipped-" + color).length !== 0) {
 
@@ -95,18 +95,15 @@ document.addEventListener("mousemove", event => {
             $('.mallow-' + color).attr("y", 30);
             console.log(color, mallowData[color]);
             const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left + colorOffset[color].x, mallowData[color].in.top + colorOffset[color].y)
-            // console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
-            // console.log(distFromMallow);
 
             if (distFromMallow < THRESH) {
-                console.log("here");
-
                 const percentageToMallow = Math.min(1, Math.sin((distFromMallow) / THRESH * Math.PI / 2));
-                // console.log((distFromMallow) / THRESH, Math.pow((distFromMallow) / THRESH, 0.25));
+
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left * percentageToMallow,
                     y: mallowData[color].diff.top * percentageToMallow
                 });
+
             } else {
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left,
@@ -118,11 +115,6 @@ document.addEventListener("mousemove", event => {
     }
 });
 
-console.log($('.mallow-yellow'));
-$('.mallow-yellow').attr({
-    "x": 50,
-    "y": 50
-});
 
 // export class Homepage extends React.PureComponent<{}, {}> {
 
