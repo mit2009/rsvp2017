@@ -216,10 +216,12 @@ table {
     transform-origin: right bottom; }
     .home-page .mallow-silver.in {
       left: 565px;
-      top: 128px; }
+      top: 128px;
+      transform: rotate(0deg); }
     .home-page .mallow-silver.out {
       left: 565px;
-      top: 66px; }
+      top: 66px;
+      transform: rotate(0deg); }
   .home-page .mallow-pink {
     background-image: url(a2dede8b182303a24be9b1172edaab20.png);
     transform-origin: right bottom; }

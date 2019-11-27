@@ -135,11 +135,15 @@
     &.in {
       left: 565px;
       top: 128px;
+
+      transform: rotate(0deg);
     }
 
     &.out {
       left: 565px;
       top: 66px;
+
+      transform: rotate(0deg);
     }
   }
 
