@@ -135,9 +135,6 @@ export class Game {
     }
 
     update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
-        if (this.final) {
-            return this.getBlob();
-        }
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 240;
 
