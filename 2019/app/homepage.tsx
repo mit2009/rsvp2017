@@ -41,7 +41,7 @@ for (const color of colors) {
             out: $(".mallow-" + color + ".out").offset(),
             in: $(".mallow-" + color + ".in").offset(),
             diff: {
-                top: $(".mallow-" + color + ".in").offset().top - $(".mallow-yellow.out").offset().top,
+                top: $(".mallow-" + color + ".in").offset().top - $(".mallow-" + color + ".out").offset().top,
                 left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
             },
             rotateOut: convertStringMatrixToAngle($(".mallow-" + color + ".out").css("transform")),
