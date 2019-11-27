@@ -146,8 +146,7 @@ table {
     visibility: hidden; }
   .home-page .mallow-yellow {
     background-image: url(abda94a2e7cda9249c8e1183be78653c.png);
-    transform-origin: left top;
-    visibility: hidden; }
+    transform-origin: left top; }
     .home-page .mallow-yellow.in {
       transform: rotate(-20deg);
       left: 196px;
@@ -156,6 +155,17 @@ table {
       transform: rotate(-20deg);
       left: 178px;
       top: 89px; }
+  .home-page .mallow-blue {
+    background-image: url(f29247d255f3317bd5d37956d842d0c0.png);
+    transform-origin: left top; }
+    .home-page .mallow-blue.in {
+      left: 783px;
+      top: 150px;
+      transform: rotate(180deg); }
+    .home-page .mallow-blue.out {
+      left: 783px;
+      top: 150px;
+      transform: rotate(0); }
   .home-page .flex-container {
     overflow: hidden;
     display: flex;

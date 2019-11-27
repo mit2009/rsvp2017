@@ -4,6 +4,7 @@ import * as $ from "jQuery";
 
 const THRESH = 300;
 const colors = ["red", "orange", "yellow", "green", "blue", "purple", "silver", "pink"];
+const isRotate = ["blue"];
 const mallowData: any = {}
 
 const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
@@ -22,8 +23,11 @@ for (const color of colors) {
             diff: {
                 top: $(".mallow-" + color + ".in").offset().top - $(".mallow-yellow.out").offset().top,
                 left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
-            }
+            },
+            rotateOut: $(".mallow-" + color + ".out").css("transform"),
+            rotateIn: $(".mallow-" + color + ".in").css("transform"),
         };
+        console.log(mallowData);
 
         $(".mallow-clipped-" + color).attr({
             x: mallowData[color].diff.left,

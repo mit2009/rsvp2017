@@ -27,7 +27,6 @@
     // background image for yellow mallow
     background-image: url("../server/public/images/mallow-yellow.png");
     transform-origin: left top;
-    visibility: hidden;
 
     &.in {
       // in position
@@ -284,25 +283,25 @@
   //       }
   //     }
 
-  //     &.mallow-blue {
-  //       // background image for blue mallow
+  .mallow-blue {
+    // background image for blue mallow
 
-  //       &.in {
-  //         // in position
-  //         left: 683px;
-  //         top: 69px;
-  //         transform: rotate(180deg);
+    background-image: url("../server/public/images/mallow-blue.png");
+    transform-origin: left top;
 
-  //         -webkit-animation-name: blue-mallow-expose;
-  //         -webkit-animation-duration: 4s;
-  //         animation-name: blue-mallow-expose;
-  //         animation-duration: 4s;
-  //       }
+    &.in {
+      // in position
+      left: 783px;
+      top: 150px;
+      transform: rotate(180deg);
+    }
 
-  //       &.out {
-  //         // out position
-  //       }
-  //     }
+    &.out {
+      left: 783px;
+      top: 150px;
+      transform: rotate(0);
+    }
+  }
 
   //     &.mallow-pink {
   //       // background image
