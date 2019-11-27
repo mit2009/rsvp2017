@@ -117,9 +117,8 @@
                 </p>
                 <div>
                     <div>
-                        <a class="tickets-btn big-pushy rsvp-btn"
-                            href="https://2009.mit.edu/apps/rsvp/new_guest/">RSVP
-                            SYSTEM</a>
+                        <a class="tickets-btn big-pushy loading rsvp-btn"
+                            href="">Loading...</a>
                     </div>
                     <div>
                         <a class="game-btn big-pushy" href="/game">PLAY THE
@@ -238,45 +237,50 @@
 <script type="text/javascript" src="/bundle/homepage.js"></script>
 
 <script type="text/javascript">
-    window.onload = () => {
-        console.log("loaded");
 
-        var urlP = 'none';
-        function parseQueryString(url) {
-            var urlParams = {};
-            url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"),
-                function ($0, $1, $2, $3) {
-                    urlParams[$1] = $3;
-                });
-            return urlParams;
-        }
-
-        function setRSVPUrl() {
-            var urlParams = parseQueryString(location.search);
-
-            if (urlParams['invite'] != undefined) {
-                urlP = urlParams['invite'];
-
-                console.log(urlParams);
-
-                for (const elem of document.getElementsByClassName("rsvp-btn")) {
-                    elem.href = 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite'];
-                }
-
-            } else {
-                for (const elem of document.getElementsByClassName("rsvp-btn")) {
-                    elem.innerHtml = "TICKET SYSTEM";
-                }
-            }
-
-            // Clears the url to a blank state incase they want to share the URL
-            // Elaine, do you remember why this was commented out? - Victor, Nov 27, 2018 3:41am
-            // Oh hey, this was a comment from last year!
-            // window.history.replaceState({}, document.title, "/");
-        }
-
-        setRSVPUrl();
+    var urlP = 'none';
+    function parseQueryString(url) {
+        var urlParams = {};
+        url.replace(new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+            function ($0, $1, $2, $3) {
+                urlParams[$1] = $3;
+            });
+        return urlParams;
     }
+
+    function setRSVPUrl() {
+        var urlParams = parseQueryString(location.search);
+
+        if (urlParams['invite'] != undefined) {
+            urlP = urlParams['invite'];
+
+            $(".rsvp-btn").removeClass("loading");
+            $(".rsvp-btn").attr("href", 'https://2009.mit.edu/apps/rsvp/login/' + urlParams['invite']);
+            $(".rsvp-btn").text("RSVP SYSTEM");
+
+        } else {
+
+            $(".rsvp-btn").removeClass("loading");
+            $(".rsvp-btn").attr("href", "https://2009.mit.edu/apps/rsvp/new_guest/");
+            $(".rsvp-btn").text("TICKET SYSTEM");
+
+            /*
+                            for (const elem of document.getElementsByClassName("rsvp-btn")) {
+                                elem.innerHtml = "TICKET SYSTEM";
+                            }*/
+        }
+
+        // Clears the url to a blank state incase they want to share the URL
+        // Elaine, do you remember why this was commented out? - Victor, Nov 27, 2018 3:41am
+        // Oh hey, this was a comment from last year!
+        // window.history.replaceState({}, document.title, "/");
+    }
+
+    // window.onload = () => {
+    //    setRSVPUrl();
+    // }
+
+    $(window).on("load", setRSVPUrl);
 </script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
