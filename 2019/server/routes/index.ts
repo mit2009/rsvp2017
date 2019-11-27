@@ -16,6 +16,12 @@ export function getRouter() {
         });
     });
 
+    router.get("/notify", (_req: express.Request, res: express.Response) => {
+        res.render("notify", {
+            layout: "layout-pre",
+        });
+    });
+
     router.get("/webcast", (_req: express.Request, res: express.Response) => {
         res.render("webcast", {
             layout: "layout",
@@ -41,7 +47,7 @@ export function getRouter() {
     });
 
     router.get("/game/leaderboard", (_req: express.Request, res: express.Response) => {
-        res.json(getLeaderboard().slice(0,8));
+        res.json(getLeaderboard().slice(0, 8));
     });
 
     router.post("/game/team", (_req: express.Request, res: express.Response) => {
@@ -84,9 +90,9 @@ export function getRouter() {
         }
 
         deleteScore(playerName,
-        (count: number) => {
-            res.json({ deleted: count });
-        });
+            (count: number) => {
+                res.json({ deleted: count });
+            });
     });
 
     router.post("/slack/delete/playername", (_req: express.Request, res: express.Response) => {
@@ -96,9 +102,9 @@ export function getRouter() {
             return;
         }
         deleteScore(playerName,
-        (count: number) => {
-            res.json({ deleted: count });
-        });
+            (count: number) => {
+                res.json({ deleted: count });
+            });
     });
 
     return router;
