@@ -49,6 +49,8 @@ export class Game {
     gameCommand: GameCommand;
     playSound: ISoundClip[];
 
+    nextCommand: GameCommand;
+
     final: boolean;
 
     constructor() {
@@ -118,7 +120,7 @@ export class Game {
                         bullets.push(b);
                     }
                 } else if (this.bulletEntityOverlap(b, this.player)) {
-                    this.gameCommand = GameCommand.MALLOW_HURT;
+                    this.nextCommand = GameCommand.MALLOW_HURT;
                     this.playSound.push(singleSoundClip(SOUNDS.playerHurt));
                     this.livesLeft -= 1;
                 } else {
@@ -146,7 +148,7 @@ export class Game {
             if (collide) {
                 this.score += enemyBonusScore;
                 this.livesLeft -= 1;
-                this.gameCommand = GameCommand.MALLOW_HURT;
+                this.nextCommand = GameCommand.MALLOW_HURT;
                 this.playSound.push(singleSoundClip(SOUNDS.playerHurt));
                 return false;
             }
@@ -187,6 +189,11 @@ export class Game {
             this.score = 0;
         }
 
+        if (this.gameCommand) {
+            this.nextCommand = this.gameCommand;
+            this.gameCommand = null;;
+        }
+
         this.lastUpdated = currentTime;
         const blob = this.getBlob();
         return blob;
@@ -198,7 +205,7 @@ export class Game {
             score: this.score,
             teamColor: this.teamColor,
             livesLeft: this.livesLeft,
-            gameCommand: this.gameCommand,
+            gameCommand: this.nextCommand,
             playSound: this.playSound,
             imagesToRender: {
                 player1: this.player.getBlob(),
@@ -211,7 +218,7 @@ export class Game {
             monsters: this.monsters.map(m => m.getBlob()),
         } as IGameRenderData
         this.playSound = [];
-        this.gameCommand = null;
+        this.nextCommand = null;
         // console.log(output);
         return output;
     }
