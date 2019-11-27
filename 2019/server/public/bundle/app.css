@@ -142,7 +142,7 @@ table {
     background-position: center center;
     background-repeat: no-repeat;
     position: absolute;
-    opacity: 0.1; }
+    opacity: 0.4; }
   .home-page .hide {
     visibility: hidden; }
   .home-page .mallow-yellow {
@@ -185,7 +185,8 @@ table {
     width: 100%;
     height: 100%; }
     .home-page .flex-container.full-background {
-      background-color: #aaa;
+      background-image: url("/images/danger-confetti.png");
+      background-color: #000;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center; }
@@ -199,13 +200,33 @@ table {
     position: absolute;
     left: -100px;
     top: -100px;
-    border: 1px solid yellow;
-    z-index: 1; }
+    z-index: 2; }
   .home-page .everything-else {
     position: absolute;
     top: 190px;
     left: calc(50% - 350px);
-    width: 100%; }
+    width: 100%;
+    text-align: center; }
+    .home-page .everything-else .big-pushy {
+      font-family: "montserrat", sans-serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+      font-size: 24px;
+      background-color: #eee;
+      border-color: #fff;
+      box-shadow: 0px 10px 0px #bbb, 0px 20px 10px black;
+      margin-bottom: 25px; }
+      .home-page .everything-else .big-pushy:hover {
+        background-color: #e2e2e2;
+        cursor: pointer;
+        transform: translateY(2px);
+        box-shadow: 0px 8px 0px #bbb, 0px 18px 10px black;
+        opacity: 1; }
+        .home-page .everything-else .big-pushy:hover.rsvp-btn {
+          color: #240000;
+          background-color: #fa8517;
+          border-color: #ffcc23;
+          box-shadow: 0px 8px 0px #6e0c0c, 0px 18px 10px black; }
   .home-page .ignite-text {
     position: relative;
     z-index: 2; }
@@ -222,14 +243,16 @@ table {
     margin-top: 20px;
     margin-bottom: 8px;
     text-transform: uppercase;
-    letter-spacing: 3px; }
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px #000; }
   .home-page .info-date {
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
     text-align: center;
     color: #ffffff;
-    margin: 0px;
-    letter-spacing: 1px; }
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px #000; }
 
 .navigation {
   /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&1+1,0+100 */
