@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+// app.use("/favicon.ico", express.static('images/favicon/favicon.ico'));
 app.use("/", index_1.getRouter());
 // catch 404 and forward to error handler
 app.use(function (req, _res, next) {

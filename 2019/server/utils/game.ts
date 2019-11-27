@@ -50,16 +50,19 @@ export class Game {
     playSound: ISoundClip[];
 
     nextCommand: GameCommand;
+    allowSending: boolean;
 
     final: boolean;
 
     constructor() {
-        this.score = 1000000;
-        this.currentLevel = 1;
-        this.livesLeft = 1; // this.maxLives;
+        this.score = 0;
+        this.currentLevel = 0;
+        this.livesLeft = this.maxLives;
 
         this.ableToLevel = false;
         this.final = false;
+
+        this.allowSending = false
     }
 
     changeTeam(team: TeamColor) {
@@ -189,9 +192,14 @@ export class Game {
             this.score = 0;
         }
 
-        if (this.gameCommand) {
-            this.nextCommand = this.gameCommand;
-            this.gameCommand = null;;
+        if (this.gameCommand != null) {
+            if (this.allowSending) {
+                this.nextCommand = this.gameCommand;
+                this.gameCommand = null;
+                this.allowSending = false
+            } else {
+                this.allowSending = true;
+            }
         }
 
         this.lastUpdated = currentTime;
@@ -219,7 +227,7 @@ export class Game {
         } as IGameRenderData
         this.playSound = [];
         this.nextCommand = null;
-        // console.log(output);
+        console.log(output);
         return output;
     }
 
