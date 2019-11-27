@@ -5,6 +5,16 @@ import * as $ from "jQuery";
 const THRESH = 300;
 const colors = ["red", "orange", "yellow", "green", "blue", "purple", "silver", "pink"];
 const isRotate = ["blue"];
+const colorOffset: { [key: string]: { [key: string]: number } } = {
+    'red': { x: 0, y: 0 },
+    'orange': { x: 0, y: 0 },
+    'yellow': { x: 25, y: 19 },
+    'green': { x: 0, y: 0 },
+    'blue': { x: 0, y: 0 },
+    'purple': { x: 0, y: 0 },
+    'silver': { x: 0, y: 0 },
+    'pink': { x: 0, y: 0 }
+}
 const mallowData: any = {}
 
 const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
@@ -12,6 +22,16 @@ const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
     const deltaY = Math.abs(y2 - y1);
     const dist = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     return (dist);
+}
+
+function convertStringMatrixToAngle(matrix: string) {
+    console.log(`MATRIX: ${matrix}`);
+    const start = matrix.indexOf('(');
+    const end = matrix.indexOf(',');
+    const value = matrix.substring(start + 1, end);
+    const radians = Math.acos(parseFloat(value));
+    const degrees = 180 * radians / Math.PI;
+    return degrees;
 }
 
 for (const color of colors) {
@@ -24,8 +44,8 @@ for (const color of colors) {
                 top: $(".mallow-" + color + ".in").offset().top - $(".mallow-yellow.out").offset().top,
                 left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
             },
-            rotateOut: $(".mallow-" + color + ".out").css("transform"),
-            rotateIn: $(".mallow-" + color + ".in").css("transform"),
+            rotateOut: convertStringMatrixToAngle($(".mallow-" + color + ".out").css("transform")),
+            rotateIn: convertStringMatrixToAngle($(".mallow-" + color + ".in").css("transform")),
         };
         console.log(mallowData);
 
@@ -47,12 +67,15 @@ document.addEventListener("mousemove", event => {
             $('.mallow-' + color).attr("x", 30);
             $('.mallow-' + color).attr("y", 30);
 
-            const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left, mallowData[color].in.top)
-
+            const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left + colorOffset[color].x, mallowData[color].in.top + colorOffset[color].y)
+            // console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
             // console.log(distFromMallow);
 
             if (distFromMallow < THRESH) {
-                const percentageToMallow = Math.min(1, (distFromMallow) / THRESH)
+                console.log("here");
+
+                const percentageToMallow = Math.min(1, Math.sin((distFromMallow) / THRESH * Math.PI / 2));
+                // console.log((distFromMallow) / THRESH, Math.pow((distFromMallow) / THRESH, 0.25));
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left * percentageToMallow,
                     y: mallowData[color].diff.top * percentageToMallow
@@ -163,4 +186,3 @@ $('.mallow-yellow').attr({
 // }
 
 // ReactDOM.render(<Homepage />, document.getElementById("home-content"));
-
