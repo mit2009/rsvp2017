@@ -80,12 +80,19 @@ document.addEventListener("mousemove", event => {
                     x: mallowData[color].diff.left * percentageToMallow,
                     y: mallowData[color].diff.top * percentageToMallow
                 });
+                if (isRotate.indexOf(color) > -1) {
+
+                }
             } else {
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left,
                     y: mallowData[color].diff.top
                 });
+                if (isRotate.indexOf(color) > -1) {
+
+                }
             }
+
         }
     }
 });

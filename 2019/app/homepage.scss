@@ -18,7 +18,7 @@
     background-repeat: no-repeat;
     position: absolute;
 
-    opacity: 0.1;
+    opacity: 0.4;
   }
 
   .hide {
@@ -551,8 +551,8 @@
     height: 100%;
 
     &.full-background {
-      // background-image: url("/images/danger-confetti.png");
-      background-color: #aaa;
+      background-image: url("/images/danger-confetti.png");
+      background-color: #000;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center;
@@ -571,8 +571,7 @@
     position: absolute;
     left: -100px;
     top: -100px;
-    border: 1px solid yellow;
-    z-index: 1;
+    z-index: 2;
   }
 
   .everything-else {
@@ -580,6 +579,33 @@
     top: 190px;
     left: calc(50% - 350px);
     width: 100%;
+    text-align: center;
+    .big-pushy {
+      font-family: "montserrat", sans-serif;
+      font-weight: 400;
+      letter-spacing: 1px;
+      font-size: 24px;
+      background-color: #eee;
+      border-color: #fff;
+
+      box-shadow: 0px 10px 0px #bbb, 0px 20px 10px rgba(0, 0, 0, 1);
+      margin-bottom: 25px;
+
+      &:hover {
+        background-color: #e2e2e2;
+        cursor: pointer;
+        transform: translateY(2px);
+        box-shadow: 0px 8px 0px #bbb, 0px 18px 10px rgba(0, 0, 0, 1);
+        opacity: 1;
+
+        &.rsvp-btn {
+          color: rgb(36, 0, 0);
+          background-color: #fa8517;
+          border-color: #ffcc23;
+          box-shadow: 0px 8px 0px rgb(110, 12, 12), 0px 18px 10px rgba(0, 0, 0, 1);
+        }
+      }
+    }
   }
 
   .ignite-text {
@@ -603,6 +629,7 @@
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 3px;
+    text-shadow: 0 0 10px #000;
   }
 
   .info-date {
@@ -610,8 +637,9 @@
     font-size: 20px;
     text-align: center;
     color: #ffffff;
-    margin: 0px;
+    margin-bottom: 20px;
     letter-spacing: 1px;
+    text-shadow: 0 0 10px #000;
   }
 }
 
