@@ -30,14 +30,14 @@
     transform-origin: left top;
 
     &.in {
-        left: 57px;
-        top: 169px;
+        left: 215px;
+        top: 218px;
         transform: rotate(-40deg);
     }
 
     &.out {
-        left: 30px;
-        top: 131px;
+        left: 145px;
+        top: 285px;
         transform: rotate(-40deg);
     }
   }
@@ -47,14 +47,14 @@
     transform-origin: left top;
 
     &.in {
-        left: 518px;
-        top: 95px;
+        left: 674px;
+        top: 199px;
         transform: rotate(-20deg);
     }
 
     &.out {
-        left: 534px;
-        top: 89px;
+        left: 594px;
+        top: 229px;
         transform: rotate(-20deg);
     }
   }
@@ -98,8 +98,8 @@
     transform-origin: left top;
 
     &.in {
-      left: 783px;
-      top: 150px;
+      left: 663px;
+      top: 90px;
       transform: rotate(0);
     }
 
@@ -115,14 +115,14 @@
     transform-origin: left top;
 
     &.in {
-        left: 207px;
-        top: 41px;
+        left: 334px;
+        top: 122px;
         transform: rotate(20deg);
     }
 
     &.out {
-        left: 232px;
-        top: -20px;
+        left: 372px;
+        top: 50px;
         transform: rotate(20deg);
     }
   }
@@ -152,14 +152,14 @@
     transform-origin: right bottom;
 
     &.in {
-        left: 419px;
-        top: 88px;
+        left: 436px;
+        top: 185px;
         transform: rotate(20deg);
     }
 
     &.out {
-        left: 406px;
-        top: 85px;
+        left: 516px;
+        top: 215px;
         transform: rotate(20deg);
     }
   }

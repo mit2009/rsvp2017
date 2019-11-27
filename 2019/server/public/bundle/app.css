@@ -149,23 +149,23 @@ table {
     background-image: url(66d3fcc66dd4682d4759f78cec38bd04.png);
     transform-origin: left top; }
     .home-page .mallow-red.in {
-      left: 57px;
-      top: 169px;
+      left: 215px;
+      top: 218px;
       transform: rotate(-40deg); }
     .home-page .mallow-red.out {
-      left: 30px;
-      top: 131px;
+      left: 145px;
+      top: 285px;
       transform: rotate(-40deg); }
   .home-page .mallow-orange {
     background-image: url(8b688e2db494dc54ef4c1afaf5a97cd6.png);
     transform-origin: left top; }
     .home-page .mallow-orange.in {
-      left: 518px;
-      top: 95px;
+      left: 674px;
+      top: 199px;
       transform: rotate(-20deg); }
     .home-page .mallow-orange.out {
-      left: 534px;
-      top: 89px;
+      left: 594px;
+      top: 229px;
       transform: rotate(-20deg); }
   .home-page .mallow-yellow {
     background-image: url(abda94a2e7cda9249c8e1183be78653c.png);
@@ -193,8 +193,8 @@ table {
     background-image: url(f29247d255f3317bd5d37956d842d0c0.png);
     transform-origin: left top; }
     .home-page .mallow-blue.in {
-      left: 783px;
-      top: 150px;
+      left: 663px;
+      top: 90px;
       transform: rotate(0); }
     .home-page .mallow-blue.out {
       left: 783px;
@@ -204,12 +204,12 @@ table {
     background-image: url(40b416cf77469d934631267d24a95828.png);
     transform-origin: left top; }
     .home-page .mallow-purple.in {
-      left: 207px;
-      top: 41px;
+      left: 334px;
+      top: 122px;
       transform: rotate(20deg); }
     .home-page .mallow-purple.out {
-      left: 232px;
-      top: -20px;
+      left: 372px;
+      top: 50px;
       transform: rotate(20deg); }
   .home-page .mallow-silver {
     background-image: url(2c980babadc9e349994f4944de4aaa06.png);
@@ -226,12 +226,12 @@ table {
     background-image: url(a2dede8b182303a24be9b1172edaab20.png);
     transform-origin: right bottom; }
     .home-page .mallow-pink.in {
-      left: 419px;
-      top: 88px;
+      left: 436px;
+      top: 185px;
       transform: rotate(20deg); }
     .home-page .mallow-pink.out {
-      left: 406px;
-      top: 85px;
+      left: 516px;
+      top: 215px;
       transform: rotate(20deg); }
   .home-page .flex-container {
     overflow: hidden;
