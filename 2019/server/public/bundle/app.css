@@ -138,17 +138,20 @@ table {
     background-position: center center;
     background-repeat: no-repeat;
     position: absolute; }
+  .home-page .hide {
+    visibility: hidden; }
   .home-page .mallow-yellow {
     background-image: url(abda94a2e7cda9249c8e1183be78653c.png);
-    transform-origin: left top; }
+    transform-origin: left top;
+    visibility: hidden; }
     .home-page .mallow-yellow.in {
       transform: rotate(-20deg);
-      left: 96px;
-      top: 39px; }
+      left: 196px;
+      top: 139px; }
     .home-page .mallow-yellow.out {
       transform: rotate(-20deg);
-      left: 78px;
-      top: -11px; }
+      left: 178px;
+      top: 89px; }
   .home-page .flex-container {
     overflow: hidden;
     display: flex;
@@ -158,7 +161,7 @@ table {
     width: 100%;
     height: 100%; }
     .home-page .flex-container.full-background {
-      background-image: url("/images/danger-confetti.png");
+      background-color: #aaa;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center; }
@@ -173,9 +176,10 @@ table {
     left: -100px;
     top: -100px;
     border: 1px solid yellow;
-    z-index: 999; }
+    z-index: 1; }
   .home-page .ignite-text {
-    z-index: -1; }
+    position: relative;
+    z-index: 2; }
   .home-page .flame-gif {
     z-index: 1;
     position: absolute;

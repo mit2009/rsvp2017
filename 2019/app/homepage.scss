@@ -13,16 +13,21 @@
     position: absolute;
   }
 
+  .hide {
+    visibility: hidden;
+  }
+
   .mallow-yellow {
     // background image for yellow mallow
     background-image: url("../server/public/images/mallow-yellow.png");
     transform-origin: left top;
+    visibility: hidden;
 
     &.in {
       // in position
       transform: rotate(-20deg);
-      left: 96px;
-      top: 39px;
+      left: 196px;
+      top: 139px;
 
       // -webkit-mask-image: url(/images/yellow-mask.png);
       // mask-image: url(../server/public/images/yellow-mask.png);
@@ -50,8 +55,8 @@
     &.out {
       // out position
       transform: rotate(-20deg);
-      left: 78px;
-      top: -11px;
+      left: 178px;
+      top: 89px;
 
       // -webkit-mask-image: url(/images/yellow-mask.png);
       // mask-image: url(../server/public/images/yellow-mask.png);
@@ -444,7 +449,8 @@
     height: 100%;
 
     &.full-background {
-      background-image: url("/images/danger-confetti.png");
+      // background-image: url("/images/danger-confetti.png");
+      background-color: #aaa;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center;
@@ -464,11 +470,12 @@
     left: -100px;
     top: -100px;
     border: 1px solid yellow;
-    z-index: 999;
+    z-index: 1;
   }
 
   .ignite-text {
-    z-index: -1;
+    position: relative;
+    z-index: 2;
   }
 
   .flame-gif {
