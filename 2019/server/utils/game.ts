@@ -224,7 +224,6 @@ export class Game {
         } as IGameRenderData
         this.playSound = [];
         this.nextCommand = null;
-        console.log(output);
         return output;
     }
 
