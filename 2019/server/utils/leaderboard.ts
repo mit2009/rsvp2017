@@ -21,13 +21,13 @@ export function saveScore(score: ILeaderboardScore, callback?: (leaderboard: ILe
     });
     axios
         .post(webhook, {
-            text: `${score.name} at ${scores.indexOf(score) + 1} (${score})`,
+            text: `${score.name} at ${scores.indexOf(score) + 1} (${score.score})`,
             blocks: [
                 {
                     type: "section",
                     text: {
                         type: "mrkdwn",
-                        text: `*${score.name}* at ${scores.indexOf(score) + 1} (${score})`,
+                        text: `*${score.name}* at ${scores.indexOf(score) + 1} (${score.score})`,
                     },
                     accessory: {
                         type: "button",
@@ -47,10 +47,12 @@ export function saveScore(score: ILeaderboardScore, callback?: (leaderboard: ILe
         .catch(error => {
             // console.log(error)
         });
+
     const result = fs.writeFileSync(fileLocation, JSON.stringify({ leaderboard: scores }));
     console.log(result);
     callback(scores.slice(0, 30));
 }
+
 // remove a score from our high tech database
 export function deleteScore(name: string, callback?: (count: number) => void) {
     let scores = getLeaderboard();
@@ -87,8 +89,9 @@ export function deleteScore(name: string, callback?: (count: number) => void) {
         });
     callback(counter);
 }
-// fetches the leaderboard, given a limit of results to retunr
-// default is all
+
+// fetches the entirety of the leaderboard
+
 export function getLeaderboard() {
     const contents = fs.readFileSync(fileLocation);
     const scores = JSON.parse(contents.toString()).leaderboard;
