@@ -286,22 +286,26 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 html = (
                     <div className="game-sized-container start-page">
                         {/* <div>{JSON.stringify(this.state.leaderboard)}</div> */}
-                        <div className="highscores-container">
+                        <div className="highscores-main-container">
                             <h1>Highscores</h1>
-                            {leaderboard.map((value, key) => {
-                                return (
-                                    <div key={key} className="highscore-row">
-                                        <div className="score">{value.score}</div>
-                                        <div className={`color color-${TeamColor[value.team].toLowerCase()}`} />
-                                        <div className="name">{value.name}</div>
-                                    </div>
-                                );
-                            })}
+                            <div className="highscores-scroll-content">
+                                <div className="highscores-container">
+                                    {leaderboard.map((value, key) => {
+                                        return (
+                                            <div key={key} className="highscore-row">
+                                                <div className="score">{value.score}</div>
+                                                <div className={`color color-${TeamColor[value.team].toLowerCase()}`} />
+                                                <div className="name">{value.name}</div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
                         </div>
                         <div className="button-container">
                             <button onClick={this.handleEnterGame} className="big-pushy play-btn">
                                 Start Game
-                            </button>
+                                </button>
                             <button
                                 onClick={() => {
                                     selectionFx.play();
@@ -312,7 +316,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                                 className="big-pushy instructions-btn"
                             >
                                 Instructions
-                            </button>
+                                </button>
                         </div>
                     </div>
                 );

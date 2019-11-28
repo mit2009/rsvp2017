@@ -47,7 +47,7 @@ export function getRouter() {
     });
 
     router.get("/game/leaderboard", (_req: express.Request, res: express.Response) => {
-        res.json(getLeaderboard().slice(0, 8));
+        res.json(getLeaderboard().slice(0, 30));
     });
 
     router.post("/game/team", (_req: express.Request, res: express.Response) => {
