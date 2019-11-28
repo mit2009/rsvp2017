@@ -6,6 +6,7 @@ import axios from "axios";
 // @ts-ignore
 import UIfx from "uifx";
 
+
 const selectionFx = new UIfx("/sounds/selection.mp3", {
     volume: 1,
 });
@@ -17,9 +18,10 @@ import { GameCommand, IGameRenderData, TeamColor } from "../server/api/gameRende
 import { ILeaderboardScore } from "../server/utils/leaderboard";
 import { GameApp } from "./components/game";
 
+import { socketIp } from "../config";
 import * as socketio from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:8001";
+const SOCKET_URL = socketIp;
 
 enum GameState {
     ATTRACT,
