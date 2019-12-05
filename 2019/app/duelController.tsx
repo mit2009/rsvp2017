@@ -62,11 +62,11 @@ export class DuelController extends React.PureComponent<
         );
     }
 
-    private keyPress(event) {
+    private keyPress(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter") {
             if (this.state.textValue !== "") {
                 const data = {
-                    event: "command",
+                    event: this.state.eventValue,
                     message: this.state.textValue
                 };
                 socket.emit("command", data);
@@ -86,13 +86,13 @@ export class DuelController extends React.PureComponent<
         }
     }
 
-    private handleChange(event) {
+    private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         this.setState({
             textValue: event.target.value
         });
     }
 
-    private handleEventChange(event) {
+    private handleEventChange(event: React.ChangeEvent<HTMLInputElement>) {
         this.setState({
             eventValue: event.target.value
         });
