@@ -10,6 +10,8 @@ import { GameApp } from "./components/game";
 const SOCKET_URL = socketIp;
 const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 
+// DEBUG PAGE START
+const pageStart = PageState.ATTRACT;
 
 export interface IDuelPageState extends IDuelStateSocketData { }
 
@@ -27,7 +29,8 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
             console.log(data);
         });
 
-        socket.on("stateChange", (data: any) => {
+        socket.on("duelResponse", (data: any) => {
+            console.log(data);
             const formattedData = JSON.parse(data) as IDuelStateSocketData;
             this.setState({
                 ...formattedData,
@@ -35,7 +38,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         });
 
         this.state = {
-            pageState: PageState.STAGING,
+            pageState: pageStart,
         };
     }
 
