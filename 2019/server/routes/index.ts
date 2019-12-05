@@ -14,6 +14,12 @@ export function getRouter() {
         });
     });
 
+    router.get("/duel", (_req: express.Request, res: express.Response) => {
+        res.render("duel", {
+            layout: "layout",
+        });
+    });
+
     router.get("/notify", (_req: express.Request, res: express.Response) => {
         res.render("notify", {
             layout: "layout-pre",
