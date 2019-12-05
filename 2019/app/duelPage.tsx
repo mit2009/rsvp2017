@@ -27,9 +27,14 @@ export interface IDuelStateSocketData {
 export interface IDuelPageState extends IDuelStateSocketData {}
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
+    private playerId: number;
+
     constructor(props: any) {
-        console.log("Initializing Duel Page");
         super(props);
+
+        console.log("Initializing Duel Page");
+        this.playerId = parseInt(window.location.search.replace("?", ""), 10);
+        console.log("I am player", this.playerId);
 
         socket.on("levelUpdate", (data: any) => {
             console.log(data);
@@ -43,7 +48,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         });
 
         this.state = {
-            pageState: PageState.ATTRACT
+            pageState: PageState.STAGING
         };
     }
 
@@ -59,8 +64,14 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 html = (
                     <div className="staging">
                         <div>staging</div>
-                        <div>{this.state.player1Ready}</div>
-                        <div>{this.state.player2Ready}</div>
+                        <div>
+                            {this.state.player1Ready}
+                            <div>Press the button...</div>
+                        </div>
+                        <div>
+                            {this.state.player2Ready}
+                            <div>Press the button...</div>
+                        </div>
                     </div>
                 );
                 console.log("In Staging");
