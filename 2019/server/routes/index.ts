@@ -1,5 +1,3 @@
-import { TeamColor } from "../api/gameRenderData";
-
 import * as express from "express";
 import * as gameHandler from "../utils/gameHandler";
 import { getLeaderboard, ILeaderboardScore, saveScore, deleteScore } from "../utils/leaderboard";
