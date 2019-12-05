@@ -4,7 +4,13 @@ import * as socketio from "socket.io-client";
 
 import { socketIp } from "../config";
 import { IGameRenderData } from "../server/api/gameRenderData";
-import { Command, DuelPlayer, IDuelSocketCommand, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
+import {
+    Command,
+    DuelPlayer,
+    IDuelSocketCommand,
+    IDuelStateSocketData,
+    PageState
+} from "../server/api/levelDuelData";
 import { GameApp } from "./components/game";
 
 const SOCKET_URL = socketIp;
@@ -13,7 +19,7 @@ const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 // DEBUG PAGE START
 const pageStart = PageState.ATTRACT;
 
-export interface IDuelPageState extends IDuelStateSocketData { }
+export interface IDuelPageState extends IDuelStateSocketData {}
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
     private playerId: DuelPlayer;
@@ -22,7 +28,10 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         super(props);
 
         console.log("Initializing Duel Page");
-        this.playerId = parseInt(window.location.search.replace("?", ""), 10) as DuelPlayer;
+        this.playerId = parseInt(
+            window.location.search.replace("?", ""),
+            10
+        ) as DuelPlayer;
         console.log("I am player", this.playerId);
 
         socket.on("levelUpdate", (data: any) => {
@@ -33,12 +42,12 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
             console.log(data);
             const formattedData = JSON.parse(data) as IDuelStateSocketData;
             this.setState({
-                ...formattedData,
+                ...formattedData
             });
         });
 
         this.state = {
-            pageState: pageStart,
+            pageState: pageStart
         };
     }
 
@@ -94,7 +103,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
             if (this.state.pageState === PageState.STAGING) {
                 const command: IDuelSocketCommand = {
                     user: this.playerId,
-                    command: Command.GO_TO_COUNTDOWN,
+                    command: Command.GO_TO_COUNTDOWN
                 };
                 socket.emit("duelUpdate", command);
                 console.log("emitted ready");
