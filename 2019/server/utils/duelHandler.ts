@@ -10,18 +10,17 @@ import {
 let game: Duel = null;
 let player0Ready = false;
 let player1Ready = false;
+let resp = null;
 
 export function update(data: IDuelSocketCommand, io: any) {
     console.log("This is DATA:", data);
+    resp = null;
     switch (data.user) {
         case -1:
             switch (data.command) {
                 case Command.RESET_TO_ATTRACT:
                     game = null;
-                    io.emit(
-                        "duelResponse",
-                        getResponse(PageState.ATTRACT, null, -1)
-                    );
+                    resp = getResponse(PageState.ATTRACT, null, -1);
                     break;
                 case Command.GO_TO_STAGING:
                     console.log("HERE");
@@ -30,37 +29,23 @@ export function update(data: IDuelSocketCommand, io: any) {
                         data.params.player1Color,
                         data.params.levelNumber
                     );
-                    const response = getResponse(PageState.STAGING, null, -1);
-                    console.log(response);
-                    io.emit("duelResponse", response);
+                    resp = getResponse(PageState.STAGING, null, -1);
                     break;
                 case Command.GO_TO_COUNTDOWN:
-                    io.emit(
-                        "duelResponse",
-                        getResponse(
-                            PageState.COUNTDOWN,
-                            null,
-                            data.params.countDownValue
-                        )
+                    resp = getResponse(
+                        PageState.COUNTDOWN,
+                        null,
+                        data.params.countDownValue
                     );
                     break;
                 case Command.GO_TO_PLAYING:
-                    io.emit(
-                        "duelResponse",
-                        getResponse(PageState.PLAYING, game.start(), -1)
-                    );
+                    resp = getResponse(PageState.PLAYING, game.start(), -1);
                     break;
                 case Command.GET_FRAME:
-                    io.emit(
-                        "duelResponse",
-                        getResponse(PageState.PLAYING, game.update(), -1)
-                    );
+                    resp = getResponse(PageState.PLAYING, game.update(), -1);
                     break;
                 case Command.GO_TO_SCORING:
-                    io.emit(
-                        "duelResponse",
-                        getResponse(PageState.SCORING, game.update(), -1)
-                    );
+                    resp = getResponse(PageState.SCORING, game.update(), -1);
                     break;
                 default:
                     break;
@@ -77,10 +62,7 @@ export function update(data: IDuelSocketCommand, io: any) {
                             player1Ready = true;
                             break;
                     }
-                    io.emit(
-                        "duelResponse",
-                        getResponse(PageState.STAGING, game.update(), -1)
-                    );
+                    resp = getResponse(PageState.STAGING, null, -1);
                     break;
                 case Command.UPDATE_CONTROLS:
                     break;
@@ -88,6 +70,8 @@ export function update(data: IDuelSocketCommand, io: any) {
                     break;
             }
     }
+    console.log("This is a response:", resp);
+    io.emit("duelResponse", resp);
 }
 
 function getResponse(

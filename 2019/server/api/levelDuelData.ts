@@ -437,7 +437,7 @@ export enum PageState {
     STAGING,
     COUNTDOWN,
     PLAYING,
-    SCORING,
+    SCORING
 }
 
 export interface IDuelStateSocketData {
@@ -480,7 +480,7 @@ export interface IDuelSocketCommand {
     params?: {
         player0Color?: TeamColor;
         player1Color?: TeamColor;
-        levelNumber?: string;
+        levelNumber?: number;
         countDownValue?: number;
         controls?: boolean[];
     };

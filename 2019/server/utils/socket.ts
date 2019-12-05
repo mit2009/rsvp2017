@@ -44,8 +44,15 @@ export function initSocket(http: any) {
         );
 
         socket.on("duelUpdate", (data: any) => {
-            const response = duelHandler.update(JSON.parse(data.message), io);
-            io.emit("duelResponse", JSON.stringify(response));
+            try {
+                const response = duelHandler.update(
+                    JSON.parse(data.message),
+                    io
+                );
+                io.emit("duelResponse", JSON.stringify(response));
+            } catch (e) {
+                console.error(e);
+            }
         });
 
         socket.on("disconnect", () => {
