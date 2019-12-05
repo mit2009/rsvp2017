@@ -10,6 +10,7 @@ const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 interface IDuelControllerState {
     textValue: string;
     eventValue: string;
+    historyPointer: number;
     history: {
         eventName: string;
         message: string;
@@ -28,41 +29,54 @@ export class DuelController extends React.PureComponent<
         this.state = {
             textValue: "",
             eventValue: "duelUpdate",
-            history: []
+            history: [],
+            historyPointer: 0,
         };
     }
 
     public render() {
         return (
             <div>
-                <input
-                    className="event-textbox"
-                    type="text"
-                    value={this.state.eventValue}
-                    onChange={this.handleEventChange}
-                />
+                <div className="manual-input">
+                    <input
+                        className="event-textbox"
+                        type="text"
+                        value={this.state.eventValue}
+                        onChange={this.handleEventChange}
+                    />
 
-                <input
-                    type="text"
-                    value={this.state.textValue}
-                    onChange={this.handleChange}
-                    onKeyPress={this.keyPress}
-                />
-                <div className="history">
-                    {this.state.history.map((value, key) => {
-                        return (
-                            <div className="history-line" key={key}>
-                                <span className="dem">{value.eventName}</span>
-                                {value.message}
-                            </div>
-                        );
-                    })}
+                    <input
+                        type="text"
+                        value={this.state.textValue}
+                        onChange={this.handleChange}
+                        onKeyDown={this.keyPress}
+                    />
+                    <div className="history">
+                        {this.state.history.map((value, key) => {
+                            return (
+                                <div className="history-line" key={key}>
+                                    <span className="dem">{value.eventName}</span>
+                                    {value.message}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+                <div className="shortcuts">
+                    {this.renderButtons()}
                 </div>
             </div>
         );
     }
 
+    private renderButtons() {
+        return <div>
+            buttons
+        </div>
+    }
+
     private keyPress(event: React.KeyboardEvent<HTMLInputElement>) {
+        console.log("Key pressed:", event.key)
         if (event.key === "Enter") {
             if (this.state.textValue !== "") {
                 const data = {
@@ -79,10 +93,21 @@ export class DuelController extends React.PureComponent<
                     ].concat(previousState.history);
                     return {
                         textValue: "",
-                        history
+                        history,
+                        historyPointer: 0,
                     };
                 });
             }
+        } else if (event.key === "ArrowDown") {
+            this.setState({
+                textValue: this.state.history[this.state.historyPointer].message,
+                historyPointer: Math.min(this.state.historyPointer + 1, this.state.history.length - 1)
+            })
+        } else if (event.key === "ArrowUp") {
+            this.setState({
+                textValue: this.state.history[this.state.historyPointer].message,
+                historyPointer: Math.max(this.state.historyPointer - 1, 0)
+            })
         }
     }
 

@@ -19,7 +19,7 @@ const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 // DEBUG PAGE START
 const pageStart = PageState.ATTRACT;
 
-export interface IDuelPageState extends IDuelStateSocketData {}
+export interface IDuelPageState extends IDuelStateSocketData { }
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
     private playerId: DuelPlayer;
@@ -40,7 +40,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
 
         socket.on("duelResponse", (data: any) => {
             console.log(data);
-            const formattedData = JSON.parse(data) as IDuelStateSocketData;
+            const formattedData = data;
             this.setState({
                 ...formattedData
             });
