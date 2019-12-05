@@ -7,6 +7,7 @@ var Bullet = /** @class */ (function () {
         this.velocity = 30;
         this.xcor = xcor;
         this.ycor = ycor;
+        this.heading = heading;
         this.deltaX = this.velocity * Math.sin(heading);
         this.deltaY = -this.velocity * Math.cos(heading);
         this.playerFired = playerFired;
@@ -20,7 +21,10 @@ var Bullet = /** @class */ (function () {
         this.xcor += this.deltaX * timeDelta;
         var xmapY = Math.floor(this.ycor / levelData_1.tileHeight);
         var xmapX = Math.floor((this.xcor + (levelData_1.bulletWidth / 2) * Math.sign(this.deltaX)) / levelData_1.tileWidth);
-        if ((xmapY < 0) || (xmapX < 0) || (xmapY >= levelMap.length) || (xmapX >= levelMap[xmapY].length)) {
+        if (xmapY < 0 ||
+            xmapX < 0 ||
+            xmapY >= levelMap.length ||
+            xmapX >= levelMap[xmapY].length) {
             return false;
         }
         if (~levelData_1.walls.indexOf(levelMap[xmapY][xmapX])) {
@@ -29,9 +33,13 @@ var Bullet = /** @class */ (function () {
             this.bounces += 1;
         }
         this.ycor += this.deltaY * timeDelta;
-        var ymapY = Math.floor((this.ycor + (levelData_1.bulletHeight / 2) * Math.sign(this.deltaY)) / levelData_1.tileHeight);
+        var ymapY = Math.floor((this.ycor + (levelData_1.bulletHeight / 2) * Math.sign(this.deltaY)) /
+            levelData_1.tileHeight);
         var ymapX = Math.floor(this.xcor / levelData_1.tileWidth);
-        if ((ymapY < 0) || (ymapX < 0) || (ymapY >= levelMap.length) || (ymapX >= levelMap[ymapY].length)) {
+        if (ymapY < 0 ||
+            ymapX < 0 ||
+            ymapY >= levelMap.length ||
+            ymapX >= levelMap[ymapY].length) {
             return false;
         }
         if (~levelData_1.walls.indexOf(levelMap[ymapY][ymapX])) {
@@ -52,7 +60,7 @@ var Bullet = /** @class */ (function () {
                 w: levelData_1.bulletWidth,
                 h: levelData_1.bulletHeight
             },
-            resourceId: 'bullet'
+            resourceId: "bullet"
         };
     };
     return Bullet;

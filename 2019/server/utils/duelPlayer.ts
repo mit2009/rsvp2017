@@ -1,4 +1,4 @@
-import { Bullet } from "./bullet";
+import { Bullet } from "./duelBullet";
 import { getBlobHeading } from "./angles";
 import { IRenderableImage, IShape, TeamColor } from "../api/gameRenderData";
 import {
@@ -22,21 +22,39 @@ export class Player {
 
     private lastFired: number;
 
+    public score: number;
+
     private velocity: number = 18;
     private turningAngle: number = 0.5;
     private fireFrequency: number = 400;
 
     private teamColor: TeamColor;
 
-    constructor(xcor: number, ycor: number, heading: number, color: TeamColor) {
+    private playerNumber: number;
+
+    private up: boolean;
+    private down: boolean;
+    private left: boolean;
+    private right: boolean;
+    private fire: boolean;
+
+    constructor(
+        xcor: number,
+        ycor: number,
+        heading: number,
+        color: TeamColor,
+        playerNumber: number
+    ) {
         this.xcor = (xcor + 0.5) * tileWidth;
         this.ycor = (ycor + 0.5) * tileHeight;
         this.startX = this.xcor;
         this.startY = this.ycor;
 
         this.teamColor = color;
+        this.playerNumber = playerNumber;
 
         this.lastFired = -1;
+        this.score = 0;
 
         this.heading = heading;
     }
@@ -49,26 +67,36 @@ export class Player {
                 this.xcor + bulletOffset * Math.sin(this.heading),
                 this.ycor - bulletOffset * Math.cos(this.heading),
                 this.heading,
-                true
+                this.playerNumber
             );
         }
         return false;
     }
 
-    update(
-        timeDelta: number,
-        up: boolean,
-        down: boolean,
-        left: boolean,
-        right: boolean,
-        levelMap: number[][]
-    ) {
+    updateControls(controls: boolean[]) {
+        this.up = controls[0];
+        this.down = controls[1];
+        this.left = controls[2];
+        this.right = controls[3];
+        if (controls[4]) {
+            this.fire = true;
+        }
+    }
+
+    update(timeDelta: number, levelMap: number[][]) {
         const increment = 1;
         let counter = 0;
 
         while (counter + increment < timeDelta) {
             if (
-                !this.updateHelper(increment, up, down, left, right, levelMap)
+                !this.updateHelper(
+                    increment,
+                    this.up,
+                    this.down,
+                    this.left,
+                    this.right,
+                    levelMap
+                )
             ) {
                 return false;
             }
@@ -77,10 +105,10 @@ export class Player {
 
         return this.updateHelper(
             timeDelta - counter,
-            up,
-            down,
-            left,
-            right,
+            this.up,
+            this.down,
+            this.left,
+            this.right,
             levelMap
         );
     }
@@ -193,7 +221,6 @@ export class Player {
             this.ycor = this.startY;
             return false;
         }
-
         return true;
     }
 
@@ -205,9 +232,10 @@ export class Player {
                 heading: getBlobHeading(this.heading),
                 w: playerWidth,
                 h: playerHeight,
-                color: this.teamColor,
+                color: this.teamColor
             } as IShape,
-            resourceId: "player"
+            resourceId: "player",
+            score: this.score
         } as IRenderableImage;
     }
 }

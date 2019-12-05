@@ -1,5 +1,6 @@
-import { Bullet } from "./bullet";
-import { Player } from "./player";
+import { Bullet } from "./duelBullet";
+import { Bullet as OldBullet } from "./bullet";
+import { Player } from "./duelPlayer";
 import { Monster } from "./monster";
 import {
     TeamColor,
@@ -8,11 +9,7 @@ import {
     PlayMode,
     ISoundClip
 } from "../api/gameRenderData";
-import { LevelData, getLevelCount, getLevelData } from "../api/levelData";
-
-const unableToLevelResponse = {
-    error: "Unable to level"
-};
+import { getLevelData, LevelDuelData, DuelPlayer } from "../api/levelDuelData";
 
 const SOUNDS = {
     bulletShoot: "bulletShoot",
@@ -30,20 +27,18 @@ function singleSoundClip(resourceId: string) {
     } as ISoundClip;
 }
 
-import { PageState, IDuelStateSocketData } from "../../app/gamePage.tsx"
-
 const baseLevelScore = 100;
 const deltaLevelScore = 50;
 const enemyBonusScore = 50;
 const bulletPenaltyScore = -1;
 
-export class DUEL {
-    gameState: PageState;
+export class Duel {
+    countDown: number;
     lastUpdated: number;
-    players: String[] = [];
-    playerMap: {String: Player};
+    players: Player[] = [];
     bullets: Bullet[];
-    levelData: LevelData;
+    monsters: Monster[];
+    levelData: LevelDuelData;
     playSound: ISoundClip[];
 
     gameCommand: GameCommand;
@@ -52,24 +47,22 @@ export class DUEL {
 
     final: boolean;
 
-    constructor() {
-        this.gameState = PageState.ATTRACT;
+    constructor(player0: TeamColor, player1: TeamColor, levelNumber: number) {
+        this.levelData = getLevelData(levelNumber);
+        const { playerLocation, enemyLocation } = this.levelData;
+        this.players.push(
+            new Player(playerLocation[0].x, playerLocation[0].y, 0, player0, 0)
+        );
+        this.players.push(
+            new Player(playerLocation[1].x, playerLocation[1].y, 0, player1, 1)
+        );
+        this.monsters = enemyLocation.map(
+            m => new Monster(m.x, m.y, m.h, m.class)
+        );
     }
 
-    updateState() {
-        switch(this.gameState) {
-            case PageState.ATTRACT:
-                break;
-            case PageState.STAGING:
-                break;
-            case PageState.COUNTDOWN:
-                break;
-            case PageState.PLAYING:
-                break;
-            case PageState.SCORING:
-                break;
-        }
-        return unableToLevelResponse;
+    start() {
+        this.lastUpdated = Date.now();
     }
 
     updateBullets(timeDelta: number) {
@@ -90,7 +83,7 @@ export class DUEL {
     }
 
     incrementalUpdateBullets(timeDelta: number) {
-        const bullets:Bullet[] = [];
+        const bullets: Bullet[] = [];
         for (let b of this.bullets) {
             if (b.update(timeDelta, this.levelData.mapData)) {
                 // if (b.getFiredByPlayer()) {
@@ -118,11 +111,35 @@ export class DUEL {
         this.bullets = bullets;
     }
 
+    updateControl(user: DuelPlayer, controls: boolean[]) {
+        this.players[user].updateControls(controls);
+    }
+
+    convertBullets(b: OldBullet) {
+        return new Bullet(b.xcor, b.ycor, b.heading, -1, 0);
+    }
+
     update() {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 240;
 
-        this.players.update();
+        this.players.forEach(p => {
+            p.update(timeDelta, this.levelData.mapData);
+        });
+        this.monsters = this.monsters.filter(m => {
+            const bullet = m.update();
+            if (bullet) {
+                this.bullets.push(this.convertBullets(bullet));
+            }
+            return this.players.every(p => {
+                const collide = this.bulletEntityOverlap(m, p);
+                if (collide) {
+                    p.score += enemyBonusScore;
+                    return false;
+                }
+                return true;
+            });
+        });
         this.updateBullets(timeDelta);
 
         if (this.gameCommand != null) {
@@ -141,10 +158,6 @@ export class DUEL {
     }
 
     getBlob() {
-        // set player 1 color
-        const playerBlob = this.player.getBlob();
-        playerBlob.pos.color = this.teamColor;
-
         const output = {
             currentLevel: -1,
             score: -1,
@@ -153,14 +166,15 @@ export class DUEL {
             gameCommand: this.nextCommand,
             playSound: this.playSound,
             imagesToRender: {
-                player1: playerBlob,
+                player1: this.players[0].getBlob(),
+                player2: this.players[1].getBlob(),
                 background: {
                     pos: { x: 0, y: 0 },
                     resourceId: "background"
                 }
             },
             bullets: this.bullets.map(b => b.getBlob()),
-            monsters: []
+            monsters: this.monsters.map(m => m.getBlob())
         } as IGameRenderData;
         this.playSound = [];
         this.nextCommand = null;
