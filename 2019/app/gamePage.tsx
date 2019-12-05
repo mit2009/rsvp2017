@@ -546,8 +546,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         // post to server, store token in state
         console.log("Starting Game. Exciting!");
 
-        // DISABLED FOR DEBUGGING
-        // this.backgroundSoundRef.play();
+        this.backgroundSoundRef.play();
 
         selectionFx.play();
 
