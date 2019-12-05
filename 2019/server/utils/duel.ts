@@ -63,6 +63,7 @@ export class Duel {
 
     start() {
         this.lastUpdated = Date.now();
+        return this.getBlob();
     }
 
     updateBullets(timeDelta: number) {

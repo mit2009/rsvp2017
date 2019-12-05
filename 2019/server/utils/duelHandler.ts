@@ -7,7 +7,8 @@ import {
     IDuelStateSocketData
 } from "../api/levelDuelData";
 
-let game: Duel = null;
+// let game: Duel = null;
+let game: Duel = new Duel(0, 1, 1);
 let player0Ready = false;
 let player1Ready = false;
 let resp = null;
