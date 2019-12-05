@@ -1,7 +1,16 @@
 import { Bullet } from "./bullet";
 import { getBlobHeading } from "./angles";
 import { IRenderableImage, IShape } from "../api/gameRenderData";
-import { playerWidth, playerHeight, widthOffset, heightOffset, tileWidth, tileHeight, walls, voids } from "../api/levelData";
+import {
+    playerWidth,
+    playerHeight,
+    widthOffset,
+    heightOffset,
+    tileWidth,
+    tileHeight,
+    walls,
+    voids
+} from "../api/levelData";
 
 export class Player {
     private startX: number;
@@ -32,27 +41,54 @@ export class Player {
         if (Date.now() - this.lastFired > this.fireFrequency) {
             this.lastFired = Date.now();
             const bulletOffset = 15;
-            return new Bullet(this.xcor + bulletOffset * Math.sin(this.heading), this.ycor - bulletOffset * Math.cos(this.heading), this.heading, true);
+            return new Bullet(
+                this.xcor + bulletOffset * Math.sin(this.heading),
+                this.ycor - bulletOffset * Math.cos(this.heading),
+                this.heading,
+                true
+            );
         }
         return false;
     }
 
-    update(timeDelta: number, up: boolean, down: boolean, left: boolean, right: boolean, levelMap: number[][]) {
+    update(
+        timeDelta: number,
+        up: boolean,
+        down: boolean,
+        left: boolean,
+        right: boolean,
+        levelMap: number[][]
+    ) {
         const increment = 1;
         let counter = 0;
 
         while (counter + increment < timeDelta) {
-            if (!this.updateHelper(increment, up, down, left, right, levelMap)) {
-                return false
+            if (
+                !this.updateHelper(increment, up, down, left, right, levelMap)
+            ) {
+                return false;
             }
             counter += increment;
         }
 
-        return this.updateHelper(timeDelta - counter, up, down, left, right, levelMap);
+        return this.updateHelper(
+            timeDelta - counter,
+            up,
+            down,
+            left,
+            right,
+            levelMap
+        );
     }
 
-    updateHelper(timeDelta: number, up: boolean, down: boolean, left: boolean, right: boolean, levelMap: number[][]) {
-
+    updateHelper(
+        timeDelta: number,
+        up: boolean,
+        down: boolean,
+        left: boolean,
+        right: boolean,
+        levelMap: number[][]
+    ) {
         if (left) {
             this.heading -= this.turningAngle * timeDelta;
         }
@@ -86,16 +122,34 @@ export class Player {
         const newX = (mapX + 0.5) * tileWidth;
 
         let nonVoidCount = 0;
-        for (let cor of [[0, 0], [0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, -1], [-1, 1]]) {
+        for (let cor of [
+            [0, 0],
+            [0, 1],
+            [0, -1],
+            [1, 0],
+            [-1, 0],
+            [1, 1],
+            [1, -1],
+            [-1, -1],
+            [-1, 1]
+        ]) {
             const j = cor[0];
             const i = cor[1];
-            if ((mapY + j < 0) || (mapX + i < 0) || (mapY + j >= levelMap.length) || (mapX + i >= levelMap[mapY + j].length)) {
+            if (
+                mapY + j < 0 ||
+                mapX + i < 0 ||
+                mapY + j >= levelMap.length ||
+                mapX + i >= levelMap[mapY + j].length
+            ) {
                 continue;
             }
             if (~walls.indexOf(levelMap[mapY + j][mapX + i])) {
                 const wallY = (mapY + j + 0.5) * tileHeight;
                 const wallX = (mapX + i + 0.5) * tileWidth;
-                if (Math.abs(this.ycor - wallY) < 30 && Math.abs(this.xcor - wallX) < 30) {
+                if (
+                    Math.abs(this.ycor - wallY) < 30 &&
+                    Math.abs(this.xcor - wallX) < 30
+                ) {
                     if (j && i) {
                         if (Math.sign(yVel) == j && Math.sign(xVel) == i) {
                             if (Math.abs(yVel) < Math.abs(xVel)) {
@@ -121,7 +175,10 @@ export class Player {
             if (voids.indexOf(levelMap[mapY + j][mapX + i]) == -1) {
                 const voidY = (mapY + j + 0.5) * tileHeight;
                 const voidX = (mapX + i + 0.5) * tileWidth;
-                if (Math.abs(this.ycor - voidY) < 30 && Math.abs(this.xcor - voidX) < 30) {
+                if (
+                    Math.abs(this.ycor - voidY) < 30 &&
+                    Math.abs(this.xcor - voidX) < 30
+                ) {
                     nonVoidCount += 1;
                 }
             }
@@ -136,8 +193,6 @@ export class Player {
         return true;
     }
 
-
-
     getBlob() {
         return {
             pos: {
@@ -147,7 +202,7 @@ export class Player {
                 w: playerWidth,
                 h: playerHeight
             } as IShape,
-            resourceId: 'player1'
+            resourceId: "player1"
         } as IRenderableImage;
     }
 }

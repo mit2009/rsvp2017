@@ -1,21 +1,27 @@
 import { Bullet } from "./bullet";
 import { Player } from "./player";
 import { Monster } from "./monster";
-import { TeamColor, IGameRenderData, GameCommand, PlayMode, ISoundClip } from "../api/gameRenderData"
-import { LevelData, getLevelCount, getLevelData } from "../api/levelData"
+import {
+    TeamColor,
+    IGameRenderData,
+    GameCommand,
+    PlayMode,
+    ISoundClip
+} from "../api/gameRenderData";
+import { LevelData, getLevelCount, getLevelData } from "../api/levelData";
 
 const unableToLevelResponse = {
-    error: 'Unable to level',
-}
+    error: "Unable to level"
+};
 
 const SOUNDS = {
-    bulletShoot: 'bulletShoot',
-    enemyHurt: 'enemyHurt',
-    playerHurt: 'playerHurt',
-    playerDie: 'playerDie',
-    levelFinish: 'levelUp',
-    levelStart: 'levelStart',
-}
+    bulletShoot: "bulletShoot",
+    enemyHurt: "enemyHurt",
+    playerHurt: "playerHurt",
+    playerDie: "playerDie",
+    levelFinish: "levelUp",
+    levelStart: "levelStart"
+};
 
 function singleSoundClip(resourceId: string) {
     return {
@@ -30,7 +36,6 @@ const enemyBonusScore = 50;
 const bulletPenaltyScore = -1;
 
 export class Game {
-
     teamColor: TeamColor = null;
 
     currentLevel: number;
@@ -62,7 +67,7 @@ export class Game {
         this.ableToLevel = false;
         this.final = false;
 
-        this.allowSending = false
+        this.allowSending = false;
     }
 
     changeTeam(team: TeamColor) {
@@ -83,7 +88,9 @@ export class Game {
             const playerData = this.levelData.playerLocation;
 
             this.player = new Player(playerData.x, playerData.y, 0);
-            this.monsters = this.levelData.enemyLocation.map(m => new Monster(m.x, m.y, m.h, m.class));
+            this.monsters = this.levelData.enemyLocation.map(
+                m => new Monster(m.x, m.y, m.h, m.class)
+            );
 
             this.playSound = [singleSoundClip(SOUNDS.levelFinish)];
 
@@ -106,17 +113,24 @@ export class Game {
     }
 
     bulletEntityOverlap(b: any, o: any, overlap: number = 22.5) {
-        return (Math.abs(b.xcor - o.xcor) < overlap) && (Math.abs(b.ycor - o.ycor) < overlap);
+        return (
+            Math.abs(b.xcor - o.xcor) < overlap &&
+            Math.abs(b.ycor - o.ycor) < overlap
+        );
     }
 
     incrementalUpdateBullets(timeDelta: number) {
-        const bullets = []
+        const bullets = [];
         for (let b of this.bullets) {
             if (b.update(timeDelta, this.levelData.mapData)) {
                 if (b.getFiredByPlayer()) {
-                    const aliveMonsters = this.monsters.filter(m => !this.bulletEntityOverlap(b, m));
+                    const aliveMonsters = this.monsters.filter(
+                        m => !this.bulletEntityOverlap(b, m)
+                    );
                     if (aliveMonsters.length != this.monsters.length) {
-                        this.score += enemyBonusScore * (this.monsters.length - aliveMonsters.length);
+                        this.score +=
+                            enemyBonusScore *
+                            (this.monsters.length - aliveMonsters.length);
                         this.monsters = aliveMonsters;
                         this.playSound.push(singleSoundClip(SOUNDS.enemyHurt));
                     } else {
@@ -127,19 +141,32 @@ export class Game {
                     this.playSound.push(singleSoundClip(SOUNDS.playerHurt));
                     this.livesLeft -= 1;
                 } else {
-                    bullets.push(b);;
+                    bullets.push(b);
                 }
             }
         }
         this.bullets = bullets;
     }
 
-    update(up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) {
+    update(
+        up: boolean,
+        down: boolean,
+        left: boolean,
+        right: boolean,
+        fire: boolean
+    ) {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 240;
 
-        this.player.update(timeDelta, up, down, left, right, this.levelData.mapData);
-        this.monsters = this.monsters.filter((m) => {
+        this.player.update(
+            timeDelta,
+            up,
+            down,
+            left,
+            right,
+            this.levelData.mapData
+        );
+        this.monsters = this.monsters.filter(m => {
             const bullet = m.update();
             if (bullet) {
                 this.bullets.push(bullet);
@@ -167,7 +194,8 @@ export class Game {
 
         if (this.monsters.length == 0) {
             if (this.ableToLevel == false && this.final == false) {
-                this.score += baseLevelScore + deltaLevelScore * (this.currentLevel);
+                this.score +=
+                    baseLevelScore + deltaLevelScore * this.currentLevel;
             }
             if (this.currentLevel == getLevelCount()) {
                 this.final = true;
@@ -193,7 +221,7 @@ export class Game {
             if (this.allowSending) {
                 this.nextCommand = this.gameCommand;
                 this.gameCommand = null;
-                this.allowSending = false
+                this.allowSending = false;
             } else {
                 this.allowSending = true;
             }
@@ -205,6 +233,10 @@ export class Game {
     }
 
     getBlob() {
+        // set player 1 color
+        const playerBlob = this.player.getBlob();
+        playerBlob.pos.color = this.teamColor;
+
         const output = {
             currentLevel: this.currentLevel,
             score: this.score,
@@ -213,15 +245,15 @@ export class Game {
             gameCommand: this.nextCommand,
             playSound: this.playSound,
             imagesToRender: {
-                player1: this.player.getBlob(),
+                player1: playerBlob,
                 background: {
                     pos: { x: 0, y: 0 },
-                    resourceId: "background",
-                },
+                    resourceId: "background"
+                }
             },
             bullets: this.bullets.map(b => b.getBlob()),
-            monsters: this.monsters.map(m => m.getBlob()),
-        } as IGameRenderData
+            monsters: this.monsters.map(m => m.getBlob())
+        } as IGameRenderData;
         this.playSound = [];
         this.nextCommand = null;
         return output;

@@ -3,7 +3,7 @@ import * as React from "react";
 // @ts-ignore
 import UIfx from "uifx";
 
-import { IGameRenderData } from "../../server/api/gameRenderData";
+import { IGameRenderData, TeamColor } from "../../server/api/gameRenderData";
 import {
     getLevel,
     heightOffset,
@@ -21,6 +21,7 @@ export interface IImageAsset {
     resourceUrl: string;
     loaded: boolean;
     hasHeading?: boolean;
+    hasColorVariants?: boolean;
     heightOffset?: number;
     zIndex?: number;
 }
@@ -53,67 +54,13 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
     private soundStore: any = {};
 
-    // private gameRenderData: IGameRenderData = {
-    //     // SAMPLE DATA FORMAT HERE:
-
-    //     currentLevel: 1,
-    //     score: 100,
-    //     teamColor: TeamColor.BLUE,
-    //     livesLeft: 3,
-
-    //     playSound: [
-    //         {
-    //             playMode: PlayMode.ONCE,
-    //             resourceId: "pew",
-    //         },
-    //     ],
-
-    //     imagesToRender: {
-    //         player1: {
-    //             pos: { x: 60, y: 449, w: 30, h: 30 },
-    //             resourceId: "player1",
-    //         },
-    //         background: {
-    //             pos: { x: 0, y: 0 },
-    //             resourceId: "background",
-    //         },
-    //     },
-
-    //     monsters: [
-    //         {
-    //             pos: { x: 60, y: 420, w: 24, h: 35 },
-    //             resourceId: "monster1",
-    //         },
-    //     ],
-
-    //     bullets: [
-    //         {
-    //             pos: { x: 60, y: 60, w: 15, h: 22 },
-    //             resourceId: "bullet",
-    //         },
-    //         {
-    //             pos: { x: 100, y: 60, w: 15, h: 22 },
-    //             resourceId: "bullet",
-    //         },
-    //         {
-    //             pos: { x: 260, y: 60, w: 15, h: 22 },
-    //             resourceId: "bullet",
-    //         },
-    //     ],
-
-    //     tiles: {
-    //         pos: { x: 60, y: 60 },
-    //         tileSize: 30,
-    //         level: 1,
-    //     },
-    // };
-
     private assets: IAssets = {
         images: {
             player1: {
-                resourceUrl: "player-blue-#.png",
+                resourceUrl: "player-%-#.png",
                 loaded: false,
-                hasHeading: true
+                hasHeading: true,
+                hasColorVariants: true
             },
             tile1: {
                 resourceUrl: "tile0.png",
@@ -203,9 +150,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             this.ctx = this.canvas.getContext("2d");
             this.drawGameAssets(this.ctx);
         }
-        // setTimeout(() => {
-        //     //
-        // }, 10);
     }
 
     public render() {
@@ -257,38 +201,43 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         for (let imageId of Object.keys(this.assets.images)) {
             const image = this.assets.images[imageId];
 
+            let imageName = imageId;
+            let imageSrc = BASE_RESOURCE_URL + image.resourceUrl;
+            let imagesToGenerate = [[imageName, imageSrc]];
+
             if (image.hasHeading) {
+                imagesToGenerate = [];
                 for (let h = 0; h < 8; h++) {
-                    console.log("loaded item heading with ", imageId + h);
-                    this.imageStore[imageId + h] = new Image();
-                    this.imageStore[imageId + h].src =
+                    imageName = imageId + "-" + h;
+                    imageSrc =
                         BASE_RESOURCE_URL +
                         image.resourceUrl.replace("#", h + "");
-                    this.imageStore[imageId + h].onload = () => {
-                        // // @ts-ignore
-                        // const pathName = e.target.src;
-                        // const fileName = pathName.split("/")[pathName.split("/").length - 1].split(".")[0];
-                        // console.log(fileName);
 
-                        // // TODO: build better loading mechanism
-                        // this.assets.images[fileName].loaded = true;
-
-                        // console.log(this.assets.images);
-                        this.forceUpdate();
-                    };
+                    if (image.hasColorVariants) {
+                        for (let colorIndex = 0; colorIndex < 8; colorIndex++) {
+                            const imageNameWithColor =
+                                imageName +
+                                "-" +
+                                TeamColor[colorIndex].toLowerCase();
+                            const imageSrcWithColor = imageSrc.replace(
+                                "%",
+                                TeamColor[colorIndex].toLowerCase()
+                            );
+                            imagesToGenerate.push([
+                                imageNameWithColor,
+                                imageSrcWithColor
+                            ]);
+                        }
+                    } else {
+                        imagesToGenerate.push([imageName, imageSrc]);
+                    }
                 }
-            } else {
-                this.imageStore[imageId] = new Image();
-                this.imageStore[imageId].src =
-                    BASE_RESOURCE_URL + image.resourceUrl;
-                this.imageStore[imageId].onload = () => {
-                    // // @ts-ignore
-                    // const pathName = e.target.src;
-                    // const fileName = pathName.split("/")[pathName.split("/").length - 1].split(".")[0];
+            }
 
-                    // // TODO: build better loading mechanism
-
-                    // this.assets.images[fileName].loaded = true;
+            for (const [n, s] of imagesToGenerate) {
+                this.imageStore[n] = new Image();
+                this.imageStore[n].src = s;
+                this.imageStore[n].onload = () => {
                     this.forceUpdate();
                 };
             }
@@ -302,8 +251,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             const sound = this.assets.sounds[soundId];
 
             // TODO Implement sound player;
-            console.log(sound);
-
             this.soundStore[soundId] = new UIfx(
                 BASE_RESOURCE_URL + sound.resourceUrl,
                 {
@@ -332,7 +279,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         // random sound loader goes here for some reason
         if (this.props.gameData.playSound.length > 0) {
             for (const sound of this.props.gameData.playSound) {
-                console.log(this.soundStore);
                 this.soundStore[sound.resourceId].play();
             }
         }
@@ -444,11 +390,19 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
             if (itemY > minDepth && itemY <= maxDepth) {
                 if (this.assets.images[itemToRenderId].hasHeading) {
+                    let imageStoreIndex =
+                        data.imagesToRender[itemToRenderId].resourceId +
+                        "-" +
+                        itemToRender.pos.heading;
+
+                    if (this.assets.images[itemToRenderId].hasColorVariants) {
+                        imageStoreIndex =
+                            imageStoreIndex +
+                            "-" +
+                            TeamColor[itemToRender.pos.color].toLowerCase();
+                    }
                     context.drawImage(
-                        this.imageStore[
-                            data.imagesToRender[itemToRenderId].resourceId +
-                                itemToRender.pos.heading
-                        ],
+                        this.imageStore[imageStoreIndex],
                         data.imagesToRender[itemToRenderId].pos.x,
                         data.imagesToRender[itemToRenderId].pos.y,
                         data.imagesToRender[itemToRenderId].pos.w,

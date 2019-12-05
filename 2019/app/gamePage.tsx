@@ -19,6 +19,7 @@ import {
     IGameRenderData,
     TeamColor
 } from "../server/api/gameRenderData";
+
 import { ILeaderboardScore } from "../server/utils/leaderboard";
 import { GameApp } from "./components/game";
 
@@ -544,7 +545,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
     private handleEnterGame = () => {
         // post to server, store token in state
         console.log("Starting Game. Exciting!");
-        this.backgroundSoundRef.play();
+
+        // DISABLED FOR DEBUGGING
+        // this.backgroundSoundRef.play();
+
         selectionFx.play();
 
         axios
