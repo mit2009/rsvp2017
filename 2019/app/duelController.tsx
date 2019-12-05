@@ -9,7 +9,11 @@ const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 
 interface IDuelControllerState {
     textValue: string;
-    history: string[];
+    eventValue: string;
+    history: {
+        eventName: string;
+        message: string;
+    }[];
 }
 
 export class DuelController extends React.PureComponent<
@@ -19,9 +23,11 @@ export class DuelController extends React.PureComponent<
     constructor(props: any) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleEventChange = this.handleEventChange.bind(this);
         this.keyPress = this.keyPress.bind(this);
         this.state = {
             textValue: "",
+            eventValue: "command",
             history: []
         };
     }
@@ -30,14 +36,26 @@ export class DuelController extends React.PureComponent<
         return (
             <div>
                 <input
+                    className="event-textbox"
+                    type="text"
+                    value={this.state.eventValue}
+                    onChange={this.handleEventChange}
+                />
+
+                <input
                     type="text"
                     value={this.state.textValue}
                     onChange={this.handleChange}
                     onKeyPress={this.keyPress}
                 />
-                <div>
+                <div className="history">
                     {this.state.history.map((value, key) => {
-                        return <div key={key}>{value}</div>;
+                        return (
+                            <div className="history-line" key={key}>
+                                <span className="dem">{value.eventName}</span>
+                                {value.message}
+                            </div>
+                        );
                     })}
                 </div>
             </div>
@@ -46,26 +64,37 @@ export class DuelController extends React.PureComponent<
 
     private keyPress(event) {
         if (event.key === "Enter") {
-            const data = {
-                event: "command",
-                message: this.state.textValue
-            };
-            socket.emit("command", data);
-            this.setState(previousState => {
-                const history = [previousState.textValue].concat(
-                    previousState.history
-                );
-                return {
-                    textValue: "",
-                    history
+            if (this.state.textValue !== "") {
+                const data = {
+                    event: "command",
+                    message: this.state.textValue
                 };
-            });
+                socket.emit("command", data);
+                this.setState(previousState => {
+                    const history = [
+                        {
+                            eventName: this.state.eventValue,
+                            message: this.state.textValue
+                        }
+                    ].concat(previousState.history);
+                    return {
+                        textValue: "",
+                        history
+                    };
+                });
+            }
         }
     }
 
     private handleChange(event) {
         this.setState({
             textValue: event.target.value
+        });
+    }
+
+    private handleEventChange(event) {
+        this.setState({
+            eventValue: event.target.value
         });
     }
 }
