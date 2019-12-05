@@ -14,7 +14,7 @@ export enum PageState {
     STAGING,
     COUNTDOWN,
     PLAYING,
-    SCORING
+    SCORING,
 }
 
 export interface IDuelStateSocketData {
@@ -24,7 +24,7 @@ export interface IDuelStateSocketData {
     gameData?: IGameRenderData;
 }
 
-export interface IDuelPageState extends IDuelStateSocketData {}
+export interface IDuelPageState extends IDuelStateSocketData { }
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
     private playerId: number;
@@ -43,13 +43,21 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         socket.on("stateChange", (data: any) => {
             const formattedData = JSON.parse(data) as IDuelStateSocketData;
             this.setState({
-                ...formattedData
+                ...formattedData,
             });
         });
 
         this.state = {
-            pageState: PageState.STAGING
+            pageState: PageState.STAGING,
         };
+    }
+
+    public componentDidMount() {
+        document.addEventListener("keypress", this.gameController);
+    }
+
+    public componentWillUnmount() {
+        document.removeEventListener("keypress", this.gameController);
     }
 
     public render() {
@@ -76,10 +84,12 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 );
                 console.log("In Staging");
                 break;
+
             case PageState.PLAYING:
                 html = <GameApp gameData={this.state.gameData} />;
                 console.log("In Playing");
                 break;
+
             case PageState.SCORING:
                 html = <div>scoring</div>;
                 console.log("Scoring");
@@ -87,6 +97,16 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         }
         return <div>{html}</div>;
     }
+
+    private gameController = (event: any) => {
+        console.log("key pressed: ", event.key);
+        if (event.key === " ") {
+            if (this.state.pageState === PageState.STAGING) {
+                socket.emit("ready", { playerId: this.playerId });
+                console.log("emitted ready");
+            }
+        }
+    };
 }
 
 ReactDOM.render(<DuelPage />, document.getElementById("duel-content"));
