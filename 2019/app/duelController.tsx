@@ -19,7 +19,7 @@ interface IDuelControllerState {
 export class DuelController extends React.PureComponent<
     {},
     IDuelControllerState
-> {
+    > {
     constructor(props: any) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -27,7 +27,7 @@ export class DuelController extends React.PureComponent<
         this.keyPress = this.keyPress.bind(this);
         this.state = {
             textValue: "",
-            eventValue: "command",
+            eventValue: "duelUpdate",
             history: []
         };
     }
@@ -69,7 +69,7 @@ export class DuelController extends React.PureComponent<
                     event: this.state.eventValue,
                     message: this.state.textValue
                 };
-                socket.emit("command", data);
+                socket.emit(this.state.eventValue, data);
                 this.setState(previousState => {
                     const history = [
                         {

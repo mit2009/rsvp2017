@@ -19,6 +19,7 @@ function initSocket(http) {
             socket.emit("levelUpdate", JSON.stringify(blob));
         });
         socket.on("duelUpdate", function (data) {
+            console.log(data);
             var response = duelHandler.update(data, io);
             io.emit("duelResponse", JSON.stringify(response));
         });
