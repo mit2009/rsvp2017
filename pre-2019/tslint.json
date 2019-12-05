@@ -19,7 +19,10 @@
             }
         },
         "jsx-no-lambda": false,
-        "no-submodule-imports": [true, "history"],
+        "no-submodule-imports": [
+            true,
+            "history"
+        ],
         "object-literal-sort-keys": false,
         "member-ordering": false,
         "no-reference": false,
