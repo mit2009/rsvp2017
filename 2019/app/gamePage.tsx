@@ -57,7 +57,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private keyStore: boolean[] = [false, false, false, false, false];
 
-    private timer: NodeJS.Timer;
+    private timer: NodeJS.Timeout;
     private backgroundSoundRef: HTMLAudioElement;
 
     constructor(props: any) {
@@ -174,7 +174,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         return -1;
     }
 
-    private gameControlsGoodbye = (e: any) => {
+    private gameControlsGoodbye = (_e: any) => {
 
         this.keyStore[0] = false;
         this.keyStore[1] = false;

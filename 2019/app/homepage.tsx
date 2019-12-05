@@ -80,7 +80,7 @@ $(() => {
     init();
 });
 
-window.addEventListener("resize", event => {
+window.addEventListener("resize", _event => {
     init();
 });
 

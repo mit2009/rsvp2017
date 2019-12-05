@@ -41,10 +41,10 @@ export function saveScore(score: ILeaderboardScore, callback?: (leaderboard: ILe
                 },
             ],
         })
-        .then(res => {
+        .then(_res => {
             // console.log(res)
         })
-        .catch(error => {
+        .catch(_error => {
             // console.log(error)
         });
 
@@ -81,10 +81,10 @@ export function deleteScore(name: string, callback?: (count: number) => void) {
                 },
             ],
         })
-        .then(res => {
+        .then(_res => {
             // console.log(res)
         })
-        .catch(error => {
+        .catch(_error => {
             // console.log(error)
         });
     callback(counter);
