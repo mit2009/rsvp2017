@@ -12,6 +12,7 @@ const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 export enum PageState {
     ATTRACT,
     STAGING,
+    COUNTDOWN,
     PLAYING,
     SCORING
 }

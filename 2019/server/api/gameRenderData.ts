@@ -44,7 +44,7 @@ export enum GameCommand {
 
 export interface IGameRenderData {
     currentLevel: number;
-    score: 100;
+    score: number;
     teamColor: TeamColor;
     gameCommand?: GameCommand;
     livesLeft: number;
