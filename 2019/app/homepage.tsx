@@ -3,8 +3,16 @@
 import * as $ from "jQuery";
 
 const THRESH = 500;
-const colors = ["red", "orange", "yellow", "green", "blue", "purple", "silver", "pink"];
-const isRotate = ["blue"];
+const colors = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "silver",
+    "pink"
+];
 const colorOffset: { [key: string]: { [key: string]: number } } = {
     red: { x: -12, y: 101 },
     orange: { x: -24, y: 72 },
@@ -13,7 +21,7 @@ const colorOffset: { [key: string]: { [key: string]: number } } = {
     blue: { x: 152, y: 87 },
     purple: { x: 84, y: -27 },
     silver: { x: 40, y: -28 },
-    pink: { x: 120, y: 75 },
+    pink: { x: 120, y: 75 }
 };
 const mallowData: any = {};
 
@@ -40,18 +48,26 @@ function init() {
                 out: $(".mallow-" + color + ".out").offset(),
                 in: $(".mallow-" + color + ".in").offset(),
                 diff: {
-                    top: $(".mallow-" + color + ".in").offset().top - $(".mallow-" + color + ".out").offset().top,
-                    left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left,
+                    top:
+                        $(".mallow-" + color + ".in").offset().top -
+                        $(".mallow-" + color + ".out").offset().top,
+                    left:
+                        $(".mallow-" + color + ".in").offset().left -
+                        $(".mallow-" + color + ".out").offset().left
                 },
-                rotateOut: convertStringMatrixToAngle($(".mallow-" + color + ".out").css("transform")),
-                rotateIn: convertStringMatrixToAngle($(".mallow-" + color + ".in").css("transform")),
+                rotateOut: convertStringMatrixToAngle(
+                    $(".mallow-" + color + ".out").css("transform")
+                ),
+                rotateIn: convertStringMatrixToAngle(
+                    $(".mallow-" + color + ".in").css("transform")
+                )
             };
             // console.log(mallowData);
 
             $(".mallow-clipped-" + color)
                 .attr({
                     x: mallowData[color].diff.left,
-                    y: mallowData[color].diff.top,
+                    y: mallowData[color].diff.top
                 })
                 .css({ visibility: "visible" });
         }
@@ -97,7 +113,7 @@ document.addEventListener("mousemove", event => {
                 mouseLeft,
                 mouseTop,
                 mallowData[color].in.left + colorOffset[color].x,
-                mallowData[color].in.top + colorOffset[color].y,
+                mallowData[color].in.top + colorOffset[color].y
             );
             // if (color == 'pink') {
             //     console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
@@ -105,15 +121,18 @@ document.addEventListener("mousemove", event => {
             // console.log(distFromMallow);
 
             if (distFromMallow < THRESH) {
-                const percentageToMallow = Math.min(1, Math.sin(((distFromMallow / THRESH) * Math.PI) / 2));
+                const percentageToMallow = Math.min(
+                    1,
+                    Math.sin(((distFromMallow / THRESH) * Math.PI) / 2)
+                );
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left * percentageToMallow,
-                    y: mallowData[color].diff.top * percentageToMallow,
+                    y: mallowData[color].diff.top * percentageToMallow
                 });
             } else {
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left,
-                    y: mallowData[color].diff.top,
+                    y: mallowData[color].diff.top
                 });
             }
         }

@@ -1,9 +1,16 @@
 import * as React from "react";
 
+// @ts-ignore
 import UIfx from "uifx";
 
 import { IGameRenderData } from "../../server/api/gameRenderData";
-import { getLevel, heightOffset, tileWidth, tileHeight, widthOffset } from "../../server/api/levelData";
+import {
+    getLevel,
+    heightOffset,
+    tileWidth,
+    tileHeight,
+    widthOffset
+} from "../../server/api/levelData";
 
 const BASE_RESOURCE_URL = "/images/gameAssets/";
 
@@ -30,12 +37,11 @@ export interface IAssets {
 
 export interface IGameAppProps {
     gameData: IGameRenderData;
-    fire?: () => void
-    unfire?: () => void
+    fire?: () => void;
+    unfire?: () => void;
 }
 export interface IGameAppState {
     mallowColor: string;
-
 }
 
 export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
@@ -45,8 +51,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private ctx: CanvasRenderingContext2D;
 
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
-    private soundStore: any = {}
-
+    private soundStore: any = {};
 
     // private gameRenderData: IGameRenderData = {
     //     // SAMPLE DATA FORMAT HERE:
@@ -108,83 +113,82 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             player1: {
                 resourceUrl: "player-blue-#.png",
                 loaded: false,
-                hasHeading: true,
+                hasHeading: true
             },
             tile1: {
                 resourceUrl: "tile0.png",
-                loaded: false,
+                loaded: false
             },
             tile2: {
                 resourceUrl: "tile1.png",
-                loaded: false,
+                loaded: false
             },
             tile3: {
                 resourceUrl: "tile2.png",
                 loaded: false,
-                heightOffset: -10,
+                heightOffset: -10
             },
             tile4: {
                 resourceUrl: "tile3.png",
                 loaded: false,
-                heightOffset: -10,
+                heightOffset: -10
             },
             tile5: {
                 resourceUrl: "tile1.png",
-                loaded: false,
+                loaded: false
             },
             tile6: {
                 resourceUrl: "tile1.png",
-                loaded: false,
+                loaded: false
             },
             monster1: {
                 resourceUrl: "monster1-4.png",
-                loaded: false,
+                loaded: false
             },
             bullet: {
                 resourceUrl: "bullet.png",
-                loaded: false,
+                loaded: false
             },
 
             background: {
                 resourceUrl: "background.png",
                 loaded: false,
-                zIndex: 0,
-            },
-
+                zIndex: 0
+            }
         },
         sounds: {
             bulletShoot: {
                 resourceUrl: "player-shoot-sound.wav",
-                loaded: false,
+                loaded: false
             },
             enemyHurt: {
                 resourceUrl: "success-hit-sound.wav",
-                loaded: false,
+                loaded: false
             },
             playerHurt: {
                 resourceUrl: "player-hit-sound.wav",
-                loaded: false,
+                loaded: false
             },
             playerDie: {
                 resourceUrl: "game-over-sound.wav",
-                loaded: false,
+                loaded: false
             },
             levelUp: {
                 resourceUrl: "new-level-sound.wav",
-                loaded: false,
+                loaded: false
             },
             levelStart: {
                 resourceUrl: "win-game-sound.wav",
-                loaded: false,
-            },
-        },
+                loaded: false
+            }
+        }
     };
 
     constructor(props: any) {
         super(props);
         this.canvasRef = React.createRef();
         this.state = {
-            mallowColor: "green",
+            mallowColor: "green"
         };
 
         // Load assets
@@ -215,24 +219,35 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                                 <h2>Level</h2>
                             </div>
                             <div className="mobile-score">
-                                <h3 className="score">{this.props.gameData.score}</h3>
+                                <h3 className="score">
+                                    {this.props.gameData.score}
+                                </h3>
                                 <h2>Score</h2>
                             </div>
                         </div>
-                        <div className="lives">{this.props.gameData.livesLeft} &times;</div>
-                    </div>
-                    <canvas ref={this.canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} />
-                    <div className="sidebar sidebar-right">
-                        <div className="mobile-control">
+                        <div className="lives">
+                            {this.props.gameData.livesLeft} &times;
                         </div>
-                        <div onPointerDown={this.props.fire} onPointerUp={this.props.unfire}
-
-                            className="big-pushy mobile-control-shoot">fire</div>
+                    </div>
+                    <canvas
+                        ref={this.canvasRef}
+                        width={CANVAS_WIDTH}
+                        height={CANVAS_HEIGHT}
+                    />
+                    <div className="sidebar sidebar-right">
+                        <div className="mobile-control"></div>
+                        <div
+                            onPointerDown={this.props.fire}
+                            onPointerUp={this.props.unfire}
+                            className="big-pushy mobile-control-shoot"
+                        >
+                            fire
+                        </div>
                     </div>
                 </div>
             );
         } else {
-            return (<div>loading...</div>);
+            return <div>loading...</div>;
         }
     }
 
@@ -246,9 +261,10 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 for (let h = 0; h < 8; h++) {
                     console.log("loaded item heading with ", imageId + h);
                     this.imageStore[imageId + h] = new Image();
-                    this.imageStore[imageId + h].src = BASE_RESOURCE_URL + image.resourceUrl.replace("#", h + "");
+                    this.imageStore[imageId + h].src =
+                        BASE_RESOURCE_URL +
+                        image.resourceUrl.replace("#", h + "");
                     this.imageStore[imageId + h].onload = () => {
-
                         // // @ts-ignore
                         // const pathName = e.target.src;
                         // const fileName = pathName.split("/")[pathName.split("/").length - 1].split(".")[0];
@@ -263,9 +279,9 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 }
             } else {
                 this.imageStore[imageId] = new Image();
-                this.imageStore[imageId].src = BASE_RESOURCE_URL + image.resourceUrl;
+                this.imageStore[imageId].src =
+                    BASE_RESOURCE_URL + image.resourceUrl;
                 this.imageStore[imageId].onload = () => {
-
                     // // @ts-ignore
                     // const pathName = e.target.src;
                     // const fileName = pathName.split("/")[pathName.split("/").length - 1].split(".")[0];
@@ -288,9 +304,12 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             // TODO Implement sound player;
             console.log(sound);
 
-            this.soundStore[soundId] = new UIfx(BASE_RESOURCE_URL + sound.resourceUrl, {
-                volume: 1,
-            });
+            this.soundStore[soundId] = new UIfx(
+                BASE_RESOURCE_URL + sound.resourceUrl,
+                {
+                    volume: 1
+                }
+            );
 
             /*
             this.imageStore[imageId] = new Image();
@@ -318,8 +337,11 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             }
         }
 
-        if (context && (this.props.gameData !== null && this.props.gameData !== undefined)) {
-
+        if (
+            context &&
+            this.props.gameData !== null &&
+            this.props.gameData !== undefined
+        ) {
             // TODO: abstract
             context.clearRect(0, 0, 600, 600);
 
@@ -337,7 +359,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 const row = tileMap[yIndex];
 
                 for (let xIndex = 0; xIndex < row.length; xIndex++) {
-
                     const x = widthOffset + xIndex * tileWidth;
                     const y = heightOffset + yIndex * tileHeight;
                     lastY = y;
@@ -349,16 +370,26 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
                     const tileId = "tile" + tileValue;
                     const imageData = this.imageStore[tileId];
-                    const graphicHeightOffset = this.assets.images[tileId].heightOffset
+                    const graphicHeightOffset = this.assets.images[tileId]
+                        .heightOffset
                         ? this.assets.images[tileId].heightOffset
                         : 0;
 
                     if (tileId !== "tile1") {
-                        context.drawImage(imageData, x, y + graphicHeightOffset);
+                        context.drawImage(
+                            imageData,
+                            x,
+                            y + graphicHeightOffset
+                        );
                     }
                 }
 
-                this.checkForDepthRender(context, data, lastY, lastY + tileHeight);
+                this.checkForDepthRender(
+                    context,
+                    data,
+                    lastY,
+                    lastY + tileHeight
+                );
             }
 
             this.checkForDepthRender(context, data, lastY, CANVAS_HEIGHT);
@@ -402,7 +433,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         context: CanvasRenderingContext2D,
         data: IGameRenderData,
         minDepth: number,
-        maxDepth: number,
+        maxDepth: number
     ) {
         // render all images to render
 
@@ -413,22 +444,25 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
             if (itemY > minDepth && itemY <= maxDepth) {
                 if (this.assets.images[itemToRenderId].hasHeading) {
-
                     context.drawImage(
-                        this.imageStore[data.imagesToRender[itemToRenderId].resourceId + itemToRender.pos.heading],
+                        this.imageStore[
+                            data.imagesToRender[itemToRenderId].resourceId +
+                                itemToRender.pos.heading
+                        ],
                         data.imagesToRender[itemToRenderId].pos.x,
                         data.imagesToRender[itemToRenderId].pos.y,
                         data.imagesToRender[itemToRenderId].pos.w,
-                        data.imagesToRender[itemToRenderId].pos.h,
+                        data.imagesToRender[itemToRenderId].pos.h
                     );
-
                 } else {
                     context.drawImage(
-                        this.imageStore[data.imagesToRender[itemToRenderId].resourceId],
+                        this.imageStore[
+                            data.imagesToRender[itemToRenderId].resourceId
+                        ],
                         data.imagesToRender[itemToRenderId].pos.x,
                         data.imagesToRender[itemToRenderId].pos.y,
                         data.imagesToRender[itemToRenderId].pos.w,
-                        data.imagesToRender[itemToRenderId].pos.h,
+                        data.imagesToRender[itemToRenderId].pos.h
                     );
                 }
             }
@@ -439,7 +473,13 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         for (const bullet of this.props.gameData.bullets) {
             const itemY = bullet.pos.y + bullet.pos.h;
             if (itemY > minDepth && itemY <= maxDepth) {
-                context.drawImage(this.imageStore[bullet.resourceId], bullet.pos.x, bullet.pos.y, bullet.pos.w, bullet.pos.h);
+                context.drawImage(
+                    this.imageStore[bullet.resourceId],
+                    bullet.pos.x,
+                    bullet.pos.y,
+                    bullet.pos.w,
+                    bullet.pos.h
+                );
             }
         }
 
@@ -448,7 +488,11 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         for (const monster of this.props.gameData.monsters) {
             const itemY = monster.pos.y + monster.pos.h;
             if (itemY > minDepth && itemY <= maxDepth) {
-                context.drawImage(this.imageStore[monster.resourceId], monster.pos.x, monster.pos.y);
+                context.drawImage(
+                    this.imageStore[monster.resourceId],
+                    monster.pos.x,
+                    monster.pos.y
+                );
             }
         }
     }
