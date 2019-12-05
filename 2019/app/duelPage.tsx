@@ -20,7 +20,6 @@ export interface IDuelStateSocketData {
     pageState: PageState;
     player1Ready?: boolean;
     player2Ready?: boolean;
-    countdown?: number;
     gameData?: IGameRenderData;
 }
 
@@ -61,7 +60,6 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                         <div>staging</div>
                         <div>{this.state.player1Ready}</div>
                         <div>{this.state.player2Ready}</div>
-                        <div>{this.state.countdown}</div>
                     </div>
                 );
                 console.log("In Staging");

@@ -27,6 +27,7 @@ module.exports = {
         homepage: ["./app/homepage.tsx"],
         game: ["./app/gamePage.tsx"],
         duelpage: ["./app/duelPage.tsx"],
+        duelcontroller: ["./app/duelController.tsx"],
         duel: ["./app/duel.scss"]
     },
 
