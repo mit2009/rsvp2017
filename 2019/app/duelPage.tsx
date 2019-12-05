@@ -4,6 +4,7 @@ import * as socketio from "socket.io-client";
 
 import { socketIp } from "../config";
 import { IGameRenderData } from "../server/api/gameRenderData";
+import { Command, DuelPlayer, IDuelSocketCommand } from "../server/api/levelDuelData";
 import { GameApp } from "./components/game";
 
 const SOCKET_URL = socketIp;
@@ -27,13 +28,13 @@ export interface IDuelStateSocketData {
 export interface IDuelPageState extends IDuelStateSocketData { }
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
-    private playerId: number;
+    private playerId: DuelPlayer;
 
     constructor(props: any) {
         super(props);
 
         console.log("Initializing Duel Page");
-        this.playerId = parseInt(window.location.search.replace("?", ""), 10);
+        this.playerId = parseInt(window.location.search.replace("?", ""), 10) as DuelPlayer;
         console.log("I am player", this.playerId);
 
         socket.on("levelUpdate", (data: any) => {
@@ -102,7 +103,13 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         console.log("key pressed: ", event.key);
         if (event.key === " ") {
             if (this.state.pageState === PageState.STAGING) {
-                socket.emit("ready", { playerId: this.playerId });
+                const command: IDuelSocketCommand = {
+                    user: this.playerId,
+                    command: Command.GO_TO_COUNTDOWN,
+                };
+                socket.emit("duelUpdate", {
+                    playerId: this.playerId,
+                });
                 console.log("emitted ready");
             }
         }

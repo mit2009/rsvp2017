@@ -404,18 +404,14 @@ export const levelMap: ILevelMap = {
             4,
             4,
             4,
-            4
-        ]
+            4,
+        ],
 };
 
 // convert to a sensible grid format
 function toMatrix(arr: number[], width: number) {
     return arr.reduce((rows, key, index) => {
-        return (
-            (index % width === 0
-                ? rows.push([key])
-                : rows[rows.length - 1].push(key)) && rows
-        );
+        return (index % width === 0 ? rows.push([key]) : rows[rows.length - 1].push(key)) && rows;
     }, []);
 }
 
@@ -423,17 +419,47 @@ export function getLevel(level: number) {
     return toMatrix(levelMap[level], gridWidth);
 }
 
-export interface LevelData {
-    mapData: number[][];
-    playerLocation: Coordinate;
-    enemyLocation: Coordinate[];
+// export interface LevelData {
+//     mapData: number[][];
+//     playerLocation: Coordinate;
+//     enemyLocation: Coordinate[];
+// }
+
+// export interface Coordinate {
+//     x: number;
+//     y: number;
+//     h: number;
+//     class?: number;
+// }
+
+// when users are ready
+// socket name: duelUpdate
+// users send: {
+//     user: 0,
+//     command: GO_TO_COUNTDOWN
+// }
+
+export enum Command {
+    RESET_TO_ATTRACT,
+    GO_TO_STAGING,
+    GO_TO_COUNTDOWN,
+    GO_TO_PLAYING,
+    UPDATE_CONTROLS,
+    GET_FRAME,
+    GO_TO_SCORING,
 }
 
-export interface Coordinate {
-    x: number;
-    y: number;
-    h: number;
-    class?: number;
+export type DuelPlayer = 0 | 1 | -1;
+
+export interface IDuelSocketCommand {
+    user: DuelPlayer;
+    command: Command;
+    params?: {
+        player0Color?: string;
+        player1Color?: string;
+        levelNumber?: string;
+        controls?: boolean[];
+    };
 }
 
 export function getLevelCount() {
@@ -472,7 +498,7 @@ export function getLevelData(level: number) {
                     x: j,
                     y: i,
                     h: (Math.PI * 3) / 2,
-                    class: 10
+                    class: 10,
                 });
                 mapData[i][j] = 2;
             }
@@ -482,9 +508,11 @@ export function getLevelData(level: number) {
             }
         }
     }
-    return {
-        mapData,
-        playerLocation,
-        enemyLocation
-    } as LevelData;
+    // everything is broken fix it
+    //
+    // return {
+    //     mapData,
+    //     playerLocation,
+    //     enemyLocation,
+    // } as LevelData;
 }
