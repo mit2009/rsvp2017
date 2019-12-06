@@ -86,6 +86,12 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
             user: -1,
             command: Command.GO_TO_PLAYING
         });
+        this.timer = global.setInterval(() => {
+            socket.emit("duelUpdate", {
+                user: -1,
+                command: Command.GET_FRAME
+            });
+        }, 100);
     };
 
     private renderButton(title: string, message: string) {
