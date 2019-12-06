@@ -16,8 +16,9 @@ const pageStart = PageState.PLAYING;
 export interface IDuelPageState extends IDuelStateSocketData { }
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
+
     private playerId: DuelPlayer;
-    private timer: NodeJS.Timer;
+    private keyStore: boolean[] = [false, false, false, false, false];
 
     constructor(props: any) {
         super(props);
@@ -41,10 +42,14 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
 
     public componentDidMount() {
         document.addEventListener("keypress", this.gameController);
+        document.addEventListener("keydown", this.gameControls);
+        document.addEventListener("keyup", this.gameControlsRelease);
     }
 
     public componentWillUnmount() {
         document.removeEventListener("keypress", this.gameController);
+        document.removeEventListener("keydown", this.gameControls);
+        document.removeEventListener("keyup", this.gameControlsRelease);
     }
 
     public render() {
@@ -103,6 +108,57 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
             }
         }
     };
+
+    private gameControls = (event: any) => {
+        if (event.keyCode === 38 || event.keyCode === 87) {
+            // up
+            this.keyStore[0] = true;
+        } else if (event.keyCode === 37 || event.keyCode === 65) {
+            // left
+            this.keyStore[2] = true;
+        } else if (event.keyCode === 40 || event.keyCode === 83) {
+            // down
+            this.keyStore[1] = true;
+        } else if (event.keyCode === 39 || event.keyCode === 68) {
+            // right
+            this.keyStore[3] = true;
+        } else if (event.key === " ") {
+            // this.keyStore[4] = true;
+        }
+        socket.emit("duelUpdate", {
+            user: this.playerId,
+            command: Command.UPDATE_CONTROLS,
+            params: {
+                controls: this.keyStore
+            }
+        });
+    };
+
+    private gameControlsRelease = (event: any) => {
+        if (event.keyCode === 38 || event.keyCode === 87) {
+            // up
+            this.keyStore[0] = false;
+        } else if (event.keyCode === 37 || event.keyCode === 65) {
+            // left
+            this.keyStore[2] = false;
+        } else if (event.keyCode === 40 || event.keyCode === 83) {
+            // down
+            this.keyStore[1] = false;
+        } else if (event.keyCode === 39 || event.keyCode === 68) {
+            // right
+            this.keyStore[3] = false;
+        } else if (event.key === " ") {
+            this.keyStore[4] = false;
+        }
+        socket.emit("duelUpdate", {
+            user: this.playerId,
+            command: Command.UPDATE_CONTROLS,
+            params: {
+                controls: this.keyStore
+            }
+        });
+    };
+
 }
 
 ReactDOM.render(<DuelPage />, document.getElementById("duel-content"));

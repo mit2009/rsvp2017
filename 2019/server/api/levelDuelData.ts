@@ -29,8 +29,8 @@ export const gridHeight = 12;
 export const tileWidth = 60;
 export const tileHeight = 60;
 
-export const widthOffset = 2 * tileWidth;
-export const heightOffset = 2 * tileHeight;
+export const widthOffset = tileWidth;
+export const heightOffset = tileHeight;
 
 export const playerWidth = 60;
 export const playerHeight = 60;

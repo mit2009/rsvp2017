@@ -12,7 +12,13 @@ import {
     widthOffset
 } from "../../server/api/levelData";
 
-import { getLevel as getDuelLevel } from "../../server/api/levelDuelData";
+import {
+    getLevel as getDuelLevel,
+    tileWidth as tileDuelWidth,
+    tileHeight as tileDuelHeight,
+    widthOffset as duelWidthOffset,
+    heightOffset as duelHeightOffset,
+} from "../../server/api/levelDuelData";
 
 const BASE_RESOURCE_URL = "/images/gameAssets/";
 
@@ -308,7 +314,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             // Render anything with a specified ZIndex
 
             // this.renderZIndexItems(context, data);
-            this.checkForDepthRender(context, data, 0, heightOffset);
+            this.checkForDepthRender(context, data, 0, (this.props.isDuel ? tileDuelWidth : tileWidth));
 
             // Render the Tiles
 
@@ -326,8 +332,8 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 const row = tileMap[yIndex];
 
                 for (let xIndex = 0; xIndex < row.length; xIndex++) {
-                    const x = widthOffset + xIndex * tileWidth;
-                    const y = heightOffset + yIndex * tileHeight;
+                    const x = (this.props.isDuel ? duelWidthOffset : widthOffset) + xIndex * (this.props.isDuel ? tileDuelWidth : tileWidth);
+                    const y = (this.props.isDuel ? duelHeightOffset : heightOffset) + yIndex * (this.props.isDuel ? tileDuelHeight : tileHeight);
                     lastY = y;
 
                     let tileValue = tileMap[yIndex][xIndex];
@@ -343,10 +349,17 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                         : 0;
 
                     if (tileId !== "tile1") {
+                        console.log("DRAWING A TILE ")
+                        let th = (!this.props.isDuel ? tileHeight : tileDuelHeight);
+                        if (tileId === "tile4") {
+                            th *= 1.33333333333;
+                        }
                         context.drawImage(
                             imageData,
                             x,
-                            y + graphicHeightOffset
+                            y + graphicHeightOffset,
+                            (!this.props.isDuel ? tileWidth : tileDuelWidth),
+                            th,
                         );
                     }
                 }
@@ -355,7 +368,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                     context,
                     data,
                     lastY,
-                    lastY + tileHeight
+                    lastY + (!this.props.isDuel ? tileHeight : tileDuelHeight)
                 );
             }
 
@@ -407,10 +420,10 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         for (const itemToRenderId of Object.keys(data.imagesToRender)) {
             const itemToRender = data.imagesToRender[itemToRenderId];
 
+            console.log("RENDERITEMID", itemToRenderId);
             const itemY = itemToRender.pos.y + itemToRender.pos.h;
 
             if (itemY > minDepth && itemY <= maxDepth) {
-                console.log("RENDERITEMID", itemToRenderId);
 
                 if (this.assets.images[itemToRenderId].hasHeading) {
                     let imageStoreIndex =
