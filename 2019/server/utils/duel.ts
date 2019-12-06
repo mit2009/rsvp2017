@@ -30,7 +30,7 @@ const hitOtherPlayerScore = 25;
 const enemyBonusScore = 50;
 const hitByMonsterScore = 5;
 
-const gameDurationInMilliseconds = 1000 * 60;
+const gameDurationInMilliseconds = 1000 * 60 * 10; // TODO: make 30 seconds
 
 export class Duel {
   countDown: number;
