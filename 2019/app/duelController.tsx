@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import * as socketio from "socket.io-client";
 
 import { socketIp } from "../config";
-import { Command, IDuelSocketCommand, IDuelStateSocketData } from "../server/api/levelDuelData";
+import { Command, IDuelSocketCommand, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
 
 const SOCKET_URL = socketIp;
 const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
@@ -37,6 +37,10 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
 
     public componentDidMount() {
         socket.on("duelResponse", (data: IDuelStateSocketData) => {
+            if (data.pageState !== PageState.PLAYING) {
+                clearInterval(this.timer);
+            }
+
             if (data !== null && data.gameData == null) {
                 this.setState(previousState => {
                     const history = [

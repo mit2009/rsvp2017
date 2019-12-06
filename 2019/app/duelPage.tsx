@@ -65,16 +65,16 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                             this.state.player2Color
                         ].toLowerCase()}`}
                     >
-                        <div>staging</div>
-                        {JSON.stringify(this.state)}
-                        <div>
-                            {this.state.player1Ready}
-                            <div>Press the button...</div>
-                        </div>
-                        <div>
-                            {this.state.player2Ready}
-                            <div>Press the button...</div>
-                        </div>
+                        <div
+                            className={`ready-sign p1 p-${TeamColor[this.state.player1Color].toLowerCase()} p-${
+                                this.state.player1Ready
+                                }`}
+                        />
+                        <div
+                            className={`ready-sign p2 p-${TeamColor[this.state.player2Color].toLowerCase()} p-${
+                                this.state.player2Ready
+                                }`}
+                        />
                     </div>
                 );
                 console.log("In Staging");
