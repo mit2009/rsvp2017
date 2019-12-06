@@ -76,6 +76,7 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
                 )}
                 {this.renderButton("go to countdown", `{"user":-1, "command":2, "params":{"countDownValue":3}}`)}
                 <button onClick={this.handleGameStart}>START GAME TIMER</button>
+                <button onClick={this.handleGameStop}>STOP GAME TIMER</button>
             </div>
         );
     }
@@ -87,12 +88,17 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
             command: Command.GO_TO_PLAYING
         });
         this.timer = global.setInterval(() => {
+            console.log(Date.now());
             socket.emit("duelUpdate", {
                 user: -1,
                 command: Command.GET_FRAME
             });
-        }, 100);
+        }, 40);
     };
+
+    private handleGameStop = () => {
+        clearInterval(this.timer);
+    }
 
     private renderButton(title: string, message: string) {
         return (

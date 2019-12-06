@@ -28,7 +28,6 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         console.log("I am player", this.playerId);
 
         socket.on("duelResponse", (data: IDuelStateSocketData) => {
-            console.log(data);
             const formattedData = data;
             this.setState({
                 ...formattedData,

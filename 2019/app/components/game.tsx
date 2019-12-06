@@ -255,7 +255,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
             for (const [n, s] of imagesToGenerate) {
                 this.imageStore[n] = new Image();
-                this.imageStore[n].src = s;
+                this.imageStore[n].src = (this.props.isDuel ? "" : "duel_") + s;
                 this.imageStore[n].onload = () => {
                     this.forceUpdate();
                 };
@@ -309,7 +309,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             this.props.gameData !== undefined
         ) {
             // TODO: abstract
-            context.clearRect(0, 0, 600, 600);
+            context.clearRect(0, 0, this.props.isDuel ? 1960 : 600, this.props.isDuel ? 840 : 600);
 
             // Render anything with a specified ZIndex
 
@@ -349,7 +349,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                         : 0;
 
                     if (tileId !== "tile1") {
-                        console.log("DRAWING A TILE ")
                         let th = (!this.props.isDuel ? tileHeight : tileDuelHeight);
                         if (tileId === "tile4") {
                             th *= 1.33333333333;
@@ -419,8 +418,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
         for (const itemToRenderId of Object.keys(data.imagesToRender)) {
             const itemToRender = data.imagesToRender[itemToRenderId];
-
-            console.log("RENDERITEMID", itemToRenderId);
             const itemY = itemToRender.pos.y + itemToRender.pos.h;
 
             if (itemY > minDepth && itemY <= maxDepth) {
