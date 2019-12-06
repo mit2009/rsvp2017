@@ -26,9 +26,9 @@ export class Player {
 
     public score: number;
 
-    private velocity: number = 18;
-    private turningAngle: number = 0.5;
-    private fireFrequency: number = 400;
+    private velocity: number = 30;
+    private turningAngle: number = 0.7;
+    private fireFrequency: number = 800;
 
     private teamColor: TeamColor;
 
@@ -146,6 +146,10 @@ export class Player {
         if (down) {
             xVel = -xVel;
             yVel = -yVel;
+        }
+        if (!(up || down) && (left || right) && !(left && right)) {
+            this.xcor += xVel * 0.3;
+            this.ycor += yVel * 0.3;
         }
         if (up || down) {
             this.xcor += xVel;

@@ -21,7 +21,7 @@ export class Bullet {
     private bounces: number;
 
     private maxBounces: number;
-    private velocity: number = 30;
+    private velocity: number = 45;
 
     constructor(
         xcor: number,
@@ -49,7 +49,6 @@ export class Bullet {
     update(timeDelta: number, levelMap: number[][]) {
         this.xcor += this.deltaX * timeDelta;
         const xmapY = Math.floor(this.ycor / tileHeight);
-<<<<<<< HEAD
         const xmapX = Math.floor(
             (this.xcor + (bulletWidth / 2) * Math.sign(this.deltaX)) / tileWidth
         );
@@ -59,11 +58,6 @@ export class Bullet {
             xmapY >= levelMap.length ||
             xmapX >= levelMap[xmapY].length
         ) {
-=======
-        const xmapX = Math.floor((this.xcor + (bulletWidth / 2) * Math.sign(this.deltaX)) / tileWidth);
-
-        if (xmapY < 0 || xmapX < 0 || xmapY >= levelMap.length || xmapX >= levelMap[xmapY].length) {
->>>>>>> full screen graphics
             return false;
         }
         if (~walls.indexOf(levelMap[xmapY][xmapX])) {
