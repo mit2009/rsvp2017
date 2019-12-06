@@ -87,7 +87,7 @@ export class Player {
         }
     }
 
-    update(timeDelta: number, levelMap: number[][]) {
+    update(timeDelta: number, levelMap: number[][], customX:number=0, customY:number=0) {
         const increment = 1;
         let counter = 0;
 
@@ -99,7 +99,9 @@ export class Player {
                     this.down,
                     this.left,
                     this.right,
-                    levelMap
+                    levelMap,
+                    customX,
+                    customY,
                 )
             ) {
                 return false;
@@ -113,7 +115,9 @@ export class Player {
             this.down,
             this.left,
             this.right,
-            levelMap
+            levelMap,
+            customX,
+            customY,
         );
     }
 
@@ -123,7 +127,9 @@ export class Player {
         down: boolean,
         left: boolean,
         right: boolean,
-        levelMap: number[][]
+        levelMap: number[][],
+        customX: number,
+        customY: number,
     ) {
         if (left) {
             this.heading -= this.turningAngle * timeDelta;
@@ -155,6 +161,9 @@ export class Player {
             this.xcor += xVel;
             this.ycor += yVel;
         }
+
+        this.xcor += customX;
+        this.ycor += customY;
 
         const mapY = Math.floor(this.ycor / tileHeight);
         const mapX = Math.floor(this.xcor / tileWidth);

@@ -30,7 +30,7 @@ const hitOtherPlayerScore = 25;
 const enemyBonusScore = 50;
 const hitByMonsterScore = 5;
 
-const gameDurationInMilliseconds = 1000 * 60 * 10; // TODO: make 30 seconds
+const gameDurationInMilliseconds = 1000 * 30; // TODO: make 30 seconds
 
 export class Duel {
   countDown: number;
@@ -39,7 +39,7 @@ export class Duel {
   bullets: Bullet[] = [];
   monsters: Monster[] = [];
   levelData: LevelDuelData;
-  playSound: ISoundClip[] = [];
+  playSound = new Set();
   levelNumber: number;
 
   gameCommand: GameCommand;
@@ -68,6 +68,7 @@ export class Duel {
     this.lastUpdated = startTime;
     this.endTime = startTime + gameDurationInMilliseconds;
     this.started = true;
+    this.playSound.add(SOUNDS.levelStart);
     return this.getBlob();
   }
 
@@ -81,7 +82,7 @@ export class Duel {
     this.incrementalUpdateBullets(timeDelta - counter);
   }
 
-  bulletEntityOverlap(b: any, o: any, overlap: number = 45) {
+  bulletEntityOverlap(b: any, o: any, overlap: number = 40) {
     return (
       Math.abs(b.xcor - o.xcor) < overlap && Math.abs(b.ycor - o.ycor) < overlap
     );
@@ -97,6 +98,7 @@ export class Duel {
             this.players.every((p: Player) => {
               if (this.bulletEntityOverlap(b, p)) {
                 p.score -= hitByMonsterScore;
+                this.playSound.add(SOUNDS.playerHurt);
                 return false;
               }
               return true;
@@ -112,11 +114,14 @@ export class Duel {
             this.players[firedBy].score +=
               (this.monsters.length - aliveMonsters.length) * enemyBonusScore;
             this.monsters = aliveMonsters;
-            this.playSound.push(singleSoundClip(SOUNDS.enemyHurt));
+            this.playSound.add(SOUNDS.enemyHurt);
           } else if (
             this.bulletEntityOverlap(b, this.players[(firedBy + 1) % 2])
           ) {
-            this.players[firedBy].score += hitOtherPlayerScore;
+              this.playSound.add(SOUNDS.playerHurt);
+              const scaleKnockback = 0.2;
+              this.players[(firedBy + 1) % 2].update(0, this.levelData.mapData, b.deltaX * scaleKnockback, b.deltaY * scaleKnockback)
+              this.players[firedBy].score += hitOtherPlayerScore;
           } else {
             bullets.push(b);
           }
@@ -135,6 +140,8 @@ export class Duel {
   update(final = false) {
     const currentTime = Date.now();
     if (currentTime > this.endTime || final) {
+
+        this.playSound.add(SOUNDS.levelFinish);
       return { done: true, blob: this.getBlob() };
     }
     const timeDelta = (currentTime - this.lastUpdated) / 200;
@@ -147,7 +154,7 @@ export class Duel {
         this.bullets.push(bullet);
       }
       return this.players.every(p => {
-        const collide = this.bulletEntityOverlap(m, p, 60);
+        const collide = this.bulletEntityOverlap(m, p, 55);
         if (collide) {
           p.score += enemyBonusScore;
           return false;
@@ -159,6 +166,7 @@ export class Duel {
     this.players.forEach(p => {
       const bullet = p.fireBullet();
       if (bullet) {
+          this.playSound.add(SOUNDS.bulletShoot);
         this.bullets.push(bullet);
       }
     });
@@ -187,7 +195,7 @@ export class Duel {
       teamColor: null,
       livesLeft: -1,
       gameCommand: this.nextCommand,
-      playSound: this.playSound,
+      playSound: Array.from(this.playSound).map(s => singleSoundClip(s)),
       imagesToRender: {
         player1: this.players[0].getBlob(),
         player2: this.players[1].getBlob(),
@@ -199,7 +207,7 @@ export class Duel {
       bullets: this.bullets.map(b => b.getBlob()),
       monsters: this.monsters.map(m => m.getBlob())
     } as IGameRenderData;
-    this.playSound = [];
+    this.playSound = new Set();
     this.nextCommand = null;
     return output;
   }

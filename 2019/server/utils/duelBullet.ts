@@ -13,8 +13,8 @@ export class Bullet {
     public xcor: number;
     public ycor: number;
 
-    private deltaX: number;
-    private deltaY: number;
+    public deltaX: number;
+    public deltaY: number;
 
     private firedBy: number;
 
