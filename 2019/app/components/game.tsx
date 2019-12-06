@@ -13,7 +13,7 @@ import {
 } from "../../server/api/levelData";
 
 import {
-    getLevel as getDuelLevel,
+    getLevelTexture as getDuelLevel,
     heightOffset as duelHeightOffset,
     tileHeight as tileDuelHeight,
     tileWidth as tileDuelWidth,
@@ -103,6 +103,63 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 resourceUrl: "tile1.png",
                 loaded: false,
             },
+            tile7: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            tile8: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            tile9: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            tile10: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            tile11: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            tile12: {
+                resourceUrl: "tile1.png",
+                loaded: false,
+            },
+            tile13: {
+                resourceUrl: "tile1-1.png",
+                loaded: false,
+            },
+            tile14: {
+                resourceUrl: "tile1-2.png",
+                loaded: false,
+            },
+            tile15: {
+                resourceUrl: "tile3-5.png",
+                loaded: false,
+                heightOffset: -10,
+            },
+            tile16: {
+                resourceUrl: "tile3-4.png",
+                loaded: false,
+                heightOffset: -10,
+            },
+            tile17: {
+                resourceUrl: "tile3-3.png",
+                loaded: false,
+                heightOffset: -10,
+            },
+            tile18: {
+                resourceUrl: "tile3-2.png",
+                loaded: false,
+                heightOffset: -10,
+            },
+            tile19: {
+                resourceUrl: "tile3-1.png",
+                loaded: false,
+                heightOffset: -10,
+            },
             monster1: {
                 resourceUrl: "monster1-4.png",
                 loaded: false,
@@ -111,7 +168,6 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 resourceUrl: "bullet.png",
                 loaded: false,
             },
-
             background: {
                 resourceUrl: "background.png",
                 loaded: false,
@@ -246,6 +302,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
             for (const [n, s] of imagesToGenerate) {
                 this.imageStore[n] = new Image();
+                console.log('loading', n, s);
                 this.imageStore[n].src = s;
                 this.imageStore[n].onload = () => {
                     this.forceUpdate();
@@ -325,7 +382,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                     lastY = y;
 
                     let tileValue = tileMap[yIndex][xIndex];
-                    if (tileValue > 4) {
+                    if (tileValue > 4 && tileValue < 13) {
                         tileValue = 2;
                     }
 
@@ -342,7 +399,8 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
                     if (tileId !== "tile1") {
                         let th = !this.props.isDuel ? tileHeight : tileDuelHeight;
-                        if (tileId === "tile4") {
+                        const tallTiles = ["tile4", "tile15", "tile16", "tile17", "tile18", "tile19"]
+                        if (tallTiles.indexOf(tileId) > -1) {
                             th *= 1.33333333333;
                         }
                         context.drawImage(

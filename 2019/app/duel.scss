@@ -16,7 +16,13 @@ body {
         left: 0;
         right: 0;
     }
-    
+
+    .attract {
+        background-image: url("/images/gameAssets/duel/duelattract.png");
+        width: 100%;
+        height: 100%;
+    }
+
 }
 
 .duel-controller-page {
@@ -54,5 +60,8 @@ body {
         background-color: #000;
         border: 1px solid #aaa;
         outline: none;
+    }
+    button {
+        display: block;
     }
 }

@@ -15,6 +15,10 @@ let resp = null;
 
 export function update(data: IDuelSocketCommand, io: any) {
     // console.log("This is DATA:", data);
+<<<<<<< HEAD
+=======
+
+>>>>>>> full screen graphics
     resp = null;
     switch (data.user) {
         case -1:

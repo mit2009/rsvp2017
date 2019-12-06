@@ -136,7 +136,6 @@ export class Duel {
     update() {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 200;
-
         this.players.forEach(p => {
             p.update(timeDelta, this.levelData.mapData);
         });

@@ -70,11 +70,24 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
     private renderButtons() {
         return (
             <div>
+                {this.renderButton("go ATTRACT", `{"user":-1, "command":2, "params":{"countDownValue":3}}`)}
                 {this.renderButton(
-                    "go to staging",
-                    `{"user":-1, "command":1, "params": {"player0Color": 0, "player1Color": 1, "levelNumber":1}}`,
+                    "go STAGING (blue/red)",
+                    `{"user":-1, "command":1, "params": {"player0Color": 5, "player1Color": 1, "levelNumber":1}}`,
                 )}
-                {this.renderButton("go to countdown", `{"user":-1, "command":2, "params":{"countDownValue":3}}`)}
+                {this.renderButton(
+                    "go STAGING (green/pink)",
+                    `{"user":-1, "command":1, "params": {"player0Color": 4, "player1Color": 0, "levelNumber":1}}`,
+                )}
+                {this.renderButton(
+                    "go STAGING (purple/orange)",
+                    `{"user":-1, "command":1, "params": {"player0Color": 6, "player1Color": 2, "levelNumber":1}}`,
+                )}
+                {this.renderButton(
+                    "go STAGING (yellow/silver)",
+                    `{"user":-1, "command":1, "params": {"player0Color": 3, "player1Color": 7, "levelNumber":1}}`,
+                )}
+                {this.renderButton("go COUNTDOWN", `{"user":-1, "command":2, "params":{"countDownValue":3}}`)}
                 <button onClick={this.handleGameStart}>START GAME TIMER</button>
                 <button onClick={this.handleGameStop}>STOP GAME TIMER</button>
             </div>
