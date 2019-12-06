@@ -21,7 +21,7 @@ export class Bullet {
     private bounces: number;
 
     private maxBounces: number;
-    private velocity: number = 30;
+    private velocity: number = 50;
 
     constructor(
         xcor: number,
@@ -69,7 +69,7 @@ export class Bullet {
 
         const ymapY = Math.floor(
             (this.ycor + (bulletHeight / 2) * Math.sign(this.deltaY)) /
-                tileHeight
+            tileHeight
         );
         const ymapX = Math.floor(this.xcor / tileWidth);
         if (
