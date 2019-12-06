@@ -9,6 +9,14 @@ body {
 #duel-content {
     width: 1920px;
     height: 1080px;
+
+    .game-canvas-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    
 }
 
 .duel-controller-page {
@@ -16,7 +24,11 @@ body {
 }
 
 #duel-controller-content {
+    width: 100%;
+    height: 100%;
     font-family: monospace;
+    position: relative;
+    
     .history {
         font-size: 14px;
         .history-line {
@@ -43,5 +55,4 @@ body {
         border: 1px solid #aaa;
         outline: none;
     }
-
 }
