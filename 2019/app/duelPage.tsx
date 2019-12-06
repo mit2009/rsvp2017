@@ -17,12 +17,13 @@ const SOCKET_URL = socketIp;
 const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 
 // DEBUG PAGE START
-const pageStart = PageState.ATTRACT;
+const pageStart = PageState.PLAYING;
 
 export interface IDuelPageState extends IDuelStateSocketData { }
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
     private playerId: DuelPlayer;
+    private timer: NodeJS.Timer;
 
     constructor(props: any) {
         super(props);
@@ -31,14 +32,11 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         this.playerId = parseInt(
             window.location.search.replace("?", ""),
             10
+
         ) as DuelPlayer;
         console.log("I am player", this.playerId);
 
-        socket.on("levelUpdate", (data: any) => {
-            console.log(data);
-        });
-
-        socket.on("duelResponse", (data: any) => {
+        socket.on("duelResponse", (data: IDuelStateSocketData) => {
             console.log(data);
             const formattedData = data;
             this.setState({
@@ -49,6 +47,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         this.state = {
             pageState: pageStart
         };
+
     }
 
     public componentDidMount() {
@@ -84,7 +83,12 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 console.log("In Staging");
                 break;
 
+            case PageState.COUNTDOWN:
+                html = <div>countdown</div>
+                break;
+
             case PageState.PLAYING:
+                console.log(this.state.gameData);
                 html = <GameApp gameData={this.state.gameData} />;
                 console.log("In Playing");
                 break;
