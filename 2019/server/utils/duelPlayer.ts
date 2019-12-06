@@ -10,7 +10,7 @@ import {
     tileHeight,
     walls,
     voids
-} from "../api/levelData";
+} from "../api/levelDuelData";
 
 export class Player {
     private startX: number;

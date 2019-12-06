@@ -1,7 +1,7 @@
 import { Bullet } from "./duelBullet";
 import { Bullet as OldBullet } from "./bullet";
 import { Player } from "./duelPlayer";
-import { Monster } from "./monster";
+import { Monster } from "./duelMonster";
 import {
     TeamColor,
     IGameRenderData,
@@ -37,7 +37,7 @@ export class Duel {
     lastUpdated: number;
     players: Player[] = [];
     bullets: Bullet[] = [];
-    monsters: Monster[];
+    monsters: Monster[] = [];
     levelData: LevelDuelData;
     playSound: ISoundClip[] = [];
     levelNumber: number;
@@ -118,10 +118,6 @@ export class Duel {
         this.players[user].updateControls(controls);
     }
 
-    convertBullets(b: OldBullet) {
-        return new Bullet(b.xcor, b.ycor, b.heading, -1, 0);
-    }
-
     update() {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 240;
@@ -132,7 +128,7 @@ export class Duel {
         this.monsters = this.monsters.filter(m => {
             const bullet = m.update();
             if (bullet) {
-                this.bullets.push(this.convertBullets(bullet));
+                this.bullets.push(bullet);
             }
             return this.players.every(p => {
                 const collide = this.bulletEntityOverlap(m, p);
@@ -157,6 +153,7 @@ export class Duel {
 
         this.lastUpdated = currentTime;
         const blob = this.getBlob();
+        console.log(blob.bullets, blob.monsters);
         return blob;
     }
 

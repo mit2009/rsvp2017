@@ -1,5 +1,5 @@
 import { getBlobHeading } from "./angles";
-import { Bullet } from "./bullet";
+import { Bullet } from "./duelBullet";
 import { IRenderableImage, IShape } from "../api/gameRenderData";
 import {
     monsterWidth,
@@ -8,7 +8,7 @@ import {
     heightOffset,
     tileWidth,
     tileHeight
-} from "../api/levelData";
+} from "../api/levelDuelData";
 
 interface Action {
     delay: number;
@@ -64,7 +64,7 @@ export class Monster {
             this.xcor + bulletOffset * Math.sin(this.heading),
             this.ycor - bulletOffset * Math.cos(this.heading),
             this.heading,
-            false,
+            -1,
             0
         );
     }

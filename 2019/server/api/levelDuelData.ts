@@ -23,23 +23,23 @@ export interface ILevelMap {
 
 // level software can be found here: https://thorbjorn.itch.io/tiled?download
 
-export const gridWidth = 16;
-export const gridHeight = 16;
+export const gridWidth = 30;
+export const gridHeight = 12;
 
-export const tileWidth = 30;
-export const tileHeight = 30;
+export const tileWidth = 60;
+export const tileHeight = 60;
 
 export const widthOffset = 2 * tileWidth;
 export const heightOffset = 2 * tileHeight;
 
-export const playerWidth = 30;
-export const playerHeight = 30;
+export const playerWidth = 60;
+export const playerHeight = 60;
 
-export const bulletWidth = 15;
-export const bulletHeight = 15;
+export const bulletWidth = 30;
+export const bulletHeight = 30;
 
-export const monsterWidth = 30;
-export const monsterHeight = 30;
+export const monsterWidth = 60;
+export const monsterHeight = 60;
 
 export const walls: number[] = [3, 4];
 export const voids: number[] = [1];

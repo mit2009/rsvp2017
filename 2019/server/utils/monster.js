@@ -9,7 +9,7 @@ var AIs = {
     8: [{ delay: 1000, deltaHeading: 0, fire: true }],
     9: [{ delay: 1000, deltaHeading: 0, fire: true }],
     10: [{ delay: 1000, deltaHeading: 0, fire: true }],
-    11: [{ delay: 500, deltaHeading: Math.PI / 4, fire: true }],
+    11: [{ delay: 500, deltaHeading: Math.PI / 4, fire: true }]
 };
 var Monster = /** @class */ (function () {
     function Monster(xcor, ycor, heading, ai) {
@@ -46,7 +46,7 @@ var Monster = /** @class */ (function () {
                 w: levelData_1.monsterWidth,
                 h: levelData_1.monsterHeight
             },
-            resourceId: 'monster1'
+            resourceId: "monster1"
         };
     };
     return Monster;
