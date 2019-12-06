@@ -22,6 +22,8 @@ export function update(data: IDuelSocketCommand, io: any) {
       switch (data.command) {
         case Command.RESET_TO_ATTRACT:
           game = null;
+          player0Ready = false;
+          player1Ready = false;
           resp = getResponse(PageState.ATTRACT, null, -1, data);
           break;
         case Command.GO_TO_STAGING:
