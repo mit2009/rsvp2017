@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import * as socketio from "socket.io-client";
 
 import { socketIp } from "../config";
-import { IGameRenderData } from "../server/api/gameRenderData";
+import { IGameRenderData, TeamColor } from "../server/api/gameRenderData";
 import { Command, DuelPlayer, IDuelSocketCommand, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
 import { GameApp } from "./components/game";
 
@@ -11,7 +11,7 @@ const SOCKET_URL = socketIp;
 const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
 
 // DEBUG PAGE START
-const pageStart = PageState.PLAYING;
+const pageStart = PageState.ATTRACT;
 
 export interface IDuelPageState extends IDuelStateSocketData { }
 
@@ -55,13 +55,18 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         switch (this.state.pageState) {
             case PageState.ATTRACT:
                 console.log("In Attract");
-                html = <div className="attract">attract</div>;
+                html = <div className="attract" />;
                 break;
 
             case PageState.STAGING:
                 html = (
-                    <div className="staging">
+                    <div
+                        className={`staging ${TeamColor[this.state.player1Color].toLowerCase()}-vs-${TeamColor[
+                            this.state.player2Color
+                        ].toLowerCase()}`}
+                    >
                         <div>staging</div>
+                        {JSON.stringify(this.state)}
                         <div>
                             {this.state.player1Ready}
                             <div>Press the button...</div>
@@ -102,7 +107,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 console.log("Scoring");
                 break;
         }
-        return <div>{html}</div>;
+        return html;
     }
 
     private gameController = (event: any) => {

@@ -1,5 +1,4 @@
 import { Bullet } from "./duelBullet";
-import { Bullet as OldBullet } from "./bullet";
 import { Player } from "./duelPlayer";
 import { Monster } from "./duelMonster";
 import {
@@ -27,13 +26,11 @@ function singleSoundClip(resourceId: string) {
   } as ISoundClip;
 }
 
-const gameTimeInMilliseconds = 1000 * 60;
-
-const baseLevelScore = 100;
-const deltaLevelScore = 50;
 const hitOtherPlayerScore = 25;
 const enemyBonusScore = 50;
 const hitByMonsterScore = 5;
+
+const gameDurationInMilliseconds = 1000 * 60;
 
 export class Duel {
   countDown: number;
@@ -44,13 +41,13 @@ export class Duel {
   levelData: LevelDuelData;
   playSound: ISoundClip[] = [];
   levelNumber: number;
-  endTime: number;
 
   gameCommand: GameCommand;
   nextCommand: GameCommand;
   allowSending: boolean;
 
   final: boolean;
+  endTime: number;
 
   constructor(player0: TeamColor, player1: TeamColor, levelNumber: number) {
     this.levelData = getLevelData(levelNumber);
@@ -68,7 +65,7 @@ export class Duel {
   start() {
     const startTime = Date.now();
     this.lastUpdated = startTime;
-    this.endTime = startTime + gameTimeInMilliseconds;
+    this.endTime = startTime + gameDurationInMilliseconds;
     return this.getBlob();
   }
 
@@ -134,7 +131,6 @@ export class Duel {
   update() {
     const currentTime = Date.now();
     const timeDelta = (currentTime - this.lastUpdated) / 200;
-
     this.players.forEach(p => {
       p.update(timeDelta, this.levelData.mapData);
     });
@@ -176,7 +172,9 @@ export class Duel {
   }
 
   getBlob() {
+    const now = Date.now();
     const output = {
+      timeLeft: Math.floor((this.endTime - now) / 1000),
       currentLevel: this.levelNumber,
       score: -1,
       teamColor: null,

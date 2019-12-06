@@ -8,23 +8,19 @@ import axios from "axios";
 import UIfx from "uifx";
 
 const selectionFx = new UIfx("/sounds/selection.mp3", {
-    volume: 1
+    volume: 1,
 });
 const closeFx = new UIfx("/sounds/close.mp3", {
-    volume: 1
+    volume: 1,
 });
 
-import {
-    GameCommand,
-    IGameRenderData,
-    TeamColor
-} from "../server/api/gameRenderData";
+import { GameCommand, IGameRenderData, TeamColor } from "../server/api/gameRenderData";
 
 import { ILeaderboardScore } from "../server/utils/leaderboard";
 import { GameApp } from "./components/game";
 
-import { socketIp } from "../config";
 import * as socketio from "socket.io-client";
+import { socketIp } from "../config";
 
 const SOCKET_URL = socketIp;
 
@@ -36,7 +32,7 @@ enum GameState {
     INSTRUCTIONS,
     NAME_COLLECTION,
     RECAPITULATE,
-    ERROR
+    ERROR,
 }
 
 // DEBUG
@@ -75,23 +71,23 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             if (formattedData.gameCommand === GameCommand.WIN) {
                 this.setState({
                     gameState: GameState.STAGING,
-                    level: formattedData.currentLevel + 1
+                    level: formattedData.currentLevel + 1,
                 });
             } else if (formattedData.gameCommand === GameCommand.FINAL_WIN) {
                 this.setState({
                     finalMessage: "you win",
                     gameState: GameState.NAME_COLLECTION,
-                    score: formattedData.score
+                    score: formattedData.score,
                 });
             } else if (formattedData.gameCommand === GameCommand.MALLOW_DEATH) {
                 this.setState({
                     finalMessage: "game over",
                     gameState: GameState.NAME_COLLECTION,
-                    score: formattedData.score
+                    score: formattedData.score,
                 });
             } else {
                 this.setState({
-                    gameData: formattedData
+                    gameData: formattedData,
                 });
             }
         });
@@ -103,14 +99,14 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             score: 0,
             musicPlaying: !DEBUG ? true : debugMusicPlaying,
             enterKeyIsDown: false,
-            finalMessage: "game over"
+            finalMessage: "game over",
         };
 
         axios
             .get("game/leaderboard")
             .then(res => {
                 this.setState({
-                    leaderboard: res.data
+                    leaderboard: res.data,
                 });
                 console.log(res);
             })
@@ -141,25 +137,23 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                 if (this.state.gameState === GameState.ATTRACT) {
                     this.setState(
                         {
-                            enterKeyIsDown: true
+                            enterKeyIsDown: true,
                         },
-                        this.handleEnterGame
+                        this.handleEnterGame,
                     );
-                } else if (
-                    this.state.gameState === GameState.CHOOSE_CHARACTER
-                ) {
+                } else if (this.state.gameState === GameState.CHOOSE_CHARACTER) {
                     this.setState(
                         {
-                            enterKeyIsDown: true
+                            enterKeyIsDown: true,
                         },
-                        this.handleCharacterSelect(TeamColor.BLUE)
+                        this.handleCharacterSelect(TeamColor.BLUE),
                     );
                 } else if (this.state.gameState === GameState.STAGING) {
                     this.setState(
                         {
-                            enterKeyIsDown: true
+                            enterKeyIsDown: true,
                         },
-                        this.handleStart
+                        this.handleStart,
                     );
                 } else if (this.state.gameState === GameState.NAME_COLLECTION) {
                     this.handleNameSubmit();
@@ -168,19 +162,11 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         }
     };
 
-    private calcOctant(
-        fingerX: number,
-        fingerY: number,
-        centerX: number,
-        centerY: number
-    ) {
+    private calcOctant(fingerX: number, fingerY: number, centerX: number, centerY: number) {
         const threshold = 100;
         const deltaX = fingerX - centerX;
         const deltaY = fingerY - centerY;
-        if (
-            Math.pow(deltaX, 2) + Math.pow(deltaY, 2) <
-            Math.pow(threshold, 2)
-        ) {
+        if (Math.pow(deltaX, 2) + Math.pow(deltaY, 2) < Math.pow(threshold, 2)) {
             const angle = Math.atan2(deltaX, deltaY);
             const adjustAngle = angle + 2 * Math.PI + Math.PI / 8;
             const section = Math.floor((adjustAngle / (Math.PI / 4)) % 8);
@@ -202,10 +188,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         const oct = this.calcOctant(
             clientX,
             clientY,
-            $(".mobile-control").offset().left +
-                $(".mobile-control").width() / 2,
-            $(".mobile-control").offset().top +
-                $(".mobile-control").height() / 2
+            $(".mobile-control").offset().left + $(".mobile-control").width() / 2,
+            $(".mobile-control").offset().top + $(".mobile-control").height() / 2,
         );
 
         e.preventDefault();
@@ -277,7 +261,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             this.keyStore[4] = false;
         } else if (event.key === "Enter") {
             this.setState({
-                enterKeyIsDown: false
+                enterKeyIsDown: false,
             });
         }
     };
@@ -303,9 +287,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         let html = <div>Loading...</div>;
         switch (this.state.gameState) {
             case GameState.ATTRACT:
-                const leaderboard = this.state.leaderboard
-                    ? this.state.leaderboard
-                    : [];
+                const leaderboard = this.state.leaderboard ? this.state.leaderboard : [];
                 backgroundImage = "attract";
                 html = (
                     <div className="game-sized-container start-page">
@@ -316,21 +298,10 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                                 <div className="highscores-container">
                                     {leaderboard.map((value, key) => {
                                         return (
-                                            <div
-                                                key={key}
-                                                className="highscore-row"
-                                            >
-                                                <div className="score">
-                                                    {value.score}
-                                                </div>
-                                                <div
-                                                    className={`color color-${TeamColor[
-                                                        value.team
-                                                    ].toLowerCase()}`}
-                                                />
-                                                <div className="name">
-                                                    {value.name}
-                                                </div>
+                                            <div key={key} className="highscore-row">
+                                                <div className="score">{value.score}</div>
+                                                <div className={`color color-${TeamColor[value.team].toLowerCase()}`} />
+                                                <div className="name">{value.name}</div>
                                             </div>
                                         );
                                     })}
@@ -338,17 +309,14 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                             </div>
                         </div>
                         <div className="button-container">
-                            <button
-                                onClick={this.handleEnterGame}
-                                className="big-pushy play-btn"
-                            >
+                            <button onClick={this.handleEnterGame} className="big-pushy play-btn">
                                 Start Game
                             </button>
                             <button
                                 onClick={() => {
                                     selectionFx.play();
                                     this.setState({
-                                        gameState: GameState.INSTRUCTIONS
+                                        gameState: GameState.INSTRUCTIONS,
                                     });
                                 }}
                                 className="big-pushy instructions-btn"
@@ -366,53 +334,28 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                         <h1>choose your marshmallow</h1>
                         <div className="character-container">
                             <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.ORANGE
-                                )}
+                                onClick={this.handleCharacterSelect(TeamColor.ORANGE)}
                                 className="mallow mallow-orange"
                             />
                             <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.PURPLE
-                                )}
+                                onClick={this.handleCharacterSelect(TeamColor.PURPLE)}
                                 className="mallow mallow-purple"
                             />
                             <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.SILVER
-                                )}
+                                onClick={this.handleCharacterSelect(TeamColor.SILVER)}
                                 className="mallow mallow-silver"
                             />
+                            <div onClick={this.handleCharacterSelect(TeamColor.BLUE)} className="mallow mallow-blue" />
                             <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.BLUE
-                                )}
-                                className="mallow mallow-blue"
-                            />
-                            <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.YELLOW
-                                )}
+                                onClick={this.handleCharacterSelect(TeamColor.YELLOW)}
                                 className="mallow mallow-yellow"
                             />
+                            <div onClick={this.handleCharacterSelect(TeamColor.PINK)} className="mallow mallow-pink" />
                             <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.PINK
-                                )}
-                                className="mallow mallow-pink"
-                            />
-                            <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.GREEN
-                                )}
+                                onClick={this.handleCharacterSelect(TeamColor.GREEN)}
                                 className="mallow mallow-green"
                             />
-                            <div
-                                onClick={this.handleCharacterSelect(
-                                    TeamColor.RED
-                                )}
-                                className="mallow mallow-red"
-                            />
+                            <div onClick={this.handleCharacterSelect(TeamColor.RED)} className="mallow mallow-red" />
                         </div>
                     </div>
                 );
@@ -426,10 +369,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                         </h1>
                         <div className="button-container">
                             <div>
-                                <button
-                                    className="big-pushy"
-                                    onClick={this.handleStart}
-                                >
+                                <button className="big-pushy" onClick={this.handleStart}>
                                     Start Level
                                 </button>
                             </div>
@@ -451,10 +391,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                                 value={this.state.nameValue}
                                 onChange={this.handleNameChange}
                             />
-                            <button
-                                className="big-pushy"
-                                onClick={this.handleNameSubmit}
-                            >
+                            <button className="big-pushy" onClick={this.handleNameSubmit}>
                                 Submit
                             </button>
                         </div>
@@ -479,9 +416,8 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                         <h1>Deep within the Candy Cosmos...</h1>
                         <h2>The 2.009 Marshmallows need your help!</h2>
                         <p>
-                            Move your mallow around the Graham Cracker Islands
-                            and clear any Monster Munchkins that may be lurking.
-                            And who knows! You might just be a hero.
+                            Move your mallow around the Graham Cracker Islands and clear any Monster Munchkins that may
+                            be lurking. And who knows! You might just be a hero.
                         </p>
                         <p>What adventures await them next?</p>
                         <div className="button-container">
@@ -489,7 +425,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
                                 onClick={() => {
                                     closeFx.play();
                                     this.setState({
-                                        gameState: GameState.ATTRACT
+                                        gameState: GameState.ATTRACT,
                                     });
                                 }}
                                 className="big-pushy play-btn"
@@ -529,16 +465,14 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
 
     private handleRestart = () => {
         this.setState({
-            gameState: GameState.STAGING
+            gameState: GameState.STAGING,
         });
     };
 
     private handleNameChange(event: any) {
-        const nameValue = event.target.value
-            .replace(/[^A-Za-z0-9]/g, "")
-            .substring(0);
+        const nameValue = event.target.value.replace(/[^A-Za-z0-9]/g, "").substring(0);
         this.setState({
-            nameValue
+            nameValue,
         });
     }
 
@@ -555,7 +489,7 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             .then((res: any) => {
                 this.setState({
                     guid: res.data.guid,
-                    gameState: GameState.CHOOSE_CHARACTER
+                    gameState: GameState.CHOOSE_CHARACTER,
                 });
             })
             .catch((err: any) => console.log(err));
@@ -569,17 +503,13 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
         clearInterval(this.timer);
         this.timer = global.setInterval(() => {
             if (this.state.gameState === GameState.PLAYING) {
-                this.socket.emit(
-                    "getUpdate",
-                    this.state.guid,
-                    ...this.keyStore
-                );
+                this.socket.emit("getUpdate", this.state.guid, ...this.keyStore);
                 this.keyStore[4] = false;
             }
         }, 80);
 
         this.setState({
-            gameState: GameState.PLAYING
+            gameState: GameState.PLAYING,
         });
     };
 
@@ -589,13 +519,13 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             axios
                 .post("/game/playername", {
                     guid: this.state.guid,
-                    playerName: this.state.nameValue
+                    playerName: this.state.nameValue,
                 })
                 .then((res: any) => {
                     this.setState({
                         leaderboard: res.data.leaderboard,
                         score: res.data.score,
-                        gameState: GameState.ATTRACT
+                        gameState: GameState.ATTRACT,
                     });
                 })
                 .catch((err: any) => console.log(err));
@@ -608,13 +538,13 @@ export class GamePage extends React.PureComponent<{}, IGamePageState> {
             axios
                 .post("/game/team", {
                     teamColor: color,
-                    guid: this.state.guid
+                    guid: this.state.guid,
                 })
                 .then((res: any) => {
                     console.log(res);
 
                     this.setState({
-                        gameState: GameState.STAGING
+                        gameState: GameState.STAGING,
                     });
                 })
                 .catch((err: any) => console.log(err));
