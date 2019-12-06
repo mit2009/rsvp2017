@@ -66,13 +66,16 @@ export function update(data: IDuelSocketCommand, io: any) {
                     resp = getResponse(PageState.STAGING, null, -1);
                     break;
                 case Command.UPDATE_CONTROLS:
+                    game.updateControl(data.user, data.params.controls);
                     break;
                 default:
                     break;
             }
     }
     console.log("This is a response:", resp);
-    io.emit("duelResponse", resp);
+    if (resp != null) {
+        io.emit("duelResponse", resp);
+    }
 }
 
 function getResponse(
