@@ -56,7 +56,7 @@ export class Player {
         this.playerNumber = playerNumber;
 
         this.lastFired = -1;
-        this.score = 0;
+        this.score = 500;
 
         this.heading = heading;
     }
