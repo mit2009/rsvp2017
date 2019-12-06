@@ -41,13 +41,29 @@ export function update(data: IDuelSocketCommand, io: any) {
           );
           break;
         case Command.GO_TO_PLAYING:
-          resp = getResponse(PageState.PLAYING, game.start(), -1, data);
+          if (game != null) {
+            resp = getResponse(PageState.PLAYING, game.start(), -1, data);
+          }
           break;
         case Command.GET_FRAME:
-          resp = getResponse(PageState.PLAYING, game.update(), -1, data);
+          if (game != null) {
+            const frame = game.update();
+            if (frame.done) {
+              resp = getResponse(PageState.SCORING, frame.blob, -1, data);
+            } else {
+              resp = getResponse(PageState.PLAYING, frame.blob, -1, data);
+            }
+          }
           break;
         case Command.GO_TO_SCORING:
-          resp = getResponse(PageState.SCORING, game.update(), -1, data);
+          if (game != null) {
+            resp = getResponse(
+              PageState.SCORING,
+              game.update(true).blob,
+              -1,
+              data
+            );
+          }
           break;
         default:
           break;
@@ -67,13 +83,14 @@ export function update(data: IDuelSocketCommand, io: any) {
               if (player1Ready == false) {
                 resp = getResponse(PageState.STAGING, null, -1, data);
               }
-
               player1Ready = true;
               break;
           }
           break;
         case Command.UPDATE_CONTROLS:
-          game.updateControl(data.user, data.params.controls);
+          if (game != null) {
+            game.updateControl(data.user, data.params.controls);
+          }
           break;
         default:
           break;
