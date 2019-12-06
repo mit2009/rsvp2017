@@ -16,8 +16,8 @@ import { getLevel as getDuelLevel } from "../../server/api/levelDuelData";
 
 const BASE_RESOURCE_URL = "/images/gameAssets/";
 
-const CANVAS_WIDTH = 600;
-const CANVAS_HEIGHT = 600;
+let CANVAS_WIDTH = 600;
+let CANVAS_HEIGHT = 600;
 
 export interface IImageAsset {
     resourceUrl: string;
@@ -154,6 +154,10 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
     public componentDidUpdate() {
         this.canvas = this.canvasRef.current;
+        if (this.props.isDuel) {
+            CANVAS_WIDTH = 1920;
+            CANVAS_HEIGHT = 840;
+        }
 
         if (this.canvas !== null) {
             this.ctx = this.canvas.getContext("2d");
