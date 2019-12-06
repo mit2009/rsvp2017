@@ -36,7 +36,7 @@ export class Duel {
     countDown: number;
     lastUpdated: number;
     players: Player[] = [];
-    bullets: Bullet[];
+    bullets: Bullet[] = [];
     monsters: Monster[];
     levelData: LevelDuelData;
     playSound: ISoundClip[];
@@ -159,6 +159,9 @@ export class Duel {
     }
 
     getBlob() {
+        console.log("bullets:", this.bullets);
+
+        console.log("monsters:", this.monsters);
         const output = {
             currentLevel: -1,
             score: -1,
