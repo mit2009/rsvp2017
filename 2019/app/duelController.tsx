@@ -37,23 +37,26 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
 
     public componentDidMount() {
         socket.on("duelResponse", (data: IDuelStateSocketData) => {
-            if (data.pageState !== PageState.PLAYING) {
-                clearInterval(this.timer);
-            }
+            if (data !== null) {
 
-            if (data !== null && data.gameData == null) {
-                this.setState(previousState => {
-                    const history = [
-                        {
-                            eventName: "response",
-                            message: JSON.stringify(data),
-                        },
-                    ].concat(previousState.history);
-                    return {
-                        history,
-                        historyPointer: 0,
-                    };
-                });
+                if (data.pageState !== PageState.PLAYING) {
+                    clearInterval(this.timer);
+                }
+
+                if (data !== null && data.gameData == null) {
+                    this.setState(previousState => {
+                        const history = [
+                            {
+                                eventName: "response",
+                                message: JSON.stringify(data),
+                            },
+                        ].concat(previousState.history);
+                        return {
+                            history,
+                            historyPointer: 0,
+                        };
+                    });
+                }
             }
         })
     }
