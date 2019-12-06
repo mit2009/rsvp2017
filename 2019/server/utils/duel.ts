@@ -47,6 +47,7 @@ export class Duel {
   allowSending: boolean;
 
   final: boolean;
+  started: boolean = false;
   endTime: number;
 
   constructor(player0: TeamColor, player1: TeamColor, levelNumber: number) {
@@ -66,6 +67,7 @@ export class Duel {
     const startTime = Date.now();
     this.lastUpdated = startTime;
     this.endTime = startTime + gameDurationInMilliseconds;
+    this.started = true;
     return this.getBlob();
   }
 
@@ -125,7 +127,9 @@ export class Duel {
   }
 
   updateControl(user: DuelPlayer, controls: boolean[]) {
-    this.players[user].updateControls(controls);
+      if (this.started) {
+          this.players[user].updateControls(controls);
+      }
   }
 
   update(final = false) {
