@@ -39,7 +39,7 @@ export class Duel {
     bullets: Bullet[] = [];
     monsters: Monster[];
     levelData: LevelDuelData;
-    playSound: ISoundClip[];
+    playSound: ISoundClip[] = [];
     levelNumber: number;
 
     gameCommand: GameCommand;
