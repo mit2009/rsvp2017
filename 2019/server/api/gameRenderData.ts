@@ -26,6 +26,7 @@ export interface IShape {
 
 export interface IRenderableImage {
     pos: IShape;
+    score?: number;
     resourceId: string;
 }
 
@@ -43,6 +44,7 @@ export enum GameCommand {
 }
 
 export interface IGameRenderData {
+    timeLeft?: number;
     currentLevel: number;
     score: number;
     teamColor: TeamColor;

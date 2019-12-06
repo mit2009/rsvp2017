@@ -16,7 +16,6 @@ const pageStart = PageState.PLAYING;
 export interface IDuelPageState extends IDuelStateSocketData { }
 
 export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
-
     private playerId: DuelPlayer;
     private keyStore: boolean[] = [false, false, false, false, false];
 
@@ -81,7 +80,18 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 break;
 
             case PageState.PLAYING:
-                html = <GameApp isDuel={true} gameData={this.state.gameData} />;
+                html = (
+                    <div>
+                        {this.state.gameData && (
+                            <>
+                                <div>Player 0{this.state.gameData.imagesToRender.player1.score}</div>
+                                <div>Player 1{this.state.gameData.imagesToRender.player2.score}</div>
+                                <div>Time{this.state.gameData.timeLeft}</div>
+                                <GameApp isDuel={true} gameData={this.state.gameData} />;
+                            </>
+                        )}
+                    </div>
+                );
                 break;
 
             case PageState.SCORING:
@@ -153,7 +163,6 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
             },
         });
     };
-
 }
 
 ReactDOM.render(<DuelPage />, document.getElementById("duel-content"));

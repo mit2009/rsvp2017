@@ -71,7 +71,7 @@ export class Bullet {
 
         const ymapY = Math.floor(
             (this.ycor + (bulletHeight / 2) * Math.sign(this.deltaY)) /
-                tileHeight
+            tileHeight
         );
         const ymapX = Math.floor(this.xcor / tileWidth);
         if (

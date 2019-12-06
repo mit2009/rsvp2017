@@ -53,6 +53,7 @@ export class Duel {
     constructor(player0: TeamColor, player1: TeamColor, levelNumber: number) {
         this.levelData = getLevelData(levelNumber);
         this.levelNumber = levelNumber;
+        this.lastUpdated = Date.now();
         const { playerLocation, enemyLocation } = this.levelData;
         this.players.push(
             new Player(playerLocation[0].x, playerLocation[0].y, 0, player0, 0)
@@ -140,7 +141,7 @@ export class Duel {
     update() {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 200;
-
+        console.log("yourmom2, ", timeDelta)
         this.players.forEach(p => {
             p.update(timeDelta, this.levelData.mapData);
         });
