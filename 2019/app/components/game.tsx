@@ -331,9 +331,14 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
                     const tileId = "tile" + tileValue;
                     const imageData = this.imageStore[tileId];
-                    const graphicHeightOffset = this.assets.images[tileId].heightOffset
+                    let graphicHeightOffset = this.assets.images[tileId].heightOffset
                         ? this.assets.images[tileId].heightOffset
                         : 0;
+
+                    // HACK
+                    if (this.props.isDuel) {
+                        graphicHeightOffset *= 2;
+                    }
 
                     if (tileId !== "tile1") {
                         let th = !this.props.isDuel ? tileHeight : tileDuelHeight;
