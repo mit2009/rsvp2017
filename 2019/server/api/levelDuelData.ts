@@ -2,7 +2,7 @@ import { IGameRenderData, TeamColor } from "./gameRenderData";
 import { Coordinate } from "./levelData";
 
 export interface ILevelMap {
-    [level: number]: number[];
+  [level: number]: number[];
 }
 
 // Tile Definitions
@@ -45,63 +45,431 @@ export const walls: number[] = [3, 4];
 export const voids: number[] = [1];
 
 export const levelMap: ILevelMap = {
-    1:
-        // tslint:disable-next-line:prettier
-        [1, 1, 4, 18, 18, 4, 4, 19, 4, 4, 4, 18, 18, 4, 4, 4, 4, 18, 18, 4, 4, 4, 19, 4, 4, 18, 18, 4, 1, 1, 1, 4, 4, 2, 2, 2, 2, 17, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 13, 2, 2, 2, 2, 4, 4, 1, 4, 4, 2, 2, 2, 9, 2, 17, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 13, 2, 2, 2, 2, 2, 4, 4, 4, 2, 2, 2, 2, 2, 2, 17, 2, 2, 2, 2, 2, 2, 19, 17, 17, 2, 2, 17, 17, 17, 19, 2, 2, 2, 5, 2, 2, 4, 4, 2, 2, 2, 2, 2, 2, 17, 2, 2, 2, 2, 6, 2, 17, 2, 2, 6, 2, 2, 2, 2, 17, 2, 2, 2, 2, 2, 2, 4, 18, 2, 2, 2, 2, 2, 2, 17, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 11, 2, 17, 2, 2, 2, 2, 2, 2, 18, 18, 2, 2, 2, 2, 2, 2, 17, 2, 11, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 17, 2, 2, 2, 2, 2, 2, 18, 4, 2, 2, 2, 2, 2, 2, 17, 2, 2, 2, 2, 6, 2, 2, 17, 2, 6, 2, 2, 2, 2, 17, 2, 2, 2, 2, 2, 2, 4, 4, 2, 2, 5, 2, 2, 2, 19, 17, 17, 17, 2, 2, 17, 17, 19, 2, 2, 2, 2, 2, 2, 17, 2, 2, 2, 2, 2, 2, 4, 4, 4, 2, 2, 2, 2, 2, 13, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 17, 2, 7, 2, 2, 2, 4, 4, 1, 4, 4, 2, 2, 2, 2, 13, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 10, 17, 2, 2, 2, 2, 4, 4, 1, 1, 1, 4, 18, 18, 4, 4, 19, 4, 4, 4, 18, 18, 4, 4, 4, 4, 18, 18, 4, 4, 4, 19, 4, 4, 18, 18, 4, 1, 1],
+  1:
+    // tslint:disable-next-line:prettier
+    [
+      1,
+      1,
+      4,
+      18,
+      18,
+      4,
+      4,
+      19,
+      4,
+      4,
+      4,
+      18,
+      18,
+      4,
+      4,
+      4,
+      4,
+      18,
+      18,
+      4,
+      4,
+      4,
+      19,
+      4,
+      4,
+      18,
+      18,
+      4,
+      1,
+      1,
+      1,
+      4,
+      4,
+      2,
+      2,
+      2,
+      2,
+      17,
+      8,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      13,
+      2,
+      2,
+      2,
+      2,
+      4,
+      4,
+      1,
+      4,
+      4,
+      2,
+      2,
+      2,
+      9,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      13,
+      2,
+      2,
+      2,
+      2,
+      2,
+      4,
+      4,
+      4,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      19,
+      17,
+      17,
+      2,
+      2,
+      17,
+      17,
+      17,
+      19,
+      2,
+      2,
+      2,
+      5,
+      2,
+      2,
+      4,
+      4,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      6,
+      2,
+      17,
+      2,
+      2,
+      6,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      4,
+      18,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      11,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      18,
+      18,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      11,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      18,
+      4,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      6,
+      2,
+      2,
+      17,
+      2,
+      6,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      4,
+      4,
+      2,
+      2,
+      5,
+      2,
+      2,
+      2,
+      19,
+      17,
+      17,
+      17,
+      2,
+      2,
+      17,
+      17,
+      19,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      4,
+      4,
+      4,
+      2,
+      2,
+      2,
+      2,
+      2,
+      13,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      17,
+      2,
+      7,
+      2,
+      2,
+      2,
+      4,
+      4,
+      1,
+      4,
+      4,
+      2,
+      2,
+      2,
+      2,
+      13,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      10,
+      17,
+      2,
+      2,
+      2,
+      2,
+      4,
+      4,
+      1,
+      1,
+      1,
+      4,
+      18,
+      18,
+      4,
+      4,
+      19,
+      4,
+      4,
+      4,
+      18,
+      18,
+      4,
+      4,
+      4,
+      4,
+      18,
+      18,
+      4,
+      4,
+      4,
+      19,
+      4,
+      4,
+      18,
+      18,
+      4,
+      1,
+      1
+    ]
 };
 
 // convert to a sensible grid format
 function toMatrix(arr: number[], width: number) {
-    return arr.reduce((rows, key, index) => {
-        console.log(key);
-        let k;
-        if (key === 13 || key === 14) {
-            k = 2;
-        } else if (key >= 15 && key <= 19) {
-            k = 4;
-        } else {
-            k = key;
-        }
-        return (index % width === 0 ? rows.push([k]) : rows[rows.length - 1].push(k)) && rows;
-    }, []);
+  return arr.reduce((rows, key, index) => {
+    console.log(key);
+    let k;
+    if (key === 13 || key === 14) {
+      k = 2;
+    } else if (key >= 15 && key <= 19) {
+      k = 4;
+    } else {
+      k = key;
+    }
+    return (
+      (index % width === 0 ? rows.push([k]) : rows[rows.length - 1].push(k)) &&
+      rows
+    );
+  }, []);
 }
 
 function toMatrixTexture(arr: number[], width: number) {
-    return arr.reduce((rows, key, index) => {
-        return (index % width === 0 ? rows.push([key]) : rows[rows.length - 1].push(key)) && rows;
-    }, []);
+  return arr.reduce((rows, key, index) => {
+    return (
+      (index % width === 0
+        ? rows.push([key])
+        : rows[rows.length - 1].push(key)) && rows
+    );
+  }, []);
 }
 
 export function getLevel(level: number) {
-    return toMatrix(levelMap[level], gridWidth);
+  return toMatrix(levelMap[level], gridWidth);
 }
 
 export function getLevelTexture(level: number) {
-    return toMatrixTexture(levelMap[level], gridWidth);
+  return toMatrixTexture(levelMap[level], gridWidth);
 }
 
 export interface LevelDuelData {
-    mapData: number[][];
-    playerLocation: Coordinate[];
-    enemyLocation: Coordinate[];
+  mapData: number[][];
+  playerLocation: Coordinate[];
+  enemyLocation: Coordinate[];
 }
 
 export enum PageState {
-    ATTRACT,
-    STAGING,
-    COUNTDOWN,
-    PLAYING,
-    SCORING,
+  ATTRACT,
+  STAGING,
+  COUNTDOWN,
+  PLAYING,
+  SCORING
 }
 
 export interface IDuelStateSocketData {
-    pageState: PageState;
-    player1Ready?: boolean;
-    player2Ready?: boolean;
-    player1Color?: TeamColor;
-    player2Color?: TeamColor;
-    countDownValue?: number;
-    gameData?: IGameRenderData;
+  pageState: PageState;
+  player1Ready?: boolean;
+  player2Ready?: boolean;
+  player1Color?: TeamColor;
+  player2Color?: TeamColor;
+  countDownValue?: number;
+  gameData?: IGameRenderData;
 }
 
 // export interface Coordinate {
@@ -119,80 +487,80 @@ export interface IDuelStateSocketData {
 // }
 
 export enum Command {
-    RESET_TO_ATTRACT,
-    GO_TO_STAGING,
-    GO_TO_COUNTDOWN,
-    GO_TO_PLAYING,
-    UPDATE_CONTROLS,
-    GET_FRAME,
-    GO_TO_SCORING,
+  RESET_TO_ATTRACT,
+  GO_TO_STAGING,
+  GO_TO_COUNTDOWN,
+  GO_TO_PLAYING,
+  UPDATE_CONTROLS,
+  GET_FRAME,
+  GO_TO_SCORING
 }
 
 export type DuelPlayer = 0 | 1 | -1;
 
 export interface IDuelSocketCommand {
-    user: DuelPlayer;
-    command: Command;
-    params?: {
-        player0Color?: TeamColor;
-        player1Color?: TeamColor;
-        levelNumber?: number;
-        countDownValue?: number;
-        controls?: boolean[];
-    };
+  user: DuelPlayer;
+  command: Command;
+  params?: {
+    player0Color?: TeamColor;
+    player1Color?: TeamColor;
+    levelNumber?: number;
+    countDownValue?: number;
+    controls?: boolean[];
+  };
 }
 
 export function getLevelCount() {
-    return Object.keys(levelMap).length;
+  return Object.keys(levelMap).length;
 }
 
 export function getLevelData(level: number) {
-    const mapData = getLevel(level);
-    const playerLocation = [];
-    const enemyLocation = [];
+  const mapData = getLevel(level);
+  const playerLocation = [];
+  const enemyLocation = [];
 
-    for (let j = 0; j < gridWidth; j++) {
-        for (let i = 0; i < gridHeight; i++) {
-            if (mapData[i][j] === 5) {
-                playerLocation.push({ x: j, y: i, h: 0 });
-                mapData[i][j] = 2;
-            }
-            if (mapData[i][j] === 6) {
-                enemyLocation.push({ x: j, y: i, h: Math.PI, class: 6 });
-                mapData[i][j] = 2;
-            }
-            if (mapData[i][j] === 7) {
-                enemyLocation.push({ x: j, y: i, h: 0, class: 7 });
-                mapData[i][j] = 2;
-            }
-            if (mapData[i][j] === 8) {
-                enemyLocation.push({ x: j, y: i, h: Math.PI / 2, class: 8 });
-                mapData[i][j] = 2;
-            }
-            if (mapData[i][j] === 9) {
-                enemyLocation.push({ x: j, y: i, h: Math.PI, class: 9 });
-                mapData[i][j] = 2;
-            }
-            if (mapData[i][j] === 10) {
-                enemyLocation.push({
-                    x: j,
-                    y: i,
-                    h: (Math.PI * 3) / 2,
-                    class: 10,
-                });
-                mapData[i][j] = 2;
-            }
-            if (mapData[i][j] === 11) {
-                enemyLocation.push({ x: j, y: i, h: 0, class: 11 });
-                mapData[i][j] = 2;
-            }
-        }
+  for (let j = 0; j < gridWidth; j++) {
+    for (let i = 0; i < gridHeight; i++) {
+      if (mapData[i][j] === 5) {
+        playerLocation.push({ x: j, y: i, h: 0 });
+        mapData[i][j] = 2;
+      }
+      if (mapData[i][j] === 6) {
+        enemyLocation.push({ x: j, y: i, h: Math.PI, class: 6 });
+        mapData[i][j] = 2;
+      }
+      if (mapData[i][j] === 7) {
+        enemyLocation.push({ x: j, y: i, h: 0, class: 7 });
+        mapData[i][j] = 2;
+      }
+      if (mapData[i][j] === 8) {
+        enemyLocation.push({ x: j, y: i, h: Math.PI / 2, class: 8 });
+        mapData[i][j] = 2;
+      }
+      if (mapData[i][j] === 9) {
+        enemyLocation.push({ x: j, y: i, h: Math.PI, class: 9 });
+        mapData[i][j] = 2;
+      }
+      if (mapData[i][j] === 10) {
+        enemyLocation.push({
+          x: j,
+          y: i,
+          h: (Math.PI * 3) / 2,
+          class: 10
+        });
+        mapData[i][j] = 2;
+      }
+      if (mapData[i][j] === 11) {
+        enemyLocation.push({ x: j, y: i, h: 0, class: 11 });
+        mapData[i][j] = 2;
+      }
     }
-    // everything is broken fix it
-    //
-    return {
-        mapData,
-        playerLocation,
-        enemyLocation,
-    } as LevelDuelData;
+  }
+  // everything is broken fix it
+  //
+  return {
+    mapData,
+    playerLocation,
+    enemyLocation
+  } as LevelDuelData;
 }

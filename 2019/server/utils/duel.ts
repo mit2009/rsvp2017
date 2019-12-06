@@ -128,8 +128,11 @@ export class Duel {
     this.players[user].updateControls(controls);
   }
 
-  update() {
+  update(final = false) {
     const currentTime = Date.now();
+    if (currentTime > this.endTime || final) {
+      return { done: true, blob: this.getBlob() };
+    }
     const timeDelta = (currentTime - this.lastUpdated) / 200;
     this.players.forEach(p => {
       p.update(timeDelta, this.levelData.mapData);
@@ -168,7 +171,7 @@ export class Duel {
 
     this.lastUpdated = currentTime;
     const blob = this.getBlob();
-    return blob;
+    return { done: false, blob };
   }
 
   getBlob() {
