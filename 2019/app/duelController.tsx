@@ -20,6 +20,7 @@ interface IDuelControllerState {
 
 export class DuelController extends React.PureComponent<{}, IDuelControllerState> {
     private timer: NodeJS.Timer;
+    private messageInput: HTMLInputElement;
 
     constructor(props: any) {
         super(props);
@@ -36,7 +37,7 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
 
     public render() {
         return (
-            <div>
+            <div className="dashboard">
                 <div className="manual-input">
                     <input
                         className="event-textbox"
@@ -50,6 +51,7 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
                         value={this.state.textValue}
                         onChange={this.handleChange}
                         onKeyDown={this.keyPress}
+                        ref={(input) => { this.messageInput = input; }}
                     />
                     <div className="history">
                         {this.state.history.map((value, key) => {
@@ -70,7 +72,7 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
     private renderButtons() {
         return (
             <div>
-                {this.renderButton("go ATTRACT", `{"user":-1, "command":2, "params":{"countDownValue":3}}`)}
+                {this.renderButton("go ATTRACT", `{"user":-1, "command":0}`)}
                 {this.renderButton(
                     "go STAGING (blue/red)",
                     `{"user":-1, "command":1, "params": {"player0Color": 5, "player1Color": 1, "levelNumber":1}}`,
@@ -120,7 +122,8 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
                     this.loadQuickCommand(message);
                 }}
             >
-                {title}
+                <div className="title">{title}</div>
+                <div className="message">{message}</div>
             </button>
         );
     }
@@ -129,6 +132,7 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
         this.setState({
             textValue: message,
         });
+        this.messageInput.focus();
     }
 
     private keyPress(event: React.KeyboardEvent<HTMLInputElement>) {

@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import * as socketio from "socket.io-client";
 
 import { socketIp } from "../config";
-import { IGameRenderData } from "../server/api/gameRenderData";
+import { IGameRenderData, TeamColor } from "../server/api/gameRenderData";
 import { Command, DuelPlayer, IDuelSocketCommand, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
 import { GameApp } from "./components/game";
 
@@ -55,12 +55,16 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         switch (this.state.pageState) {
             case PageState.ATTRACT:
                 console.log("In Attract");
-                html = <div className="attract" />
+                html = <div className="attract" />;
                 break;
 
             case PageState.STAGING:
                 html = (
-                    <div className="staging">
+                    <div
+                        className={`staging ${TeamColor[this.state.player1Color].toLowerCase()}-vs-${TeamColor[
+                            this.state.player2Color
+                        ].toLowerCase()}`}
+                    >
                         <div>staging</div>
                         {JSON.stringify(this.state)}
                         <div>

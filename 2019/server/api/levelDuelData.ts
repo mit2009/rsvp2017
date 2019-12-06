@@ -98,6 +98,8 @@ export interface IDuelStateSocketData {
     pageState: PageState;
     player1Ready?: boolean;
     player2Ready?: boolean;
+    player1Color?: TeamColor;
+    player2Color?: TeamColor;
     countDownValue?: number;
     gameData?: IGameRenderData;
 }
