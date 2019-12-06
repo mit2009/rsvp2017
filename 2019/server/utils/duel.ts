@@ -31,6 +31,7 @@ const baseLevelScore = 100;
 const deltaLevelScore = 50;
 const hitOtherPlayerScore = 75;
 const enemyBonusScore = 50;
+const hitByMonsterScore = 25;
 const bulletPenaltyScore = -1;
 
 export class Duel {
@@ -98,9 +99,7 @@ export class Duel {
                                 this.bulletEntityOverlap(b, p) &&
                                 p.playerNumber != firedBy
                             ) {
-                                this.players[
-                                    firedBy
-                                ].score += hitOtherPlayerScore;
+                                p.score -= hitByMonsterScore;
                                 return false;
                             }
                             return true;
