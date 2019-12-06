@@ -81,9 +81,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 break;
 
             case PageState.PLAYING:
-                console.log(this.state.gameData);
                 html = <GameApp isDuel={true} gameData={this.state.gameData} />;
-                console.log("In Playing");
                 break;
 
             case PageState.SCORING:
