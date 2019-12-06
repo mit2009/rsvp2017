@@ -30,7 +30,7 @@ export class Player {
 
     private teamColor: TeamColor;
 
-    private playerNumber: number;
+    public playerNumber: number;
 
     private up: boolean;
     private down: boolean;
@@ -60,9 +60,10 @@ export class Player {
     }
 
     fireBullet() {
-        if (Date.now() - this.lastFired > this.fireFrequency) {
+        if (Date.now() - this.lastFired > this.fireFrequency && this.fire) {
             this.lastFired = Date.now();
             const bulletOffset = 15;
+            this.fire = false;
             return new Bullet(
                 this.xcor + bulletOffset * Math.sin(this.heading),
                 this.ycor - bulletOffset * Math.cos(this.heading),

@@ -29,6 +29,7 @@ function singleSoundClip(resourceId: string) {
 
 const baseLevelScore = 100;
 const deltaLevelScore = 50;
+const hitOtherPlayerScore = 75;
 const enemyBonusScore = 50;
 const bulletPenaltyScore = -1;
 
@@ -89,26 +90,45 @@ export class Duel {
         const bullets: Bullet[] = [];
         for (let b of this.bullets) {
             if (b.update(timeDelta, this.levelData.mapData)) {
-                // if (b.getFiredByPlayer()) {
-                //     const aliveMonsters = this.monsters.filter(
-                //         m => !this.bulletEntityOverlap(b, m)
-                //     );
-                //     if (aliveMonsters.length != this.monsters.length) {
-                //         this.score +=
-                //             enemyBonusScore *
-                //             (this.monsters.length - aliveMonsters.length);
-                //         this.monsters = aliveMonsters;
-                //         this.playSound.push(singleSoundClip(SOUNDS.enemyHurt));
-                //     } else {
-                //         bullets.push(b);
-                //     }
-                // } else if (this.bulletEntityOverlap(b, this.player)) {
-                //     this.nextCommand = GameCommand.MALLOW_HURT;
-                //     this.playSound.push(singleSoundClip(SOUNDS.playerHurt));
-                //     this.livesLeft -= 1;
-                // } else {
-                //     bullets.push(b);
-                // }
+                const firedBy = b.getFiredBy();
+                if (firedBy == -1) {
+                    if (
+                        this.players.every((p: Player) => {
+                            if (
+                                this.bulletEntityOverlap(b, p) &&
+                                p.playerNumber != firedBy
+                            ) {
+                                this.players[
+                                    firedBy
+                                ].score += hitOtherPlayerScore;
+                                return false;
+                            }
+                            return true;
+                        })
+                    ) {
+                        bullets.push(b);
+                    }
+                } else {
+                    const aliveMonsters = this.monsters.filter(
+                        m => !this.bulletEntityOverlap(b, m)
+                    );
+                    if (aliveMonsters.length != this.monsters.length) {
+                        this.monsters = aliveMonsters;
+                        this.players[firedBy].score +=
+                            (this.monsters.length - aliveMonsters.length) *
+                            enemyBonusScore;
+                        this.playSound.push(singleSoundClip(SOUNDS.enemyHurt));
+                    } else if (
+                        this.bulletEntityOverlap(
+                            b,
+                            this.players[(firedBy + 1) % 2]
+                        )
+                    ) {
+                        this.players[firedBy].score += hitOtherPlayerScore;
+                    } else {
+                        bullets.push(b);
+                    }
+                }
             }
         }
         this.bullets = bullets;
@@ -140,6 +160,12 @@ export class Duel {
             });
         });
         this.updateBullets(timeDelta);
+        this.players.forEach(p => {
+            const bullet = p.fireBullet();
+            if (bullet) {
+                this.bullets.push(bullet);
+            }
+        });
 
         if (this.gameCommand != null) {
             if (this.allowSending) {
@@ -153,7 +179,6 @@ export class Duel {
 
         this.lastUpdated = currentTime;
         const blob = this.getBlob();
-        console.log(blob.bullets, blob.monsters);
         return blob;
     }
 
