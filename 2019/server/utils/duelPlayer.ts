@@ -234,7 +234,7 @@ export class Player {
                 h: playerHeight,
                 color: this.teamColor
             } as IShape,
-            resourceId: "player",
+            resourceId: "player1",
             score: this.score
         } as IRenderableImage;
     }
