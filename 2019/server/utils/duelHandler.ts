@@ -77,15 +77,15 @@ export function update(data: IDuelSocketCommand, io: any) {
           switch (data.user) {
             case 0:
               if (player0Ready == false) {
-                resp = getResponse(PageState.STAGING, null, -1, data);
+                  player0Ready = true;
+                  resp = getResponse(PageState.STAGING, null, -1, data);
               }
-              player0Ready = true;
               break;
             case 1:
               if (player1Ready == false) {
-                resp = getResponse(PageState.STAGING, null, -1, data);
+                  player1Ready = true;
+                  resp = getResponse(PageState.STAGING, null, -1, data);
               }
-              player1Ready = true;
               break;
           }
           break;
