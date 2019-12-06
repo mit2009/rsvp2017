@@ -79,7 +79,7 @@ export class Duel {
         this.incrementalUpdateBullets(timeDelta - counter);
     }
 
-    bulletEntityOverlap(b: any, o: any, overlap: number = 22.5) {
+    bulletEntityOverlap(b: any, o: any, overlap: number = 45) {
         return (
             Math.abs(b.xcor - o.xcor) < overlap &&
             Math.abs(b.ycor - o.ycor) < overlap
@@ -151,7 +151,7 @@ export class Duel {
                 this.bullets.push(bullet);
             }
             return this.players.every(p => {
-                const collide = this.bulletEntityOverlap(m, p);
+                const collide = this.bulletEntityOverlap(m, p, 60);
                 if (collide) {
                     p.score += enemyBonusScore;
                     return false;

@@ -147,9 +147,6 @@ export class Player {
         if (up || down) {
             this.xcor += xVel;
             this.ycor += yVel;
-        } else if (left || right) {
-            this.xcor += xVel / 2;
-            this.ycor += yVel / 2;
         }
 
         const mapY = Math.floor(this.ycor / tileHeight);
@@ -183,8 +180,8 @@ export class Player {
                 const wallY = (mapY + j + 0.5) * tileHeight;
                 const wallX = (mapX + i + 0.5) * tileWidth;
                 if (
-                    Math.abs(this.ycor - wallY) < 30 &&
-                    Math.abs(this.xcor - wallX) < 30
+                    Math.abs(this.ycor - wallY) < 60 &&
+                    Math.abs(this.xcor - wallX) < 60
                 ) {
                     if (j && i) {
                         if (Math.sign(yVel) == j && Math.sign(xVel) == i) {
