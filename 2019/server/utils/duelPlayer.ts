@@ -24,7 +24,7 @@ export class Player {
 
     public score: number;
 
-    private velocity: number = 18;
+    private velocity: number = 35;
     private turningAngle: number = 0.5;
     private fireFrequency: number = 400;
 
@@ -148,6 +148,13 @@ export class Player {
             this.xcor += xVel;
             this.ycor += yVel;
         }
+
+        // OOoo gross
+        if (left ? !right : right) {
+            this.xcor += xVel * 0.5;
+            this.ycor += yVel * 0.5;
+        }
+
 
         const mapY = Math.floor(this.ycor / tileHeight);
         const mapX = Math.floor(this.xcor / tileWidth);
