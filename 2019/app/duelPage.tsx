@@ -86,15 +86,34 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
 
             case PageState.PLAYING:
                 html = (
-                    <div className="container">
+                    <div className="container playing">
                         {this.state.gameData && (
                             <>
-                                <div>Player 0: {this.state.gameData.imagesToRender.player1.score}</div>
-                                <div>Player 1: {this.state.gameData.imagesToRender.player2.score}</div>
-                                <div>Time{this.state.gameData.timeLeft}</div>
-
+                                <div className="info-container">
+                                    <div className={`p1 mallow-${TeamColor[this.state.gameData.imagesToRender.player1.pos.color].toLowerCase()}`}>
+                                        <div className="mallow" />
+                                        <div className="score-value">
+                                            {this.state.gameData.imagesToRender.player1.score}
+                                        </div>
+                                    </div>
+                                    <div className={`p2 mallow-${TeamColor[this.state.gameData.imagesToRender.player2.pos.color].toLowerCase()}`}>
+                                        <div className="mallow" />
+                                        <div className="score-value">
+                                            {this.state.gameData.imagesToRender.player2.score}
+                                        </div>
+                                    </div>
+                                    <div className="time">
+                                        <div className="time-text">TIME</div>
+                                        <div className="time-value">
+                                            <div className="time-tens">
+                                                {Math.floor((this.state.gameData.timeLeft / 10) % 10)}
+                                            </div>
+                                            <div className="time-ones">{this.state.gameData.timeLeft % 10}</div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="game-canvas-container">
-                                    <GameApp isDuel={true} gameData={this.state.gameData} />;
+                                    <GameApp isDuel={true} gameData={this.state.gameData} />
                                 </div>
                             </>
                         )}
