@@ -14,7 +14,7 @@ let player1Ready = false;
 let resp = null;
 
 export function update(data: IDuelSocketCommand, io: any) {
-    console.log("This is DATA:", data);
+    // console.log("This is DATA:", data);
     resp = null;
     switch (data.user) {
         case -1:
@@ -72,7 +72,7 @@ export function update(data: IDuelSocketCommand, io: any) {
                     break;
             }
     }
-    console.log("This is a response:", resp);
+    // console.log("This is a response:", resp);
     if (resp != null) {
         io.emit("duelResponse", resp);
     }

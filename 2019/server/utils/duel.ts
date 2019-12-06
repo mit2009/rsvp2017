@@ -29,10 +29,9 @@ function singleSoundClip(resourceId: string) {
 
 const baseLevelScore = 100;
 const deltaLevelScore = 50;
-const hitOtherPlayerScore = 75;
+const hitOtherPlayerScore = 25;
 const enemyBonusScore = 50;
-const hitByMonsterScore = 25;
-const bulletPenaltyScore = -1;
+const hitByMonsterScore = 5;
 
 export class Duel {
     countDown: number;
@@ -53,7 +52,6 @@ export class Duel {
     constructor(player0: TeamColor, player1: TeamColor, levelNumber: number) {
         this.levelData = getLevelData(levelNumber);
         this.levelNumber = levelNumber;
-        this.lastUpdated = Date.now();
         const { playerLocation, enemyLocation } = this.levelData;
         this.players.push(
             new Player(playerLocation[0].x, playerLocation[0].y, 0, player0, 0)
@@ -96,10 +94,7 @@ export class Duel {
                 if (firedBy == -1) {
                     if (
                         this.players.every((p: Player) => {
-                            if (
-                                this.bulletEntityOverlap(b, p) &&
-                                p.playerNumber != firedBy
-                            ) {
+                            if (this.bulletEntityOverlap(b, p)) {
                                 p.score -= hitByMonsterScore;
                                 return false;
                             }
@@ -113,10 +108,10 @@ export class Duel {
                         m => !this.bulletEntityOverlap(b, m)
                     );
                     if (aliveMonsters.length != this.monsters.length) {
-                        this.monsters = aliveMonsters;
                         this.players[firedBy].score +=
                             (this.monsters.length - aliveMonsters.length) *
                             enemyBonusScore;
+                        this.monsters = aliveMonsters;
                         this.playSound.push(singleSoundClip(SOUNDS.enemyHurt));
                     } else if (
                         this.bulletEntityOverlap(
@@ -141,7 +136,7 @@ export class Duel {
     update() {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 200;
-        console.log("yourmom2, ", timeDelta)
+
         this.players.forEach(p => {
             p.update(timeDelta, this.levelData.mapData);
         });
@@ -183,9 +178,6 @@ export class Duel {
     }
 
     getBlob() {
-        console.log("bullets:", this.bullets);
-
-        console.log("monsters:", this.monsters);
         const output = {
             currentLevel: this.levelNumber,
             score: -1,

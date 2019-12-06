@@ -12,6 +12,8 @@ import {
     voids
 } from "../api/levelDuelData";
 
+const bulletPenaltyScore = 1;
+
 export class Player {
     private startX: number;
     private startY: number;
@@ -24,7 +26,7 @@ export class Player {
 
     public score: number;
 
-    private velocity: number = 35;
+    private velocity: number = 18;
     private turningAngle: number = 0.5;
     private fireFrequency: number = 400;
 
@@ -64,6 +66,7 @@ export class Player {
             this.lastFired = Date.now();
             const bulletOffset = 15;
             this.fire = false;
+            this.score -= bulletPenaltyScore;
             return new Bullet(
                 this.xcor + bulletOffset * Math.sin(this.heading),
                 this.ycor - bulletOffset * Math.cos(this.heading),
@@ -149,13 +152,6 @@ export class Player {
             this.ycor += yVel;
         }
 
-        // OOoo gross
-        if (left ? !right : right) {
-            this.xcor += xVel * 0.5;
-            this.ycor += yVel * 0.5;
-        }
-
-
         const mapY = Math.floor(this.ycor / tileHeight);
         const mapX = Math.floor(this.xcor / tileWidth);
         const newY = (mapY + 0.5) * tileHeight;
@@ -233,6 +229,10 @@ export class Player {
     }
 
     getBlob() {
+        if (this.score < 0) {
+            this.score = 0;
+        }
+        // console.log("SCORES", this.playerNumber, this.score);
         return {
             pos: {
                 x: this.xcor - playerWidth / 2 + widthOffset,

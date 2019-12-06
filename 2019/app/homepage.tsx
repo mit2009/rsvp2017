@@ -2,6 +2,7 @@
 // import * as ReactDOM from "react-dom";
 import * as $ from "jQuery";
 
+<<<<<<< Updated upstream
 const THRESH = 500;
 const colors = [
     "red",
@@ -24,6 +25,21 @@ const colorOffset: { [key: string]: { [key: string]: number } } = {
     pink: { x: 120, y: 75 }
 };
 const mallowData: any = {};
+=======
+const THRESH = 300;
+const colors = ["red", "orange", "yellow", "green", "blue", "purple", "silver", "pink"];
+const colorOffset: {[key: string]: {[key: string]: number}} = {
+    'red': {x: 0, y: 0},
+    'orange': {x: 0, y: 0},
+    'yellow': {x: 25, y: 19},
+    'green': {x: 0, y: 0},
+    'blue': {x: 0, y: 0},
+    'purple': {x: 0, y: 0},
+    'silver': {x: 0, y: 0},
+    'pink': {x: 0, y: 0}
+}
+const mallowData: any = {}
+>>>>>>> Stashed changes
 
 const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
     const deltaX = Math.abs(x2 - x1);
@@ -106,6 +122,7 @@ document.addEventListener("mousemove", event => {
 
     for (const color of colors) {
         if ($(".mallow-clipped-" + color).length !== 0) {
+<<<<<<< Updated upstream
             $(".mallow-" + color).attr("x", 30);
             $(".mallow-" + color).attr("y", 30);
             // console.log(color, mallowData[color]);
@@ -125,6 +142,21 @@ document.addEventListener("mousemove", event => {
                     1,
                     Math.sin(((distFromMallow / THRESH) * Math.PI) / 2)
                 );
+=======
+
+            $('.mallow-' + color).attr("x", 30);
+            $('.mallow-' + color).attr("y", 30);
+
+            const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left + colorOffset[color].x, mallowData[color].in.top + colorOffset[color].y)
+            // console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
+            // console.log(distFromMallow);
+
+            if (distFromMallow < THRESH) {
+                console.log("here");
+
+                const percentageToMallow = Math.min(1, Math.sin((distFromMallow) / THRESH * Math.PI / 2));
+                // console.log((distFromMallow) / THRESH, Math.pow((distFromMallow) / THRESH, 0.25));
+>>>>>>> Stashed changes
                 $(".mallow-clipped-" + color).attr({
                     x: mallowData[color].diff.left * percentageToMallow,
                     y: mallowData[color].diff.top * percentageToMallow
