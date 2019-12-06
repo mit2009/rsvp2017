@@ -12,6 +12,8 @@ import {
     widthOffset
 } from "../../server/api/levelData";
 
+import { getLevel as getDuelLevel } from "../../server/api/levelDuelData";
+
 const BASE_RESOURCE_URL = "/images/gameAssets/";
 
 const CANVAS_WIDTH = 600;
@@ -37,6 +39,7 @@ export interface IAssets {
 }
 
 export interface IGameAppProps {
+    isDuel?: boolean;
     gameData: IGameRenderData;
     fire?: () => void;
     unfire?: () => void;
@@ -57,6 +60,12 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private assets: IAssets = {
         images: {
             player1: {
+                resourceUrl: "player-%-#.png",
+                loaded: false,
+                hasHeading: true,
+                hasColorVariants: true
+            },
+            player2: {
                 resourceUrl: "player-%-#.png",
                 loaded: false,
                 hasHeading: true,
@@ -277,6 +286,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         const data = this.props.gameData;
 
         // random sound loader goes here for some reason
+
         if (this.props.gameData.playSound.length > 0) {
             for (const sound of this.props.gameData.playSound) {
                 this.soundStore[sound.resourceId].play();
@@ -299,7 +309,14 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             // Render the Tiles
 
             let lastY = 0;
-            const tileMap = getLevel(data.currentLevel);
+
+            let tileMap;
+
+            if (this.props.isDuel) {
+                tileMap = getDuelLevel(data.currentLevel);
+            } else {
+                tileMap = getLevel(data.currentLevel);
+            }
 
             for (let yIndex = 0; yIndex < tileMap.length; yIndex++) {
                 const row = tileMap[yIndex];
@@ -389,6 +406,8 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
             const itemY = itemToRender.pos.y + itemToRender.pos.h;
 
             if (itemY > minDepth && itemY <= maxDepth) {
+                console.log("RENDERITEMID", itemToRenderId);
+
                 if (this.assets.images[itemToRenderId].hasHeading) {
                     let imageStoreIndex =
                         data.imagesToRender[itemToRenderId].resourceId +
@@ -411,7 +430,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 } else {
                     context.drawImage(
                         this.imageStore[
-                            data.imagesToRender[itemToRenderId].resourceId
+                        data.imagesToRender[itemToRenderId].resourceId
                         ],
                         data.imagesToRender[itemToRenderId].pos.x,
                         data.imagesToRender[itemToRenderId].pos.y,
