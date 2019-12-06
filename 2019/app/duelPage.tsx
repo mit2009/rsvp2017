@@ -81,13 +81,16 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
 
             case PageState.PLAYING:
                 html = (
-                    <div>
+                    <div className="container">
                         {this.state.gameData && (
                             <>
-                                <div>Player 0{this.state.gameData.imagesToRender.player1.score}</div>
-                                <div>Player 1{this.state.gameData.imagesToRender.player2.score}</div>
+                                <div>Player 0: {this.state.gameData.imagesToRender.player1.score}</div>
+                                <div>Player 1: {this.state.gameData.imagesToRender.player2.score}</div>
                                 <div>Time{this.state.gameData.timeLeft}</div>
-                                <GameApp isDuel={true} gameData={this.state.gameData} />;
+
+                                <div className="game-canvas-container">
+                                    <GameApp isDuel={true} gameData={this.state.gameData} />;
+                                </div>
                             </>
                         )}
                     </div>
