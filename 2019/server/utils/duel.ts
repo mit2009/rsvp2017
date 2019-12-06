@@ -40,6 +40,7 @@ export class Duel {
     monsters: Monster[];
     levelData: LevelDuelData;
     playSound: ISoundClip[];
+    levelNumber: number;
 
     gameCommand: GameCommand;
     nextCommand: GameCommand;
@@ -49,6 +50,7 @@ export class Duel {
 
     constructor(player0: TeamColor, player1: TeamColor, levelNumber: number) {
         this.levelData = getLevelData(levelNumber);
+        this.levelNumber = levelNumber;
         const { playerLocation, enemyLocation } = this.levelData;
         this.players.push(
             new Player(playerLocation[0].x, playerLocation[0].y, 0, player0, 0)
@@ -163,7 +165,7 @@ export class Duel {
 
         console.log("monsters:", this.monsters);
         const output = {
-            currentLevel: -1,
+            currentLevel: this.levelNumber,
             score: -1,
             teamColor: null,
             livesLeft: -1,
