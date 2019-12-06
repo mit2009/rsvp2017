@@ -123,15 +123,9 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
             // right
             this.keyStore[3] = true;
         } else if (event.key === " ") {
-            // this.keyStore[4] = true;
+            this.keyStore[4] = true;
         }
-        socket.emit("duelUpdate", {
-            user: this.playerId,
-            command: Command.UPDATE_CONTROLS,
-            params: {
-                controls: this.keyStore
-            }
-        });
+        this.updateKeystore();
     };
 
     private gameControlsRelease = (event: any) => {
@@ -150,12 +144,16 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
         } else if (event.key === " ") {
             this.keyStore[4] = false;
         }
+        this.updateKeystore();
+    };
+
+    private updateKeystore = () => {
         socket.emit("duelUpdate", {
             user: this.playerId,
             command: Command.UPDATE_CONTROLS,
             params: {
-                controls: this.keyStore
-            }
+                controls: this.keyStore,
+            },
         });
     };
 
