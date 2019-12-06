@@ -220,8 +220,14 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
         for (let imageId of Object.keys(this.assets.images)) {
             const image = this.assets.images[imageId];
 
+            let duelConditional = "";
+
+            if (this.props.isDuel) {
+                duelConditional = "duel/";
+            }
+
             let imageName = imageId;
-            let imageSrc = BASE_RESOURCE_URL + image.resourceUrl;
+            let imageSrc = BASE_RESOURCE_URL + duelConditional + image.resourceUrl;
             let imagesToGenerate = [[imageName, imageSrc]];
 
             if (image.hasHeading) {
@@ -229,7 +235,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 for (let h = 0; h < 8; h++) {
                     imageName = imageId + "-" + h;
                     imageSrc =
-                        BASE_RESOURCE_URL +
+                        BASE_RESOURCE_URL + duelConditional +
                         image.resourceUrl.replace("#", h + "");
 
                     if (image.hasColorVariants) {
@@ -255,7 +261,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
             for (const [n, s] of imagesToGenerate) {
                 this.imageStore[n] = new Image();
-                this.imageStore[n].src = (this.props.isDuel ? "" : "duel_") + s;
+                this.imageStore[n].src = s;
                 this.imageStore[n].onload = () => {
                     this.forceUpdate();
                 };
