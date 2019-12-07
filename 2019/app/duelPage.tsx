@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import * as socketio from "socket.io-client";
 
 import { socketIp } from "../config";
-import { IGameRenderData, TeamColor } from "../server/api/gameRenderData";
+import { TeamColor } from "../server/api/gameRenderData";
 import { Command, DuelPlayer, IDuelSocketCommand, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
 import { GameApp } from "./components/game";
 
@@ -129,7 +129,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 if (player1C.score > player2C.score) {
                     winner = TeamColor[player1C.pos.color].toLowerCase();
                 } else {
-                    winner = TeamColor[player1C.pos.color].toLowerCase();
+                    winner = TeamColor[player2C.pos.color].toLowerCase();
                 }
 
 
