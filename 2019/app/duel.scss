@@ -184,6 +184,51 @@ body {
         width: 100%;
         height: 100%;
         background-size: cover;
+        position: relative;
+        font-family: "victory";
+
+        .score {
+            text-shadow: 10px 10px 0 rgba(0,0,0,1);
+            font-size: 100px;
+        }
+
+        .player1-score {
+            position: absolute;
+            left: 100px;
+            bottom: 100px;
+            text-align: left;
+        }
+
+        .player2-score {
+            position: absolute;
+            right: 100px;
+            bottom: 100px;
+            text-align: right;
+        }
+
+
+        @each $color, $hex in $colorMap {
+            .player-#{$color} {
+                color: lighten($hex, 20%);
+            }
+        }
+
+        .player-text {
+            text-shadow: 10px 10px 0 rgba(0,0,0,1);
+            font-size: 60px;
+            position: absolute;
+        }
+
+        .player1-text {
+            left: 100px;
+            bottom: 200px;
+        }
+
+        .player2-text {
+            right: 100px;
+            bottom: 200px;
+            text-align: right;
+        }
 
         @each $color, $hex in $colorMap {
             &.winner-#{$color} {
