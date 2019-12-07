@@ -36,6 +36,10 @@ export class Bullet {
         this.deltaX = this.velocity * Math.sin(heading);
         this.deltaY = -this.velocity * Math.cos(heading);
 
+        const offsetModifier = 0.5
+        this.xcor += this.deltaX * offsetModifier;
+        this.ycor += this.deltaY * offsetModifier;
+
         this.firedBy = firedBy;
 
         this.bounces = 0;
