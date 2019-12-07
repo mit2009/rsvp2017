@@ -34,6 +34,13 @@ export function initSocket(http: any) {
                 console.error(e);
             }
         });
+        socket.on("clientCommand", (data: any) => {
+            try {
+                io.emit("clientEcho", data);
+            } catch (e) {
+                console.error(e);
+            }
+        });
 
         socket.on("disconnect", () => {
             console.log(`${socket.id} disconnected`);
