@@ -168,11 +168,11 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 resourceUrl: "bullet.png",
                 loaded: false,
             },
-            background: {
-                resourceUrl: "background.png",
-                loaded: false,
-                zIndex: 0,
-            },
+            // background: {
+            //     resourceUrl: "background.png",
+            //     loaded: false,
+            //     zIndex: 0,
+            // },
         },
         sounds: {
             bulletShoot: {

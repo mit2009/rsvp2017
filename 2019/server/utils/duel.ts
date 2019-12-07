@@ -28,7 +28,7 @@ function singleSoundClip(resourceId: string) {
 
 const hitOtherPlayerScore = 25;
 const enemyBonusScore = 50;
-const hitByMonsterScore = 5;
+const hitByMonsterScore = 10;
 
 const gameDurationInMilliseconds = 1000 * 60; // TODO: make 30 seconds
 
@@ -119,7 +119,7 @@ export class Duel {
                         this.bulletEntityOverlap(b, this.players[(firedBy + 1) % 2])
                     ) {
                         this.playSound.add(SOUNDS.playerHurt);
-                        const scaleKnockback = 0.2;
+                        const scaleKnockback = 0.4;
                         this.players[(firedBy + 1) % 2].update(0, this.levelData.mapData, b.deltaX * scaleKnockback, b.deltaY * scaleKnockback)
                         this.players[firedBy].score += hitOtherPlayerScore;
                     } else {

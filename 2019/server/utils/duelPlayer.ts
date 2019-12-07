@@ -12,8 +12,8 @@ import {
     voids
 } from "../api/levelDuelData";
 
-const bulletPenaltyScore = 1;
-const fallingPenaltyScore = 50;
+const bulletPenaltyScore = 5;
+const fallingPenaltyScore = 100;
 
 export class Player {
     private startX: number;
@@ -29,7 +29,7 @@ export class Player {
 
     private velocity: number = 30;
     private turningAngle: number = 0.7;
-    private fireFrequency: number = 100;
+    private fireFrequency: number = 200;
 
     private teamColor: TeamColor;
 
