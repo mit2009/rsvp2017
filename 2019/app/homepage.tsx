@@ -2,86 +2,141 @@
 // import * as ReactDOM from "react-dom";
 import * as $ from "jQuery";
 
-const THRESH = 300;
-const colors = ["red", "orange", "yellow", "green", "blue", "purple", "silver", "pink"];
-const colorOffset: {[key: string]: {[key: string]: number}} = {
-    'red': {x: 0, y: 0},
-    'orange': {x: 0, y: 0},
-    'yellow': {x: 25, y: 19},
-    'green': {x: 0, y: 0},
-    'blue': {x: 0, y: 0},
-    'purple': {x: 0, y: 0},
-    'silver': {x: 0, y: 0},
-    'pink': {x: 0, y: 0}
-}
-const mallowData: any = {}
+const THRESH = 500;
+const colors = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "blue",
+    "purple",
+    "silver",
+    "pink"
+];
+const colorOffset: { [key: string]: { [key: string]: number } } = {
+    red: { x: -12, y: 101 },
+    orange: { x: -24, y: 72 },
+    yellow: { x: 25, y: 19 },
+    green: { x: -12.5, y: 54.5 },
+    blue: { x: 152, y: 87 },
+    purple: { x: 84, y: -27 },
+    silver: { x: 40, y: -28 },
+    pink: { x: 120, y: 75 }
+};
+const mallowData: any = {};
 
 const getDistance: any = (x1: number, y1: number, x2: number, y2: number) => {
     const deltaX = Math.abs(x2 - x1);
     const deltaY = Math.abs(y2 - y1);
     const dist = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-    return (dist);
+    return dist;
+};
+
+function convertStringMatrixToAngle(matrix: string) {
+    const start = matrix.indexOf("(");
+    const end = matrix.indexOf(",");
+    const value = matrix.substring(start + 1, end);
+    const radians = Math.acos(parseFloat(value));
+    const degrees = (180 * radians) / Math.PI;
+    return degrees;
 }
 
-for (const color of colors) {
-
-    if ($(".mallow-" + color + ".out").length !== 0) {
-        mallowData[color] = {
-            out: $(".mallow-" + color + ".out").offset(),
-            in: $(".mallow-" + color + ".in").offset(),
-            diff: {
-                top: $(".mallow-" + color + ".in").offset().top - $(".mallow-yellow.out").offset().top,
-                left: $(".mallow-" + color + ".in").offset().left - $(".mallow-" + color + ".out").offset().left
-            }
-        };
-
-        $(".mallow-clipped-" + color).attr({
-            x: mallowData[color].diff.left,
-            y: mallowData[color].diff.top,
-        }).css({ visibility: "visible" })
-    }
-}
-
-
-document.addEventListener("mousemove", event => {
-    const mouseLeft = event.pageX
-    const mouseTop = event.pageY;
-    // console.log($(".mallow-yellow.in").offset().left);
+function init() {
     for (const color of colors) {
-        if ($(".mallow-clipped-" + color).length !== 0) {
+        if ($(".mallow-" + color + ".out").length !== 0) {
+            mallowData[color] = {
+                out: $(".mallow-" + color + ".out").offset(),
+                in: $(".mallow-" + color + ".in").offset(),
+                diff: {
+                    top:
+                        $(".mallow-" + color + ".in").offset().top -
+                        $(".mallow-" + color + ".out").offset().top,
+                    left:
+                        $(".mallow-" + color + ".in").offset().left -
+                        $(".mallow-" + color + ".out").offset().left
+                },
+                rotateOut: convertStringMatrixToAngle(
+                    $(".mallow-" + color + ".out").css("transform")
+                ),
+                rotateIn: convertStringMatrixToAngle(
+                    $(".mallow-" + color + ".in").css("transform")
+                )
+            };
+            // console.log(mallowData);
 
-            $('.mallow-' + color).attr("x", 30);
-            $('.mallow-' + color).attr("y", 30);
-
-            const distFromMallow = getDistance(mouseLeft, mouseTop, mallowData[color].in.left + colorOffset[color].x, mallowData[color].in.top + colorOffset[color].y)
-            // console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
-            // console.log(distFromMallow);
-
-            if (distFromMallow < THRESH) {
-                console.log("here");
-
-                const percentageToMallow = Math.min(1, Math.sin((distFromMallow) / THRESH * Math.PI / 2));
-                // console.log((distFromMallow) / THRESH, Math.pow((distFromMallow) / THRESH, 0.25));
-                $(".mallow-clipped-" + color).attr({
-                    x: mallowData[color].diff.left * percentageToMallow,
-                    y: mallowData[color].diff.top * percentageToMallow
-                })
-            } else {
-                console.log("ehr2");
-
-                $(".mallow-clipped-" + color).attr({
+            $(".mallow-clipped-" + color)
+                .attr({
                     x: mallowData[color].diff.left,
                     y: mallowData[color].diff.top
                 })
+                .css({ visibility: "visible" });
+        }
+    }
+
+    $(".rsvp-btn").on("mouseover", () => {
+        $(".flame-gif").attr("src", "images/flame.gif");
+        $(".flame-gif").show();
+    });
+
+    $(".rsvp-btn").on("mouseout", () => {
+        $(".flame-gif").hide();
+    });
+
+    $(".game-btn").on("mouseover", () => {
+        $(".flame-gif").attr("src", "images/flame.gif");
+        $(".flame-gif").show();
+    });
+
+    $(".game-btn").on("mouseout", () => {
+        $(".flame-gif").hide();
+    });
+}
+
+$(() => {
+    init();
+});
+
+window.addEventListener("resize", _event => {
+    init();
+});
+
+document.addEventListener("mousemove", event => {
+    const mouseLeft = event.pageX;
+    const mouseTop = event.pageY;
+
+    for (const color of colors) {
+        if ($(".mallow-clipped-" + color).length !== 0) {
+            $(".mallow-" + color).attr("x", 30);
+            $(".mallow-" + color).attr("y", 30);
+            // console.log(color, mallowData[color]);
+            const distFromMallow = getDistance(
+                mouseLeft,
+                mouseTop,
+                mallowData[color].in.left + colorOffset[color].x,
+                mallowData[color].in.top + colorOffset[color].y
+            );
+            // if (color == 'pink') {
+            //     console.log(color, mouseLeft - mallowData[color].in.left, mouseTop - mallowData[color].in.top);
+            // }
+            // console.log(distFromMallow);
+
+            if (distFromMallow < THRESH) {
+                const percentageToMallow = Math.min(
+                    1,
+                    Math.sin(((distFromMallow / THRESH) * Math.PI) / 2)
+                );
+                $(".mallow-clipped-" + color).attr({
+                    x: mallowData[color].diff.left * percentageToMallow,
+                    y: mallowData[color].diff.top * percentageToMallow
+                });
+            } else {
+                $(".mallow-clipped-" + color).attr({
+                    x: mallowData[color].diff.left,
+                    y: mallowData[color].diff.top
+                });
             }
         }
     }
-});
-
-console.log($('.mallow-yellow'));
-$('.mallow-yellow').attr({
-    "x": 50,
-    "y": 50
 });
 
 // export class Homepage extends React.PureComponent<{}, {}> {
