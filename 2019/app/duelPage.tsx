@@ -122,7 +122,18 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 break;
 
             case PageState.SCORING:
-                html = <div>scoring</div>;
+                const player1C = this.state.gameData.imagesToRender.player1;
+                const player2C = this.state.gameData.imagesToRender.player2;
+                let winner: string = "";
+
+                if (player1C.score > player2C.score) {
+                    winner = TeamColor[player1C.pos.color].toLowerCase();
+                } else {
+                    winner = TeamColor[player1C.pos.color].toLowerCase();
+                }
+
+
+                html = <div className={`winner winner-${winner}`} />;
                 console.log("Scoring");
                 break;
         }
