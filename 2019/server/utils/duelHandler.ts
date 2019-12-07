@@ -27,6 +27,8 @@ export function update(data: IDuelSocketCommand, io: any) {
           resp = getResponse(PageState.ATTRACT, null, -1, data);
           break;
         case Command.GO_TO_STAGING:
+          player0Ready = false;
+          player1Ready = false;
           game = new Duel(
             data.params.player0Color,
             data.params.player1Color,
