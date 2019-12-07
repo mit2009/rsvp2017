@@ -146,7 +146,9 @@ export class Duel {
         }
         const timeDelta = (currentTime - this.lastUpdated) / 200;
         this.players.forEach(p => {
-            p.update(timeDelta, this.levelData.mapData);
+            if (!p.update(timeDelta, this.levelData.mapData)) {
+                this.playSound.add(SOUNDS.playerDie);
+            };
         });
         this.monsters = this.monsters.filter(m => {
             const bullet = m.update();

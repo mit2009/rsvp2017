@@ -13,6 +13,7 @@ import {
 } from "../api/levelDuelData";
 
 const bulletPenaltyScore = 1;
+const fallingPenaltyScore = 50;
 
 export class Player {
     private startX: number;
@@ -234,6 +235,7 @@ export class Player {
         }
 
         if (nonVoidCount == 0) {
+            this.score -= fallingPenaltyScore;
             this.xcor = this.startX;
             this.ycor = this.startY;
             return false;
