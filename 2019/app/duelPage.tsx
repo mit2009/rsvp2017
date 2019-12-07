@@ -144,7 +144,15 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                     winner = TeamColor[player2C.pos.color].toLowerCase();
                 }
 
-                html = <div className={`winner winner-${winner}`} />;
+                html = (
+                    <div className={`winner winner-${winner}`}>
+                        <div className={`player-text player1-text player-${TeamColor[player1C.pos.color].toLowerCase()}`}>Player 1</div>
+                        <div className="score player1-score">{player1C.score}</div>
+
+                        <div className={`player-text player2-text player-${TeamColor[player2C.pos.color].toLowerCase()}`}>Player 2</div>
+                        <div className="score player2-score">{player2C.score}</div>
+                    </div>
+                );
                 console.log("Scoring");
                 break;
         }
