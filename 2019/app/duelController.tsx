@@ -2,8 +2,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as socketio from "socket.io-client";
 
+import { emit } from "cluster";
 import { socketIp } from "../config";
-import { Command, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
+import { Command, IDuelSocketCommand, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
 
 const SOCKET_URL = socketIp;
 const socket: SocketIOClient.Socket = socketio(SOCKET_URL);
@@ -38,7 +39,6 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
     public componentDidMount() {
         socket.on("duelResponse", (data: IDuelStateSocketData) => {
             if (data !== null) {
-
                 if (data.pageState !== PageState.PLAYING) {
                     clearInterval(this.timer);
                 }
@@ -58,7 +58,7 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
                     });
                 }
             }
-        })
+        });
     }
 
     public render() {
@@ -77,7 +77,9 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
                         value={this.state.textValue}
                         onChange={this.handleChange}
                         onKeyDown={this.keyPress}
-                        ref={(input) => { this.messageInput = input; }}
+                        ref={input => {
+                            this.messageInput = input;
+                        }}
                     />
                     <div className="history">
                         {this.state.history.map((value, key) => {
@@ -104,20 +106,28 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
                     `{"user":-1, "command":1, "params": {"player0Color": 5, "player1Color": 1, "levelNumber":1}}`,
                 )}
                 {this.renderButton(
-                    "go STAGING (green/pink)",
-                    `{"user":-1, "command":1, "params": {"player0Color": 4, "player1Color": 0, "levelNumber":1}}`,
-                )}
-                {this.renderButton(
                     "go STAGING (purple/orange)",
-                    `{"user":-1, "command":1, "params": {"player0Color": 6, "player1Color": 2, "levelNumber":1}}`,
+                    `{"user":-1, "command":1, "params": {"player0Color": 6, "player1Color": 2, "levelNumber":2}}`,
                 )}
                 {this.renderButton(
                     "go STAGING (yellow/silver)",
-                    `{"user":-1, "command":1, "params": {"player0Color": 3, "player1Color": 7, "levelNumber":1}}`,
+                    `{"user":-1, "command":1, "params": {"player0Color": 3, "player1Color": 7, "levelNumber":3}}`,
                 )}
-                {this.renderButton("go COUNTDOWN", `{"user":-1, "command":2, "params":{"countDownValue":3}}`)}
+                {this.renderButton(
+                    "go STAGING (green/pink)",
+                    `{"user":-1, "command":1, "params": {"player0Color": 4, "player1Color": 0, "levelNumber":4}}`,
+                )}
+
+                {/* this.renderButton("go COUNTDOWN", `{"user":-1, "command":2, "params":{"countDownValue":3}}`) */}
                 <button onClick={this.handleGameStart}>START GAME TIMER</button>
                 <button onClick={this.handleGameStop}>STOP GAME TIMER</button>
+                <button
+                    onClick={() => {
+                        socket.emit("clientCommand", {});
+                    }}
+                >
+                    REFRESH CLIENT
+                </button>
             </div>
         );
     }
@@ -126,26 +136,26 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
         clearInterval(this.timer);
         socket.emit("duelUpdate", {
             user: -1,
-            command: Command.GO_TO_PLAYING
+            command: Command.GO_TO_PLAYING,
         });
         this.timer = global.setInterval(() => {
             console.log(Date.now());
             socket.emit("duelUpdate", {
                 user: -1,
-                command: Command.GET_FRAME
+                command: Command.GET_FRAME,
             });
         }, 40);
     };
 
     private handleGameStop = () => {
         clearInterval(this.timer);
-    }
+    };
 
     private renderButton(title: string, message: string) {
         return (
             <button
                 onClick={() => {
-                    this.loadQuickCommand(message);
+                    this.directCommand(message);
                 }}
             >
                 <div className="title">{title}</div>
@@ -159,6 +169,15 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
             textValue: message,
         });
         this.messageInput.focus();
+    }
+
+    private directCommand(message: string) {
+        const data = JSON.parse(message) as IDuelSocketCommand;
+        socket.emit("duelUpdate", {
+            user: -1,
+            command: data.command,
+            params: data.params,
+        });
     }
 
     private keyPress(event: React.KeyboardEvent<HTMLInputElement>) {

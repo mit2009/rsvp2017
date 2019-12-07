@@ -33,6 +33,10 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
             });
         });
 
+        socket.on("clientEcho", () => {
+            location.reload();
+        });
+
         this.state = {
             pageState: pageStart,
         };
@@ -90,13 +94,21 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                         {this.state.gameData && (
                             <>
                                 <div className="info-container">
-                                    <div className={`p1 mallow-${TeamColor[this.state.gameData.imagesToRender.player1.pos.color].toLowerCase()}`}>
+                                    <div
+                                        className={`p1 mallow-${TeamColor[
+                                            this.state.gameData.imagesToRender.player1.pos.color
+                                        ].toLowerCase()}`}
+                                    >
                                         <div className="mallow" />
                                         <div className="score-value">
                                             {this.state.gameData.imagesToRender.player1.score}
                                         </div>
                                     </div>
-                                    <div className={`p2 mallow-${TeamColor[this.state.gameData.imagesToRender.player2.pos.color].toLowerCase()}`}>
+                                    <div
+                                        className={`p2 mallow-${TeamColor[
+                                            this.state.gameData.imagesToRender.player2.pos.color
+                                        ].toLowerCase()}`}
+                                    >
                                         <div className="mallow" />
                                         <div className="score-value">
                                             {this.state.gameData.imagesToRender.player2.score}
@@ -131,7 +143,6 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
                 } else {
                     winner = TeamColor[player2C.pos.color].toLowerCase();
                 }
-
 
                 html = <div className={`winner winner-${winner}`} />;
                 console.log("Scoring");

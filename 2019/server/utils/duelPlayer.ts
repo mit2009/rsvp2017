@@ -29,7 +29,7 @@ export class Player {
 
     private velocity: number = 30;
     private turningAngle: number = 0.7;
-    private fireFrequency: number = 800;
+    private fireFrequency: number = 100;
 
     private teamColor: TeamColor;
 
@@ -88,7 +88,7 @@ export class Player {
         }
     }
 
-    update(timeDelta: number, levelMap: number[][], customX:number=0, customY:number=0) {
+    update(timeDelta: number, levelMap: number[][], customX: number = 0, customY: number = 0) {
         const increment = 1;
         let counter = 0;
 
