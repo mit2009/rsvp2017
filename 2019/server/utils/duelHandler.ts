@@ -51,6 +51,7 @@ export function update(data: IDuelSocketCommand, io: any) {
           if (game != null) {
             const frame = game.update();
             if (frame.done) {
+              resp = getResponse(PageState.PLAYING, frame.blob, -1, data);
               resp = getResponse(PageState.SCORING, frame.blob, -1, data);
             } else {
               resp = getResponse(PageState.PLAYING, frame.blob, -1, data);
