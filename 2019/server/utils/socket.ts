@@ -20,7 +20,9 @@ export function initSocket(http: any) {
 
         socket.on("getUpdate", (guid: string, up: boolean, down: boolean, left: boolean, right: boolean, fire: boolean) => {
             const blob = gameHandler.update(guid, up, down, left, right, fire);
-            socket.emit("levelUpdate", JSON.stringify(blob));
+            if (blob) {
+                socket.emit("levelUpdate", JSON.stringify(blob));
+            }
         });
 
         socket.on("disconnect", () => {

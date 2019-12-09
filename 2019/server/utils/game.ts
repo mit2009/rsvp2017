@@ -157,7 +157,9 @@ export class Game {
     ) {
         const currentTime = Date.now();
         const timeDelta = (currentTime - this.lastUpdated) / 240;
-
+        if (this.player == null) {
+            return false;
+        }
         this.player.update(
             timeDelta,
             up,

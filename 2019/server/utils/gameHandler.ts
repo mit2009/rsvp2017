@@ -40,7 +40,7 @@ export function update(guid: string, up: boolean, down: boolean, left: boolean, 
     if (games.hasOwnProperty(guid)) {
         return games[guid].update(up, down, left, right, fire);
     }
-    return gameDoesNotExistResponse;
+    return false;
 }
 
 export function getScore(guid: string) {
