@@ -80,7 +80,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 hasColorVariants: true,
             },
             tile1: {
-                resourceUrl: "tile0.png",
+                resourceUrl: "tile1.png",
                 loaded: false,
             },
             tile2: {
@@ -88,7 +88,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
                 loaded: false,
             },
             tile3: {
-                resourceUrl: "tile2.png",
+                resourceUrl: "tile1.png",
                 loaded: false,
                 heightOffset: -10,
             },
@@ -304,7 +304,7 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
             for (const [n, s] of imagesToGenerate) {
                 this.imageStore[n] = new Image();
-                console.log('loading', n, s);
+                // console.log('loading', n, s);
                 this.imageStore[n].src = s;
                 this.imageStore[n].onload = () => {
                     this.forceUpdate();
