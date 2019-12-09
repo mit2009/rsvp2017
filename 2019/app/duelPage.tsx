@@ -56,6 +56,7 @@ export class DuelPage extends React.PureComponent<{}, IDuelPageState> {
 
     public render() {
         let html;
+
         switch (this.state.pageState) {
             case PageState.ATTRACT:
                 console.log("In Attract");

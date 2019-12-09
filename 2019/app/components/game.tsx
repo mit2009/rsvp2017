@@ -63,6 +63,8 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
     private imageStore: { [imageId: string]: HTMLImageElement } = {};
     private soundStore: any = {};
 
+    private hasPlayedStartSound: boolean = false;
+
     private assets: IAssets = {
         images: {
             player1: {
@@ -344,7 +346,19 @@ export class GameApp extends React.PureComponent<IGameAppProps, IGameAppState> {
 
         if (this.props.gameData.playSound.length > 0) {
             for (const sound of this.props.gameData.playSound) {
-                this.soundStore[sound.resourceId].play();
+                console.log(sound);
+                if (sound.resourceId === "levelStart") {
+
+                    if (!this.hasPlayedStartSound) {
+                        this.soundStore[sound.resourceId].play();
+                        this.hasPlayedStartSound = true;
+                        setTimeout(() => {
+                            this.hasPlayedStartSound = false;
+                        }, 3000);
+                    }
+                } else {
+                    this.soundStore[sound.resourceId].play();
+                }
             }
         }
 

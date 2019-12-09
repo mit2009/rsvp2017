@@ -159,7 +159,7 @@ export class DuelController extends React.PureComponent<{}, IDuelControllerState
                 }}
             >
                 <div className="title">{title}</div>
-                <div className="message">{message}</div>
+                <div className="message">{JSON.stringify(JSON.parse(message))}</div>
             </button>
         );
     }

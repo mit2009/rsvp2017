@@ -1,316 +1,322 @@
-$colors: ('red', 'pink', 'orange', 'yellow', 'blue', 'green', 'purple', 'silver'); 
-$colorMap: ('red': #EA222A, 'pink': #EF4780, 'orange': #F17524, 'yellow': #F8D808, 'blue': #2F76BB, 'green': #4BB548, 'purple': #894D9E, 'silver': #B1B4B6);
+$colors: ("red", "pink", "orange", "yellow", "blue", "green", "purple", "silver");
+$colorMap: (
+  "red": #ea222a,
+  "pink": #ef4780,
+  "orange": #f17524,
+  "yellow": #f8d808,
+  "blue": #2f76bb,
+  "green": #4bb548,
+  "purple": #894d9e,
+  "silver": #b1b4b6
+);
 
 @font-face {
-    font-family: "victory";
-    src: url("/victorycomicscond.ttf"),
+  font-family: "victory";
+  src: url("/victorycomicscond.ttf");
 }
 
 @font-face {
-    font-family: "victory-i";
-    src: url("/victorycomicscondital.ttf"),
+  font-family: "victory-i";
+  src: url("/victorycomicscondital.ttf");
 }
 
 html,
 body {
-    background-color: #000;
-    height: 100%;
-    width: 100%;
-    color: #fff;
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+  color: #fff;
 }
 
 #duel-content {
-    width: 1920px;
-    height: 1080px;
+  width: 1920px;
+  height: 1080px;
 
-    .game-canvas-container {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
+  .game-canvas-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .attract {
+    background-image: url("/images/gameAssets/duel/duelattract.png");
+    width: 100%;
+    height: 100%;
+  }
+
+  .staging {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+
+    .ready-sign {
+      width: 440px;
+      height: 200px;
+      background-size: contain;
+      position: fixed;
+      background-repeat: no-repeat;
     }
 
-    .attract {
-        background-image: url("/images/gameAssets/duel/duelattract.png");
-        width: 100%;
-        height: 100%;
+    .p1 {
+      left: 70px;
+      top: 500px;
+      transition: 0.3s all;
+
+      &.p-true {
+        transform: translateY(0px);
+      }
+      &.p-false {
+        transform: translateY(-1000px);
+      }
     }
 
-    .staging {
-        width: 100%;
-        height: 100%;
-        position: fixed;
+    .p2 {
+      left: 1360px;
+      top: 820px;
+      transition: 0.3s all;
 
-        .ready-sign {
-            width: 440px;
-            height: 200px;
-            background-size: contain;
-            position: fixed;
-            background-repeat: no-repeat;
-        }
-
-        .p1 {
-            left: 70px;
-            top: 500px;
-            transition: 0.3s all;
-
-            &.p-true {
-                transform: translateY(0px);
-            }
-            &.p-false {
-                transform: translateY(-1000px);
-            }
-        }
-
-        .p2 {
-            left: 1360px;
-            top: 820px;
-            transition: 0.3s all;
-
-            &.p-true {
-                transform: translateY(0px);
-            }
-            &.p-false {
-                transform: translateY(1000px);
-            }
-        }
-
-
-        @each $color in $colors {
-            .p-#{$color} {
-                background-image: url("/images/gameAssets/duel/#{$color}-ready.png");
-            }
-        }
+      &.p-true {
+        transform: translateY(0px);
+      }
+      &.p-false {
+        transform: translateY(1000px);
+      }
     }
 
-    .blue-vs-red {
-        background-image: url("/images/gameAssets/duel/blue-vs-red.png"); 
+    @each $color in $colors {
+      .p-#{$color} {
+        background-image: url("/images/gameAssets/duel/#{$color}-ready.png");
+      }
     }
-    .green-vs-pink {
-        background-image: url("/images/gameAssets/duel/green-vs-pink.png"); 
+  }
+
+  .blue-vs-red {
+    background-image: url("/images/gameAssets/duel/blue-vs-red.png");
+  }
+  .green-vs-pink {
+    background-image: url("/images/gameAssets/duel/green-vs-pink.png");
+  }
+  .purple-vs-orange {
+    background-image: url("/images/gameAssets/duel/purple-vs-orange.png");
+  }
+  .yellow-vs-silver {
+    background-image: url("/images/gameAssets/duel/yellow-vs-silver.png");
+  }
+  .playing {
+    .info-container {
+      font-family: "victory-i";
+      font-size: 40px;
+
+      width: 100%;
+      height: 360px;
+      overflow: hidden;
+      position: relative;
     }
-    .purple-vs-orange {
-        background-image: url("/images/gameAssets/duel/purple-vs-orange.png"); 
+
+    .p1 {
+      position: absolute;
+      left: 60px;
+      top: 60px;
     }
-    .yellow-vs-silver {
-        background-image: url("/images/gameAssets/duel/yellow-vs-silver.png"); 
+
+    .p2 {
+      position: absolute;
+      right: 60px;
+      top: 60px;
+
+      .score-value {
+        text-align: right;
+        right: 210px;
+        left: auto;
+      }
     }
-    .playing {
-        .info-container {
-            font-family: "victory-i";
-            font-size: 40px;
 
-            width: 100%;
-            height: 360px;
-            overflow: hidden;
-            position: relative;
-        }
+    .score-value {
+      position: absolute;
+      letter-spacing: 6px;
+      font-size: 100px;
+      left: 200px;
+      top: 60px;
+    }
 
-        .p1 {
-            position: absolute;
-            left: 60px;
-            top: 60px;
-        }
+    .time {
+      color: #aaa;
+      font-size: 60px;
+      width: 300px;
+      height: 300px;
+      left: 960px - 150px;
+      position: absolute;
+      top: 60px;
+      text-align: center;
+      letter-spacing: 3px;
 
-        .p2 {
-            position: absolute;
-            right: 60px;
-            top: 60px;
+      .time-value {
+        font-size: 120px;
+        color: #fff;
+      }
 
-            .score-value {
-                text-align: right;
-                right: 210px;
-                left: auto;
-            }
-        }
+      .time-tens {
+        position: absolute;
+        right: 170px;
+        text-align: right;
+      }
 
-        .score-value {
-            position: absolute;
-            letter-spacing: 6px;
-            font-size: 100px;
-            left: 200px;
-            top: 60px;
-        }
+      .time-ones {
+        position: absolute;
+        left: 135px;
+        text-align: left;
+      }
+    }
 
-        .time {
-            color: #aaa;
-            font-size: 60px;
-            width: 300px;
-            height: 300px;
-            left: 960px - 150px;
-            position: absolute;
-            top: 60px;
-            text-align: center;
-            letter-spacing: 3px;
+    .mallow {
+      width: 180px;
+      height: 180px;
+      background-size: contain;
+    }
+    /* score-mallow_player-blue-4.png */
 
-            .time-value {
-                font-size: 120px;
-                color: #fff;
-            }
-
-            .time-tens {
-                position: absolute;
-                right: 170px;
-                text-align: right;
-            }
-            
-            .time-ones {
-                position: absolute;
-                left: 135px;
-                text-align: left;
-            }
-        }
-
+    @each $color, $hex in $colorMap {
+      .mallow-#{$color} {
         .mallow {
-            width: 180px;
-            height: 180px;
-            background-size: contain;
+          background-image: url("/images/gameAssets/duel/score-mallow_player-#{$color}-4.png");
         }
-        /* score-mallow_player-blue-4.png */
+        .score-value {
+          color: lighten($hex, 30%);
+        }
+      }
+    }
+  }
 
-        @each $color, $hex in $colorMap {
-            .mallow-#{$color} {
-                .mallow {
-                background-image: url("/images/gameAssets/duel/score-mallow_player-#{$color}-4.png");
-                }
-                .score-value {
-                    color: lighten($hex, 30%);
-                }
-            }
-        }
+  .winner {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    position: relative;
+    font-family: "victory";
+
+    .score {
+      text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+      font-size: 100px;
     }
 
-    .winner {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        position: relative;
-        font-family: "victory";
-
-        .score {
-            text-shadow: 10px 10px 0 rgba(0,0,0,1);
-            font-size: 100px;
-        }
-
-        .player1-score {
-            position: absolute;
-            left: 100px;
-            bottom: 100px;
-            text-align: left;
-        }
-
-        .player2-score {
-            position: absolute;
-            right: 100px;
-            bottom: 100px;
-            text-align: right;
-        }
-
-
-        @each $color, $hex in $colorMap {
-            .player-#{$color} {
-                color: lighten($hex, 20%);
-            }
-        }
-
-        .player-text {
-            text-shadow: 10px 10px 0 rgba(0,0,0,1);
-            font-size: 60px;
-            position: absolute;
-        }
-
-        .player1-text {
-            left: 100px;
-            bottom: 200px;
-        }
-
-        .player2-text {
-            right: 100px;
-            bottom: 200px;
-            text-align: right;
-        }
-
-        @each $color, $hex in $colorMap {
-            &.winner-#{$color} {
-                background-image: url("/images/gameAssets/duel/winner-#{$color}.png"); 
-            }
-        }
+    .player1-score {
+      position: absolute;
+      left: 100px;
+      bottom: 100px;
+      text-align: left;
     }
 
+    .player2-score {
+      position: absolute;
+      right: 100px;
+      bottom: 100px;
+      text-align: right;
+    }
+
+    @each $color, $hex in $colorMap {
+      .player-#{$color} {
+        color: lighten($hex, 20%);
+      }
+    }
+
+    .player-text {
+      text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+      font-size: 60px;
+      position: absolute;
+    }
+
+    .player1-text {
+      left: 100px;
+      bottom: 200px;
+    }
+
+    .player2-text {
+      right: 100px;
+      bottom: 200px;
+      text-align: right;
+    }
+
+    @each $color, $hex in $colorMap {
+      &.winner-#{$color} {
+        background-image: url("/images/gameAssets/duel/winner-#{$color}.png");
+      }
+    }
+  }
 }
 
 .duel-controller-page {
-    padding: 50px;
+  padding: 50px;
 }
 
 #duel-controller-content {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  font-family: monospace;
+  position: relative;
+
+  .dashboard {
+    display: flex;
+    justify-content: space-between;
+  }
+  .manual-input {
+    margin-right: 30px;
+  }
+
+  .history {
+    font-size: 14px;
+    line-height: 20px;
+    word-break: break-all;
+
+    .history-line {
+      margin-bottom: 9px;
+    }
+  }
+  .event-textbox {
+    margin-right: 5px;
+    width: 100px;
+  }
+  .dem {
+    color: #666;
+    margin-right: 6px;
+    display: inline-block;
+  }
+  input {
+    width: 300px;
+    margin-bottom: 8px;
     font-family: monospace;
-    position: relative;
-    
-    .dashboard {
-        display: flex;
-        justify-content: space-between;
-    }
-    .manual-input {
-        margin-right: 30px;
+    font-size: 14px;
+    padding: 10px 10px;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #aaa;
+    outline: none;
+  }
+  button {
+    display: block;
+    background-color: #fff;
+    padding: 8px 12px;
+    font-family: sans-serif;
+    border: none;
+    width: 400px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    outline: none;
+    font-size: 14px;
+
+    &:hover {
+      opacity: 0.8;
+      cursor: pointer;
     }
 
-    .history {
-        font-size: 14px;
-        line-height: 20px;
+    .title {
+      font-size: 19px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
 
-        .history-line {
-            margin-bottom: 9px;
-        }
+    .message {
+      font-size: 10px;
     }
-    .event-textbox {
-        margin-right: 5px;
-        width: 100px;
-    }
-    .dem {
-        color: #666;
-        margin-right: 6px;
-        display: inline-block;
-    }
-    input {
-        width: 300px;
-        margin-bottom: 8px;
-        font-family: monospace;
-        font-size: 14px;
-        padding: 10px 10px;
-        color: #fff;
-        background-color: #000;
-        border: 1px solid #aaa;
-        outline: none;
-    }
-    button {
-        display: block;
-        background-color: #fff;
-        padding: 8px 12px;
-        font-family: sans-serif;
-        border: none;
-        width: 400px;
-        border-radius: 3px;
-        margin-bottom: 10px;
-        outline: none;
-        font-size: 14px;
-        
-        &:hover {
-            opacity: 0.8;
-            cursor: pointer;
-        }
-
-        .title {
-            font-size: 19px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .message {
-            font-size: 10px;
-        }
-        
-    }
+  }
 }
