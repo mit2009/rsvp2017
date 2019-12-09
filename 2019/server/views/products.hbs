@@ -37,23 +37,31 @@
                 productName: "Triton",
                 link: "http://web.mit.edu/2.009/file_uploads/brochures/Purple_brochure.pdf"
             }
+        }
 
+        // URL Redirect, for QR codes
+        url = location.search;
+        brochureColor = url.split('?')[1];
+        if (Object.keys(colors).indexOf(brochureColor) > -1) {
+            console.log("hey");
+            location.href = colors[brochureColor].link;
         }
 
         randomColors = Object.keys(colors).sort(() => Math.random() - 0.5);
         for (let c of randomColors) {
             $('.products-container').append(`
-            <a class="team-product-${c} ${randomColors.indexOf(c) % 2 == 1 ? "right-shift" : ""}" href="${colors[c].link}">
-                <div class="text-container">
-                    <div class="team-name">
-                        ${c} Team
+                <a class="team-product-${c} ${randomColors.indexOf(c) % 2 == 1 ? "right-shift" : ""}" href="${colors[c].link}">
+                    <div class="text-container">
+                        <div class="team-name">
+                            ${c} Team
+                        </div>
+                        <div class="product-name">
+                            ${colors[c].productName}
+                        </div>
                     </div>
-                    <div class="product-name">
-                        ${colors[c].productName}
-                    </div>
-                </div>
-            </a>
-        `)
+                </a>
+            `)
         }
+
     })
 </script>
