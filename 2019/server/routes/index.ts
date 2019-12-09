@@ -46,6 +46,20 @@ export function getRouter() {
         });
     });
 
+    router.get("/program", (_req: express.Request, res: express.Response) => {
+        res.render("program", {
+            layout: "layout",
+            isProgram: true
+        });
+    });
+
+    router.get("/products", (_req: express.Request, res: express.Response) => {
+        res.render("products", {
+            layout: "layout",
+            isProducts: true
+        });
+    });
+
     router.get("/game", (_req: express.Request, res: express.Response) => {
         res.render("game", {
             layout: "layout",
