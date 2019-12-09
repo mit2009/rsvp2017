@@ -26,7 +26,7 @@ function singleSoundClip(resourceId: string) {
     } as ISoundClip;
 }
 
-const hitOtherPlayerScore = 25;
+const hitOtherPlayerScore = 30;
 const enemyBonusScore = 50;
 const collideEnemyScore = 50;
 const hitByMonsterScore = 10;
@@ -122,6 +122,7 @@ export class Duel {
                         this.playSound.add(SOUNDS.playerHurt);
                         const scaleKnockback = 0.4;
                         this.players[(firedBy + 1) % 2].update(0, this.levelData.mapData, b.deltaX * scaleKnockback, b.deltaY * scaleKnockback)
+                        this.players[(firedBy + 1) % 2].score -= hitOtherPlayerScore / 2;
                         this.players[firedBy].score += hitOtherPlayerScore;
                     } else {
                         bullets.push(b);
