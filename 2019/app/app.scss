@@ -483,6 +483,10 @@ body {
 }
 
 @media only screen and (max-width: 800px) {
+  .big-pushy {
+    padding: 4px 24px;
+  }
+
   .navigation {
     .logo-container {
       transform: scaleX(-1);

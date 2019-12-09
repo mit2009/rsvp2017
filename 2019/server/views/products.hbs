@@ -1,14 +1,59 @@
 <div class="products">
     <div class="products-container">
-        <a class="team-product-pink" href="https://www.abhitivaish.com/2009/brochure.html">
-            <div class="text-container">
-                <div class="team-name">
-                    Pink
-                </div>
-                <div class="product-name">
-                    Rho
-                </div>
-            </div>
-        </a>
     </div>
 </div>
+<script type="text/javascript">
+    $(() => {
+        let colors = {
+            pink: {
+                productName: "Rho",
+                link: "https://rho.pink/"
+            },
+            red: {
+                productName: "Aris",
+                link: "http://web.mit.edu/2.009/file_uploads/brochures/Red_brochure.pdf"
+            },
+            blue: {
+                productName: "UpLift",
+                link: "http://web.mit.edu/2.009/file_uploads/brochures/Blue_brochure.pdf"
+            },
+            green: {
+                productName: "Areta",
+                link: "http://web.mit.edu/2.009/file_uploads/brochures/Green_brochure.pdf?1541"
+            },
+            orange: {
+                productName: "Calipso",
+                link: "http://web.mit.edu/2.009/file_uploads/brochures/Orange_brochure.pdf"
+            },
+            yellow: {
+                productName: "Carve",
+                link: "http://web.mit.edu/2.009/file_uploads/brochures/Yellow_brochure.pdf"
+            },
+            silver: {
+                productName: "Rise",
+                link: "http://web.mit.edu/2.009/file_uploads/brochures/Silver_brochure.pdf"
+            },
+            purple: {
+                productName: "Triton",
+                link: "http://web.mit.edu/2.009/file_uploads/brochures/Purple_brochure.pdf"
+            }
+
+        }
+
+        randomColors = Object.keys(colors).sort(() => Math.random() - 0.5);
+        for (let c of randomColors) {
+            $('.products-container').append(`
+            <a class="team-product-${c} ${randomColors.indexOf(c) % 2 == 1 ? "right-shift" : ""}" href="${colors[c].link}">
+                <div class="text-container">
+                    <div class="team-name">
+                        ${c} Team
+                    </div>
+                    <div class="product-name">
+                        ${colors[c].productName}
+                    </div>
+                </div>
+            </a>
+        `)
+        }
+    })
+</script>
