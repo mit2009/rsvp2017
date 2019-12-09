@@ -2,7 +2,6 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as socketio from "socket.io-client";
 
-import { emit } from "cluster";
 import { socketIp } from "../config";
 import { Command, IDuelSocketCommand, IDuelStateSocketData, PageState } from "../server/api/levelDuelData";
 
